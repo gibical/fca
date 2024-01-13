@@ -2,11 +2,13 @@ import 'package:get/get.dart';
 
 import 'logic.dart';
 
-class SplashState implements Bindings {
+class HomeState implements Bindings {
+
 
 
   @override
   void dependencies() {
-    Get.put(SplashLogic());
+  Get.put(HomeLogic());
   }
+
 }
