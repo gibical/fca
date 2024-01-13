@@ -1,0 +1,20 @@
+class AppIcon{
+  static const  videoIcon = 'assets/icons/video.svg';
+  static const  imageIcon = 'assets/icons/image.svg';
+  static const  soundIcon = 'assets/icons/sound.svg';
+  static const  textIcon = 'assets/icons/text.svg';
+  static const  searchIcon = 'assets/icons/search.svg';
+  static const  musicIcon = 'assets/icons/music.svg';
+  static const  profileIcon = 'assets/icons/profile.svg';
+  static const  exploreIcon = 'assets/icons/explore.svg';
+  static const  addIcon = 'assets/icons/add.svg';
+  static const  deviceIcon = 'assets/icons/device.svg';
+  static const  closeIcon = 'assets/icons/close.svg';
+  static const  downIcon = 'assets/icons/down.svg';
+  static const  upIcon = 'assets/icons/up.svg';
+  static const  detail1Icon = 'assets/icons/detail1.svg';
+  static const  detail2Icon = 'assets/icons/detail2.svg';
+  static const  detail3Icon = 'assets/icons/detail3.svg';
+  static const  detail4Icon = 'assets/icons/detail4.svg';
+
+}
