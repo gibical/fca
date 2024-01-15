@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
@@ -40,125 +42,80 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
     super.dispose();
   }
 
-  bool isAdvancedSearchVisible = false;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
-        Container(
-          height: 1.h,
-          color: Colors.white,
-        ),
-        if (isAdvancedSearchVisible)
-          Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Column(
-                children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 13,
-                      ),
-                      fillColor: AppColor.grayLightColor,
-                      filled: true,
-                      hintText: 'Search in all media',
-                      hintStyle: FontStyleApp.bodyMedium.copyWith(
-                          color: AppColor.primaryDarkColor.withOpacity(0.2)
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7.sp),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 1.h),
-                  TextField(
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 13,
-                      ),
-                      fillColor: AppColor.grayLightColor,
-                      filled: true,
-                      hintText: 'Search in all media',
-                      hintStyle: FontStyleApp.bodyMedium.copyWith(
-                          color: AppColor.primaryDarkColor.withOpacity(0.2)
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7.sp),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        Container(
-          height: 1,
-          color: Colors.black.withOpacity(0.1),
-        ),
-        Container(
-          color: Colors.white,
-          height: 60,
-          child: TabBar(
-            physics: const BouncingScrollPhysics(),
-            isScrollable: true,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
             controller: _tabController,
-            labelPadding: const EdgeInsets.symmetric(horizontal: 20.0),
-            overlayColor: MaterialStateProperty.all(Colors.transparent),
-            enableFeedback: false,
-            indicatorWeight: 2,
-            indicatorSize: TabBarIndicatorSize.tab,
-            indicatorColor: AppColor.primaryLightColor,
-            unselectedLabelColor: Colors.grey,
-            labelColor: AppColor.primaryLightColor,
-            dividerColor: Colors.transparent,
-            tabs: [
-              _buildTab(context, 'Image', AppIcon.imageIcon, 0),
-              _buildTab(context, 'Video', AppIcon.videoIcon, 1),
-              _buildTab(context, 'Sound', AppIcon.soundIcon, 2),
-              _buildTab(context, 'Text', AppIcon.textIcon, 3),
+            children: [
+              ImageTabScreen(),
+              VideoTabScreen(),
+              SoundTabScreen(
+                  introBoxWidget: SvgPicture.asset(AppIcon.musicIcon)),
+              TextTabScreen(
+                introBoxWidget: Text(
+                  'Be',
+                  style: TextStyle(
+                      color: AppColor.whiteColor,
+                      fontSize: 30.sp,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
             ],
           ),
         ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: TabBarView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: _tabController,
-              children: [
-                ImageTabScreen(),
-                VideoTabScreen(),
-                SoundTabScreen(
-                    introBoxWidget: SvgPicture.asset(AppIcon.musicIcon)),
-                TextTabScreen(
-                  introBoxWidget: Text(
-                    'Be',
-                    style: TextStyle(
-                        color: AppColor.whiteColor,
-                        fontSize: 30.sp,
-                        fontWeight: FontWeight.bold),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25  , vertical: 10),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(11.sp),
+            child: ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaY: 10 , sigmaX: 10),
+
+                child: Container(
+                  height: 60,
+                  color: Colors.white.withOpacity(0.7),
+
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TabBar(
+
+                      physics: const BouncingScrollPhysics(),
+                      controller: _tabController,
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                      enableFeedback: false,
+                      indicatorWeight: 2,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      indicatorColor: AppColor.primaryLightColor,
+                      unselectedLabelColor: Colors.grey,
+                      labelColor: AppColor.primaryLightColor,
+                      dividerColor: Colors.transparent,
+                      tabs: [
+                        _buildTab(context, AppIcon.imageIcon, 0),
+                        _buildTab(context, AppIcon.videoIcon, 1),
+                        _buildTab(context, AppIcon.soundIcon, 2),
+                        _buildTab(context, AppIcon.textIcon, 3),
+                      ],
+                    ),
                   ),
                 ),
-              ],
+              ),
             ),
           ),
-        )
+        ),
+
       ],
     );
   }
 
   Widget _buildTab(
-      BuildContext context, String label, String icon, int tabIndex) {
+      BuildContext context, String icon, int tabIndex) {
     return Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -169,17 +126,7 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
               color: tabIndex == _selectedTabIndex
                   ? AppColor.primaryLightColor
                   : AppColor.primaryDarkColor.withOpacity(0.2)),
-          SizedBox(
-            width: 1.8.w,
-          ),
-          if (tabIndex == _selectedTabIndex)
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 11.5.sp,
-                color: AppColor.primaryLightColor,
-              ),
-            ),
+
         ],
       ),
     );
