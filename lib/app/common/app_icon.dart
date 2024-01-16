@@ -16,5 +16,7 @@ class AppIcon{
   static const  detail2Icon = 'assets/icons/detail2.svg';
   static const  detail3Icon = 'assets/icons/detail3.svg';
   static const  detail4Icon = 'assets/icons/detail4.svg';
+  static const  channelIcon = 'assets/icons/channel.svg';
+  static const  walletIcon = 'assets/icons/wallet.svg';
 
 }

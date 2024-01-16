@@ -4,7 +4,9 @@ import 'package:mediaverse/app/common/font_style.dart';
 import '../../../common/app_color.dart';
 
 
-Widget CodeOTPWidget(){
+Widget CodeOTPWidget(context){
+
+  final textTheme = Theme.of(context).textTheme;
   return SizedBox(
     height: 53,
     child: Padding(
@@ -14,8 +16,8 @@ Widget CodeOTPWidget(){
         children: [
           Padding(
             padding: const EdgeInsets.only(right: 25 , left: 10),
-            child: Text('Code' , style: FontStyleApp.bodyMedium.copyWith(
-                color: AppColor.primaryDarkColor.withOpacity(0.2)
+            child: Text('Code' , style: textTheme.bodyMedium?.copyWith(
+              color: Color(0xff4E4E61).withOpacity(0.5)
             )
             ),
           ),
@@ -25,7 +27,7 @@ Widget CodeOTPWidget(){
             child: Container(
               height: 28,
               width: 1.5,
-              color: AppColor.primaryDarkColor.withOpacity(0.2),
+              color:Color(0xff4E4E61).withOpacity(0.5)
             ),
           )
         ],

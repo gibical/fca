@@ -11,11 +11,11 @@ import 'lang/fa_IR.dart';
 
 class LocalizationService extends Translations {
   //static final locale = Locale('en', 'US');
-  static final fallBackLocale = Locale('en', 'US');
+  static const fallBackLocale = Locale('en', 'US');
   // static final fallBackLocale = Locale('fa', 'IR');
 
   static final langs = ['English', 'Farsi'];
-  static final locales = [Locale('en', 'US'), Locale('fa', 'IR')];
+  static final locales = [const Locale('en', 'US'), const Locale('fa', 'IR')];
 
   @override
   Map<String, Map<String, String>> get keys => {'en_US': enUS, 'fa_IR': faIR};
@@ -51,6 +51,6 @@ class LocalizationService extends Translations {
   String getCurrentLang() {
     final box = GetStorage();
 
-    return box.read('lng') != null ? box.read('lng') : 'Farsi';
+    return box.read('lng') ?? 'Farsi';
   }
 }

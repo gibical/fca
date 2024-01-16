@@ -5,11 +5,11 @@ import 'package:sizer/sizer.dart';
 import '../../../common/app_color.dart';
 
 
-Widget CustomRegisterButtonWidget({required String title  , required Function() onTap}){
+Widget CustomRegisterButtonWidget({required String title  , required Function() onTap , color}){
   return  Padding(
     padding: const EdgeInsets.only(left: 25 , right: 25),
     child: SizedBox(
-      height: 54,
+      height: 52,
       width: double.infinity,
       child: ElevatedButton(
         onPressed: onTap,
@@ -22,9 +22,9 @@ Widget CustomRegisterButtonWidget({required String title  , required Function() 
         ),
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(9.sp)
+                borderRadius: BorderRadius.circular(20.sp)
             ),
-            backgroundColor: AppColor.primaryLightColor
+            backgroundColor: color != null ? color : Color(0xff4E4E61).withOpacity(0.5)
 
         ),
       ),

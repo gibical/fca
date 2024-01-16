@@ -11,10 +11,11 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: CustomAppBarWidget(),
-      backgroundColor: theme.primaryColor,
+      appBar: CustomAppBarWidget(context),
+      backgroundColor: theme.primary,
       bottomNavigationBar: BuyCardWidget(),
     );
   }
@@ -76,7 +77,7 @@ Widget BuyCardWidget(){
                     AppTheme.changeTheme(ThemeMode.light);
                   }
                 },
-                child: Text('buy' , style: TextStyle(
+                child: Text('Buy' , style: TextStyle(
                   color: AppColor.whiteColor,
                   fontSize: 17,
                   fontWeight: FontWeight.w500

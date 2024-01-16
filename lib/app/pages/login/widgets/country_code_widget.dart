@@ -8,7 +8,10 @@ import 'package:sizer/sizer.dart';
 import '../../../common/app_color.dart';
 
 
-Widget CountryCodeWidget(){
+Widget CountryCodeWidget(context){
+
+
+  final textTheme = Theme.of(context).textTheme;
   return Stack(
     alignment: Alignment.center,
     children: [
@@ -16,8 +19,8 @@ Widget CountryCodeWidget(){
              flagWidth: 25,
         onChanged: print,
         initialSelection: 'FR',
-        textStyle: FontStyleApp.bodyMedium.copyWith(
-          color: AppColor.whiteColor
+        textStyle: textTheme.bodyMedium!.copyWith(
+          color: Colors.white,
         ),
 
         dialogBackgroundColor: Colors.pink,
@@ -34,11 +37,11 @@ Widget CountryCodeWidget(){
       ),
       Positioned(
 
-        right: 10,
+        right: 8,
         child: Container(
           height: 28,
           width: 1.5,
-          color: AppColor.primaryDarkColor.withOpacity(0.2),
+          color: AppColor.whiteColor.withOpacity(0.2),
         ),
       )
     ],

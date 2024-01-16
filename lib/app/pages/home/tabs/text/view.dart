@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mediaverse/app/common/font_style.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../common/app_color.dart';
@@ -10,20 +11,21 @@ class TextTabScreen extends StatelessWidget {
  final Widget introBoxWidget;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return   Scaffold(
-        backgroundColor: AppColor.grayLightColor,
+        backgroundColor: theme.background,
         body: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child:  CustomScrollView(
             slivers: [
-              SliverPadding(padding: EdgeInsets.only(top: 3.h)),
-              const SliverToBoxAdapter(
+              SliverPadding(padding: EdgeInsets.only(top: 11.h)),
+               SliverToBoxAdapter(
                 child:      Text(
                   'Latest',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 21.5,
-                      fontWeight: FontWeight.w600),
+                  style: FontStyleApp.titleLarge.copyWith(
+                    color: AppColor.whiteColor
+                  )
                 ),
               ),
               SliverPadding(padding: EdgeInsets.only(top: 1.5.h)),
@@ -92,7 +94,7 @@ class TextTabScreen extends StatelessWidget {
                     );
                   }),
 
-              SliverPadding(padding: EdgeInsets.only(top: 9.h)),
+              SliverPadding(padding: EdgeInsets.only(top: 12.h)),
             ],
           ),
         )

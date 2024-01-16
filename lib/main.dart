@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
       locale: LocalizationService().getCurrentLocale(),
       fallbackLocale:LocalizationService.fallBackLocale,
       themeMode: AppTheme().getCurrentTheme(),
-      theme: AppTheme.lightTheme,
-      darkTheme:  AppTheme.darkTheme,
+      theme: AppTheme.darkMode,
+      darkTheme:  AppTheme.darkMode,
 
     );
   }

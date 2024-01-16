@@ -11,10 +11,11 @@ class HomeScreen extends GetView< WrapperController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBarWidget(),
-      backgroundColor: AppColor.grayLightColor,
-      body: const CustomTabBarWidget(),
+    return  Scaffold(
+        backgroundColor:  Theme.of(context).colorScheme.background,
+        appBar: CustomAppBarWidget(context),
+        body: const CustomTabBarWidget(),
+
     );
   }
 }

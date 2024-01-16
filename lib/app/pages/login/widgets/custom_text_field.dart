@@ -9,7 +9,8 @@ import '../../../common/app_color.dart';
 import 'country_code_widget.dart';
 
 
-Widget CustomTextFieldLogin({required Widget prefix ,required String hintText} ){
+Widget CustomTextFieldLogin({required Widget prefix ,required String hintText , required context} ){
+  final textTheme = Theme.of(context).textTheme;
   return  Padding(
     padding: const EdgeInsets.only(left: 25 , right: 25),
     child: TextFormField(
@@ -18,16 +19,16 @@ Widget CustomTextFieldLogin({required Widget prefix ,required String hintText} )
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.digitsOnly
       ], //
-      style: TextStyle(
-          color: AppColor.primaryDarkColor
+      style: textTheme.bodyLarge?.copyWith(
+        color: AppColor.whiteColor
       ),
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle:  TextStyle(
-            color: AppColor.primaryDarkColor.withOpacity(0.2)
+            color: AppColor.whiteColor.withOpacity(0.2),
         ),
         contentPadding: EdgeInsets.only(top: 8),
-        fillColor: AppColor.whiteColor,
+        fillColor: Color(0xff0E0E12).withOpacity(0.5),
         filled: true,
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(9.sp),

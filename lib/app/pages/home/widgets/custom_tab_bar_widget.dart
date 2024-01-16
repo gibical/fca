@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/font_style.dart';
+import 'package:mediaverse/app/pages/home/tabs/all/view.dart';
 import 'package:mediaverse/app/pages/home/tabs/image/view.dart';
 import 'package:mediaverse/app/pages/home/tabs/text/view.dart';
 import 'package:mediaverse/app/pages/home/tabs/video/view.dart';
@@ -28,7 +29,7 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 5, vsync: this, initialIndex: 0);
     _tabController.addListener(() {
       setState(() {
         _selectedTabIndex = _tabController.index;
@@ -45,32 +46,33 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Stack(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
-          child: TabBarView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: _tabController,
-            children: [
-              ImageTabScreen(),
-              VideoTabScreen(),
-              SoundTabScreen(
-                  introBoxWidget: SvgPicture.asset(AppIcon.musicIcon)),
-              TextTabScreen(
-                introBoxWidget: Text(
-                  'Be',
-                  style: TextStyle(
-                      color: AppColor.whiteColor,
-                      fontSize: 30.sp,
-                      fontWeight: FontWeight.bold),
-                ),
+
+        TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _tabController,
+          children: [
+            AllTabScreen(),
+            ImageTabScreen(),
+            VideoTabScreen(),
+            SoundTabScreen(
+                introBoxWidget: SvgPicture.asset(AppIcon.musicIcon)),
+            TextTabScreen(
+              introBoxWidget: Text(
+                'Be',
+                style: TextStyle(
+                    color: AppColor.whiteColor,
+                    fontSize: 30.sp,
+                    fontWeight: FontWeight.bold),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25  , vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 25  , vertical: 15),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(11.sp),
             child: ClipRect(
@@ -79,7 +81,7 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
 
                 child: Container(
                   height: 60,
-                  color: Colors.white.withOpacity(0.7),
+                  color: theme.secondary,
 
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -87,20 +89,22 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
 
                       physics: const BouncingScrollPhysics(),
                       controller: _tabController,
-                      labelPadding: const EdgeInsets.symmetric(horizontal: 20.0),
                       overlayColor: MaterialStateProperty.all(Colors.transparent),
                       enableFeedback: false,
                       indicatorWeight: 2,
                       indicatorSize: TabBarIndicatorSize.tab,
                       indicatorColor: AppColor.primaryLightColor,
-                      unselectedLabelColor: Colors.grey,
+                      unselectedLabelColor: Color(0xff666680),
                       labelColor: AppColor.primaryLightColor,
                       dividerColor: Colors.transparent,
                       tabs: [
-                        _buildTab(context, AppIcon.imageIcon, 0),
-                        _buildTab(context, AppIcon.videoIcon, 1),
-                        _buildTab(context, AppIcon.soundIcon, 2),
-                        _buildTab(context, AppIcon.textIcon, 3),
+                        _buildTab(context, AppIcon.imageIcon, 0 , true),
+                        _buildTab(context, AppIcon.imageIcon, 1 , false),
+                        _buildTab(context, AppIcon.videoIcon, 2 , false),
+                        _buildTab(context, AppIcon.soundIcon, 3 , false),
+                        _buildTab(context, AppIcon.textIcon, 4 , false),
+
+
                       ],
                     ),
                   ),
@@ -115,17 +119,17 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
   }
 
   Widget _buildTab(
-      BuildContext context, String icon, int tabIndex) {
+      BuildContext context, String icon, int tabIndex , bool isLabel) {
     return Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(
+       isLabel ? Text('All'):   SvgPicture.asset(
               height: 2.h,
               icon,
               color: tabIndex == _selectedTabIndex
                   ? AppColor.primaryLightColor
-                  : AppColor.primaryDarkColor.withOpacity(0.2)),
+                  : Color(0xff666680),),
 
         ],
       ),

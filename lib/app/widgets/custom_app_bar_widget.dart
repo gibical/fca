@@ -4,38 +4,46 @@ import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/app_route.dart';
+import 'package:mediaverse/app/common/font_style.dart';
 import 'package:mediaverse/app/pages/search/view.dart';
+import 'package:sizer/sizer.dart';
 
-PreferredSizeWidget CustomAppBarWidget() {
+PreferredSizeWidget CustomAppBarWidget(context) {
+  final theme = Theme.of(context).colorScheme;
+  final textTheme = Theme.of(context).textTheme;
   return AppBar(
-      backgroundColor: Colors.white,
-      toolbarHeight: 80,
-      title: Row(
-        children: [
-          const CircleAvatar(),
-          const SizedBox(
-            width: 7,
-          ),
-          const Text('Ma.Nakhli' , style: TextStyle(
-            fontSize: 19
-          ),),
-
-          const Spacer(),
-          GestureDetector(
-            onTap: (){
-              Get.toNamed(PageRoutes.SEARCH);
-            },
-            child: Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                  color: AppColor.grayLightColor,
-                  borderRadius: BorderRadius.circular(10)),
-              child: Center(
-                child: SvgPicture.asset(AppIcon.searchIcon)
+      backgroundColor:  theme.secondary,
+      toolbarHeight: 85,
+      title: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25 ,),
+        child: GestureDetector(
+          onTap: () {
+            Get.toNamed(PageRoutes.SEARCH);
+          },
+          child: Container(
+            height: 6.h,
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Search' ,style: FontStyleApp.bodyLarge.copyWith(
+                    color: Color(0xff666680)
+                  ),),
+                  SvgPicture.asset(AppIcon.searchIcon , color: Color(0xff666680),)
+                ],
               ),
             ),
-          )
-        ],
-      ));
+            decoration: BoxDecoration(
+                color: Color(0xff0E0E12).withOpacity(0.5),
+              borderRadius: BorderRadius.circular(15)
+            ),
+          ),
+        ),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50.sp) , bottomRight: Radius.circular(50.sp))
+      ),
+    );
 }

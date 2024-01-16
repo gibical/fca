@@ -14,58 +14,75 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: AppColor.primaryDarkColor,
       body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 16.h,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 10.h,
+            ),
+            LogoAppWidget(),
+        
+            SizedBox(
+              height: 4.5.h,
+            ),
+            Text('Insert your data for beter service'),
+            SizedBox(
+              height: 5.h,
+            ),
+            CustomTextFieldRegisterWidget(
+                context: context,
+                titleText: 'Full Name',
+                hintText: 'Insert your full name',
+                needful: true),
+            CustomTextFieldRegisterWidget(
+                context: context,
+                titleText: 'Email',
+                hintText: 'Insert your email',
+                needful: true),
+            CustomTextFieldRegisterWidget(
+                context: context,
+                titleText: 'Password',
+                hintText: 'Insert your password',
+                needful: true),
+            CustomTextFieldRegisterWidget(
+                context: context,
+                titleText: 'Repeat Password',
+                hintText: 'Repeat your password',
+                needful: true),
+            CustomTextFieldRegisterWidget(
+                context: context,
+                titleText: 'City',
+                hintText: 'Insert your city',
+                needful: false),
+            CustomTextFieldRegisterWidget(
+                context: context,
+                titleText: 'Adress',
+                hintText: 'Insert your adress',
+                needful: false),
+            SizedBox(height: 1.5.h,),
+            GestureDetector(
+              onTap: (){},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Have an account?' , style: textTheme.bodySmall,),
+                  SizedBox(width: 1.w,),
+                  Text('Log in' , style: textTheme.bodySmall!.copyWith(
+                      color: AppColor.primaryLightColor
+                  ),)
+                ],
               ),
-              LogoAppWidget(),
+            ),
+            SizedBox(height: 1.5.h,),
 
-              SizedBox(
-                height: 4.5.h,
-              ),
-              Text('Insert your data for beter service'),
-              SizedBox(
-                height: 5.h,
-              ),
-              CustomTextFieldRegisterWidget(
-                  titleText: 'Full Name',
-                  hintText: 'Insert your full name',
-                  needful: true),
-              CustomTextFieldRegisterWidget(
-                  titleText: 'Email',
-                  hintText: 'Insert your email',
-                  needful: true),
-              CustomTextFieldRegisterWidget(
-                  titleText: 'Password',
-                  hintText: 'Insert your password',
-                  needful: true),
-              CustomTextFieldRegisterWidget(
-                  titleText: 'Repeat Password',
-                  hintText: 'Repeat your password',
-                  needful: true),
-              CustomTextFieldRegisterWidget(
-                  titleText: 'City',
-                  hintText: 'Insert your city',
-                  needful: false),
-              CustomTextFieldRegisterWidget(
-                  titleText: 'Adress',
-                  hintText: 'Insert your adress',
-                  needful: false),
-              SizedBox(height: 2.h,),
+            CustomRegisterButtonWidget(title: 'Save', onTap: (){} ,color: AppColor.primaryLightColor),
 
-              CustomRegisterButtonWidget(title: 'Save', onTap: (){}),
-              SizedBox(height: 3.5.h,),
-              Text('Skip' , style: FontStyleApp.bodyMedium.copyWith(
-                color: AppColor.whiteColor
-              )),
-              SizedBox(height: 8.5.h,),
-            ],
-          ),
+            SizedBox(height: 3.5.h,),
+
+          ],
         ),
       ),
     );

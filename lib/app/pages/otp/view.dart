@@ -14,58 +14,52 @@ class OTPScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: AppColor.primaryDarkColor,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 16.h,
-            ),
-            LogoAppWidget(),
-            SizedBox(
-              height: 10.h,
-            ),
-            Text('We send the code to +33700555123'),
-            SizedBox(
-              height: 3.h,
-            ),
-            CustomTextFieldLogin(prefix: CodeOTPWidget(), hintText: 'Insert your OTP code'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 10.h,
+          ),
+          LogoAppWidget(),
+          SizedBox(
+            height: 7.h,
+          ),
+          Text('We send the code to +33700555123'),
+          SizedBox(
+            height: 3.h,
+          ),
+          CustomTextFieldLogin(prefix: CodeOTPWidget(context), hintText: 'Insert your OTP code' , context: context),
 
 
-            SizedBox(
-              height: 1.8.h,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 28 , left: 28),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Send again' ,
-                    style: FontStyleApp.bodyLarge.copyWith(
-                      color: AppColor.primaryLightColor,
-                      decoration: TextDecoration.underline,
+          SizedBox(
+            height: 1.8.h,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 28 , left: 28),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Send again' ,
+                    style: textTheme.bodyMedium?.copyWith(
+                        color: AppColor.primaryLightColor
                     )
-                  ),
-                  Text('Wrong number?' ,
-                    style: FontStyleApp.bodyLarge.copyWith(
-                      color: AppColor.whiteColor,
-                      decoration: TextDecoration.underline,
-                    )
-                  )
-                ],
-              ),
+                ),
+                Text('Wrong number?' ,
+                    style: textTheme.bodyMedium
+                )
+              ],
             ),
-            SizedBox(
-              height: 8.h,
-            ),
-            CustomRegisterButtonWidget(onTap: (){}, title: 'Log in'),
-           SizedBox(
-              height: 5.h,
-            ),
-          ],
-        ),
+          ),
+           Spacer(),
+          CustomRegisterButtonWidget(onTap: (){}, title: 'Log in'),
+          SizedBox(
+            height: 2.5.h,
+          ),
+        ],
       ),
     );
   }

@@ -9,7 +9,7 @@ class SplashLogic extends GetxController {
 
   void hideSplashAndNavigateToNextScreen() {
     showSplash.value = false;
-    Get.offAndToNamed(PageRoutes.DETAIL);
+    Get.offAndToNamed(PageRoutes.WRAPPER);
   }
 
   @override

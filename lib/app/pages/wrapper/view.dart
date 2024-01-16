@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -27,9 +29,23 @@ class MainWrapperScreen extends GetView<WrapperController> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
+      
       backgroundColor: Theme.of(context).colorScheme.background,
       bottomNavigationBar:  BottomNavWidget() ,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        elevation: 5,
 
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50)
+        ),
+        splashColor: Colors.transparent,
+        backgroundColor: AppColor.primaryLightColor,
+        onPressed: (){
+
+        },
+        child: Icon(Icons.add , color: Theme.of(context).colorScheme.onBackground,),
+      ),
       body:
       PageView(
         physics: const NeverScrollableScrollPhysics(),
@@ -73,60 +89,52 @@ class MainWrapperScreen extends GetView<WrapperController> {
 
 
 class BottomNavWidget extends GetView<WrapperController> {
-
-
   @override
   Widget build(BuildContext context) {
-
-    final theme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
     return GetX<WrapperController>(
-      builder: (builderController) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          ItemBottomNavBar(
-              color: AppColor.whiteColor,
-              iconActiveColor: AppColor.whiteColor,
-              iconColor: AppColor.primaryDarkColor.withOpacity(0.2),
-              activeColor: AppColor.primaryDarkColor,
-              icon: AppIcon.exploreIcon,
-              indexItem: 0
-          ),
-          ItemBottomNavBar(
-              color: AppColor.whiteColor,
-              iconActiveColor: AppColor.whiteColor,
-              iconColor: AppColor.primaryDarkColor.withOpacity(0.2),
-              activeColor: AppColor.primaryDarkColor,
-              icon: AppIcon.addIcon,
-              indexItem: 1
-          ),
-          ItemBottomNavBar(
-              color: AppColor.whiteColor,
-              iconActiveColor: AppColor.whiteColor,
-              iconColor: AppColor.primaryDarkColor.withOpacity(0.2),
-              activeColor: AppColor.primaryDarkColor,
-              icon: AppIcon.profileIcon,
-              indexItem: 2
-          ),
-          ItemBottomNavBar(
-              color: AppColor.whiteColor,
-              iconActiveColor: AppColor.whiteColor,
-              iconColor: AppColor.primaryDarkColor.withOpacity(0.2),
-              activeColor: AppColor.primaryDarkColor,
-              icon: AppIcon.profileIcon,
-              indexItem: 3
-          ),
-          // IconButton(
-          //   onPressed: () {
-          //     builderController.navigatePages(0);
-          //   },
-          //   icon: Icon(Icons.verified_user , color: builderController.selectedIndex.value==0 ? theme.primary : theme.surface,),
-          //   splashColor: Colors.transparent,
-          //   highlightColor: Colors.transparent,
-          // ),
+      builder: (builderController) => ClipRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaY: 10 , sigmaX: 10),
+          child: BottomAppBar(
+            height: 10.h,
+            color: Colors.white.withOpacity(0.2),
+            shape: const CircularNotchedRectangle(), //shape of notch
+            notchMargin: 8,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ItemBottomNavBar(
+                      iconActiveColor: AppColor.whiteColor,
+                      iconColor: AppColor.primaryDarkColor.withOpacity(0.2),
+                      icon: AppIcon.exploreIcon,
+                      indexItem: 0
+                  ),
+                  ItemBottomNavBar(
+                      iconActiveColor: AppColor.whiteColor,
+                      iconColor: AppColor.primaryDarkColor.withOpacity(0.2),
+                      icon: AppIcon.channelIcon,
+                      indexItem: 1
+                  ),
+                  ItemBottomNavBar(
+                      iconActiveColor: AppColor.whiteColor,
+                      iconColor: AppColor.primaryDarkColor.withOpacity(0.2),
+                      icon: AppIcon.profileIcon,
+                      indexItem: 2
+                  ),
+                  ItemBottomNavBar(
+                      iconActiveColor: AppColor.whiteColor,
+                      iconColor: AppColor.primaryDarkColor.withOpacity(0.2),
+                      icon: AppIcon.profileIcon,
+                      indexItem: 3
+                  ),
 
-
-        ],
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -134,8 +142,7 @@ class BottomNavWidget extends GetView<WrapperController> {
 
 
 Widget ItemBottomNavBar({
-  required Color color ,
-  required Color activeColor,
+
   required Color iconColor ,
   required Color iconActiveColor,
   required String icon,
@@ -149,10 +156,10 @@ Widget ItemBottomNavBar({
           builderController.navigatePages(indexItem);
         },
         child: Container(
-        height: 8.5.h,
-        color: builderController.selectedIndex.value== indexItem ? activeColor : color,
-        child: Center(child: SvgPicture.asset(icon , color: builderController.selectedIndex.value== indexItem ? iconActiveColor : iconColor,)),
-          ),
+          height: 8.5.h,
+
+          child: Center(child: SvgPicture.asset(icon , color: builderController.selectedIndex.value== indexItem ? iconActiveColor : iconColor, height: 25,)),
+        ),
       )
   );
 }
