@@ -43,6 +43,8 @@ dependencies:
   flutter_spinkit: ^5.2.0
   flutter_staggered_grid_view: ^0.7.0
   country_code_picker: ^3.0.0
+  lottie: ^3.0.0
+  http: ^1.2.0
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +72,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/json/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

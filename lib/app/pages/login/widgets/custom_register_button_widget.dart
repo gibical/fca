@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mediaverse/app/common/font_style.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
 
 
-Widget CustomRegisterButtonWidget({required String title  , required Function() onTap , color}){
+Widget CustomRegisterButtonWidget({required String title  , required Function() onTap , color,required bool isloading}){
   return  Padding(
     padding: const EdgeInsets.only(left: 25 , right: 25),
     child: SizedBox(
@@ -13,7 +14,7 @@ Widget CustomRegisterButtonWidget({required String title  , required Function() 
       width: double.infinity,
       child: ElevatedButton(
         onPressed: onTap,
-        child: Text(
+        child:isloading?Lottie.asset("assets/json/Y8IBRQ38bK.json"): Text(
           title,
           style: FontStyleApp.bodyLarge.copyWith(
             color: AppColor.whiteColor,

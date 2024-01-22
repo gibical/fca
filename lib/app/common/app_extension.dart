@@ -42,3 +42,21 @@ extension Loc on GetInterface {
     return Get.locale!.languageCode.toString().contains("en");
   }
 }
+extension EmailValidator on String {
+  bool get isEmail {
+    final RegExp emailRegExp = RegExp(
+      r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+',
+      caseSensitive: false,
+      multiLine: false,
+    );
+    return emailRegExp.hasMatch(this);
+  }
+}
+
+
+
+
+
+
+
+

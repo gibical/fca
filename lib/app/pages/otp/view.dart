@@ -32,7 +32,7 @@ class OTPScreen extends StatelessWidget {
           SizedBox(
             height: 3.h,
           ),
-          CustomTextFieldLogin(prefix: CodeOTPWidget(context), hintText: 'Insert your OTP code' , context: context),
+          CustomTextFieldLogin(prefix: CodeOTPWidget(context), hintText: 'Insert your OTP code' , context: context,editingController: TextEditingController(),),
 
 
           SizedBox(
@@ -55,7 +55,7 @@ class OTPScreen extends StatelessWidget {
             ),
           ),
            Spacer(),
-          CustomRegisterButtonWidget(onTap: (){}, title: 'Log in'),
+          CustomRegisterButtonWidget(onTap: (){}, title: 'Log in', isloading: false),
           SizedBox(
             height: 2.5.h,
           ),

@@ -55,9 +55,10 @@ class ApiRequster {
   final encoding = Encoding.getByName('utf-8');
 
   static final staticHeaders = {
-    'Accept': 'application/json',
+    'accept': 'application/json',
     'Content-Type': 'application/json',
-    'User-Agent': 'MobileApp',
+    'X-App': '_Android',
+    'Accept-Language': 'en-US',
   };
 
   void request(String endPointUrl, int reqMode, int reqCode,

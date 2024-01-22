@@ -78,7 +78,7 @@ class SignupScreen extends StatelessWidget {
             ),
             SizedBox(height: 1.5.h,),
 
-            CustomRegisterButtonWidget(title: 'Save', onTap: (){} ,color: AppColor.primaryLightColor),
+            CustomRegisterButtonWidget(title: 'Save', onTap: (){} ,color: AppColor.primaryLightColor, isloading: false),
 
             SizedBox(height: 3.5.h,),
 

@@ -15,25 +15,27 @@ Widget CountryCodeWidget(context){
   return Stack(
     alignment: Alignment.center,
     children: [
-      CountryCodePicker(
-             flagWidth: 25,
-        onChanged: print,
-        initialSelection: 'FR',
-        textStyle: textTheme.bodyMedium!.copyWith(
-          color: Colors.white,
+      IgnorePointer(
+        child: CountryCodePicker(
+               flagWidth: 25,
+          onChanged: print,
+          initialSelection: 'FR',
+          textStyle: textTheme.bodyMedium!.copyWith(
+            color: Colors.white,
+          ),
+        
+          dialogBackgroundColor: Colors.pink,
+          barrierColor: Colors.transparent,
+          dialogSize: Size(500, 500),
+          boxDecoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(15.sp)
+          ),
+          showCountryOnly: false,
+          showOnlyCountryWhenClosed: false,
+          // optional. aligns the flag and the Text left
+          alignLeft: false,
         ),
-
-        dialogBackgroundColor: Colors.pink,
-        barrierColor: Colors.transparent,
-        dialogSize: Size(500, 500),
-        boxDecoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(15.sp)
-        ),
-        showCountryOnly: false,
-        showOnlyCountryWhenClosed: false,
-        // optional. aligns the flag and the Text left
-        alignLeft: false,
       ),
       Positioned(
 

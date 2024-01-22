@@ -3,25 +3,27 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
 import 'country_code_widget.dart';
 
 
-Widget CustomTextFieldLogin({required Widget prefix ,required String hintText , required context} ){
+Widget CustomTextFieldLogin({required Widget prefix ,required String hintText , required context,required TextEditingController editingController} ){
   final textTheme = Theme.of(context).textTheme;
   return  Padding(
     padding: const EdgeInsets.only(left: 25 , right: 25),
     child: TextFormField(
       showCursor: false,
-      keyboardType: TextInputType.number,
-      inputFormatters: <TextInputFormatter>[
-        FilteringTextInputFormatter.digitsOnly
-      ], //
+      controller: editingController,
+       //
       style: textTheme.bodyLarge?.copyWith(
         color: AppColor.whiteColor
       ),
+      onChanged: (s){
+        print('CustomTextFieldLogin = ${s.isEmail}');
+      },
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle:  TextStyle(
