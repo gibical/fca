@@ -13,26 +13,8 @@ Widget LogoAppWidget(){
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      SvgPicture.asset(AppImage.logo),
-      SizedBox(
-        height: 1.h,
-      ),
-      Text(
-        'MediaVers',
-        style: TextStyle(
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
-          fontSize: 25,
-        ),
-      ),
-      Text(
-        'content is wealth',
-        style: TextStyle(
-          color: AppColor.primaryLightColor,
-          fontSize: 14,
-        ),
-      ),
-
+      Image.asset("assets/images/mediamainlogo.png",
+      height: 10.h,)
     ],
   );
 }
