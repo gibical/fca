@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:mediaverse/app/pages/detail/view.dart';
 import 'package:mediaverse/app/pages/home/state.dart';
 import 'package:mediaverse/app/pages/home/view.dart';
+import 'package:mediaverse/app/pages/intro/view.dart';
 import 'package:mediaverse/app/pages/login/view.dart';
 import 'package:mediaverse/app/pages/otp/view.dart';
 import 'package:mediaverse/app/pages/search/state.dart';
@@ -23,6 +24,7 @@ class PageRoutes {
   static const WRAPPER = '/Wrapper';
   static const SEARCH = '/Search';
   static const DETAIL = '/Detail';
+  static const INTRO = '/Intro';
 
 
   static List<GetPage> routes = [
@@ -76,6 +78,14 @@ class PageRoutes {
       name: PageRoutes.DETAIL,
       transition: Transition.downToUp,
       page: () => DetailScreen(),
+
+
+
+    ),
+    GetPage(
+      name: PageRoutes.INTRO,
+      transition: Transition.downToUp,
+      page: () => IntroPage(),
 
 
 

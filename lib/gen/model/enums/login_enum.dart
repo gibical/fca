@@ -1,3 +1,3 @@
 enum LoginEnum{
-  phone,username
+  phone,username,SMS
 }

@@ -181,6 +181,18 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: 2.h,
             ),
+          InkWell(
+                onTap: () {
+                  logic.loginEnum = LoginEnum.SMS;
+                  logic.update();
+                },
+                child: Text(
+                  "login_20".tr,
+                  style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
+                )),
+            SizedBox(
+              height: 2.h,
+            ),
 
           ],
         );
@@ -258,6 +270,69 @@ class LoginScreen extends StatelessWidget {
                   "login_17".tr,
                   style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
                 )),
+            SizedBox(
+              height: 2.h,
+            ),
+            InkWell(
+                onTap: () {
+                  logic.loginEnum = LoginEnum.SMS;
+                  logic.update();
+                },
+                child: Text(
+                  "login_20".tr,
+                  style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
+                )),
+
+
+          ],
+        );
+
+      case LoginEnum.SMS:
+        // TODO: Handle this case.
+        return Column(
+          key: UniqueKey(),
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('login_1'.tr,
+                style: FontStyleApp.bodyMedium
+                    .copyWith(color: AppColor.whiteColor)),
+            SizedBox(
+              height: 3.h,
+            ),
+            CustomTextFieldLogin(
+                prefix: CountryCodeWidget(context),
+                hintText: 'login_2'.tr,
+                editingController: logic.eTextEditingControllerPhone,
+                context: context),
+
+            SizedBox(
+              height: 3.h,
+            ),
+            InkWell(
+                onTap: () {
+                  logic.loginEnum = LoginEnum.username;
+                  logic.update();
+                },
+                child: Text(
+                  "login_5".tr,
+                  style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
+                )),
+            SizedBox(
+              height: 2.h,
+            ),
+            InkWell(
+                onTap: () {
+                  logic.loginEnum = LoginEnum.phone;
+                  logic.update();
+                },
+                child: Text(
+                  "login_17".tr,
+                  style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
+                )),
+            SizedBox(
+              height: 2.h,
+            ),
+
           ],
         );
 

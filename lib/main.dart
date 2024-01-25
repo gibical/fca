@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'MediaVerse',
       getPages: PageRoutes.routes,
 
-      initialRoute: PageRoutes.LOGIN,
+      initialRoute: PageRoutes.SPLASH,
       translations: LocalizationService(),
       debugShowCheckedModeBanner: false,
       locale: LocalizationService().getCurrentLocale(),

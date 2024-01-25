@@ -20,6 +20,18 @@ const Map<String, String> enUS = {
   "login_17":"Log in with phone",
   "login_18":"Dont have an account?",
   "login_19":"Signup",
+  "login_20":"Login With SMS",
+
+
+
+
+  "intro_1":"By registering, you agree to our ",
+  "intro_2":"Terms of Use.",
+  "intro_3":"Lets start!",
+  "intro_4":"I have an account",
+
+
+
 
 
 

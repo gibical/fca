@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -18,6 +19,29 @@ import '../../common/app_color.dart';
 class LoginController extends GetxController implements RequestInterface {
 
   late ApiRequster apiRequster;
+
+  var timeLeft = 30.obs; // Observable variable
+  Timer? _timer;
+
+
+
+  void startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (_) {
+      if (timeLeft.value == 0) {
+        _timer?.cancel();
+        timeLeft.value = 0;
+        update(); // This is optional since we are using .obs
+      } else {
+        timeLeft.value--;
+      }
+    });
+  }
+
+  @override
+  void onClose() {
+    _timer?.cancel();
+    super.onClose();
+  }
 
 
   var box = GetStorage();
@@ -42,6 +66,7 @@ class LoginController extends GetxController implements RequestInterface {
   TextEditingController  eTextEditingControllerUsername = TextEditingController();
   TextEditingController  eTextEditingControllerEmail = TextEditingController();
   TextEditingController  eTextEditingControllerPassword = TextEditingController();
+  TextEditingController  eTextEditingControllerOTP = TextEditingController();
 
 
   ///bool
@@ -57,8 +82,7 @@ class LoginController extends GetxController implements RequestInterface {
         // TODO: Handle this case.
 
         if(eTextEditingControllerPhone.text.isEmpty||eTextEditingControllerPassword.text.isEmpty){
-          ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("Please fill out the form",
-            style: TextStyle(color: AppColor.primaryDarkColor),)));
+       Constant.showMessege("Please fill out the form");
           isloading(false);
 
           break;
@@ -69,9 +93,9 @@ class LoginController extends GetxController implements RequestInterface {
         break;
       case LoginEnum.username:
         // TODO: Handle this case.
+
         if(eTextEditingControllerUsername.text.isEmpty||eTextEditingControllerPassword.text.isEmpty){
-          ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text("Please fill out the form",
-            style: TextStyle(color: AppColor.primaryDarkColor),)));
+          Constant.showMessege("Please fill out the form");
           isloading(false);
 
           break;
@@ -79,6 +103,16 @@ class LoginController extends GetxController implements RequestInterface {
         _getUseranmeReuqest();
         break;
 
+      case LoginEnum.SMS:
+        if(eTextEditingControllerPhone.text.isEmpty){
+          Constant.showMessege("Please fill out the form");
+          isloading(false);
+
+          break;
+        }
+        _getOTPReuqest();
+
+    // TODO: Handle this case.
     }
   }
 
@@ -141,6 +175,19 @@ class LoginController extends GetxController implements RequestInterface {
 
   void peaseJsonFromGetPhoneOTP(source) {
 
+    try {
+      timeLeft = (jsonDecode(source)['expires_after'] as int).obs;
+      startTimer();
+    }  catch (e) {
+      // TODO
+      print('LoginController.peaseJsonFromGetPhoneOTP = ${e}');
+    }
+
+    update();
+
+    if (!Get.currentRoute.contains(PageRoutes.OTP)) {
+      Get.toNamed(PageRoutes.OTP,arguments: [this]);
+    }
   }
 
   void praseJsonFromGetLogin(source) {
@@ -150,6 +197,21 @@ class LoginController extends GetxController implements RequestInterface {
     FromJsonGetLogin getLogin = FromJsonGetLogin.fromJson(jsonDecode(source));
     box.write("token", getLogin.token??"");
     Get.offAllNamed(PageRoutes.HOME);
+  }
+
+  void _getOTPReuqest() {
+    var body = {
+      "cellphone":eTextEditingControllerPhone.text,
+    };
+    apiRequster.request("auth/otp/request", ApiRequster.MHETOD_POST, 2,body: body);
+  }
+  void getOTPSumbit() {
+    isloading(true);
+    var body = {
+      "cellphone":eTextEditingControllerPhone.text,
+      "otp":eTextEditingControllerOTP.text,
+    };
+    apiRequster.request("auth/otp/submit", ApiRequster.MHETOD_POST, 1,body: body);
   }
 
 

@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 900));
+        vsync: this, duration: const Duration(milliseconds: 3000));
     _animation = Tween(
       begin: 0.0,
       end: 1.0,
