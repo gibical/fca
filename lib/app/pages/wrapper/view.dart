@@ -29,23 +29,26 @@ class MainWrapperScreen extends GetView<WrapperController> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      
+
       backgroundColor: Theme.of(context).colorScheme.background,
-      bottomNavigationBar:  BottomNavWidget() ,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        elevation: 5,
-
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50)
-        ),
-        splashColor: Colors.transparent,
-        backgroundColor: AppColor.primaryLightColor,
-        onPressed: (){
-
-        },
-        child: Icon(Icons.add , color: Theme.of(context).colorScheme.onBackground,),
-      ),
+      bottomNavigationBar:  Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: BottomNavWidget(),
+      ) ,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   elevation: 5,
+      //
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(50)
+      //   ),
+      //   splashColor: Colors.transparent,
+      //   backgroundColor: AppColor.primaryLightColor,
+      //   onPressed: (){
+      //
+      //   },
+      //   child: Icon(Icons.add , color: Theme.of(context).colorScheme.onBackground,),
+      // ),
       body:
       PageView(
         physics: const NeverScrollableScrollPhysics(),

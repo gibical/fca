@@ -8,8 +8,8 @@ import 'package:sizer/sizer.dart';
 
 
 class BestItemExploreWidget extends GetView<HomeLogic> {
-  const BestItemExploreWidget({super.key});
-
+  const BestItemExploreWidget(this.icon, {super.key});
+  final String icon;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -49,7 +49,7 @@ class BestItemExploreWidget extends GetView<HomeLogic> {
             ),
             Padding(
               padding: const EdgeInsets.only(right: 15 , bottom: 10),
-              child: SvgPicture.asset(AppIcon.videoIcon , color: AppColor.grayLightColor.withOpacity(0.5)  , height: 1.8.h),
+              child: SvgPicture.asset(icon , color: AppColor.grayLightColor.withOpacity(0.5)  , height: 1.8.h),
             )
           ],
         )

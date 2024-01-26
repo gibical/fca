@@ -36,6 +36,9 @@ PreferredSizeWidget CustomAppBarWidget(context) {
               ),
             ),
             decoration: BoxDecoration(
+                border: Border.all(
+                  color: AppColor.grayLightColor.withOpacity(0.1)
+                ),
                 color: Color(0xff0E0E12).withOpacity(0.5),
               borderRadius: BorderRadius.circular(15)
             ),

@@ -33,7 +33,9 @@ class AllTabScreen extends StatelessWidget {
                     itemCount: 5,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context , index){
-                  return BestItemExploreWidget();
+                  return BestItemExploreWidget(
+                    AppIcon.videoIcon
+                  );
                 }),
               ),
             ),
@@ -41,7 +43,7 @@ class AllTabScreen extends StatelessWidget {
             TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.imageIcon, title: 'Most viewed'),
             const SliverPadding(padding: EdgeInsets.only(top: 12.5)),
             CustomGridImageWidget(),
-            SliverPadding(padding: EdgeInsets.only(top: 12.h)),
+            SliverPadding(padding: EdgeInsets.only(top: 14.h)),
           ],
         ),
       ),

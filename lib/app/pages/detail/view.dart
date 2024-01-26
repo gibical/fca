@@ -11,65 +11,73 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      appBar: CustomAppBarWidget(context),
-      backgroundColor: theme.primary,
+
+      backgroundColor: AppColor.primaryDarkColor,
       bottomNavigationBar: BuyCardWidget(),
     );
   }
 }
 
+
+
+
+
+
 Widget BuyCardWidget(){
   return Container(
-    height: 13.h,
-    color: AppColor.whiteColor,
-    child: Padding(
-      padding: const EdgeInsets.only(left: 18.0 , right: 18),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
+    height: 22.h,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.only(topRight: Radius.circular(16.sp) , topLeft: Radius.circular(16.sp)),
+      color: Colors.white.withOpacity(0.1),
+    ),
+    child:Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Monthly: 20" , style: TextStyle(
-                color: AppColor.primaryDarkColor,
-                fontSize: 18,
-                fontWeight: FontWeight.w500
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Container(
+              height: 7.5.h,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.11),
+                borderRadius: BorderRadius.circular(15)
               ),
-              ),
-              SizedBox(
-                height: 1.8.h,
-              ),
-              Row(
+              child:  Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18),
+                child: Row(
+                  children: [
+                    Text("Monthly: 20" , style: TextStyle(
+                        color: AppColor.whiteColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500
+                    ),
+                    ),
+                    SizedBox(
+                      height: 1.8.h,
+                    ),
+                    Spacer(),
+                    SvgPicture.asset(AppIcon.detail4Icon , color: Colors.white,),
+                    SizedBox(
+                      width: 4.5.w,
+                    ),
 
-                children: [
-                  SvgPicture.asset(AppIcon.detail4Icon),
-                  SizedBox(
-                    width: 4.5.w,
-                  ),
-                  SvgPicture.asset(AppIcon.detail3Icon),
-                  SizedBox(
-                    width: 4.5.w,
-                  ),
-                 SvgPicture.asset(AppIcon.detail1Icon),
-                  SizedBox(
-                    width: 4.5.w,
-                  ),
-                 SvgPicture.asset(AppIcon.detail2Icon),
-
-
-                ],
+                    SvgPicture.asset(AppIcon.detail1Icon , color: Colors.white),
+                  ],
+                ),
               ),
-            ],
+            ),
           ),
-          SizedBox(
-            height: 7.h,
-            width: 38.w,
-            child: ElevatedButton(
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0 , vertical: 10),
+            child: SizedBox(
+              height: 6.h,
+              width: double.infinity,
+              child: ElevatedButton(
                 onPressed: (){
                   if (AppTheme().getCurrentTheme() == ThemeMode.light) {
                     AppTheme.changeTheme(ThemeMode.dark);
@@ -78,16 +86,19 @@ Widget BuyCardWidget(){
                   }
                 },
                 child: Text('Buy' , style: TextStyle(
-                  color: AppColor.whiteColor,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w500
+                    color: AppColor.whiteColor,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500
                 ),),
-             style: ElevatedButton.styleFrom(
-               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.3.sp)),
-               backgroundColor: AppColor.primaryLightColor
-             ),
+                style: ElevatedButton.styleFrom(
+                    shadowColor: AppColor.primaryLightColor,
+                    elevation: 8,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.3.sp)),
+                    backgroundColor: AppColor.primaryLightColor
+                ),
+              ),
             ),
-          )
+          ),
         ],
       ),
     ),

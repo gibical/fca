@@ -9,6 +9,7 @@ import 'package:mediaverse/app/pages/home/tabs/image/view.dart';
 import 'package:mediaverse/app/pages/home/tabs/text/view.dart';
 import 'package:mediaverse/app/pages/home/tabs/video/view.dart';
 import 'package:mediaverse/app/pages/home/widgets/custom_grid_view_widget.dart';
+import 'package:mediaverse/app/pages/home/widgets/item_video_tab_screen.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -48,74 +49,61 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return Stack(
-      children: [
-
-        TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _tabController,
-          children: [
-            AllTabScreen(),
-            ImageTabScreen(),
-            VideoTabScreen(),
-            SoundTabScreen(
-                introBoxWidget: SvgPicture.asset(AppIcon.musicIcon)),
-            TextTabScreen(
-              introBoxWidget: Text(
-                'Be',
-                style: TextStyle(
-                    color: AppColor.whiteColor,
-                    fontSize: 30.sp,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25  , vertical: 15),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(11.sp),
-            child: ClipRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaY: 10 , sigmaX: 10),
-
-                child: Container(
-                  height: 60,
-                  color: theme.secondary,
-
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: TabBar(
-
-                      physics: const BouncingScrollPhysics(),
-                      controller: _tabController,
-                      overlayColor: MaterialStateProperty.all(Colors.transparent),
-                      enableFeedback: false,
-                      indicatorWeight: 2,
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      indicatorColor: AppColor.primaryLightColor,
-                      unselectedLabelColor: Color(0xff666680),
-                      labelColor: AppColor.primaryLightColor,
-                      dividerColor: Colors.transparent,
-                      tabs: [
-                        _buildTab(context, AppIcon.imageIcon, 0 , true),
-                        _buildTab(context, AppIcon.imageIcon, 1 , false),
-                        _buildTab(context, AppIcon.videoIcon, 2 , false),
-                        _buildTab(context, AppIcon.soundIcon, 3 , false),
-                        _buildTab(context, AppIcon.textIcon, 4 , false),
-
-
-                      ],
+    return Scaffold(
+      body: Stack(
+        children: [
+          TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _tabController,
+            children: [
+              AllTabScreen(),
+              ImageTabScreen(),
+              VideoTabScreen(),
+              SoundTabScreen(introBoxWidget: SvgPicture.asset(AppIcon.musicIcon),),
+              TextTabScreen(introBoxWidget: Text('BE' , style: FontStyleApp.headMedium,))
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(11.sp),
+              child: ClipRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
+                  child: Container(
+                    height: 60,
+                    color: theme.secondary,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TabBar(
+                        physics: const BouncingScrollPhysics(),
+                        controller: _tabController,
+                        overlayColor: MaterialStateProperty.all(Colors.transparent),
+                        enableFeedback: false,
+                        indicatorWeight: 2,
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        indicatorColor: AppColor.primaryLightColor,
+                        unselectedLabelColor: Color(0xff666680),
+                        labelColor: AppColor.primaryLightColor,
+                        dividerColor: Colors.transparent,
+                        tabs: [
+                          _buildTab(context, AppIcon.imageIcon, 0, true),
+                          _buildTab(context, AppIcon.imageIcon, 1, false),
+                          _buildTab(context, AppIcon.videoIcon, 2, false),
+                          _buildTab(context, AppIcon.soundIcon, 3, false),
+                          _buildTab(context, AppIcon.textIcon, 4, false),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-
-      ],
+        ],
+      ),
     );
+
   }
 
   Widget _buildTab(

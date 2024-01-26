@@ -93,7 +93,7 @@ class SoundTabScreen extends StatelessWidget {
                     );
                   }),
 
-              SliverPadding(padding: EdgeInsets.only(top: 12.h)),
+              SliverPadding(padding: EdgeInsets.only(top: 15.h)),
             ],
           ),
         )
