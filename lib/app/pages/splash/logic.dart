@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../common/app_route.dart';
 import 'state.dart';
@@ -7,9 +8,15 @@ class SplashLogic extends GetxController {
   final SplashState state = SplashState();
   var showSplash = true.obs;
 
-  void hideSplashAndNavigateToNextScreen() {
+  void hideSplashAndNavigateToNextScreen() async{
     showSplash.value = false;
-    Get.offAndToNamed(PageRoutes.INTRO);
+    if(GetStorage().read("islogin")??false){
+
+      Get.offAndToNamed(PageRoutes.HOME);
+    }else{
+      Get.offAndToNamed(PageRoutes.INTRO);
+
+    }
   }
 
   @override

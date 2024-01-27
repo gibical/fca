@@ -7,14 +7,14 @@ import 'package:mediaverse/app/pages/wrapper/logic.dart';
 import 'package:mediaverse/app/widgets/custom_app_bar_widget.dart';
 
 class HomeScreen extends GetView< WrapperController> {
-  const HomeScreen({Key? key}) : super(key: key);
 
+  HomeLogic homeLogic = Get.put(HomeLogic());
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
         backgroundColor:  Theme.of(context).colorScheme.background,
         appBar: CustomAppBarWidget(context),
-        body: const CustomTabBarWidget(),
+        body:  CustomTabBarWidget(homeLogic),
 
     );
   }

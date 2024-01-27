@@ -5,6 +5,7 @@ import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/common/font_style.dart';
+import 'package:mediaverse/app/pages/home/logic.dart';
 import 'package:mediaverse/app/pages/search/view.dart';
 import 'package:sizer/sizer.dart';
 
@@ -18,7 +19,8 @@ PreferredSizeWidget CustomAppBarWidget(context) {
         padding: const EdgeInsets.symmetric(horizontal: 25 ,),
         child: GestureDetector(
           onTap: () {
-            Get.toNamed(PageRoutes.SEARCH);
+            //Get.toNamed(PageRoutes.SEARCH);
+            Get.find<HomeLogic>().getMainReueqst();
           },
           child: Container(
             height: 6.h,

@@ -1,8 +1,119 @@
 
 
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:get/get.dart';
+import 'package:mediaverse/app/common/RequestInterface.dart';
+import 'package:mediaverse/app/common/app_api.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetBestVideos.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetChannels.dart';
 
-class HomeLogic extends GetxController{
+import '../../../gen/model/json/FromJsonGetBestModelVideows.dart';
+
+class HomeLogic extends GetxController implements  RequestInterface{
+
+  List<ChannelModel> channels = [];
+  List<dynamic> bestVideos = [];
+  List<dynamic> mostVideos = [];
+  List<dynamic> mostText = [];
+  List<dynamic> mostSongs = [];
+  late ApiRequster apiRequster;
+
+  var isloading = false.obs;
 
 
+  @override
+  void onReady() {
+    // TODO: implement onReady
+    super.onReady();
+    apiRequster  = ApiRequster(this,develperModel: true);
+
+    getMainReueqst();
+  }
+
+  getMainReueqst(){
+    isloading(true);
+    apiRequster.request("channels", ApiRequster.MHETOD_GET, 1);
+  }
+  @override
+  void onError(String content, int reqCode, bodyError) {
+    // TODO: implement onError
+  }
+
+  @override
+  void onStartReuqest(int reqCode) {
+    // TODO: implement onStartReuqest
+  }
+
+  @override
+  void onSucces(source, int reqCdoe) {
+    // TODO: implement onSucces
+    switch(reqCdoe){
+      case 1:
+        praseJsonFromChannels (source);
+       case 2:
+        praseJsonFromBestVideos (source);
+        case 3:
+        parseJsonFromMostViewdVideos (source);
+         case 4:
+        parseJsonFromBestText (source);
+          case 5:
+        parseJsonFromBestSongs (source);
+    }
+  }
+
+  void praseJsonFromChannels(source) {
+    try {
+      channels = FromJsonGetChannels
+          .fromJson(jsonDecode(source))
+          .data ?? [];
+    }  catch (e) {
+      // TODO
+    }
+
+    _getBestVideos();
+  }
+
+  void _getBestVideos() {
+    apiRequster.request("videos/newest", ApiRequster.MHETOD_GET, 2);
+
+  }
+
+  void praseJsonFromBestVideos(source) {
+    bestVideos = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
+
+
+    _getMostVideos();
+  }
+
+  void _getMostVideos() {
+    apiRequster.request("videos/most-viewed", ApiRequster.MHETOD_GET, 3);
+
+  }
+  void _getMostText() {
+    apiRequster.request("texts/most-viewed", ApiRequster.MHETOD_GET, 4);
+
+  }
+  void _getMostSongs() {
+    apiRequster.request("audios/newest", ApiRequster.MHETOD_GET, 5);
+
+  }
+
+  void parseJsonFromMostViewdVideos(source) {
+    mostVideos = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
+    _getMostText();
+
+  }
+
+  void parseJsonFromBestText(source) {
+    mostText = FromJsonGetBestText.fromJson(jsonDecode(source)).data??[];
+    _getMostSongs();
+  }
+
+  void parseJsonFromBestSongs(source) {
+    mostSongs = FromJsonGetBestText.fromJson(jsonDecode(source)).data??[];
+    isloading(false);
+    update();
+  }
 }

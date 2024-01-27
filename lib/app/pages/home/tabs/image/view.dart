@@ -43,7 +43,7 @@ class ImageTabScreen extends StatelessWidget {
             ),
 
             const SliverPadding(padding: EdgeInsets.only(top: 12.5)),
-            CustomGridImageWidget(),
+            if(false)CustomGridImageWidget([]),
             SliverPadding(padding: EdgeInsets.only(top: 12.h)),
           ],
         ),

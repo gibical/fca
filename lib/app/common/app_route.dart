@@ -45,7 +45,7 @@ class PageRoutes {
     GetPage(
       name: PageRoutes.HOME,
       transition: Transition.noTransition,
-      page: () => const HomeScreen(),
+      page: () =>  HomeScreen(),
     ),
     GetPage(
       name: PageRoutes.LOGIN,

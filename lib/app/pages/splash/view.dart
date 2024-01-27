@@ -25,26 +25,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void initState() {
-    _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 3000));
-    _animation = Tween(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.ease),
-    );
 
-    _animationController.addListener(() {
-      setState(() {});
-    });
-    _animationController.forward();
-    _animationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        if (splashController.showSplash.value) {
-          splashController.hideSplashAndNavigateToNextScreen();
-        }
-      }
-    });
+    _mainFunction();
     super.initState();
   }
 
@@ -87,5 +69,28 @@ class _SplashScreenState extends State<SplashScreen>
         ],
       ),
     );
+  }
+
+  void _mainFunction() async{
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 3000));
+    _animation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.ease),
+    );
+
+    _animationController.addListener(() {
+      setState(() {});
+    });
+    _animationController.forward();
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        if (splashController.showSplash.value) {
+          splashController.hideSplashAndNavigateToNextScreen();
+        }
+      }
+    });
   }
 }
