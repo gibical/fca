@@ -7,6 +7,7 @@ class AppIcon{
   static const  musicIcon = 'assets/icons/music.svg';
   static const  profileIcon = 'assets/icons/profile.svg';
   static const  exploreIcon = 'assets/icons/explore.svg';
+  static const  walletIcon = 'assets/icons/wallet.svg';
   static const  addIcon = 'assets/icons/add.svg';
   static const  deviceIcon = 'assets/icons/device.svg';
   static const  closeIcon = 'assets/icons/close.svg';
@@ -17,6 +18,9 @@ class AppIcon{
   static const  detail3Icon = 'assets/icons/detail3.svg';
   static const  detail4Icon = 'assets/icons/detail4.svg';
   static const  channelIcon = 'assets/icons/channel.svg';
-  static const  walletIcon = 'assets/icons/wallet.svg';
+  static const  walletdeIcon = 'assets/icons/walletde.svg';
+  static const  profiledeIcon = 'assets/icons/profilede.svg';
+  static const  channeldeIcon = 'assets/icons/channelde.svg';
+  static const  exploredeIcon = 'assets/icons/explorede.svg';
 
 }
