@@ -46,6 +46,8 @@ dependencies:
   lottie: any
   http: any
   google_fonts: ^6.1.0
+  visibility_detector: any
+  focus_detector: any
 
 dev_dependencies:
   flutter_test:

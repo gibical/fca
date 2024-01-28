@@ -54,9 +54,10 @@ class AllTabScreen extends StatelessWidget {
               SizedBox(height: 3.h),
               TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.imageIcon, title: 'Most viewed'),
               SizedBox(height: 12.5),
-             if(logic.mostVideos.length>0) CustomGridImageWidget(logic.mostVideos),
+             if(logic.mostImages.length>0) CustomGridImageWidget(logic.mostImages),
               SizedBox(height: 3.h),
-              TitleExplore(theme: theme, textTheme: textTheme, icon: "assets/icons/text_icon.svg", title: 'Top Text'),
+              TitleExplore(theme: theme, textTheme: textTheme,
+                  icon: "assets/icons/text_icon.svg", title: 'Top Text'),
               SizedBox(height: 1.5.h),
               SizedBox(
                 height: 40.w,

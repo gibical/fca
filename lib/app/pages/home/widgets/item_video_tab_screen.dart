@@ -5,7 +5,7 @@ import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/font_style.dart';
 import 'package:sizer/sizer.dart';
 
-Widget ItemVideoTabScreen(){
+Widget ItemVideoTabScreen(dynamic model){
   return SizedBox(
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 7 ,vertical: 12),
@@ -22,32 +22,40 @@ Widget ItemVideoTabScreen(){
                   Positioned(
                       bottom: 10,
                       left: 20,
-                      child: Text('Velit officia consequat.')),
+                      child: Text(model['name'])),
                 ],
               ),
-              decoration: BoxDecoration(
+              decoration:
+              (model['asset']['thumbnails'].toString().length>3)?
+              BoxDecoration(
                 borderRadius: BorderRadius.circular(12.sp),
-                image: DecorationImage(image: AssetImage('assets/images/test.png' ) , fit: BoxFit.cover ,
+                image: DecorationImage(image: NetworkImage('${model['asset']['thumbnails']['336x366']}' ) ,
+                  fit: BoxFit.cover ,
+                colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.55), BlendMode.hardLight),
+                )
+              ):BoxDecoration(
+                borderRadius: BorderRadius.circular(12.sp),
+                image: DecorationImage(image: AssetImage('assets/images/tum_video.jpeg' ) ,
+                  fit: BoxFit.cover ,
                 colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.55), BlendMode.hardLight),
                 )
               ),
             ),
-          SizedBox(height: 1.h,),
-          Text('Amet minim mollit non deserunt ullamco est sit. amet sint. Velit officia consequat duis...' , style: FontStyleApp.bodyLarge.copyWith(
+          if(model['description']!=null)SizedBox(height: 1.h,),
+          Text(model['description']??"", style: FontStyleApp.bodyLarge.copyWith(
             color: AppColor.grayLightColor.withOpacity(0.6),
 
           ),),
-          SizedBox(height: 2.3.h,),
+          if(model['description']!=null)SizedBox(height: 2.3.h,),
           Row(
             children: [
-              CircleAvatar(
-                radius: 11,
-              ),
-              SizedBox(width: 2.w,),
-              Text('Ralph Edwards' , style: FontStyleApp.bodySmall.copyWith(
-                color: AppColor.grayLightColor.withOpacity(0.6),
+              Image.asset("assets/images/avatar.jpeg",width: 4.w,),
+              SizedBox(width: 3.w,),
+              Text(model['asset']['user']['username'],style: TextStyle(fontSize: 8.sp,
+                color: Color(0xFF666680),
 
               ),),
+
               Spacer(),
               Text('8:15' , style: FontStyleApp.bodySmall.copyWith(
                 color: AppColor.grayLightColor.withOpacity(0.6),

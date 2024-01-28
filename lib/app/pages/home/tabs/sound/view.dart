@@ -1,102 +1,117 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:focus_detector/focus_detector.dart';
+import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../common/app_color.dart';
+import '../../../../common/app_icon.dart';
 import '../../../../common/font_style.dart';
+import '../../logic.dart';
+import '../../widgets/bset_item_explore_widget.dart';
 import '../../widgets/custom_grid_view_widget.dart';
+import '../all/view.dart';
+
 
 
 class SoundTabScreen extends StatelessWidget {
-  const SoundTabScreen({super.key , required this.introBoxWidget});
-  final Widget introBoxWidget;
+  HomeLogic logic = Get.find<HomeLogic>();
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return   Scaffold(
+    return FocusDetector(
+      onFocusGained: () {
+        if (logic.songsRecently.length == 0) {
+          logic.sendSoundRecentlyReuqest();
+        }
+      },
+      child: Scaffold(
         backgroundColor: theme.background,
         body: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
-          child:  CustomScrollView(
-            slivers: [
-              SliverPadding(padding: EdgeInsets.only(top: 11.h)),
-              SliverToBoxAdapter(
-                child:      Text(
-                    'Latest',
-                    style: FontStyleApp.titleLarge.copyWith(
-                        color: AppColor.whiteColor
-                    )
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 15.h),
+
+                TitleExplore(theme: theme,
+                    textTheme: textTheme,
+                    icon: "assets/icons/sound_icons.svg",
+                    title: 'Best in month'),
+                SizedBox(height: 1.5.h),
+                SizedBox(
+                  height: 30.h,
+                  child: ListView.builder(
+                      itemCount: logic.mostSongs.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return BestItemSongsWidget(logic.mostSongs.reversed.toList().elementAt(index));
+                      }),
                 ),
-              ),
-              SliverPadding(padding: EdgeInsets.only(top: 1.5.h)),
-              SliverList.builder(
-                  itemCount: 5,
-                  itemBuilder: (context , index){
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 8.0 , bottom: 8.0 ),
-                      child: Container(
-                            height: 13.h,
-                            width: MediaQuery.of(context).size.width ,
-                            decoration: BoxDecoration(
-                              color:AppColor.whiteColor,
-                              borderRadius: BorderRadius.circular(14.sp),
-                              border: Border.all(
-                                  color:  AppColor.primaryDarkColor.withOpacity(0.2),
-                                  width: 0.4
+                TitleExplore(theme: theme,
+                    textTheme: textTheme,
+                    icon: "assets/icons/sound_icons.svg",
+                    title: 'Recently'),
+
+                SizedBox(height: 4.h,),
+
+                Obx(() {
+                  var isloadingImage = logic.songsRecently.length==0;
+                  if(isloadingImage){
+                    return Container(
+                      child: Lottie.asset("assets/json/Y8IBRQ38bK.json",height: 10.h),
+                    );
+                  }
+                  return Container(
+                    height: 40.h,
+                    child: GridView.builder(
+                        itemCount: 4,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2
+                    ), itemBuilder: (s,q){
+                          var item = logic.songsRecently.elementAt(q);
+                          return AspectRatio(
+                            aspectRatio: 1/1,
+                            child: Container(
+
+                              margin: EdgeInsets.all(2.w),
+                              child: Stack(
+                                children: [
+                                  SizedBox.expand(
+                                    child: Image.asset("assets/images/sound_bg.png"),
+                                  ),
+                                  SizedBox.expand(
+                                    child:Container(
+                                      decoration: ShapeDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment(0.00, 1.00),
+                                          end: Alignment(0, -1),
+                                          colors: [Color(0xFF0B0B31), Color(0x000A0A32)],
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          side: BorderSide(width: 1, color: Color(0x33CFCFFC)),
+                                          borderRadius: BorderRadius.circular(16),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  //if(item)
+
+                                ],
                               ),
                             ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: 13.h,
-                                  width: MediaQuery.of(context).size.width / 3.8,
-                                  decoration: BoxDecoration(
-                                      color: AppColor.primaryDarkColor.withOpacity(0.2),
-                                      borderRadius: BorderRadius.circular(15)
-                                  ),
-                                  child: Center(
-                                    child: introBoxWidget,
-                                  ),
-                                ),
-                                Padding(
-                                  padding:  EdgeInsets.all(9.sp),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text('Best worlld cup messi mo...' , style: TextStyle(
-                                          color: Colors.black
-                                      ),),
-                                      const SizedBox(height: 4,),
-                                      Text('this is a clip from best momen...' , style: TextStyle(
-                                        color:  AppColor.primaryDarkColor.withOpacity(0.2),
-                                      ),),
-                                      const Spacer(),
-                                      Row(
-                                        children: [
-                                          const CircleAvatar(
-                                            radius: 10,
-                                          ),
-                                          const SizedBox(width: 4,),
-                                          Text('Jak paul' , style: TextStyle(
-                                            color:  AppColor.primaryDarkColor.withOpacity(0.2),
-                                          ),),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          );
 
-
-                    );
-                  }),
-
-              SliverPadding(padding: EdgeInsets.only(top: 12.h)),
-            ],
+                    }),
+                  );
+                })
+              ],
+            ),
           ),
-        )
+        ),
+      ),
     );
   }
 }

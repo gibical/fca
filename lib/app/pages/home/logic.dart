@@ -15,9 +15,17 @@ class HomeLogic extends GetxController implements  RequestInterface{
 
   List<ChannelModel> channels = [];
   List<dynamic> bestVideos = [];
-  List<dynamic> mostVideos = [];
+  List<dynamic> mostImages = [];
   List<dynamic> mostText = [];
   List<dynamic> mostSongs = [];
+
+
+  var imagesRecently = [].obs;
+  var songsRecently = [].obs;
+  var textRecently = [].obs;
+
+
+
   late ApiRequster apiRequster;
 
   var isloading = false.obs;
@@ -60,6 +68,12 @@ class HomeLogic extends GetxController implements  RequestInterface{
         parseJsonFromBestText (source);
           case 5:
         parseJsonFromBestSongs (source);
+           case 6:
+        parseJsonFromNewsImage (source);
+            case 7:
+        parseJsonFromNewsSound (source);
+            case 8:
+        parseJsonFromNewsText (source);
     }
   }
 
@@ -88,7 +102,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
 
   void _getMostVideos() {
-    apiRequster.request("videos/most-viewed", ApiRequster.MHETOD_GET, 3);
+    apiRequster.request("images/most-viewed", ApiRequster.MHETOD_GET, 3);
 
   }
   void _getMostText() {
@@ -101,7 +115,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
 
   void parseJsonFromMostViewdVideos(source) {
-    mostVideos = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
+    mostImages = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
     _getMostText();
 
   }
@@ -115,5 +129,37 @@ class HomeLogic extends GetxController implements  RequestInterface{
     mostSongs = FromJsonGetBestText.fromJson(jsonDecode(source)).data??[];
     isloading(false);
     update();
+  }
+
+  void sendImageRecentlyReuqest() {
+    apiRequster.request("images/daily-recommended", ApiRequster.MHETOD_GET, 6);
+
+  }
+
+  void parseJsonFromNewsImage(source) {
+    imagesRecently.value = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
+    print('HomeLogic.parseJsonFromNewsImage = ${imagesRecently.length}');
+  }
+
+  void sendSoundRecentlyReuqest() {
+
+    apiRequster.request("audios/daily-recommended", ApiRequster.MHETOD_GET, 7);
+
+  }
+
+  void parseJsonFromNewsSound(source) {
+    songsRecently.value = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
+
+  }
+  void sendTextRecentlyReuqest() {
+
+    apiRequster.request("texts/daily-recommended", ApiRequster.MHETOD_GET, 8);
+
+  }
+
+  void parseJsonFromNewsText(source) {
+    textRecently.value = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
+
+    print('HomeLogic.parseJsonFromNewsText = ${textRecently.length}');
   }
 }

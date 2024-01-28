@@ -73,15 +73,10 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
                   ImageTabScreen(),
                   VideoTabScreen(),
                   SoundTabScreen(
-                      introBoxWidget: SvgPicture.asset(AppIcon.musicIcon)),
-                  TextTabScreen(
-                    introBoxWidget: Text(
-                      'Be',
-                      style: TextStyle(
-                          color: AppColor.whiteColor,
-                          fontSize: 30.sp,
-                          fontWeight: FontWeight.bold),
                     ),
+                  TextTabScreen(
+
+
                   ),
                 ],
               ),
