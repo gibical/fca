@@ -5,11 +5,15 @@
 import 'package:flutter/material.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/font_style.dart';
+import 'package:mediaverse/app/pages/profile/logic.dart';
 import 'package:sizer/sizer.dart';
 
 
 class CardProfileInfoWidget extends StatelessWidget {
-  const CardProfileInfoWidget({super.key});
+
+  ProfileController logic;
+
+  CardProfileInfoWidget(this.logic);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +21,9 @@ class CardProfileInfoWidget extends StatelessWidget {
       padding: const EdgeInsets.only(top: 140.0 , left: 15 , right: 15),
       child: Row(
         children: [
-          CardProfileInfoItem(title: '126' , subTitle: 'Assets'),
-          CardProfileInfoItem(title: '15.1 k' , subTitle: 'Sales'),
-          CardProfileInfoItem(title: '20k ' , subTitle: 'Assets'),
+          CardProfileInfoItem(title: '${logic.assetsModel.assets.toString()}' , subTitle: 'Assets'),
+          CardProfileInfoItem(title: '${logic.assetsModel.salesNumber.toString()}', subTitle: 'Sales'),
+          CardProfileInfoItem(title: '${logic.assetsModel.salesVolume.toString()}' , subTitle: 'Volume'),
 
 
 

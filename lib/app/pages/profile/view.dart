@@ -1,9 +1,10 @@
-
-
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:mediaverse/app/pages/profile/logic.dart';
 import 'package:mediaverse/app/pages/profile/tab/subscribe_tab_screen.dart';
 import 'package:mediaverse/app/pages/profile/widgets/card_profile_info.dart';
 import 'package:sizer/sizer.dart';
@@ -18,160 +19,173 @@ import '../home/tabs/image/view.dart';
 
 
 class ProfileScreen extends StatefulWidget {
-   ProfileScreen({super.key});
+  ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
-   late TabController _tabController;
+class _ProfileScreenState extends State<ProfileScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
 
-   int _selectedTabIndex = 0;
+  ProfileController logic = Get.put(ProfileController());
+  int _selectedTabIndex = 0;
 
-   @override
-   void initState() {
-     super.initState();
-     _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
-     _tabController.addListener(() {
-       setState(() {
-         _selectedTabIndex = _tabController.index;
-       });
-     });
-   }
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    _tabController.addListener(() {
+      setState(() {
+        _selectedTabIndex = _tabController.index;
+      });
+    });
+  }
 
-   @override
-   void dispose() {
-     _tabController.dispose();
-     super.dispose();
-   }
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
+    return Obx(() {
+      return logic.isloading.value?Scaffold(
         backgroundColor: AppColor.blueDarkColor,
-        title:     CardProfileInfoWidget(),
-        toolbarHeight: 220,
-        flexibleSpace: Stack(
-          children: [
-            Container(
-              height: 9.h,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
 
-                    Colors.white,
-                    AppColor.primaryLightColor,
-                    AppColor.primaryLightColor,
-                  ])
+        body: Container(
+
+          child: Center(
+            child:  Lottie.asset("assets/json/Y8IBRQ38bK.json",height: 10.h),
+          ),
+        ),
+      ): Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColor.blueDarkColor,
+          title: CardProfileInfoWidget(logic),
+          toolbarHeight: 220,
+          flexibleSpace: Stack(
+            children: [
+              Container(
+                height: 9.h,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+
+                      Colors.white,
+                      AppColor.primaryLightColor,
+                      AppColor.primaryLightColor,
+                    ])
+                ),
               ),
-            ),
 
 
-            Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 5.w,vertical: 6.5.h),
-              child: Container(
-                height: 85,
-                width: 85,
-                decoration:BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColor.blueDarkColor,
-                ) ,
-                child: Padding(
-                  padding: const EdgeInsets.all(7),
-                  child: CircleAvatar(
-                    backgroundColor:AppColor.blueDarkColor,
-                    backgroundImage: AssetImage('assets/images/profile.png'),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 6.5.h),
+                child: Container(
+                  height: 85,
+                  width: 85,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColor.blueDarkColor,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(7),
+                    child: CircleAvatar(
+                      backgroundColor: AppColor.blueDarkColor,
+                      backgroundImage: AssetImage('assets/images/profile.png'),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              bottom: 7.5.h,
-              left: 29.w,
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Ma.nakhli' , style: FontStyleApp.titleSmall.copyWith(
-                        color: AppColor.whiteColor,
-                        fontWeight: FontWeight.w600,
-                      ),),
-                      Text('Manakhli@gmail.com' , style: FontStyleApp.bodyMedium.copyWith(
-                        color: AppColor.whiteColor.withOpacity(0.2),
-                      ),),
-                    ],
-                  ),
+              Positioned(
+                bottom: 7.5.h,
+                left: 29.w,
+                child: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('${logic.model.firstName??""} ${logic.model.lastName??""}', style: FontStyleApp.titleSmall
+                            .copyWith(
+                          color: AppColor.whiteColor,
+                          fontWeight: FontWeight.w600,
+                        ),),
+                        Text('${logic.model.email??""} ', style: FontStyleApp
+                            .bodyMedium.copyWith(
+                          color: AppColor.whiteColor.withOpacity(0.2),
+                        ),),
+                      ],
+                    ),
 
-                ],
+                  ],
+                ),
               ),
-            ),
 
-          ],
+            ],
+          ),
         ),
-      ),
-     body:DefaultTabController(
-       length: 2,
-       child: Column(
-         children: [
-           Container(
-             decoration: BoxDecoration(
-               color: AppColor.blueDarkColor,
-               borderRadius: BorderRadius.only(
-                 bottomRight: Radius.circular(60.sp),
-                 bottomLeft: Radius.circular(60.sp),
-               ),
-             ),
-             height: 60,
-             child: TabBar(
-               tabAlignment: TabAlignment.center,
-               physics: const BouncingScrollPhysics(),
-               isScrollable: true,
-               controller: _tabController,
-               labelPadding: const EdgeInsets.symmetric(horizontal: 20.0),
-               overlayColor: MaterialStateProperty.all(Colors.transparent),
-               enableFeedback: false,
-               indicatorWeight: 2,
-               indicatorSize: TabBarIndicatorSize.tab,
-               indicatorColor: AppColor.primaryLightColor,
-               unselectedLabelColor: Colors.grey,
-               labelColor: AppColor.whiteColor,
-               dividerColor: Colors.transparent,
-               tabs: [
-                 _buildTab(context, 0, 'Subscribe'),
-                 _buildTab(context, 1, 'Ownership'),
-               ],
-             ),
-           ),
-           Expanded(
-             child: TabBarView(
-               physics: const NeverScrollableScrollPhysics(),
-               controller: _tabController,
-               children: [
-                 SubscribeTabScreen(),
-                 Scaffold()
-               ],
-             ),
-           ),
-         ],
-       ),
-     ),
+        body: DefaultTabController(
+          length: 2,
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColor.blueDarkColor,
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(60.sp),
+                    bottomLeft: Radius.circular(60.sp),
+                  ),
+                ),
+                height: 60,
+                child: TabBar(
+                  tabAlignment: TabAlignment.center,
+                  physics: const BouncingScrollPhysics(),
+                  isScrollable: true,
+                  controller: _tabController,
+                  labelPadding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  enableFeedback: false,
+                  indicatorWeight: 2,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorColor: AppColor.primaryLightColor,
+                  unselectedLabelColor: Colors.grey,
+                  labelColor: AppColor.whiteColor,
+                  dividerColor: Colors.transparent,
+                  tabs: [
+                    _buildTab(context, 0, 'Subscribe'),
+                    _buildTab(context, 1, 'Ownership'),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _tabController,
+                  children: [
+                    SubscribeTabScreen(),
+                    Scaffold()
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
 
-    );
+      );
+    });
   }
 
-   Widget _buildTab(
-       BuildContext context, int tabIndex , String label) {
-     return Center(
-       child: Row(
-         mainAxisAlignment: MainAxisAlignment.center,
-         children: [
-           Text(label)
+  Widget _buildTab(BuildContext context, int tabIndex, String label) {
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(label)
 
-         ],
-       ),
-     );
-   }
+        ],
+      ),
+    );
+  }
 }
