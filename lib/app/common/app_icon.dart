@@ -22,5 +22,8 @@ class AppIcon{
   static const  profiledeIcon = 'assets/icons/profilede.svg';
   static const  channeldeIcon = 'assets/icons/channelde.svg';
   static const  exploredeIcon = 'assets/icons/explorede.svg';
+  static const  chipIcon = 'assets/icons/Chip.svg';
+  static const  cardIcon = 'assets/icons/card.svg';
+  static const  mastercardIcon = 'assets/icons/mastercard.svg';
 
 }
