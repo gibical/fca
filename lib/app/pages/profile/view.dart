@@ -4,6 +4,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/profile/tab/subscribe_tab_screen.dart';
 import 'package:mediaverse/app/pages/profile/widgets/card_profile_info.dart';
 import 'package:sizer/sizer.dart';
@@ -90,7 +92,9 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             Positioned(
               bottom: 7.5.h,
               left: 29.w,
+              right: 5.w,
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +108,26 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       ),),
                     ],
                   ),
-
+                  Spacer(),
+                  GestureDetector(
+                    onTap: (){
+                     Get.toNamed(PageRoutes.SETTING);
+                    },
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      child: Transform.scale(
+                          scale: 0.5,
+                          child: SvgPicture.asset(AppIcon.settingIcon , height:50,)),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.4),
+                        borderRadius: BorderRadius.circular(10.sp),
+                        border: Border.all(
+                          color: Colors.grey.withOpacity(0.4)
+                        )
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

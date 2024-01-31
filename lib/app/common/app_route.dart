@@ -3,10 +3,12 @@ import 'package:mediaverse/app/pages/detail/view.dart';
 import 'package:mediaverse/app/pages/home/state.dart';
 import 'package:mediaverse/app/pages/home/view.dart';
 import 'package:mediaverse/app/pages/login/view.dart';
+import 'package:mediaverse/app/pages/massage/view.dart';
 import 'package:mediaverse/app/pages/otp/view.dart';
 import 'package:mediaverse/app/pages/profile/view.dart';
 import 'package:mediaverse/app/pages/search/state.dart';
 import 'package:mediaverse/app/pages/search/view.dart';
+import 'package:mediaverse/app/pages/setting/view.dart';
 import 'package:mediaverse/app/pages/signup/view.dart';
 import 'package:mediaverse/app/pages/splash/state.dart';
 import 'package:mediaverse/app/pages/wrapper/state.dart';
@@ -25,6 +27,8 @@ class PageRoutes {
   static const SEARCH = '/Search';
   static const DETAIL = '/Detail';
   static const PROFILE = '/Profile';
+  static const SETTING = '/Setting';
+  static const MASSAGE = '/Massage';
 
 
   static List<GetPage> routes = [
@@ -84,9 +88,16 @@ class PageRoutes {
       name: PageRoutes.DETAIL,
       transition: Transition.downToUp,
       page: () => DetailScreen(),
-
-
-
+    ),
+    GetPage(
+      name: PageRoutes.SETTING,
+      transition: Transition.leftToRight,
+      page: () => SettingScreen(),
+    ),
+    GetPage(
+      name: PageRoutes.MASSAGE,
+      transition: Transition.leftToRight,
+      page: () => MassageScreen(),
     ),
 
   ];
