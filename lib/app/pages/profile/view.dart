@@ -5,7 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mediaverse/app/pages/profile/logic.dart';
-import 'package:mediaverse/app/pages/profile/tab/subscribe_tab_screen.dart';
+import 'package:mediaverse/app/pages/profile/tab/ownser_tab_screen.dart';
+import 'package:mediaverse/app/pages/profile/tab/subs_tab_screen.dart';
 import 'package:mediaverse/app/pages/profile/widgets/card_profile_info.dart';
 import 'package:sizer/sizer.dart';
 
@@ -164,8 +165,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _tabController,
                   children: [
-                    SubscribeTabScreen(),
-                    Scaffold()
+SubscrTabScreen(),
+                    OwnerTabScreen(),
                   ],
                 ),
               ),

@@ -15,22 +15,35 @@ import '../all/view.dart';
 
 
 class TextTabScreen extends StatelessWidget {
-  HomeLogic logic = Get.find<HomeLogic>();
+  Function onClick;
+
+  Function onSendRequest;
+  RxList<dynamic> list = <dynamic>[].obs;
+
+  TextTabScreen(
+      {required this.onClick, required this.onSendRequest, required this.list});
+
+
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    return   FocusDetector(
-      onFocusGained: (){
-        if (logic.textRecently.length == 0) {
-          logic.sendTextRecentlyReuqest();
+    final theme = Theme
+        .of(context)
+        .colorScheme;
+    final textTheme = Theme
+        .of(context)
+        .textTheme;
+    return FocusDetector(
+      onFocusGained: () {
+        if (list.length == 0) {
+
+          onSendRequest.call();
         }
       },
       child: Scaffold(
           backgroundColor: theme.background,
           body: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
-            child:  SingleChildScrollView(
+            child: SingleChildScrollView(
               child: Column(
                 children: [
                   SizedBox(height: 13.h),
@@ -39,39 +52,42 @@ class TextTabScreen extends StatelessWidget {
                   SizedBox(height: 1.5.h),
                   SizedBox(
                     height: 40.w,
-                    child: ListView.builder(
-                        itemCount: logic.mostText.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return BestTextWidget(model: logic.mostText.elementAt(index));
-                        }),
+                    child: Obx(() {
+                      return ListView.builder(
+                          itemCount: list.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return BestTextWidget(model: list.elementAt(index));
+                          });
+                    }),
                   ),
                   SizedBox(height: 3.5.h),
-      
-                Obx(() {
-                  var isloadingImage = logic.textRecently.length==0;
-                  if(isloadingImage){
-                    return Container(
-                      child: Lottie.asset("assets/json/Y8IBRQ38bK.json",height: 10.h),
-                    );
-                  }
-                  return Container(
-                    height: 40.h,
-                    child: GridView.builder(
-                        itemCount: logic.textRecently.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2
-                        ), itemBuilder: (s,q){
-                      var item = logic.textRecently.elementAt(q);
-                      return AspectRatio(
-                        aspectRatio: 1/1,
-                        child: BestTextWidget(model: item),
+
+                  Obx(() {
+                    var isloadingImage = list.length == 0;
+                    if (isloadingImage) {
+                      return Container(
+                        child: Lottie.asset(
+                            "assets/json/Y8IBRQ38bK.json", height: 10.h),
                       );
-      
-                    }),
-                  );
-                })
-            
-      
+                    }
+                    return Container(
+                      height: 40.h,
+                      child: GridView.builder(
+                          itemCount: list.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2
+                          ), itemBuilder: (s, q) {
+                        var item = list.elementAt(q);
+                        return AspectRatio(
+                          aspectRatio: 1 / 1,
+                          child: BestTextWidget(model: item),
+                        );
+                      }),
+                    );
+                  })
+
+
                 ],
               ),
             ),

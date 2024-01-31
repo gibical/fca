@@ -16,7 +16,14 @@ import '../all/view.dart';
 
 class ImageTabScreen extends StatelessWidget {
 
-  HomeLogic logic = Get.find<HomeLogic>();
+  Function onClick;
+
+  Function onSendRequest;
+  RxList<dynamic> list = <dynamic>[].obs;
+
+  ImageTabScreen(
+      {required this.onClick, required this.onSendRequest, required this.list});
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +35,8 @@ class ImageTabScreen extends StatelessWidget {
         .textTheme;
     return FocusDetector(
       onFocusGained: () {
-        if (logic.imagesRecently.length == 0) {
-          logic.sendImageRecentlyReuqest();
+        if (list.length == 0) {
+          onSendRequest.call();
         }
       },
       child: Scaffold(
@@ -48,13 +55,15 @@ class ImageTabScreen extends StatelessWidget {
                 SizedBox(height: 1.5.h),
                 SizedBox(
                   height: 30.h,
-                  child: ListView.builder(
-                      itemCount: logic.mostImages.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return MostImageWidget(
-                            logic.mostImages.elementAt(index));
-                      }),
+                  child: Obx(() {
+                    return ListView.builder(
+                        itemCount: list.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return MostImageWidget(
+                              list.elementAt(index));
+                        });
+                  }),
                 ),
                 TitleExplore(theme: theme,
                     textTheme: textTheme,
@@ -64,19 +73,22 @@ class ImageTabScreen extends StatelessWidget {
                 SizedBox(height: 4.h,),
 
                 Obx(() {
-                var isloadingImage = logic.imagesRecently.length==0;
-                if(isloadingImage){
-                  return Container(
-                    child: Lottie.asset("assets/json/Y8IBRQ38bK.json",height: 10.h),
+                  var isloadingImage = list.length == 0;
+                  if (isloadingImage) {
+                    return Container(
+                      child: Lottie.asset(
+                          "assets/json/Y8IBRQ38bK.json", height: 10.h),
+                    );
+                  }
+                  return Column(
+                    children: [
+                      Container(child: CustomGridImageWidget(list.value)),
+                      Container(child: CustomGridImageWidget(list.value,
+                        isReversed: true,)),
+                      Container(child: CustomGridImageWidget(list,
+                        isReversed: false,)),
+                    ],
                   );
-                }
-                return Column(
-                  children: [
-                    Container(child: CustomGridImageWidget(logic.imagesRecently.value)),
-                    Container(child: CustomGridImageWidget(logic.imagesRecently.value,isReversed: true,)),
-                    Container(child: CustomGridImageWidget(logic.imagesRecently.value,isReversed: false,)),
-                  ],
-                );
                 })
               ],
             ),

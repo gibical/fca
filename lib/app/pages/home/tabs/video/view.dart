@@ -12,12 +12,23 @@ import '../../widgets/custom_grid_view_widget.dart';
 import '../all/view.dart';
 
 class VideoTabScreen extends StatelessWidget {
-  HomeLogic logic = Get.find<HomeLogic>();
+  Function onClick;
+
+  Function onSendRequest;
+  RxList<dynamic> list = <dynamic>[].obs;
+
+  VideoTabScreen(
+      {required this.onClick, required this.onSendRequest, required this.list});
+
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme
+        .of(context)
+        .colorScheme;
+    final textTheme = Theme
+        .of(context)
+        .textTheme;
     return Scaffold(
       backgroundColor: theme.background,
       body: Padding(
@@ -32,15 +43,18 @@ class VideoTabScreen extends StatelessWidget {
                   icon: "assets/icons/sound_icons.svg",
                   title: 'Best in month'),
               SizedBox(height: 1.5.h),
-              SizedBox(
-                height: 30.h,
-                child: ListView.builder(
-                    itemCount: logic.bestVideos.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return BestItemExploreWidget(logic.bestVideos.reversed.toList().elementAt(index));
-                    }),
-              ),
+              Obx(() {
+                return SizedBox(
+                  height: 30.h,
+                  child: ListView.builder(
+                      itemCount: list.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return BestItemExploreWidget(list.reversed
+                            .toList().elementAt(index));
+                      }),
+                );
+              }),
               SizedBox(height: 2.h),
               TitleExplore(theme: theme,
                   textTheme: textTheme,
@@ -52,9 +66,10 @@ class VideoTabScreen extends StatelessWidget {
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: logic.bestVideos.length,
+                itemCount: list.length,
                 itemBuilder: (context, index) {
-                  return ItemVideoTabScreen(logic.bestVideos.reversed.toList().elementAt(index));
+                  return ItemVideoTabScreen(
+                      list.reversed.toList().elementAt(index));
                 },
               ),
               SizedBox(height: 7.h),

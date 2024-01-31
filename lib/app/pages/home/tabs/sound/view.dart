@@ -16,7 +16,14 @@ import '../all/view.dart';
 
 
 class SoundTabScreen extends StatelessWidget {
-  HomeLogic logic = Get.find<HomeLogic>();
+  Function onClick;
+
+  Function onSendRequest;
+  RxList<dynamic> list = <dynamic>[].obs;
+
+  SoundTabScreen(
+      {required this.onClick, required this.onSendRequest, required this.list});
+
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +31,8 @@ class SoundTabScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return FocusDetector(
       onFocusGained: () {
-        if (logic.songsRecently.length == 0) {
-          logic.sendSoundRecentlyReuqest();
+        if (list.length == 0) {
+          onSendRequest.call();
         }
       },
       child: Scaffold(
@@ -45,10 +52,10 @@ class SoundTabScreen extends StatelessWidget {
                 SizedBox(
                   height: 30.h,
                   child: ListView.builder(
-                      itemCount: logic.mostSongs.length,
+                      itemCount: list.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return BestItemSongsWidget(logic.mostSongs.reversed.toList().elementAt(index));
+                        return BestItemSongsWidget(list.reversed.toList().elementAt(index));
                       }),
                 ),
                 TitleExplore(theme: theme,
@@ -59,7 +66,7 @@ class SoundTabScreen extends StatelessWidget {
                 SizedBox(height: 4.h,),
 
                 Obx(() {
-                  var isloadingImage = logic.songsRecently.length==0;
+                  var isloadingImage = list.length==0;
                   if(isloadingImage){
                     return Container(
                       child: Lottie.asset("assets/json/Y8IBRQ38bK.json",height: 10.h),
@@ -71,7 +78,7 @@ class SoundTabScreen extends StatelessWidget {
                         itemCount: 4,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2
                     ), itemBuilder: (s,q){
-                          var item = logic.songsRecently.elementAt(q);
+                          var item = list.elementAt(q);
                           return AspectRatio(
                             aspectRatio: 1/1,
                             child: Container(

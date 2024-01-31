@@ -1,9 +1,9 @@
 class FromJsonGetAllAsstes {
   FromJsonGetAllAsstes({
-      List<Texts>? texts, 
-      List<Images>? images, 
-      List<Audios>? audios, 
-      List<Videos>? videos,}){
+      List<dynamic>? texts,
+      List<dynamic>? images,
+      List<dynamic>? audios,
+      List<dynamic>? videos,}){
     _texts = texts;
     _images = images;
     _audios = audios;
@@ -14,45 +14,45 @@ class FromJsonGetAllAsstes {
     if (json['texts'] != null) {
       _texts = [];
       json['texts'].forEach((v) {
-        _texts?.add(Texts.fromJson(v));
+        _texts?.add(v);
       });
     }
     if (json['images'] != null) {
       _images = [];
       json['images'].forEach((v) {
-        _images?.add(Images.fromJson(v));
+        _images?.add(v);
       });
     }
     if (json['audios'] != null) {
       _audios = [];
       json['audios'].forEach((v) {
-        _audios?.add(Audios.fromJson(v));
+        _audios?.add(v);
       });
     }
     if (json['videos'] != null) {
       _videos = [];
       json['videos'].forEach((v) {
-        _videos?.add(Videos.fromJson(v));
+        _videos?.add(v);
       });
     }
   }
-  List<Texts>? _texts;
-  List<Images>? _images;
-  List<Audios>? _audios;
-  List<Videos>? _videos;
-FromJsonGetAllAsstes copyWith({  List<Texts>? texts,
-  List<Images>? images,
-  List<Audios>? audios,
-  List<Videos>? videos,
+  List<dynamic>? _texts;
+  List<dynamic>? _images;
+  List<dynamic>? _audios;
+  List<dynamic>? _videos;
+FromJsonGetAllAsstes copyWith({  List<dynamic>? texts,
+  List<dynamic>? images,
+  List<dynamic>? audios,
+  List<dynamic>? videos,
 }) => FromJsonGetAllAsstes(  texts: texts ?? _texts,
   images: images ?? _images,
   audios: audios ?? _audios,
   videos: videos ?? _videos,
 );
-  List<Texts>? get texts => _texts;
-  List<Images>? get images => _images;
-  List<Audios>? get audios => _audios;
-  List<Videos>? get videos => _videos;
+  List<dynamic>? get texts => _texts;
+  List<dynamic>? get images => _images;
+  List<dynamic>? get audios => _audios;
+  List<dynamic>? get videos => _videos;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

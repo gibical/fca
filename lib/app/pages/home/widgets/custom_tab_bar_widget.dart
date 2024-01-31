@@ -2,8 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/font_style.dart';
@@ -70,13 +72,33 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
                 controller: _tabController,
                 children: [
                   AllTabScreen(),
-                  ImageTabScreen(),
-                  VideoTabScreen(),
+                  ImageTabScreen(
+                    onClick: (){},onSendRequest: (){
+                      logic.sendImageRecentlyReuqest();
+                  },list: logic.imagesRecently,
+                  ),
+                  VideoTabScreen(
+                    onSendRequest: (){
+
+                    },onClick: (){
+
+                  },list:convertToRxList(logic.bestVideos) ,
+                  ),
                   SoundTabScreen(
+                    onSendRequest: (){
+                      logic.sendSoundRecentlyReuqest();
+
+                    },onClick: (){
+
+                  },list:convertToRxList(logic.mostSongs) ,
                     ),
                   TextTabScreen(
+          onSendRequest: (){
+            logic.sendTextRecentlyReuqest();
 
+          },onClick: (){
 
+          },list:convertToRxList(logic.textRecently) ,
                   ),
                 ],
               ),
@@ -161,5 +183,8 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
         ],
       ),
     );
+  }
+  RxList<T> convertToRxList<T>(List<T> normalList) {
+    return RxList<T>(normalList);
   }
 }
