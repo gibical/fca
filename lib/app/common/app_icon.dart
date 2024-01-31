@@ -32,5 +32,6 @@ class AppIcon{
   static const  shareIcon = 'assets/icons/share.svg';
   static const  wallet1Icon = 'assets/icons/wallet1.svg';
   static const  account1Icon = 'assets/icons/account1.svg';
+  static const  playIcon = 'assets/icons/play.svg';
 
 }
