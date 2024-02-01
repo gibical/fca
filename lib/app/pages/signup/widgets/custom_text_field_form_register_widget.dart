@@ -10,13 +10,16 @@ import '../../../common/app_color.dart';
 
 
 
-Widget CustomTextFieldRegisterWidget({required String hintText ,required String titleText , required bool needful  , required context } ){
+Widget CustomTextFieldRegisterWidget({required String hintText ,required String titleText , required bool needful  , required context ,
+
+TextEditingController? textEditingController} ){
   final textTheme = Theme.of(context).textTheme;
   return     Padding(
     padding: const EdgeInsets.symmetric(vertical: 10 , horizontal: 25),
     child: SizedBox(
       height: 53,
       child: TextFormField(
+        controller: textEditingController??TextEditingController(),
         showCursor: false,
 
         style: textTheme.bodyMedium?.copyWith(

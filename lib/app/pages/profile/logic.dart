@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/RequestInterface.dart';
 import 'package:mediaverse/app/common/app_api.dart';
+import 'package:mediaverse/app/common/app_config.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetAllAsstes.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetAssets.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetProfile.dart';
@@ -52,6 +53,7 @@ class ProfileController extends GetxController implements RequestInterface {
   var isloading7 = false.obs;
   var isloading8 = false.obs;
   var isloading9 = false.obs;
+  var isloadingEdit = false.obs;
 
   @override
   void onReady() {
@@ -115,6 +117,9 @@ class ProfileController extends GetxController implements RequestInterface {
         break;
       case 12:
         parseJsonFromGetSubsTexts(source);
+        break;
+       case 13:
+        parseJsonFromEditText(source);
         break;
     }
   }
@@ -262,5 +267,22 @@ class ProfileController extends GetxController implements RequestInterface {
 
     if (subText.isEmpty) emptySubText = true;
     isloading9(false);
+  }
+
+  void sendEditRequest(String text, String text2, String text3) {
+    isloadingEdit(true);
+
+    var body = {
+      "first_name": text,
+      "last_name": text2,
+      "email": text3,
+
+    };
+    apiRequster.request("profile", ApiRequster.MHETOD_PUT, 13,body: body);
+  }
+
+  void parseJsonFromEditText(source) {
+    isloadingEdit(false);
+    Constant.showMessege(" Profile Update Successful ");
   }
 }

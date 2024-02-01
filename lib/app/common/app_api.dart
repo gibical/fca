@@ -50,6 +50,7 @@ class ApiRequster {
   static int MHETOD_POST = 2;
   static int MHETOD_DELETE = 4;
   static int MHETOD_PATCH = 3;
+  static int MHETOD_PUT = 5;
   String mainUrl = Constant.HTTP_HOST;
 
   final encoding = Encoding.getByName('utf-8');
@@ -173,6 +174,32 @@ class ApiRequster {
           var response = await gt.Dio(gt.BaseOptions(
             headers: headers,
           )).patch(
+            daynamicUrl ? endPointUrl : mainUrl + endPointUrl,
+            data: jsonEncode(body),
+          );
+          if (develperModel) print("uri  $reqCode = $uri");
+
+          final statusCode = response.statusCode;
+          if (response.statusCode == 200 || response.statusCode == 201) {
+            String responseBody = response.data.toString();
+            if (develperModel)
+              if (develperModel) {
+                print("onSucces body $reqCode = ${jsonEncode(response.data)}");
+              }
+            _requestInterface.onSucces(jsonEncode(response.data), reqCode);
+          } else {
+            _requestInterface.onError(
+                statusCode.toString(), reqCode, jsonEncode(response.data));
+            if (develperModel)
+              if (develperModel) {
+                print("onError Body $reqCode = " + response.data);
+              }
+          }
+          break;
+        case 5:
+          var response = await gt.Dio(gt.BaseOptions(
+            headers: headers,
+          )).put(
             daynamicUrl ? endPointUrl : mainUrl + endPointUrl,
             data: jsonEncode(body),
           );

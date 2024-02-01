@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/massage/logic.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetMesseges.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetLogins.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetSessions.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../common/app_color.dart';
+import '../../common/app_icon.dart';
+import '../../common/font_style.dart';
+import 'logic.dart';
 
-class MassageScreen extends StatelessWidget {
-  final logic = Get.put(MessegeController());
+class LoginsPage extends StatelessWidget {
 
+    final logic = Get.put(LoginsLogic());
+    final state = Get.find<LoginsLogic>().state;
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -35,15 +37,12 @@ class MassageScreen extends StatelessWidget {
             Get.back();
           },
               icon: SvgPicture.asset(AppIcon.backIcon)),
-          title: Text('Massage', style: FontStyleApp.titleMedium.copyWith(
+          title: Text('Log ins', style: FontStyleApp.titleMedium.copyWith(
               color: AppColor.whiteColor
           ),),
         ),
-        body: logic.list.isEmpty?  Container(
-            padding: EdgeInsets.zero,
-            child: Center(child: Text("No item to show"))):CustomScrollView(
+        body: CustomScrollView(
           slivers: [
-
             SliverList.builder(
                 itemCount: logic.list.length,
                 itemBuilder: (context, index) {
@@ -55,11 +54,11 @@ class MassageScreen extends StatelessWidget {
     });
   }
 
-  Padding MassageItemWidget(MessegesModel elementAt) {
+  Padding MassageItemWidget(dynamic elementAt) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0.6.h),
       child: Container(
-        height: 11.5.h,
+
         width: double.infinity,
         decoration: BoxDecoration(
             color: Color(0xff4E4E61).withOpacity(0.3),
@@ -71,6 +70,7 @@ class MassageScreen extends StatelessWidget {
             )
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
@@ -80,14 +80,10 @@ class MassageScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 6.w,),
               child: Row(
                 children: [
-                  Text('${elementAt.message}', style: FontStyleApp.bodyMedium.copyWith(
+                  Text(' ${elementAt['ip']}', style: FontStyleApp.bodyMedium.copyWith(
                       color: Colors.white
                   ),),
-                  Spacer(),
-                  Text(
-                    'April 26  13:23', style: FontStyleApp.bodySmall.copyWith(
-                      color: Colors.grey.withOpacity(0.3)
-                  ),),
+
                 ],
               ),
             ),
@@ -97,10 +93,13 @@ class MassageScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 6.w),
               child: Text(
-               elementAt.createdAt??"",
+                elementAt['created_at'],
                 style: FontStyleApp.bodyMedium.copyWith(
                   color: Colors.grey.withOpacity(0.7),
                 ),),
+            ),
+            SizedBox(
+              height: 1.5.h,
             ),
           ],
         ),

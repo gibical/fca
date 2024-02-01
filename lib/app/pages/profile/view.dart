@@ -12,6 +12,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
 import '../../common/app_icon.dart';
+import '../../common/app_route.dart';
 import '../../common/font_style.dart';
 import '../channel/tab/channel_tab.dart';
 import '../channel/widgets/custom_calendar_widget.dart';
@@ -103,24 +104,50 @@ class _ProfileScreenState extends State<ProfileScreen>
               Positioned(
                 bottom: 7.5.h,
                 left: 29.w,
-                child: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('${logic.model.firstName??""} ${logic.model.lastName??""}', style: FontStyleApp.titleSmall
-                            .copyWith(
-                          color: AppColor.whiteColor,
-                          fontWeight: FontWeight.w600,
-                        ),),
-                        Text('${logic.model.email??""} ', style: FontStyleApp
-                            .bodyMedium.copyWith(
-                          color: AppColor.whiteColor.withOpacity(0.2),
-                        ),),
-                      ],
-                    ),
+                child: Container(
+                  width: 100.w,
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${logic.model.firstName??""} ${logic.model.lastName??""}', style: FontStyleApp.titleSmall
+                              .copyWith(
+                            color: AppColor.whiteColor,
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w600,
+                          ),),
 
-                  ],
+                          Text('${logic.model.email??""} ', style: FontStyleApp
+                              .bodyMedium.copyWith(
+                            color: AppColor.whiteColor.withOpacity(0.2),
+                            fontSize: 8.sp,
+
+                          ),),
+                        ],
+                      ),
+                    GestureDetector(
+                        onTap: (){
+                          Get.toNamed(PageRoutes.SETTING);
+                        },
+                        child: Container(
+                          width: 45,
+                          height: 45,
+                          child: Transform.scale(
+                              scale: 0.5,
+                              child: SvgPicture.asset(AppIcon.settingIcon , height:50,)),
+                          decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.4),
+                              borderRadius: BorderRadius.circular(10.sp),
+                              border: Border.all(
+                                  color: Colors.grey.withOpacity(0.4)
+                              )
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
                 ),
               ),
 

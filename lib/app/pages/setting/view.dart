@@ -5,14 +5,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/app_route.dart';
+import 'package:mediaverse/app/pages/profile/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
 import '../../common/font_style.dart';
+import 'account_page.dart';
 
 class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
 
+  ProfileController logic = Get.find<ProfileController>();
 
 
   @override
@@ -83,12 +85,12 @@ class SettingScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 1.h),
-            Text('Ma.nakhli' , style: FontStyleApp.titleSmall.copyWith(
+            Text('${logic.model.firstName??""} ${logic.model.lastName??""}' , style: FontStyleApp.titleSmall.copyWith(
               color: AppColor.whiteColor,
               fontWeight: FontWeight.w600,
             ),),
             SizedBox(height: 0.5.h),
-            Text('Manakhli@gmail.com' , style: FontStyleApp.bodyMedium.copyWith(
+            Text('${logic.model.email??""} ', style: FontStyleApp.bodyMedium.copyWith(
               color: AppColor.whiteColor.withOpacity(0.2),
             ),),
             SizedBox(height: 3.h),
@@ -100,11 +102,11 @@ class SettingScreen extends StatelessWidget {
                   children: [
                     ItemSettingScreenWidget(
                       onTap: (){
-                        print('Account');
+                       Get.to(AccountPage());
                       },
                         icon: AppIcon.account1Icon,
                         title: 'Account',
-                        subTitle: 'Ma.nakhli',
+                        subTitle: '${logic.model.username??""} ',
                         iconSize: 21,
                     ),
                     ItemSettingScreenWidget(icon: AppIcon.emailIcon,
@@ -112,7 +114,7 @@ class SettingScreen extends StatelessWidget {
                       onTap: (){
                         Get.toNamed(PageRoutes.MASSAGE);
                       },
-                      subTitle: '2' ,
+                      subTitle: '۰' ,
                       iconSize: 18,
                       boxMassage: true,
                     ),
@@ -191,7 +193,7 @@ class ItemSettingScreenWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
       child: SizedBox(
         height: 8.h,
