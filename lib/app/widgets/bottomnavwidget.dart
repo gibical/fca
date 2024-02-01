@@ -23,7 +23,6 @@ class BottomNavWidget extends GetView<WrapperController> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ClipRRect(
-
               borderRadius: BorderRadius.circular(18),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaY: 9, sigmaX: 9),

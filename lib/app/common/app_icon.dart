@@ -22,5 +22,16 @@ class AppIcon{
   static const  profiledeIcon = 'assets/icons/profilede.svg';
   static const  channeldeIcon = 'assets/icons/channelde.svg';
   static const  exploredeIcon = 'assets/icons/explorede.svg';
+  static const  chipIcon = 'assets/icons/Chip.svg';
+  static const  cardIcon = 'assets/icons/card.svg';
+  static const  mastercardIcon = 'assets/icons/mastercard.svg';
+  static const  settingIcon = 'assets/icons/setting.svg';
+  static const  backIcon = 'assets/icons/back.svg';
+  static const emailIcon = 'assets/icons/email.svg';
+  static const  AnalyticsIcon = 'assets/icons/Analytics.svg';
+  static const  shareIcon = 'assets/icons/share.svg';
+  static const  wallet1Icon = 'assets/icons/wallet1.svg';
+  static const  account1Icon = 'assets/icons/account1.svg';
+  static const  playIcon = 'assets/icons/play.svg';
 
 }
