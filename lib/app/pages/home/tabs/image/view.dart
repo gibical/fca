@@ -87,6 +87,7 @@ class ImageTabScreen extends StatelessWidget {
                         isReversed: true,)),
                       Container(child: CustomGridImageWidget(list,
                         isReversed: false,)),
+                      SizedBox(height: 15.5.h),
                     ],
                   );
                 })

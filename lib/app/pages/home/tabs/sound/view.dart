@@ -113,7 +113,8 @@ class SoundTabScreen extends StatelessWidget {
 
                     }),
                   );
-                })
+                }),
+                SizedBox(height: 10.5.h),
               ],
             ),
           ),

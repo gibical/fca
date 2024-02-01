@@ -81,6 +81,7 @@ class AllTabScreen extends StatelessWidget {
                       return BestItemSongsWidget(logic.mostSongs.elementAt(index));
                     }),
               ),
+              SizedBox(height: 13.5.h),
             ],
           ),
         ),

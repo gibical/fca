@@ -73,8 +73,6 @@ class VideoTabScreen extends StatelessWidget {
                 },
               ),
               SizedBox(height: 7.h),
-              SizedBox(height: 18.5), // Replaced SliverPadding
-              SizedBox(height: 3.h),
             ],
           ),
         ),

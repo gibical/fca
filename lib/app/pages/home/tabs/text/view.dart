@@ -85,8 +85,7 @@ class TextTabScreen extends StatelessWidget {
                         );
                       }),
                     );
-                  })
-
+                  }),
 
                 ],
               ),
