@@ -90,7 +90,9 @@ class AccountPage extends StatelessWidget {
                   width: double.infinity,
                   child: Column(
                     children: [
-                      ItemAccountScreenWidget(title: 'Sign out', onTap: () {  },),
+                      ItemAccountScreenWidget(title: 'Sign out', onTap: () {
+                        _logOut();
+                      },),
           
                     ],
                   ),
@@ -111,6 +113,10 @@ class AccountPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _logOut() async{
+
   }
 }
 
