@@ -7,7 +7,9 @@ import 'package:sizer/sizer.dart';
 
 import '../../../../common/app_color.dart';
 import '../../../../common/app_icon.dart';
+import '../../../../common/app_route.dart';
 import '../../../../common/font_style.dart';
+import '../../../detail/logic.dart';
 import '../../logic.dart';
 import '../../widgets/bset_item_explore_widget.dart';
 import '../../widgets/custom_grid_view_widget.dart';
@@ -55,7 +57,14 @@ class SoundTabScreen extends StatelessWidget {
                       itemCount: list.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return BestItemSongsWidget(list.reversed.toList().elementAt(index));
+                        return GestureDetector(
+                            onTap: (){
+                              Get.find<DetailController>().selectedItem.value = list.reversed
+                                  .toList().elementAt(index);
+
+                              Get.toNamed(PageRoutes.DETAILMUSIC);
+                            },
+                            child: BestItemSongsWidget(list.reversed.toList().elementAt(index)));
                       }),
                 ),
                 TitleExplore(theme: theme,
