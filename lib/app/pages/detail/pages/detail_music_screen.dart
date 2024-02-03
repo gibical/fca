@@ -31,8 +31,9 @@ class DetailMusicScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Stack(
                   children: [
+
                     Container(
-                      height: 46.5.h,
+                      height: 42.5.h,
                       decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.1),
                           borderRadius: BorderRadius.only(
@@ -44,7 +45,13 @@ class DetailMusicScreen extends StatelessWidget {
                                   color: Colors.white.withOpacity(0.2)))),
                     ),
                     Positioned(
-                      top: 5.h,
+                        top: 5.5.h,
+                        left: 3.w,
+                        child: IconButton(onPressed: (){
+                          Get.back();
+                        }, icon: SvgPicture.asset(AppIcon.backIcon))),
+                    Positioned(
+                      top: 2.h,
                       left: 0.w,
                       right: 0,
                       bottom: 0,
@@ -59,8 +66,8 @@ class DetailMusicScreen extends StatelessWidget {
                             MainAxisAlignment.center,
                             children: [
                               Container(
-                                  width: 50.w,
-                                  height:25.h,
+                                  width: 44.w,
+                                  height:22.h,
                                   decoration: BoxDecoration(
                                       color: Colors.white.withOpacity(0.1),
                                       border: Border.symmetric(horizontal: BorderSide(
@@ -114,10 +121,10 @@ class DetailMusicScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(
-                                height: 3.h,
+                                height: 2.3.h,
                               ),
                               SizedBox(
-                                width: 45.w,
+                                width: 50.w,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -139,7 +146,7 @@ class DetailMusicScreen extends StatelessWidget {
 
                                     Spacer(),
                                     Text(
-                                      '8:15',
+                                      'Report',
                                       style: FontStyleApp.bodySmall
                                           .copyWith(
                                           color: AppColor.grayLightColor
