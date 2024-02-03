@@ -35,7 +35,7 @@ class DetailMusicScreen extends StatelessWidget {
                     Container(
                       height: 42.5.h,
                       decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withOpacity(0.05),
                           borderRadius: BorderRadius.only(
                             bottomRight: Radius.circular(40.sp),
                             bottomLeft: Radius.circular(40.sp),
@@ -117,7 +117,7 @@ class DetailMusicScreen extends StatelessWidget {
                                 '${selectedItem['name']}',
                                 style: GoogleFonts.inter(
                                   color: Colors.white,
-                                  fontSize: selectedItem['name'].length > 15 ? 17 : 21,
+                                  fontSize: selectedItem['name'].length > 15 ? 16 : 20,
                                 ),
                               ),
                               SizedBox(
@@ -138,20 +138,19 @@ class DetailMusicScreen extends StatelessWidget {
                                       (selectedItem['asset']['user']['username'].toString().length > 10)
                                           ? selectedItem['asset']['user']['username'].toString().substring(0, 10) + '...'
                                           : selectedItem['asset']['user']['username'],
-                                      style: FontStyleApp.bodySmall.copyWith(
-                                        color: AppColor.grayLightColor.withOpacity(0.8),
+                                      style: GoogleFonts.inter(
+                                        color: Colors.white.withOpacity(0.5),
                                         fontSize: 13,
-                                      ),
+                                      )
                                     ),
 
                                     Spacer(),
                                     Text(
                                       'Report',
-                                      style: FontStyleApp.bodySmall
-                                          .copyWith(
-                                          color: AppColor.grayLightColor
-                                              .withOpacity(0.8),
-                                          fontSize: 13),
+                                      style: GoogleFonts.inter(
+                                        color: Colors.white.withOpacity(0.5),
+                                        fontSize: 13,
+                                      )
                                     ),
                                   ],
                                 ),
@@ -175,16 +174,19 @@ class DetailMusicScreen extends StatelessWidget {
                       SizedBox(
                         height: 2.h,
                       ),
-                      Text('${selectedItem['name']}', style: FontStyleApp.titleMedium.copyWith(
-                          color: AppColor.whiteColor,
-                          fontWeight: FontWeight.w600
-                      ),),
+
                       SizedBox(
                         height: 1.h,
                       ),
-                      Text('${selectedItem['description']}' , style: FontStyleApp.bodyMedium.copyWith(
-                        color: AppColor.grayLightColor.withOpacity(0.8),
-                      ),),
+                      Padding(
+                        padding:  EdgeInsets.symmetric(horizontal: 2.w),
+                        child: Text('${selectedItem['description']}' ,
+                          style: GoogleFonts.inter(
+                            fontSize: 14.5,
+                            color: Colors.white.withOpacity(0.5)
+                          )
+                        ),
+                      ),
 
                       SizedBox(
                         height: 2.h,
