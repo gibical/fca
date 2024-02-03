@@ -9,6 +9,8 @@ import 'package:mediaverse/app/pages/home/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../common/app_color.dart';
+import '../../../../common/app_route.dart';
+import '../../../detail/logic.dart';
 import '../../widgets/bset_item_explore_widget.dart';
 import '../../widgets/custom_grid_view_widget.dart';
 import '../all/view.dart';
@@ -57,7 +59,14 @@ class TextTabScreen extends StatelessWidget {
                           itemCount: list.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            return BestTextWidget(model: list.elementAt(index));
+                            return GestureDetector(
+                                onTap: (){
+                                  Get.find<DetailController>().selectedItem.value = list
+                                      .toList().elementAt(index);
+
+                                  Get.toNamed(PageRoutes.DETAILTEXT);
+                                },
+                                child: BestTextWidget(model: list.elementAt(index)));
                           });
                     }),
                   ),

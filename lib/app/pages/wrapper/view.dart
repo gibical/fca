@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:mediaverse/app/common/app_color.dart';
+import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/wallet/view.dart';
 
 import '../../widgets/bottomnavwidget.dart';
@@ -29,7 +30,9 @@ class MainWrapperScreen extends GetView<WrapperController> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
           splashColor: Colors.transparent,
           backgroundColor: AppColor.primaryLightColor,
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(PageRoutes.UPLOAD);
+          },
           child: Icon(
             Icons.add,
             color: Theme.of(context).colorScheme.onBackground,

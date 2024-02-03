@@ -38,19 +38,19 @@ class BestItemExploreWidget extends GetView<HomeLogic> {
             child: Stack(
               alignment: Alignment.bottomRight,
               children: [
-                SizedBox.expand(
-                  child: (elementAt['asset']['thumbnails'].toString().length>3)?Image.network("${elementAt['asset']['thumbnails']['336x366']}", fit: BoxFit.cover)
-        :Image.asset("assets/images/tum_video.jpeg", fit: BoxFit.cover)
-    ,
-                ),
+    //
+
+    //             ),
                 Container(
                   width: 190,
                   height: 190,
                   decoration: BoxDecoration(
+                    image: DecorationImage(image: NetworkImage("${elementAt['asset']['thumbnails']['336x366']}",) ,  fit: BoxFit.cover),
                       borderRadius: BorderRadius.all(Radius.circular(20.sp)),
                     gradient: LinearGradient(
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
+
                         colors: [
                           Colors.black.withOpacity(0.6),
                           Colors.black.withOpacity(0.4),

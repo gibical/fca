@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/home/widgets/card_live_widget.dart';
 import 'package:mediaverse/app/pages/home/widgets/custom_grid_image_widget.dart';
 import 'package:mediaverse/app/pages/home/widgets/item_video_tab_screen.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../common/app_color.dart';
+import '../../../detail/logic.dart';
+import '../../../detail/view.dart';
 import '../../logic.dart';
 import '../../widgets/bset_item_explore_widget.dart';
 import '../../widgets/custom_grid_view_widget.dart';
@@ -50,8 +53,16 @@ class VideoTabScreen extends StatelessWidget {
                       itemCount: list.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return BestItemExploreWidget(list.reversed
-                            .toList().elementAt(index));
+                        return GestureDetector(
+                          onTap: (){
+                            Get.find<DetailController>().selectedItem.value = list.reversed
+                                .toList().elementAt(index);
+
+                            Get.toNamed(PageRoutes.DETAILVIDEO);
+                          },
+                          child: BestItemExploreWidget(list.reversed
+                              .toList().elementAt(index)),
+                        );
                       }),
                 );
               }),
@@ -68,8 +79,16 @@ class VideoTabScreen extends StatelessWidget {
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: list.length,
                 itemBuilder: (context, index) {
-                  return ItemVideoTabScreen(
-                      list.reversed.toList().elementAt(index));
+                  return GestureDetector(
+                    onTap: (){
+                      Get.find<DetailController>().selectedItem.value = list.reversed
+                          .toList().elementAt(index);
+
+                      Get.toNamed(PageRoutes.DETAILVIDEO);
+                    },
+                    child: ItemVideoTabScreen(
+                        list.reversed.toList().elementAt(index)),
+                  );
                 },
               ),
               SizedBox(height: 7.h),

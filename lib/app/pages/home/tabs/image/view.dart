@@ -7,7 +7,9 @@ import 'package:mediaverse/app/pages/home/tabs/image/most_image_widget.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../common/app_color.dart';
+import '../../../../common/app_route.dart';
 import '../../../../common/font_style.dart';
+import '../../../detail/logic.dart';
 import '../../widgets/bset_item_explore_widget.dart';
 import '../../widgets/custom_grid_image_widget.dart';
 import '../../widgets/custom_grid_view_widget.dart';
@@ -60,8 +62,16 @@ class ImageTabScreen extends StatelessWidget {
                         itemCount: list.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          return MostImageWidget(
-                              list.elementAt(index));
+                          return GestureDetector(
+                            onTap: (){
+                              Get.find<DetailController>().selectedItem.value = list.reversed
+                                  .toList().elementAt(index);
+
+                              Get.toNamed(PageRoutes.DETAILIMAGE);
+                            },
+                            child: MostImageWidget(
+                                list.reversed.elementAt(index)),
+                          );
                         });
                   }),
                 ),
@@ -83,10 +93,10 @@ class ImageTabScreen extends StatelessWidget {
                   return Column(
                     children: [
                       Container(child: CustomGridImageWidget(list.value)),
-                      Container(child: CustomGridImageWidget(list.value,
-                        isReversed: true,)),
-                      Container(child: CustomGridImageWidget(list,
-                        isReversed: false,)),
+                      // Container(child: CustomGridImageWidget(list.value,
+                      //   isReversed: true,)),
+                      // Container(child: CustomGridImageWidget(list,
+                      //   isReversed: false,)),
                       SizedBox(height: 15.5.h),
                     ],
                   );

@@ -50,6 +50,7 @@ dependencies:
   focus_detector: any
   dotted_border: ^2.1.0
   pointycastle: 3.7.3
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:
