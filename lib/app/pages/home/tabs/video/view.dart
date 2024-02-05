@@ -50,19 +50,12 @@ class VideoTabScreen extends StatelessWidget {
                 return SizedBox(
                   height: 30.h,
                   child: ListView.builder(
-                      itemCount: list.length,
+                      itemCount: list.reversed.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: (){
-                            Get.find<DetailController>().selectedItem.value = list.reversed
-                                .toList().elementAt(index);
-
-                            Get.toNamed(PageRoutes.DETAILVIDEO);
-                          },
-                          child: BestItemExploreWidget(list.reversed
-                              .toList().elementAt(index)),
-                        );
+                        return  BestItemExploreWidget(
+                            list.reversed
+                                .toList().elementAt(index));
                       }),
                 );
               }),
@@ -80,15 +73,17 @@ class VideoTabScreen extends StatelessWidget {
                 itemCount: list.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: (){
-                      Get.find<DetailController>().selectedItem.value = list.reversed
-                          .toList().elementAt(index);
-
-                      Get.toNamed(PageRoutes.DETAILVIDEO);
+                    onTap: () {
+                      int itemId = list[index]['id'];
+                      print(itemId);
+                      Get.toNamed(PageRoutes.DETAILVIDEO, arguments: {'id': itemId});
                     },
                     child: ItemVideoTabScreen(
-                        list.reversed.toList().elementAt(index)),
+                      list[index],
+                    ),
                   );
+
+
                 },
               ),
               SizedBox(height: 7.h),

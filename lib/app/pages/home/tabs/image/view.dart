@@ -62,15 +62,13 @@ class ImageTabScreen extends StatelessWidget {
                         itemCount: list.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          return GestureDetector(
+                          return  GestureDetector(
                             onTap: (){
-                              Get.find<DetailController>().selectedItem.value = list.reversed
-                                  .toList().elementAt(index);
-
-                              Get.toNamed(PageRoutes.DETAILIMAGE);
+                              int itemId = list[index]['id'];
+                              Get.toNamed(PageRoutes.DETAILIMAGE, arguments: {'id': itemId});
                             },
                             child: MostImageWidget(
-                                list.reversed.elementAt(index)),
+                                list.elementAt(index)),
                           );
                         });
                   }),

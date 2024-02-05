@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:mediaverse/app/pages/detail/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
 import '../../../common/app_icon.dart';
 
-Widget BuyCardWidget({required   price }){
+Widget BuyCardWidget({required   price ,required title , required  selectedItem }){
   return Container(
     height: 22.h,
     decoration: BoxDecoration(
@@ -33,7 +35,7 @@ Widget BuyCardWidget({required   price }){
                 padding: const EdgeInsets.symmetric(horizontal: 18),
                 child: Row(
                   children: [
-                    Text("Monthly: ${price}" , style: TextStyle(
+                    Text("$title: ${price}" , style: TextStyle(
                         color: AppColor.whiteColor,
                         fontSize: 18,
                         fontWeight: FontWeight.w500
@@ -61,11 +63,9 @@ Widget BuyCardWidget({required   price }){
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: (){
-                  if (AppTheme().getCurrentTheme() == ThemeMode.light) {
-                    AppTheme.changeTheme(ThemeMode.dark);
-                  } else {
-                    AppTheme.changeTheme(ThemeMode.light);
-                  }
+                  Get.find<DetailController>().buyAsset(selectedItem['asset_id']);
+
+
                 },
                 child: Text('Buy' , style: TextStyle(
                     color: AppColor.whiteColor,

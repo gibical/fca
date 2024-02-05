@@ -7,157 +7,132 @@ import 'package:mediaverse/app/pages/detail/widgets/card_mark_singlepage_widget.
 import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../common/app_route.dart';
 import '../logic.dart';
+import '../widgets/custom_comment_single_pageWidget.dart';
 
 class DetailImageScreen extends StatelessWidget {
   const DetailImageScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
+    final imageController = Get.find<DetailController>();
     return Scaffold(
 
       backgroundColor: AppColor.primaryDarkColor,
-      bottomNavigationBar: BuyCardWidget(price: 20),
-      body: GetBuilder<DetailController>(
-        builder: (controller){
-          var selectedItem = controller.selectedItem.value;
-          return CustomScrollView(
-            slivers: [
-              CustomAppBarVideoAndImageDetailWidget(selectedItem: selectedItem, isVideo: false,),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 6.5.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      Text('${selectedItem['name']}', style: FontStyleApp.titleMedium.copyWith(
-                          color: AppColor.whiteColor,
-                          fontWeight: FontWeight.w600
-                      ),),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      Text('${selectedItem['description']}' , style: FontStyleApp.bodyMedium.copyWith(
-                        color: AppColor.grayLightColor.withOpacity(0.8),
-                      ),),
+      bottomNavigationBar: Obx(() {
+          if (imageController.isLoadingMusic.value) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            if (imageController.imageDetails != null &&
+                imageController.imageDetails!.containsKey('asset') &&
+                imageController.imageDetails!['asset'] != null &&
+                imageController.imageDetails!['asset'].containsKey('plan')) {
+              int plan = imageController.imageDetails!['asset']['plan'];
+              print(plan);
+              if (plan == 1) {
+                return SizedBox();
+              } else if (plan == 2 || plan == 3) {
+                return BuyCardWidget(
+                    selectedItem: imageController.imageDetails,
+                    title: imageController.imageDetails!['asset']['plan'] == 2
+                        ? 'Ownership'
+                        : imageController.imageDetails!['asset']['plan'] == 3
+                        ? 'Subscribe'
+                        : '',
+                    price: imageController.imageDetails!['asset']['price']
+                );
 
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius:3.w,
-                          ),
-                          SizedBox(
-                            width: 2.w,
-                          ),
-                          Text('Ralph Edwards' , style: FontStyleApp.bodySmall.copyWith(
-                              color: AppColor.grayLightColor.withOpacity(0.8),
-                              fontSize: 13
-                          ),),
-                          Spacer(),
-                          Text('8:15' , style: FontStyleApp.bodySmall.copyWith(
-                              color: AppColor.grayLightColor.withOpacity(0.8),
-                              fontSize: 13
-                          ),),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 3.h,
-                      ),
-                      Wrap(
-                        children: [
+              } else {
+                return SizedBox();
+              }
+            } else {
+              return SizedBox();
+            }
+          }
+        }),
+      body:Obx((){
+        return imageController.isLoadingImages.value ? Center(child: CircularProgressIndicator(),): CustomScrollView(
+          slivers: [
+           CustomAppBarVideoAndImageDetailWidget(selectedItem: imageController.imageDetails, isVideo: false,),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 6.5.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Text('${imageController.imageDetails?['name']}', style: FontStyleApp.titleMedium.copyWith(
+                        color: AppColor.whiteColor,
+                        fontWeight: FontWeight.w600
+                    ),),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    // Text('${selectedItem['description']}' , style: FontStyleApp.bodyMedium.copyWith(
+                    //   color: AppColor.grayLightColor.withOpacity(0.8),
+                    // ),),
 
-
-                          CardMarkSinglePageWidget(label: 'Suffix' , type: '${selectedItem['suffix']}'),
-                          CardMarkSinglePageWidget(label: 'Type' , type: '${selectedItem['type']}'),
-                          CardMarkSinglePageWidget(label: 'Lanuage' , type: '${selectedItem['language']}'),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 4.h,
-                      ),
-                      Container(
-                        height: 17.5.h,
-                        decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(15.sp),
-                            border: Border(
-                                top: BorderSide(color: Colors.white.withOpacity(0.3) , width: 0.6),
-                                left: BorderSide(color: Colors.white.withOpacity(0.3) , width: 0.8),
-
-                                right: BorderSide(color: Colors.white.withOpacity(0.3) , width: 0.1)
-                            )
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          radius:3.w,
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal:6.w , vertical: 2.h),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text('Comments' , style: FontStyleApp.bodyLarge.copyWith(
-                                      color: AppColor.whiteColor,
-                                      fontWeight: FontWeight.w600
-                                  ),),
-                                  Spacer(),
-                                  Text('56' , style: FontStyleApp.bodyMedium.copyWith(
-                                    color: AppColor.whiteColor.withOpacity(0.5),
-
-                                  ),),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 4.h,
-                              ),
-                              Row(
-
-                                children: [
-                                  CircleAvatar(
-                                    radius: 19,
-                                  ),
-                                  SizedBox(
-                                    width: 4.w,
-                                  ),
-                                  Expanded(
-                                    child: SizedBox(
-                                      height: 5.h,
-                                      child: TextField(
-
-                                        decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor: Colors.black54,
-                                            hintText: 'Add a comment...',
-                                            contentPadding: EdgeInsets.symmetric(vertical: 8 ,horizontal: 10),
-                                            border: OutlineInputBorder(
-                                                borderSide: BorderSide.none
-                                            )
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
+                        SizedBox(
+                          width: 2.w,
                         ),
-                      ),
-                      SizedBox(
-                        height: 6.h,
-                      ),
-                    ],
-                  ),
+                        Text('Ralph Edwards' , style: FontStyleApp.bodySmall.copyWith(
+                            color: AppColor.grayLightColor.withOpacity(0.8),
+                            fontSize: 13
+                        ),),
+                        Spacer(),
+                        Text('8:15' , style: FontStyleApp.bodySmall.copyWith(
+                            color: AppColor.grayLightColor.withOpacity(0.8),
+                            fontSize: 13
+                        ),),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 3.h,
+                    ),
+                    // Wrap(
+                    //   children: [
+                    //
+                    //
+                    //     CardMarkSinglePageWidget(label: 'Suffix' , type: '${selectedItem['suffix']}'),
+                    CardMarkSinglePageWidget(label: 'Type' , type: imageController.getTypeString(imageController.imageDetails?['asset']['type'])),
+                    //     CardMarkSinglePageWidget(label: 'Lanuage' , type: '${selectedItem['language']}'),
+                    //   ],
+                    // ),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        int itemId = imageController.imageDetails?['asset_id'];
+                        print(itemId);
+                        Get.toNamed(PageRoutes.COMMENT, arguments: {'id': itemId});
+                      },
+                      child: CustomCommentSinglePageWidget(),
+                    ),
+                    SizedBox(
+                      height: 6.h,
+                    ),
+                  ],
                 ),
               ),
+            ),
 
-            ],
-          );
-        },
-      ),
+          ],
+        );
+      })
+
+
     );
   }
 

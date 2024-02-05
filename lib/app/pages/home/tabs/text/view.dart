@@ -59,14 +59,7 @@ class TextTabScreen extends StatelessWidget {
                           itemCount: list.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            return GestureDetector(
-                                onTap: (){
-                                  Get.find<DetailController>().selectedItem.value = list
-                                      .toList().elementAt(index);
-
-                                  Get.toNamed(PageRoutes.DETAILTEXT);
-                                },
-                                child: BestTextWidget(model: list.elementAt(index)));
+                            return  BestTextWidget(model: list.elementAt(index));
                           });
                     }),
                   ),

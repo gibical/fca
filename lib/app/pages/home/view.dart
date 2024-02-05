@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/pages/home/logic.dart';
 import 'package:mediaverse/app/pages/home/widgets/custom_tab_bar_widget.dart';
 import 'package:mediaverse/app/pages/wrapper/logic.dart';

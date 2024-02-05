@@ -18,6 +18,7 @@ import 'package:mediaverse/app/pages/upload/view.dart';
 import 'package:mediaverse/app/pages/wrapper/state.dart';
 import 'package:mediaverse/app/pages/wrapper/view.dart';
 
+import '../pages/detail/pages/comment_screen.dart';
 import '../pages/detail/pages/detail_image_screen.dart';
 import '../pages/detail/pages/detail_music_screen.dart';
 import '../pages/detail/pages/detail_video_screen.dart';
@@ -41,6 +42,7 @@ class PageRoutes {
   static const MASSAGE = '/Massage';
   static const INTRO = '/Intro';
   static const UPLOAD = '/Upload';
+  static const COMMENT = '/Comment';
 
 
   static List<GetPage> routes = [
@@ -61,7 +63,7 @@ class PageRoutes {
       name: PageRoutes.WRAPPER,
       transition: Transition.noTransition,
       page: () => MainWrapperScreen(),
-      bindings: [WrapperState(), DetailState()]
+      binding: WrapperState(),
     ),
 
     GetPage(
@@ -109,7 +111,7 @@ class PageRoutes {
       page: () => DetailMusicScreen(),
       binding: DetailState(),
     ),
-
+    //
     GetPage(
       name: PageRoutes.DETAILTEXT,
       transition: Transition.downToUp,
@@ -121,7 +123,8 @@ class PageRoutes {
       name: PageRoutes.DETAILVIDEO,
       transition: Transition.downToUp,
       page: () => DetailVideoScreen(),
-      binding: DetailState(),
+      binding: DetailState()
+
     ),
     GetPage(
       name: PageRoutes.SETTING,
@@ -137,17 +140,18 @@ class PageRoutes {
       name: PageRoutes.INTRO,
       transition: Transition.downToUp,
       page: () => IntroPage(),
-
-
-
     ),
     GetPage(
       name: PageRoutes.UPLOAD,
       transition: Transition.noTransition,
       page: () => UploadScreen(),
+    ),
 
-
-
+    GetPage(
+      name: PageRoutes.COMMENT,
+      transition: Transition.downToUp,
+      page: () => CommentScreen(),
+      binding: DetailState(),
     ),
 
   ];

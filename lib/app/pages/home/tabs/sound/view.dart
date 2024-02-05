@@ -58,19 +58,21 @@ class SoundTabScreen extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                            onTap: (){
-                              Get.find<DetailController>().selectedItem.value = list.reversed
-                                  .toList().elementAt(index);
 
-                              Get.toNamed(PageRoutes.DETAILMUSIC);
+                            onTap: (){
+                              int itemId = list[index]['id'];
+                              Get.toNamed(PageRoutes.DETAILMUSIC, arguments: {'id': itemId});
                             },
-                            child: BestItemSongsWidget(list.reversed.toList().elementAt(index)));
+                            child: BestItemSongsWidget(list.toList().elementAt(index)));
                       }),
                 ),
-                TitleExplore(theme: theme,
-                    textTheme: textTheme,
-                    icon: "assets/icons/sound_icons.svg",
-                    title: 'Recently'),
+                Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 2.w),
+                  child: TitleExplore(theme: theme,
+                      textTheme: textTheme,
+                      icon: AppIcon.soundIcon,
+                      title: 'Recently'),
+                ),
 
                 SizedBox(height: 4.h,),
 
@@ -98,6 +100,7 @@ class SoundTabScreen extends StatelessWidget {
                                   SizedBox.expand(
                                     child: Image.asset("assets/images/sound_bg.png"),
                                   ),
+
                                   SizedBox.expand(
                                     child:Container(
                                       decoration: ShapeDecoration(

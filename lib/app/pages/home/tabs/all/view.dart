@@ -67,12 +67,10 @@ class AllTabScreen extends StatelessWidget {
                     itemCount: logic.mostText.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return GestureDetector(
+                      return  GestureDetector(
                           onTap: (){
-                            Get.find<DetailController>().selectedItem.value = logic.mostText
-                                .toList().elementAt(index);
-
-                            Get.toNamed(PageRoutes.DETAILTEXT);
+                            int itemId = logic.mostText[index]['id'];
+                            Get.toNamed(PageRoutes.DETAILTEXT, arguments: {'id': itemId});
                           },
                           child: BestTextWidget(model: logic.mostText.elementAt(index)));
                     }),
@@ -89,10 +87,8 @@ class AllTabScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                           onTap: (){
-                            Get.find<DetailController>().selectedItem.value = logic.mostSongs
-                                .toList().elementAt(index);
-
-                            Get.toNamed(PageRoutes.DETAILMUSIC);
+                            int itemId = logic.mostSongs[index]['id'];
+                            Get.toNamed(PageRoutes.DETAILMUSIC, arguments: {'id': itemId});
                           },
                           child: BestItemSongsWidget(logic.mostSongs.elementAt(index)));
                     }),
