@@ -63,13 +63,13 @@ class _SearchScreenState extends State<SearchScreen>
       builder: (controller) => Scaffold(
         // backgroundColor: Colors.white,
         appBar: AppBar(
-          toolbarHeight: 22.h,
+          toolbarHeight: 25.h,
           // backgroundColor: AppColor.whiteColor,
           backgroundColor: AppColor.primaryDarkColor,
           automaticallyImplyLeading: false,
           title: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            height: !_logic.isAdvancedSearchVisible ? 15.h : 20.h,
+            height: !_logic.isAdvancedSearchVisible ? 15.h : 22.h,
             child: Column(
               children: [
                 Row(
@@ -121,9 +121,12 @@ class _SearchScreenState extends State<SearchScreen>
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Center(
-                          child: SvgPicture.asset(_logic.isAdvancedSearchVisible
-                              ? AppIcon.upIcon
-                              : AppIcon.settingIcon,color: Colors.grey,),
+                          child: SvgPicture.asset(
+                            _logic.isAdvancedSearchVisible
+                                ? AppIcon.upIcon
+                                : AppIcon.settingIcon,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                     ),
@@ -234,16 +237,11 @@ class _SearchScreenState extends State<SearchScreen>
               : TabBarView(
                   controller: _tabController,
                   children: [
-                    GridView.builder(
+                    GridView(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2),
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          color: Colors.blue,
-                        );
-                      },
+                      children: allItems(),
                     ),
                     GridView.builder(
                       gridDelegate:
@@ -460,6 +458,32 @@ class _SearchScreenState extends State<SearchScreen>
     //   ),
     //
     // );
+  }
+
+  List<Widget> allItems() {
+    List<Widget> s = [];
+    if (_logic.pictureLST.isNotEmpty) {
+      for (var element in _logic.pictureLST) {
+        s.add(ImageWidget(elementAt: element));
+      }
+    }
+    if (_logic.bestVideos.isNotEmpty) {
+      for (var element in _logic.bestVideos) {
+        s.add(VidPage(item: element));
+      }
+    }
+    if (_logic.audioLST.isNotEmpty) {
+      for (var element in _logic.audioLST) {
+        s.add(SoundWidget(elementAt: element));
+      }
+    }
+    if (_logic.txtLST.isNotEmpty) {
+      for (var element in _logic.txtLST) {
+        s.add(TxtWidget(model: element));
+      }
+    }
+
+    return s;
   }
 
   Widget _buildTab(
