@@ -57,7 +57,7 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
     super.dispose();
   }
 
-  ProfileController profileController = Get.find<ProfileController>();
+  ProfileControllers logic = Get.find<HomeLogic>().profileController;
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +67,9 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
     final textTheme = Theme
         .of(context)
         .textTheme;
-    return GetBuilder<ProfileController>(
+    return GetBuilder<ProfileControllers>(
 
-        init: profileController,
+        init: logic,
 
         builder: (logic) {
           return Stack(

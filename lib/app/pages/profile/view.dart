@@ -16,6 +16,7 @@ import '../../common/app_route.dart';
 import '../../common/font_style.dart';
 import '../channel/tab/channel_tab.dart';
 import '../channel/widgets/custom_calendar_widget.dart';
+import '../home/logic.dart';
 import '../home/tabs/all/view.dart';
 import '../home/tabs/image/view.dart';
 
@@ -31,7 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  ProfileController logic = Get.put(ProfileController());
+  ProfileControllers logic = Get.find<HomeLogic>().profileController;
   int _selectedTabIndex = 0;
 
   @override

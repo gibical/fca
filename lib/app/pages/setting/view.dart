@@ -10,11 +10,12 @@ import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
 import '../../common/font_style.dart';
+import '../home/logic.dart';
 import 'account_page.dart';
 
 class SettingScreen extends StatelessWidget {
 
-  ProfileController logic = Get.find<ProfileController>();
+  ProfileControllers logic = Get.find<HomeLogic>().profileController;
 
 
   @override

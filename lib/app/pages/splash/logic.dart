@@ -12,7 +12,7 @@ class SplashLogic extends GetxController {
     showSplash.value = false;
     if(GetStorage().read("islogin")??false){
 
-      Get.offAndToNamed(PageRoutes.HOME);
+      Get.offAndToNamed(PageRoutes.WRAPPER);
     }else{
       Get.offAndToNamed(PageRoutes.INTRO);
 

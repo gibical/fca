@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart' as gt;
 
 import 'package:get_storage/get_storage.dart';
+import 'package:mediaverse/app/common/utils/dio_inperactor.dart';
 import 'dart:io' as IO;
 import 'RequestInterface.dart';
 import 'app_config.dart';
@@ -86,7 +87,8 @@ class ApiRequster {
 
     if (develperModel) print('ApiRequster.request 0 1 = $headers');
 
-    gt.Dio dio = gt.Dio(gt.BaseOptions(headers: headers));
+    gt.Dio dio = gt.Dio(gt.BaseOptions(headers: headers,));
+    dio.interceptors.add(MediaVerseInterceptor(_requestInterface,reqCode));
     if (!kIsWeb) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (IO.HttpClient client) {

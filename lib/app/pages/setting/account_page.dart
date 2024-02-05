@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/app_route.dart';
@@ -11,13 +12,14 @@ import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
 import '../../common/font_style.dart';
+import '../home/logic.dart';
 import '../logins/view.dart';
 import '../sessions/view.dart';
 import 'general_information.dart';
 
 class AccountPage extends StatelessWidget {
 
-  ProfileController logic = Get.find<ProfileController>();
+  ProfileControllers logic = Get.find<HomeLogic>().profileController;
 
 
   @override
@@ -117,6 +119,9 @@ class AccountPage extends StatelessWidget {
 
   void _logOut() async{
 
+    var box  = GetStorage();
+    box.write("islogin", false);
+    Get.offAllNamed(PageRoutes.SPLASH,);
   }
 }
 

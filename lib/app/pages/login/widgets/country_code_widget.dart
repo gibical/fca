@@ -3,12 +3,13 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:mediaverse/app/common/font_style.dart';
+import 'package:mediaverse/app/pages/login/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
 
 
-Widget CountryCodeWidget(context){
+Widget CountryCodeWidget(context,LoginController controller){
 
 
   final textTheme = Theme.of(context).textTheme;
@@ -16,13 +17,19 @@ Widget CountryCodeWidget(context){
     alignment: Alignment.center,
     children: [
       IgnorePointer(
+        ignoring: false,
         child: CountryCodePicker(
                flagWidth: 25,
-          onChanged: print,
+          onChanged: (CountryCode d){
+            print('CountryCodeWidget = ${d.dialCode}');
+            controller.code  =d;
+
+          },
           initialSelection: 'FR',
           textStyle: textTheme.bodyMedium!.copyWith(
             color: Colors.white,
           ),
+
         
           dialogBackgroundColor: Colors.pink,
           barrierColor: Colors.transparent,

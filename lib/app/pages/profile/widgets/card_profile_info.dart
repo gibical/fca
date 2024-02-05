@@ -11,7 +11,7 @@ import 'package:sizer/sizer.dart';
 
 class CardProfileInfoWidget extends StatelessWidget {
 
-  ProfileController logic;
+  ProfileControllers logic;
 
   CardProfileInfoWidget(this.logic);
 

@@ -10,6 +10,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
 import '../../common/font_style.dart';
+import '../home/logic.dart';
 import '../signup/widgets/custom_text_field_form_register_widget.dart';
 
 class GeneralInformationPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class GeneralInformationPage extends StatefulWidget {
 }
 
 class _GeneralInformationPageState extends State<GeneralInformationPage> {
-  ProfileController logic = Get.find<ProfileController>();
+  ProfileControllers logic = Get.find<HomeLogic>().profileController;
 
   TextEditingController firstName = TextEditingController();
   TextEditingController lastName = TextEditingController();

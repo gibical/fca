@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/RequestInterface.dart';
 import 'package:mediaverse/app/common/app_api.dart';
@@ -9,13 +10,18 @@ import 'package:mediaverse/gen/model/json/FromJsonGetAllAsstes.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetAssets.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetProfile.dart';
 import 'package:meta/meta.dart';
+import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../gen/model/json/FromJsonGetImages.dart';
+import '../../../gen/model/json/FromJsonGetWallet.dart';
+import '../../common/app_color.dart';
 
-class ProfileController extends GetxController implements RequestInterface {
+class ProfileControllers extends GetxController implements RequestInterface {
   final _obj = ''.obs;
 
   set obj(value) => _obj.value = value;
+  WalletModel walletModel = WalletModel();
 
   get obj => _obj.value;
 
@@ -39,6 +45,9 @@ class ProfileController extends GetxController implements RequestInterface {
   bool emptySubAudios = false;
   bool emptySubText = false;
 
+  var isStripeConnected = true;
+
+
   FromJsonGetAllAsstes myAssets = FromJsonGetAllAsstes();
   FromJsonGetAllAsstes mysubsAssets = FromJsonGetAllAsstes();
   late AssetsModel assetsModel;
@@ -61,6 +70,8 @@ class ProfileController extends GetxController implements RequestInterface {
     super.onReady();
     apiRequster = ApiRequster(this, develperModel: true);
     onGetProfileMethod();
+    getWalletBalance();
+    getStripe();
   }
 
   onGetProfileMethod() {
@@ -71,6 +82,28 @@ class ProfileController extends GetxController implements RequestInterface {
   @override
   void onError(String content, int reqCode, bodyError) {
     // TODO: implement onError
+    if(reqCode==15){
+      isStripeConnected = false;
+      update();
+      //getStripeConnect();
+    }else{
+      print('ProfileControllers.onError = ${content}');
+      try {
+        var messege = jsonDecode(bodyError)['message'];
+        ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text(messege,
+          style: TextStyle(color: AppColor.primaryDarkColor),)));
+      }  catch (e) {
+        // TODO
+      }
+      var messege = jsonDecode(content)['message'];
+      print('ProfileControllers.onError 2  =${messege}');
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(bottom: 3.h),
+          content: Text(messege,
+        style: TextStyle(color: AppColor.primaryDarkColor),)));
+
+    }
   }
 
   @override
@@ -120,6 +153,18 @@ class ProfileController extends GetxController implements RequestInterface {
         break;
        case 13:
         parseJsonFromEditText(source);
+        break;
+       case 14:
+        parseJsonFromGetWalletBalance(source);
+        break;
+       case 15:
+        pareJsonFromStripe(source);
+        break;
+       case 16:
+        pareJsonFromStripeConnect(source);
+        break;
+        case 17:
+        parseJsonFromGateWay(source);
         break;
     }
   }
@@ -284,5 +329,56 @@ class ProfileController extends GetxController implements RequestInterface {
   void parseJsonFromEditText(source) {
     isloadingEdit(false);
     Constant.showMessege(" Profile Update Successful ");
+  }
+
+
+
+
+  getWalletBalance(){
+    isloading(true);
+    apiRequster.request("wallets", ApiRequster.MHETOD_GET, 14,useToken: true);
+  }
+
+  getStripe(){
+    // isloading(true);
+    apiRequster.request("stripe/account", ApiRequster.MHETOD_GET, 15,useToken: true);
+  }
+  getStripeConnect(){
+    // isloading(true);
+    apiRequster.request("stripe/connect", ApiRequster.MHETOD_POST, 16,useToken: true);
+  }
+  getStripeGateWay(){
+    // isloading(true);
+    apiRequster.request("stripe/gateway", ApiRequster.MHETOD_GET, 17,useToken: true);
+  }
+  void parseJsonFromGetWalletBalance(source) {
+    walletModel = WalletModel.fromJson(jsonDecode(source)[0]);
+    isloading(false);
+
+  }
+
+  void pareJsonFromStripe(source) {
+    print('ProfileControllers.pareJsonFromStripe = ${source}');
+    isStripeConnected = true;
+
+    update();
+
+  }
+
+  void pareJsonFromStripeConnect(source) {
+    isStripeConnected = true;
+
+    update();
+    var url = jsonDecode(source)['url'];
+
+    try {
+      launchUrlString(url);
+    }  catch (e) {
+      // TODO
+    }
+  }
+
+  void parseJsonFromGateWay(source) {
+
   }
 }

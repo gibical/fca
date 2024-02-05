@@ -136,7 +136,7 @@ class LoginScreen extends StatelessWidget {
               height: 3.h,
             ),
             CustomTextFieldLogin(
-                prefix: CountryCodeWidget(context),
+                prefix: CountryCodeWidget(context,logic),
                 hintText: 'login_2'.tr,
                 editingController: logic.eTextEditingControllerPhone,
                 context: context),
@@ -300,7 +300,7 @@ class LoginScreen extends StatelessWidget {
               height: 3.h,
             ),
             CustomTextFieldLogin(
-                prefix: CountryCodeWidget(context),
+                prefix: CountryCodeWidget(context,logic),
                 hintText: 'login_2'.tr,
                 editingController: logic.eTextEditingControllerPhone,
                 context: context),

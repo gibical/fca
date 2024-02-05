@@ -11,23 +11,35 @@ class WalletController extends GetxController implements RequestInterface{
 
   var isloading = false.obs;
 
-  WalletModel walletModel = WalletModel();
   @override
   void onReady() {
     // TODO: implement onReady
     super.onReady();
     apiRequster = ApiRequster(this,develperModel: true);
     getWalletBalance();
+  //  getStripe();
   }
   
   getWalletBalance(){
     isloading(true);
     apiRequster.request("wallets", ApiRequster.MHETOD_GET, 1,useToken: true);
   }
-  
+
+  getStripe(){
+   // isloading(true);
+    apiRequster.request("stripe/account", ApiRequster.MHETOD_GET, 2,useToken: true);
+  }
+  getStripeConnect(){
+   // isloading(true);
+    apiRequster.request("stripe/connect", ApiRequster.MHETOD_POST, 3,useToken: true);
+  }
+
   @override
   void onError(String content, int reqCode, bodyError) {
     // TODO: implement onError
+    if(reqCode==2){
+      getStripeConnect();
+    }
   }
 
   @override
@@ -45,7 +57,7 @@ class WalletController extends GetxController implements RequestInterface{
   }
 
   void parseJsonFromGetWalletBalance(source) {
-    walletModel = WalletModel.fromJson(jsonDecode(source)[0]);
+   // walletModel = WalletModel.fromJson(jsonDecode(source)[0]);
     isloading(false);
 
   }

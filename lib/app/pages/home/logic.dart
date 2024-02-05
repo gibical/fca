@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/RequestInterface.dart';
 import 'package:mediaverse/app/common/app_api.dart';
+import 'package:mediaverse/app/pages/profile/logic.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetBestVideos.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetChannels.dart';
 
@@ -19,6 +20,8 @@ class HomeLogic extends GetxController implements  RequestInterface{
   List<dynamic> mostText = [];
   List<dynamic> mostSongs = [];
 
+
+  ProfileControllers profileController = Get.put(ProfileControllers());
 
   var imagesRecently = [].obs;
   var songsRecently = [].obs;

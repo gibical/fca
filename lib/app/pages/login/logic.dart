@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,6 +21,7 @@ class LoginController extends GetxController implements RequestInterface {
 
   late ApiRequster apiRequster;
 
+  CountryCode code = CountryCode(dialCode: "+33");
   var timeLeft = 30.obs; // Observable variable
   Timer? _timer;
 
@@ -196,12 +198,12 @@ class LoginController extends GetxController implements RequestInterface {
 
     FromJsonGetLogin getLogin = FromJsonGetLogin.fromJson(jsonDecode(source));
     box.write("token", getLogin.token??"");
-    Get.offAllNamed(PageRoutes.HOME);
+    Get.offAllNamed(PageRoutes.WRAPPER);
   }
 
   void _getOTPReuqest() {
     var body = {
-      "cellphone":eTextEditingControllerPhone.text,
+      "cellphone":(code.dialCode??"")+(eTextEditingControllerPhone.text),
     };
     apiRequster.request("auth/otp/request", ApiRequster.MHETOD_POST, 2,body: body);
   }

@@ -6,6 +6,7 @@ import 'package:mediaverse/app/pages/intro/view.dart';
 import 'package:mediaverse/app/pages/login/view.dart';
 import 'package:mediaverse/app/pages/massage/view.dart';
 import 'package:mediaverse/app/pages/otp/view.dart';
+import 'package:mediaverse/app/pages/plus_section/view.dart';
 import 'package:mediaverse/app/pages/profile/view.dart';
 import 'package:mediaverse/app/pages/search/state.dart';
 import 'package:mediaverse/app/pages/search/view.dart';
@@ -31,13 +32,14 @@ class PageRoutes {
   static const SETTING = '/Setting';
   static const MASSAGE = '/Massage';
   static const INTRO = '/Intro';
+  static const PLUS = '/Plus';
 
 
   static List<GetPage> routes = [
     GetPage(
       name: PageRoutes.SPLASH,
       page: () => const SplashScreen(),
-      transition: Transition.noTransition,
+      transition: Transition.upToDown,
       binding: SplashState(),
 
     ),
@@ -105,6 +107,14 @@ class PageRoutes {
       name: PageRoutes.INTRO,
       transition: Transition.downToUp,
       page: () => IntroPage(),
+
+
+
+    ),
+    GetPage(
+      name: PageRoutes.PLUS,
+      transition: Transition.downToUp,
+      page: () => PlusSectionPage(),
 
 
 
