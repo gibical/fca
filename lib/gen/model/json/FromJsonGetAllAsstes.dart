@@ -83,10 +83,10 @@ class Videos {
       String? summary, 
       String? language, 
       String? genre, 
-      num? country, 
-      num? imdbScore, 
-      num? productionYear, 
-      num? length, 
+      String? country, 
+      int? imdbScore, 
+      int? productionYear, 
+      int? length, 
       List<String>? producers, 
       List<String>? directors, 
       List<String>? actors, 
@@ -141,10 +141,10 @@ class Videos {
   String? _summary;
   String? _language;
   String? _genre;
-  num? _country;
-  num? _imdbScore;
-  num? _productionYear;
-  num? _length;
+  String? _country;
+  int? _imdbScore;
+  int? _productionYear;
+  int? _length;
   List<String>? _producers;
   List<String>? _directors;
   List<String>? _actors;
@@ -159,10 +159,10 @@ Videos copyWith({  num? id,
   String? summary,
   String? language,
   String? genre,
-  num? country,
-  num? imdbScore,
-  num? productionYear,
-  num? length,
+  String? country,
+  int? imdbScore,
+  int? productionYear,
+  int? length,
   List<String>? producers,
   List<String>? directors,
   List<String>? actors,
@@ -196,10 +196,10 @@ Videos copyWith({  num? id,
   String? get summary => _summary;
   String? get language => _language;
   String? get genre => _genre;
-  num? get country => _country;
-  num? get imdbScore => _imdbScore;
-  num? get productionYear => _productionYear;
-  num? get length => _length;
+  String? get country => _country;
+  int? get imdbScore => _imdbScore;
+  int? get productionYear => _productionYear;
+  int? get length => _length;
   List<String>? get producers => _producers;
   List<String>? get directors => _directors;
   List<String>? get actors => _actors;

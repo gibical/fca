@@ -14,13 +14,14 @@ PreferredSizeWidget CustomAppBarWidget(context) {
   final textTheme = Theme.of(context).textTheme;
   return AppBar(
       backgroundColor:  theme.secondary,
+      
       toolbarHeight: 85,
       title: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25 ,),
         child: GestureDetector(
           onTap: () {
-            //Get.toNamed(PageRoutes.SEARCH);
-            Get.find<HomeLogic>().getMainReueqst();
+            Get.toNamed(PageRoutes.SEARCH);
+            // Get.find<HomeLogic>().getMainReueqst();
           },
           child: Container(
             height: 6.h,
