@@ -18,8 +18,8 @@ class SoundWidget extends StatelessWidget {
       child: Column(
         children: [
           Container(
-              width: 40.w,
-              height: 20.h,
+              width: 30.w,
+              height: 15.h,
               decoration: BoxDecoration(
                   color: theme.onBackground.withOpacity(0.1),
                   border: Border.symmetric(
@@ -48,8 +48,8 @@ class SoundWidget extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: 190,
-                    height: 190,
+                    width: 170,
+                    height: 170,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20.sp)),
                         gradient: LinearGradient(
