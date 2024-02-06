@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/font_style.dart';
 import 'package:mediaverse/app/pages/channel/logic.dart';
@@ -162,57 +163,222 @@ class _AddChannelCardWidgetState extends State<AddChannelCardWidget> {
                       Obx(() {
                         if (_logic.changeType.value) {
                           return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 3.w),
+                            padding: EdgeInsets.symmetric(horizontal: 7.w),
                             child: ListView(
                               shrinkWrap: true,
                               physics: const ClampingScrollPhysics(),
                               children: [
-                                ListTile(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: .5.h),
+                                  child: SizedBox(
+                                    height: 6.h,
+                                    child: ListTile(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      onTap: () {
+                                        _logic.typeString.value = "Google";
+                                        _logic.changeType.value = false;
+                                      },
+                                      tileColor: Colors.black54,
+                                      title: const Text("Google"),
+                                    ),
                                   ),
-                                  onTap: () {
-                                    _logic.typeString.value = "Google";
-                                    _logic.changeType.value = false;
-                                  },
-                                  tileColor: Colors.black54,
-                                  title: const Text("Google"),
                                 ),
-                                ListTile(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: .5.h),
+                                  child: SizedBox(
+                                    height: 6.h,
+                                    child: ListTile(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      onTap: () {
+                                        _logic.typeString.value = "Twitter";
+                                        _logic.changeType.value = false;
+                                      },
+                                      tileColor: Colors.black54,
+                                      title: const Text("Twitter"),
+                                    ),
                                   ),
-                                  onTap: () {
-                                    _logic.typeString.value = "Twitter";
-                                    _logic.changeType.value = false;
-                                  },
-                                  tileColor: Colors.black54,
-                                  title: const Text("Twitter"),
                                 ),
-                                // ListTile(
-                                //   shape: RoundedRectangleBorder(
-                                //     borderRadius: BorderRadius.circular(10),
-                                //   ),
-                                //   onTap: () {
-                                //     _logic.typeString.value = "Facebook";
-                                //  _logic.changeType.value = false;
-                                //   },
-                                //   tileColor: Colors.black54,
-                                //   title: const Text("Facebook"),
-                                // ),
-                                ListTile(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: .5.h),
+                                  child: SizedBox(
+                                    height: 6.h,
+                                    child: ListTile(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      onTap: () {
+                                        _logic.typeString.value = "Facebook";
+                                        _logic.changeType.value = false;
+                                      },
+                                      tileColor: Colors.black54,
+                                      title: const Text("Facebook"),
+                                    ),
                                   ),
-                                  onTap: () {
-                                    _logic.typeString.value = "Steam";
-                                    _logic.changeType.value = false;
-                                  },
-                                  tileColor: Colors.black54,
-                                  title: const Text("Steam"),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: .5.h),
+                                  child: SizedBox(
+                                    height: 6.h,
+                                    child: ListTile(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      onTap: () {
+                                        _logic.typeString.value = "Steam";
+                                        _logic.changeType.value = false;
+                                      },
+                                      tileColor: Colors.black54,
+                                      title: const Text("Steam"),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
+                          );
+                        } else {
+                          return SizedBox(
+                            height: 1.h,
+                          );
+                        }
+                      }),
+                      Obx(() {
+                        if (_logic.typeString.value == "Steam") {
+                          return Column(
+                            children: [
+                              Container(
+                                height: 6.h,
+                                width: 85.w,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.black54),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 1.w,
+                                    ),
+                                    const Text(
+                                      "Email",
+                                      style: TextStyle(color: Colors.white54),
+                                    ),
+                                    SizedBox(
+                                      width: 1.w,
+                                    ),
+                                    Container(
+                                      height: 28,
+                                      width: 1.5,
+                                      color:
+                                          AppColor.whiteColor.withOpacity(0.2),
+                                    ),
+                                    const Expanded(
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          hintText: "Insert Email...",
+                                          hintStyle: TextStyle(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: .5.h,
+                              ),
+                              Container(
+                                height: 6.h,
+                                width: 85.w,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.black54),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 1.w,
+                                    ),
+                                    const Text(
+                                      "Stream key",
+                                      style: TextStyle(color: Colors.white54),
+                                    ),
+                                    SizedBox(
+                                      width: 1.w,
+                                    ),
+                                    Container(
+                                      height: 28,
+                                      width: 1.5,
+                                      color:
+                                          AppColor.whiteColor.withOpacity(0.2),
+                                    ),
+                                    const Expanded(
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          hintText: "Insert stream key...",
+                                          hintStyle: TextStyle(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: .5.h,
+                              ),
+                              Container(
+                                height: 6.h,
+                                width: 85.w,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.black54),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 1.w,
+                                    ),
+                                    const Text(
+                                      "Stream url",
+                                      style: TextStyle(color: Colors.white54),
+                                    ),
+                                    SizedBox(
+                                      width: 1.w,
+                                    ),
+                                    Container(
+                                      height: 28,
+                                      width: 1.5,
+                                      color:
+                                          AppColor.whiteColor.withOpacity(0.2),
+                                    ),
+                                    const Expanded(
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          hintText: "rtmp://...",
+                                          hintStyle: TextStyle(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: .5.h,
+                              ),
+                            ],
                           );
                         } else {
                           return SizedBox(
@@ -231,7 +397,22 @@ class _AddChannelCardWidgetState extends State<AddChannelCardWidget> {
                           height: 5.h,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100)),
-                          onPressed: () {},
+                          onPressed: () async {
+                            if (_logic.typeString.value == "Google") {
+                              GoogleSignIn _googleSignIn = GoogleSignIn(
+                                scopes: [
+                                  'email',
+                                  'https://www.googleapis.com/auth/contacts.readonly',
+                                ],
+                              );
+
+                              try {
+                                await _googleSignIn.signIn();
+                              } catch (error) {
+                                print(error);
+                              }
+                            }
+                          },
                           color: Colors.black54,
                           child: const Text("Add"),
                         ),
