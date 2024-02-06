@@ -22,6 +22,76 @@ class _CommentScreenState extends State<CommentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Color(0xff55647d),
+        toolbarHeight: 15.h,
+        flexibleSpace: Padding(
+          padding:  EdgeInsets.symmetric(horizontal: 7.w ,  ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 1.w , vertical: 2.h),
+                child: Row(
+                  children: [
+                    Text('Comments' , style: GoogleFonts.inter(
+                      color: Colors.white,
+
+                    ),
+                    ),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: (){
+                        Get.back();
+                      },
+                      child: Text('Cancel' , style: GoogleFonts.inter(
+                        color: Colors.grey,
+
+                      ),),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 1.h,),
+              Row(
+
+                children: [
+                  CircleAvatar(
+                    radius: 18.5,
+                  ),
+                  SizedBox(
+                    width: 3.w,
+                  ),
+                  Expanded(
+                    child: SizedBox(
+                      height: 5.h,
+                      child: TextField(
+                        controller: commentController.commentTextController,
+                        onSubmitted: (comment) {
+                          commentController.postComment();
+                          commentController.fetchMediaComments();
+                          commentController.commentTextController.text ='';
+                        },
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.black54,
+                            hintText: 'Add a comment...',
+                            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none
+                            )
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
       backgroundColor: Color(0xff55647d),
       body: Obx(() {
         if (commentController.isLoadingComment.value) {
@@ -45,76 +115,7 @@ class _CommentScreenState extends State<CommentScreen> {
         } else {
           return CustomScrollView(
             slivers: [
-              SliverAppBar(
-                automaticallyImplyLeading: false,
-                backgroundColor: Color(0xff55647d),
-                toolbarHeight: 15.h,
-                flexibleSpace: Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 7.w ,  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      
-                      Padding(
-                        padding:  EdgeInsets.symmetric(horizontal: 1.w , vertical: 2.h),
-                        child: Row(
-                          children: [
-                            Text('Comments' , style: GoogleFonts.inter(
-                              color: Colors.white,
 
-                            ),
-                            ),
-                            Spacer(),
-                            GestureDetector(
-                              onTap: (){
-                                Get.back();
-                              },
-                              child: Text('Cancel' , style: GoogleFonts.inter(
-                                color: Colors.grey,
-
-                              ),),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 1.h,),
-                      Row(
-                      
-                        children: [
-                          CircleAvatar(
-                            radius: 18.5,
-                          ),
-                          SizedBox(
-                            width: 3.w,
-                          ),
-                          Expanded(
-                            child: SizedBox(
-                              height: 5.h,
-                              child: TextField(
-                                controller: commentController.commentTextController,
-                                  onSubmitted: (comment) {
-                                      commentController.postComment();
-                                      commentController.fetchMediaComments();
-                                     commentController.commentTextController.text ='';
-                                  },
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.black54,
-                                    hintText: 'Add a comment...',
-                                    contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none
-                                    )
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               SliverList.builder(
                   itemCount: commentController.commentsData!['data'].length,
                   itemBuilder: (context , index){
@@ -126,10 +127,13 @@ class _CommentScreenState extends State<CommentScreen> {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 5.w , vertical: 10),
                     decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.011),
                       borderRadius: BorderRadius.circular(15.sp),
                       border: Border(
-                        bottom: BorderSide(color: Colors.grey , width: 0.7),
-                        left: BorderSide(color: Colors.grey , width: 0.7)
+                        bottom: BorderSide(color: Colors.grey.withOpacity(0.3) , width: 0.8),
+                        left: BorderSide(color: Colors.grey.withOpacity(0.3) , width: 0.8),
+                        right: BorderSide(color: Colors.grey.withOpacity(0.3) , width: 0.4),
+                        top: BorderSide(color: Colors.grey.withOpacity(0.3) , width: 0.4)
                       )
                     ),
                     child: Column(
