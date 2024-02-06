@@ -42,9 +42,11 @@ class _PlusSectionPageState extends State<PlusSectionPage> {
           child: Container(
             child: Stack(
               children: [
-              if (logic.controller!=null&&!logic.controller!.value.isInitialized)Container(),
+                SizedBox.expand(
+                  child: logic.getMainWidget(),
+                ),
 
-                if (logic.controller!=null&&logic.controller!.value.isInitialized)    SizedBox.expand(child: CameraPreview(logic.controller!)),
+
 
                 Align(
                   alignment: Alignment.bottomCenter,
@@ -57,7 +59,7 @@ class _PlusSectionPageState extends State<PlusSectionPage> {
                           child: Stack(
                             children: [
                               SizedBox.expand(child: Image.asset(
-                                  "assets/images/plus_base.png")),
+                                  "assets/images/plus_base.png",fit: BoxFit.fitWidth,)),
 
                               Align(
                                 alignment: Alignment.topCenter,
@@ -69,14 +71,22 @@ class _PlusSectionPageState extends State<PlusSectionPage> {
                                         shape: BoxShape.circle
                                     ),
                                     margin: EdgeInsets.only(top: 25),
-                                    child: MaterialButton(
-                                        onPressed: () {
+                                    child: GestureDetector(
+                                        onTap: () {
                                           logic.middleClick();
                                         },
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                6000)
-                                        ),
+
+                                        onLongPressStart: (l){
+                                          if(logic.mediaMode==MediaMode.image){
+                                            logic.startVideoRecording();
+                                          }
+                                        },
+                                        onLongPressEnd: (h){
+                                          if(logic.mediaMode==MediaMode.image){
+                                            logic.stopVideoRecording();
+                                          }
+                                        },
+
 
 
                                         child: Center(child: SvgPicture.asset(

@@ -151,36 +151,29 @@ class _SecendFormState extends State<SecendForm> {
                         ),
                         SizedBox(height: 4.h,),
                         Align(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                width: 10.w,
-                                height: 10.w,
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  padding: EdgeInsets.zero,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(100)
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      SizedBox.expand(child: Image.asset(
-                                          "assets/images/save_bg.png")),
-                                      Align(
-                                        child: SvgPicture.asset(
-                                            "assets/images/save.svg"),
-                                      )
-                                    ],
-                                  ),
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            width: 100.w,
+                            height: 6.h,
+                            margin: EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                                color: "597AFF".toColor(),
+                                borderRadius: BorderRadius.circular(5000)
+                            ),
+                            child: Obx(() {
+                              return MaterialButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5000)
                                 ),
-                              ),
-                              SizedBox(height: 1.h,),
-                              Text("Save", style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold
-                              ),)
-                            ],
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  logic.sendMainRequest();
+                                },
+                                child: logic.isloading.value ? Lottie.asset(
+                                    "assets/json/Y8IBRQ38bK.json", height: 10.h) : Text(
+                                  "Save and Publish", style: TextStyle(color: Colors.white),),
+                              );
+                            }),
                           ),
                         ),
                         SizedBox(height: 30.h,)

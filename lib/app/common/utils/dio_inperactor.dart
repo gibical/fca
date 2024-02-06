@@ -16,6 +16,7 @@ class MediaVerseInterceptor extends Interceptor{
     // TODO: implement onError
     super.onError(err, handler);
 
+    print('MediaVerseInterceptor.onError = ${err.response!.statusCode} - ${err.response!.data}');
 
     requestInterface.onError(jsonEncode(err.response!.data), reqQode, err.response!.data.toString());
     if(err.response!.statusCode==406){

@@ -198,6 +198,7 @@ class LoginController extends GetxController implements RequestInterface {
 
     FromJsonGetLogin getLogin = FromJsonGetLogin.fromJson(jsonDecode(source));
     box.write("token", getLogin.token??"");
+    box.write("userid", getLogin.user!.id.toString());
     Get.offAllNamed(PageRoutes.WRAPPER);
   }
 
