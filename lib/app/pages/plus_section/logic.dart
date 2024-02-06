@@ -18,6 +18,7 @@ import 'package:mediaverse/app/common/RequestInterface.dart';
 import 'package:mediaverse/app/common/app_api.dart';
 import 'package:mediaverse/app/common/app_config.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
+import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/plus_section/widget/custom_plan_text_filed.dart';
 import 'package:mediaverse/app/pages/plus_section/widget/first_form.dart';
 import 'package:mediaverse/app/pages/plus_section/widget/upload_asset_file.dart';
@@ -28,12 +29,12 @@ import '../../common/app_color.dart';
 import 'state.dart';
 
 class PlusSectionLogic extends GetxController implements RequestInterface {
-late ApiRequster apiRequster;
+  late ApiRequster apiRequster;
 
   TextEditingController titleController = TextEditingController();
   TextEditingController planController = TextEditingController(text: "Free");
-  TextEditingController editibaleController = TextEditingController(
-      text: "yes");
+  TextEditingController editibaleController =
+      TextEditingController(text: "yes");
   TextEditingController captionController = TextEditingController();
   TextEditingController languageController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -42,12 +43,15 @@ late ApiRequster apiRequster;
   TextEditingController textDisController = TextEditingController();
 
   String assetid = "";
+  String postUploadedId = "";
   var isloading = false.obs;
   String imageOutPut = "";
   String videoOutPut = "";
   String soundOutPut = "";
+  String textOutPut = "";
 
   double uploadedCount = 0.0;
+
   // برای کنترل نمایش ویجت زمان ضبط
   var isRecordingTimeVisible = false.obs;
 
@@ -141,7 +145,6 @@ late ApiRequster apiRequster;
   bool isLoading = true;
   late Directory appDirectory;
 
-
   final PlusSectionState state = PlusSectionState();
   MediaMode mediaMode = MediaMode.image;
   CameraController? controller;
@@ -150,7 +153,7 @@ late ApiRequster apiRequster;
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster = ApiRequster(this,develperModel: true);
+    apiRequster = ApiRequster(this, develperModel: true);
     initCamera();
     planController.addListener(() {
       update();
@@ -160,7 +163,6 @@ late ApiRequster apiRequster;
 
   var imageFile;
   late List<CameraDescription> _cameras;
-
 
   Future<XFile?> takePicture() async {
     final CameraController? cameraController = controller;
@@ -182,11 +184,10 @@ late ApiRequster apiRequster;
       return file;
     } on CameraException catch (e) {
       // _showCameraException(e);
-      Constant.showMessege(e.description??"");
+      Constant.showMessege(e.description ?? "");
       return null;
-    }finally{
+    } finally {
       Get.to(FirstForm(), arguments: [this]);
-
     }
   }
 
@@ -201,17 +202,16 @@ late ApiRequster apiRequster;
         print('_PlusSectionPageState.initState = ${e.description}');
         switch (e.code) {
           case 'CameraAccessDenied':
-          // Handle access errors here.
+            // Handle access errors here.
 
             break;
           default:
-          // Handle other errors here.
+            // Handle other errors here.
             break;
         }
       }
     });
   }
-
 
   @override
   void onClose() {
@@ -222,62 +222,62 @@ late ApiRequster apiRequster;
   getTopIcon() {
     switch (mediaMode) {
       case MediaMode.audio:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return 2;
       case MediaMode.image:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return 1;
 
       case MediaMode.text:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return 3;
       case MediaMode.video:
         return 1;
 
-    // TODO: Handle this case.
+      // TODO: Handle this case.
     }
   }
 
   getLeftIcon() {
     switch (mediaMode) {
       case MediaMode.audio:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return 1;
       case MediaMode.image:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return 2;
       case MediaMode.text:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return 1;
       case MediaMode.video:
         return 2;
 
-    // TODO: Handle this case.
+      // TODO: Handle this case.
     }
   }
 
   getRightIcon() {
     switch (mediaMode) {
       case MediaMode.audio:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return 3;
       case MediaMode.image:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return 3;
       case MediaMode.text:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return 2;
       case MediaMode.video:
         return 3;
 
-    // TODO: Handle this case.
+      // TODO: Handle this case.
     }
   }
 
   void middleClick() {
     switch (mediaMode) {
       case MediaMode.audio:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         _startOrStopRecording();
         break;
       case MediaMode.image:
@@ -287,26 +287,26 @@ late ApiRequster apiRequster;
       case MediaMode.text:
         Get.to(FirstForm(), arguments: [this]);
         break;
-    // TODO: Handle this case.
+      // TODO: Handle this case.
       case MediaMode.video:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
     }
   }
 
   void getLeftClick() {
     switch (mediaMode) {
       case MediaMode.audio:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         mediaMode = MediaMode.image;
       case MediaMode.image:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         mediaMode = MediaMode.audio;
 
       case MediaMode.text:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         mediaMode = MediaMode.image;
       case MediaMode.video:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
     }
     update();
   }
@@ -345,7 +345,7 @@ late ApiRequster apiRequster;
         if (path != null) {
           isRecordingCompleted = true;
           debugPrint(path);
-          soundOutPut = path??"";
+          soundOutPut = path ?? "";
           debugPrint("Recorded file size: ${File(path).lengthSync()}");
           Get.to(FirstForm(), arguments: [this]);
         }
@@ -365,17 +365,17 @@ late ApiRequster apiRequster;
   void getRightClick() {
     switch (mediaMode) {
       case MediaMode.audio:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         mediaMode = MediaMode.text;
       case MediaMode.image:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         mediaMode = MediaMode.text;
 
       case MediaMode.text:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         mediaMode = MediaMode.audio;
       case MediaMode.video:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
     }
     update();
   }
@@ -383,13 +383,12 @@ late ApiRequster apiRequster;
   Widget getMainWidget() {
     switch (mediaMode) {
       case MediaMode.audio:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return Container(
           width: 100.w,
           height: 100.h,
           child: Scaffold(
             backgroundColor: "#02073D".toColor(),
-
             body: Center(
               child: SafeArea(
                 child: Container(
@@ -397,21 +396,23 @@ late ApiRequster apiRequster;
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-
-
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 7.5.w),
-
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                           children: [
-                            IconButton(onPressed: () {
-                              Get.back();
-                            },
-                                icon: Icon(Icons.arrow_back, color: "666680"
-                                    .toColor(),)),
-                            Text("   ", style: TextStyle(color: Colors.white),),
+                            IconButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color: "666680".toColor(),
+                                )),
+                            Text(
+                              "   ",
+                              style: TextStyle(color: Colors.white),
+                            ),
                             Container(
                               width: 16.w,
                             )
@@ -419,52 +420,55 @@ late ApiRequster apiRequster;
                         ),
                       ),
                       SizedBox(height: 20.h),
-
-                      Align(child: Text(getFormattedRecordingDuration(),
-                        style: TextStyle(color: Colors.white,
-                            fontWeight: FontWeight.bold, fontSize: 14.sp),)),
+                      Align(
+                          child: Text(
+                        getFormattedRecordingDuration(),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.sp),
+                      )),
                       Container(
-
                         width: 100.w,
                         height: 40.h,
                         child: Stack(
                           children: [
-                            SizedBox.expand(child: Image.asset(
-                              "assets/images/voicebackground.png", width: 100.w,
-                              fit: BoxFit.fitWidth,)),
+                            SizedBox.expand(
+                                child: Image.asset(
+                              "assets/images/voicebackground.png",
+                              width: 100.w,
+                              fit: BoxFit.fitWidth,
+                            )),
                             Align(
                               child: isRecording
                                   ? Container(
-                                height: 30.h,
-                                child: AudioWaveforms(
-                                  enableGesture: true,
-                                  size: Size(
-                                      MediaQuery
-                                          .of(Get.context!)
-                                          .size
-                                          .width,
-                                      30.h),
-                                  recorderController: recorderController,
-                                  waveStyle: WaveStyle(
-
-                                      waveColor: Colors.white,
-                                      extendWaveform: true,
-                                      showMiddleLine: true,
-                                      middleLineColor: "597AFF".toColor(),
-                                      scaleFactor: 300
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    // color: const Color(0xFF1E1B26),
-                                  ),
-                                  padding: const EdgeInsets.only(left: 18),
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 15),
-                                ),
-                              )
-                                  : Container(
-
-                              ),
+                                      height: 30.h,
+                                      child: AudioWaveforms(
+                                        enableGesture: true,
+                                        size: Size(
+                                            MediaQuery.of(Get.context!)
+                                                .size
+                                                .width,
+                                            30.h),
+                                        recorderController: recorderController,
+                                        waveStyle: WaveStyle(
+                                            waveColor: Colors.white,
+                                            extendWaveform: true,
+                                            showMiddleLine: true,
+                                            middleLineColor: "597AFF".toColor(),
+                                            scaleFactor: 300),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                          // color: const Color(0xFF1E1B26),
+                                        ),
+                                        padding:
+                                            const EdgeInsets.only(left: 18),
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                      ),
+                                    )
+                                  : Container(),
                             )
                           ],
                         ),
@@ -477,23 +481,19 @@ late ApiRequster apiRequster;
           ),
         );
       case MediaMode.image:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
 
         if (controller != null && !controller!.value.isInitialized) {
-          return FocusDetector(
-              onFocusGained: () {
-
-
-              }, child: Container());
+          return FocusDetector(onFocusGained: () {}, child: Container());
         }
         return Stack(
           children: [
-            SizedBox.expand(child: FocusDetector(
-                onFocusGained: () {
-
-                },
-                onFocusLost: () {},
-                child: CameraPreview(controller!))),
+            if (controller != null)
+              SizedBox.expand(
+                  child: FocusDetector(
+                      onFocusGained: () {},
+                      onFocusLost: () {},
+                      child: CameraPreview(controller!))),
             Obx(() {
               return Visibility(
                 visible: isRecordingTimeVisible.value,
@@ -505,14 +505,15 @@ late ApiRequster apiRequster;
                     margin: EdgeInsets.all(6.w),
                     decoration: BoxDecoration(
                         color: Colors.black,
-                        borderRadius: BorderRadius.circular(400)
-                    ),
+                        borderRadius: BorderRadius.circular(400)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         SvgPicture.asset("assets/images/record.svg"),
-                        Text(recordingTime.value, style: TextStyle(color: Colors
-                            .white),)
+                        Text(
+                          recordingTime.value,
+                          style: TextStyle(color: Colors.white),
+                        )
                       ],
                     ),
                   ),
@@ -522,13 +523,12 @@ late ApiRequster apiRequster;
           ],
         );
       case MediaMode.text:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return Container(
           width: 100.w,
           height: 100.h,
           child: Scaffold(
             backgroundColor: AppColor.blueDarkColor,
-
             body: Center(
               child: SafeArea(
                 child: Container(
@@ -536,21 +536,23 @@ late ApiRequster apiRequster;
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-
-
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 7.5.w),
-
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                           children: [
-                            IconButton(onPressed: () {
-                              Get.back();
-                            },
-                                icon: Icon(Icons.arrow_back, color: "666680"
-                                    .toColor(),)),
-                            Text("   ", style: TextStyle(color: Colors.white),),
+                            IconButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color: "666680".toColor(),
+                                )),
+                            Text(
+                              "   ",
+                              style: TextStyle(color: Colors.white),
+                            ),
                             Container(
                               width: 16.w,
                             )
@@ -558,40 +560,46 @@ late ApiRequster apiRequster;
                         ),
                       ),
                       SizedBox(height: 4.h),
-
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Title", style: TextStyle(color: Colors.white,
-                              fontWeight: FontWeight.bold),),
+                          Text(
+                            "Title",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                           CustomTextFieldPlusWidget(
                               context: Get.context!,
                               textEditingController: textTitleController,
-
                               titleText: 'Title',
                               hintText: 'Insert your title',
                               isLarge: false,
                               needful: false),
                         ],
                       ),
-                      SizedBox(height: 4.h,),
+                      SizedBox(
+                        height: 4.h,
+                      ),
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Caption", style: TextStyle(color: Colors.white,
-                              fontWeight: FontWeight.bold),),
+                          Text(
+                            "Caption",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                           CustomTextFieldPlusWidget(
                               context: Get.context!,
                               textEditingController: textDisController,
-
                               titleText: 'Select language',
                               hintText: 'Insert Caption',
                               needful: false),
                         ],
                       ),
-
                     ],
                   ),
                 ),
@@ -605,45 +613,49 @@ late ApiRequster apiRequster;
     }
   }
 
-
-  sendMainRequest(){
+  sendMainRequest() {
     isloading(true);
     var box = GetStorage();
     var body = {
       "name": titleController.text,
       "user": box.read("userid"),
       "plan": _getPlanByDropDown(),
-
       "subscription_period": subscrptionController.text,
-      "description":captionController.text,
+      "description": captionController.text,
       "lat": 0,
       "lng": 0,
-      "forkability_status": editibaleController.text.contains("Yes")?"0":"1",
+      "forkability_status":
+          editibaleController.text.contains("Yes") ? "0" : "1",
       "commenting_status": 1,
-      "tags": [
-
-      ]
+      "tags": []
     };
-    if(!_getPlanByDropDown().toString().contains("1")){
-      body['price']= priceController.text;
+    if (!_getPlanByDropDown().toString().contains("1")) {
+      body['price'] = priceController.text;
     }
     print('PlusSectionLogic.sendMainRequest = ${body}');
 
-    apiRequster.request(_getUrlByMediaEnum(), ApiRequster.MHETOD_POST, 1,body: body,useToken: true);
+    apiRequster.request(_getUrlByMediaEnum(), ApiRequster.MHETOD_POST, 1,
+        body: body, useToken: true);
   }
-
+  Future<String> saveStringToTxtFile(String stringData) async {
+    final directory = await getTemporaryDirectory();
+    final filePath = '${directory.path}/fileName.txt';
+    final file = File(filePath);
+    await file.writeAsString(stringData);
+    return filePath;
+  }
   @override
   void onError(String content, int reqCode, bodyError) {
     // TODO: implement onError
     isloading(false);
-    try{
+    try {
       var messege = jsonDecode(bodyError)['message'];
-      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text(messege,
-        style: TextStyle(color: AppColor.primaryDarkColor),)));
-
-    }catch(e){
-
-    }
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+          content: Text(
+        messege,
+        style: TextStyle(color: AppColor.primaryDarkColor),
+      )));
+    } catch (e) {}
   }
 
   @override
@@ -654,7 +666,7 @@ late ApiRequster apiRequster;
   @override
   void onSucces(source, int reqCdoe) {
     // TODO: implement onSucces
-    switch(reqCdoe){
+    switch (reqCdoe) {
       case 1:
         peaseJsonFromAddAssets(source);
         break;
@@ -662,8 +674,7 @@ late ApiRequster apiRequster;
   }
 
   String _getUrlByMediaEnum() {
-    switch(mediaMode){
-
+    switch (mediaMode) {
       case MediaMode.audio:
         // TODO: Handle this case.
         return "audios";
@@ -678,12 +689,11 @@ late ApiRequster apiRequster;
       case MediaMode.video:
         // TODO: Handle this case.
         return "videos";
-
     }
   }
 
   _getPlanByDropDown() {
-    switch(planController.text){
+    switch (planController.text) {
       case "Free":
         return "1";
       case "Ownership":
@@ -694,18 +704,22 @@ late ApiRequster apiRequster;
   }
 
   void peaseJsonFromAddAssets(source) {
-    print('PlusSectionLogic.peaseJsonFromAddAssets = ${jsonDecode(source)['asset_id']} - ${imageOutPut}');
-     assetid = jsonDecode(source)['asset_id'].toString();
-
+    print(
+        'PlusSectionLogic.peaseJsonFromAddAssets = ${jsonDecode(source)['asset_id']} - ${imageOutPut}');
+    assetid = jsonDecode(source)['asset_id'].toString();
+    postUploadedId = jsonDecode(source)['id'].toString();
 
     isloading(false);
 
-    Get.to(UploadAssetPage(),arguments: [this]);
+    Get.to(UploadAssetPage(), arguments: [this]);
   }
+
   Future<void> uploadFileWithDio() async {
+   textOutPut = await saveStringToTxtFile(textDisController.text);
     var dio = Dio();
     var formData = d.FormData.fromMap({
-      'file': await d.MultipartFile.fromFile(_getFilePathFromMediaEnum(), filename: 'uploadfile'),
+      'file': await d.MultipartFile.fromFile(_getFilePathFromMediaEnum(),
+          filename: 'uploadfile'),
       'asset': assetid.toString(),
     });
 
@@ -720,15 +734,17 @@ late ApiRequster apiRequster;
             'X-App': '_Android',
           },
         ),
-        onSendProgress: (s,p){
-          uploadedCount = (s*100)/p;
+        onSendProgress: (s, p) {
+          uploadedCount = (s * 100) / p;
           print('PlusSectionLogic.uploadFileWithDio = ${s} - ${p}');
-        update();
-        }
+          update();
+        },
       );
 
       if (response.statusCode == 200) {
         print('File uploaded successfully = ${response.data}');
+         Get.offAllNamed(PageRoutes.WRAPPER);
+        Get.toNamed(_getRouteByMedia(),arguments: {'id': postUploadedId});
       } else {
         print('Failed to upload file: ${response.statusMessage}');
       }
@@ -738,25 +754,44 @@ late ApiRequster apiRequster;
   }
 
   String _getFilePathFromMediaEnum() {
-    switch(mediaMode){
-
+    switch (mediaMode) {
       case MediaMode.audio:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return soundOutPut;
       case MediaMode.image:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return imageOutPut;
 
       case MediaMode.text:
-      // TODO: Handle this case.
-        return "texts";
+        // TODO: Handle this case.
+        return textOutPut;
 
       case MediaMode.video:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         return videoOutPut;
+    }
+  }
+
+  String _getRouteByMedia() {
+    switch(mediaMode){
+
+      case MediaMode.audio:
+        // TODO: Handle this case.
+        return PageRoutes.DETAILMUSIC;
+      case MediaMode.image:
+        // TODO: Handle this case.
+        return PageRoutes.DETAILIMAGE;
+
+      case MediaMode.text:
+        // TODO: Handle this case.
+        return PageRoutes.DETAILTEXT;
+
+      case MediaMode.video:
+        // TODO: Handle this case.
+        return PageRoutes.DETAILVIDEO;
 
     }
   }
 }
 
-enum MediaMode { audio, image, text,video }
+enum MediaMode { audio, image, text, video }

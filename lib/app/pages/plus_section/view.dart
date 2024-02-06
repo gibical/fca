@@ -63,35 +63,35 @@ class _PlusSectionPageState extends State<PlusSectionPage> {
 
                               Align(
                                 alignment: Alignment.topCenter,
-                                child: Container(
-                                    width: 55,
-                                    height: 55,
-                                    decoration: BoxDecoration(
-                                        color: "#030340".toColor(),
-                                        shape: BoxShape.circle
-                                    ),
-                                    margin: EdgeInsets.only(top: 25),
-                                    child: GestureDetector(
-                                        onTap: () {
-                                          logic.middleClick();
-                                        },
+                                child: GestureDetector(
+                                  onTap: () {
+                                    logic.middleClick();
+                                    print(
+                                        '_PlusSectionPageState.build');
+                                  },
 
-                                        onLongPressStart: (l){
-                                          if(logic.mediaMode==MediaMode.image){
-                                            logic.startVideoRecording();
-                                          }
-                                        },
-                                        onLongPressEnd: (h){
-                                          if(logic.mediaMode==MediaMode.image){
-                                            logic.stopVideoRecording();
-                                          }
-                                        },
-
-
-
-                                        child: Center(child: SvgPicture.asset(
-                                            "assets/images/plus_${logic
-                                                .getTopIcon()}.svg")))),
+                                  onLongPressStart: (l){
+                                    if(logic.mediaMode==MediaMode.image){
+                                      logic.startVideoRecording();
+                                    }
+                                  },
+                                  onLongPressEnd: (h){
+                                    if(logic.mediaMode==MediaMode.image){
+                                      logic.stopVideoRecording();
+                                    }
+                                  },
+                                  child: Container(
+                                      width: 55,
+                                      height: 55,
+                                      decoration: BoxDecoration(
+                                          color: "#030340".toColor(),
+                                          shape: BoxShape.circle
+                                      ),
+                                      margin: EdgeInsets.only(top: 25),
+                                      child: Center(child: SvgPicture.asset(
+                                          "assets/images/plus_${logic
+                                              .getTopIcon()}.svg"))),
+                                ),
                               ),
                               Align(
                                 alignment: Alignment.bottomLeft,
