@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mediaverse/app/pages/channel/widgets/addChanelCardCalanderWidget.dart';
 import 'package:mediaverse/app/pages/channel/widgets/add_channel_card_widget.dart';
 import 'package:mediaverse/app/pages/channel/widgets/card_channel_widget.dart';
 import 'package:sizer/sizer.dart';
@@ -239,7 +240,7 @@ class _CustomCalendarWidgetState extends State<CustomCalendarWidget> {
                             ),
                           ),
                         ),
-                        AddChannelCardWidget(),
+                        AddChannelCalanderCardWidget(),
                         CardChannelWidget(title: 'New Channel' , date: DateTime.now().toString()),
                       ],
                     ),

@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       title: 'MediaVerse',
       getPages: PageRoutes.routes,
 
-      initialRoute: PageRoutes.SPLASH,
+      // initialRoute: PageRoutes.SPLASH,
       translations: LocalizationService(),
       debugShowCheckedModeBanner: false,
       locale: LocalizationService().getCurrentLocale(),
@@ -34,6 +34,8 @@ class MyApp extends StatelessWidget {
       themeMode: AppTheme().getCurrentTheme(),
       theme: AppTheme.darkMode,
       darkTheme:  AppTheme.darkMode,
+
+      home: ChannelScreen(),
 
     );
   }
