@@ -31,12 +31,21 @@ class AllTabScreen extends StatelessWidget {
               TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.videoIcon, title: 'Live Channels'),
               SizedBox(height: 1.5.h),
               SizedBox(
-                height: 40.w,
+                height: 21.h,
+
                 child: ListView.builder(
                     itemCount: logic.channels.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return BestChannelsWidget(model: logic.channels.elementAt(index));
+                      return GestureDetector(
+                          onTap: (){
+                            final channelId = logic.channels[index].id;
+                           Get.toNamed(PageRoutes.LIVE , arguments: {'channelId': channelId});
+
+                          },
+                          child: BestChannelsWidget(model: logic.channels.elementAt(index)
+                          )
+                      );
                     }),
               ),
               SizedBox(height: 1.5.h),

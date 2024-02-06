@@ -37,5 +37,9 @@ class AppIcon{
   static const  boxcircleIcon = 'assets/icons/boxcircle.svg';
   static const  uploadIcon = 'assets/icons/upload.svg';
   static const  saveIcon = 'assets/icons/save.svg';
+  static const  fullscreenIcon = 'assets/icons/fullscreen.png';
+  static const  screenshotIcon = 'assets/icons/screenshot.png';
+  static const  recIcon = 'assets/icons/rec.png';
+  static const  recActiveIcon = 'assets/icons/recActive.png';
 
 }

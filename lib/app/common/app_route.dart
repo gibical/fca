@@ -5,6 +5,8 @@ import 'package:mediaverse/app/pages/detail/view.dart';
 import 'package:mediaverse/app/pages/home/state.dart';
 import 'package:mediaverse/app/pages/home/view.dart';
 import 'package:mediaverse/app/pages/intro/view.dart';
+import 'package:mediaverse/app/pages/live/state.dart';
+import 'package:mediaverse/app/pages/live/view.dart';
 import 'package:mediaverse/app/pages/login/view.dart';
 import 'package:mediaverse/app/pages/massage/view.dart';
 import 'package:mediaverse/app/pages/otp/view.dart';
@@ -43,6 +45,7 @@ class PageRoutes {
   static const INTRO = '/Intro';
   static const UPLOAD = '/Upload';
   static const COMMENT = '/Comment';
+  static const LIVE = '/Live';
 
 
   static List<GetPage> routes = [
@@ -152,6 +155,13 @@ class PageRoutes {
       transition: Transition.downToUp,
       page: () => CommentScreen(),
       binding: DetailState(),
+    ),
+
+    GetPage(
+      name: PageRoutes.LIVE,
+      transition: Transition.fadeIn,
+      page: () => LiveScreen(),
+      binding: LiveState(),
     ),
 
   ];

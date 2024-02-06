@@ -196,7 +196,7 @@ class BestChannelsWidget extends GetView<HomeLogic> {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         width: 40.w,
-        height: 20.w,
+        height: 20.h,
         decoration: BoxDecoration(
           color: theme.onBackground.withOpacity(0.1),
          image: DecorationImage(image: NetworkImage(model.thumbnail??"",) , fit: BoxFit.cover),
