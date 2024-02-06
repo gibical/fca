@@ -7,6 +7,8 @@ import 'package:mediaverse/app/pages/home/widgets/bset_item_explore_widget.dart'
 import 'package:sizer/sizer.dart';
 
 import '../../../../common/app_color.dart';
+import '../../../../common/app_route.dart';
+import '../../../detail/logic.dart';
 import '../../widgets/custom_grid_image_widget.dart';
 import '../../widgets/custom_grid_view_widget.dart';
 
@@ -65,7 +67,12 @@ class AllTabScreen extends StatelessWidget {
                     itemCount: logic.mostText.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return BestTextWidget(model: logic.mostText.elementAt(index));
+                      return  GestureDetector(
+                          onTap: (){
+                            int itemId = logic.mostText[index]['id'];
+                            Get.toNamed(PageRoutes.DETAILTEXT, arguments: {'id': itemId});
+                          },
+                          child: BestTextWidget(model: logic.mostText.elementAt(index)));
                     }),
               ),
               SizedBox(height: 6.h),
@@ -78,9 +85,15 @@ class AllTabScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     reverse: true,
                     itemBuilder: (context, index) {
-                      return BestItemSongsWidget(logic.mostSongs.elementAt(index));
+                      return GestureDetector(
+                          onTap: (){
+                            int itemId = logic.mostSongs[index]['id'];
+                            Get.toNamed(PageRoutes.DETAILMUSIC, arguments: {'id': itemId});
+                          },
+                          child: BestItemSongsWidget(logic.mostSongs.elementAt(index)));
                     }),
               ),
+              SizedBox(height: 13.5.h),
             ],
           ),
         ),

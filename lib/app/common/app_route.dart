@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:mediaverse/app/pages/detail/pages/detail_text_screen.dart';
+import 'package:mediaverse/app/pages/detail/state.dart';
 import 'package:mediaverse/app/pages/detail/view.dart';
 import 'package:mediaverse/app/pages/home/state.dart';
 import 'package:mediaverse/app/pages/home/view.dart';
@@ -13,9 +15,14 @@ import 'package:mediaverse/app/pages/search/view.dart';
 import 'package:mediaverse/app/pages/setting/view.dart';
 import 'package:mediaverse/app/pages/signup/view.dart';
 import 'package:mediaverse/app/pages/splash/state.dart';
+import 'package:mediaverse/app/pages/upload/view.dart';
 import 'package:mediaverse/app/pages/wrapper/state.dart';
 import 'package:mediaverse/app/pages/wrapper/view.dart';
 
+import '../pages/detail/pages/comment_screen.dart';
+import '../pages/detail/pages/detail_image_screen.dart';
+import '../pages/detail/pages/detail_music_screen.dart';
+import '../pages/detail/pages/detail_video_screen.dart';
 import '../pages/splash/view.dart';
 
 
@@ -27,12 +34,17 @@ class PageRoutes {
   static const SIGNUP = '/Signup';
   static const WRAPPER = '/Wrapper';
   static const SEARCH = '/Search';
-  static const DETAIL = '/Detail';
+  static const DETAILVIDEO = '/DetailVideo';
+  static const DETAILIMAGE = '/DetailImage';
+  static const DETAILTEXT = '/DetailText';
+  static const DETAILMUSIC = '/DetailMusic';
   static const PROFILE = '/Profile';
   static const SETTING = '/Setting';
   static const MASSAGE = '/Massage';
   static const INTRO = '/Intro';
   static const PLUS = '/Plus';
+  static const UPLOAD = '/Upload';
+  static const COMMENT = '/Comment';
 
 
   static List<GetPage> routes = [
@@ -89,9 +101,32 @@ class PageRoutes {
 
     ),
     GetPage(
-      name: PageRoutes.DETAIL,
+      name: PageRoutes.DETAILIMAGE,
       transition: Transition.downToUp,
-      page: () => DetailScreen(),
+      page: () => DetailImageScreen(),
+      binding: DetailState(),
+    ),
+
+    GetPage(
+      name: PageRoutes.DETAILMUSIC,
+      transition: Transition.downToUp,
+      page: () => DetailMusicScreen(),
+      binding: DetailState(),
+    ),
+    //
+    GetPage(
+      name: PageRoutes.DETAILTEXT,
+      transition: Transition.downToUp,
+      page: () => DetailTextScreen(),
+      binding: DetailState(),
+    ),
+
+    GetPage(
+      name: PageRoutes.DETAILVIDEO,
+      transition: Transition.downToUp,
+      page: () => DetailVideoScreen(),
+      binding: DetailState()
+
     ),
     GetPage(
       name: PageRoutes.SETTING,
@@ -107,9 +142,18 @@ class PageRoutes {
       name: PageRoutes.INTRO,
       transition: Transition.downToUp,
       page: () => IntroPage(),
+    ),
+    GetPage(
+      name: PageRoutes.UPLOAD,
+      transition: Transition.noTransition,
+      page: () => UploadScreen(),
+    ),
 
-
-
+    GetPage(
+      name: PageRoutes.COMMENT,
+      transition: Transition.downToUp,
+      page: () => CommentScreen(),
+      binding: DetailState(),
     ),
     GetPage(
       name: PageRoutes.PLUS,

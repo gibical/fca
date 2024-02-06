@@ -7,7 +7,9 @@ import 'package:sizer/sizer.dart';
 
 import '../../../../common/app_color.dart';
 import '../../../../common/app_icon.dart';
+import '../../../../common/app_route.dart';
 import '../../../../common/font_style.dart';
+import '../../../detail/logic.dart';
 import '../../logic.dart';
 import '../../widgets/bset_item_explore_widget.dart';
 import '../../widgets/custom_grid_view_widget.dart';
@@ -55,13 +57,22 @@ class SoundTabScreen extends StatelessWidget {
                       itemCount: list.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return BestItemSongsWidget(list.reversed.toList().elementAt(index));
+                        return GestureDetector(
+
+                            onTap: (){
+                              int itemId = list[index]['id'];
+                              Get.toNamed(PageRoutes.DETAILMUSIC, arguments: {'id': itemId});
+                            },
+                            child: BestItemSongsWidget(list.toList().elementAt(index)));
                       }),
                 ),
-                TitleExplore(theme: theme,
-                    textTheme: textTheme,
-                    icon: "assets/icons/sound_icons.svg",
-                    title: 'Recently'),
+                Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 2.w),
+                  child: TitleExplore(theme: theme,
+                      textTheme: textTheme,
+                      icon: AppIcon.soundIcon,
+                      title: 'Recently'),
+                ),
 
                 SizedBox(height: 4.h,),
 
@@ -89,6 +100,7 @@ class SoundTabScreen extends StatelessWidget {
                                   SizedBox.expand(
                                     child: Image.asset("assets/images/sound_bg.png"),
                                   ),
+
                                   SizedBox.expand(
                                     child:Container(
                                       decoration: ShapeDecoration(
@@ -113,7 +125,8 @@ class SoundTabScreen extends StatelessWidget {
 
                     }),
                   );
-                })
+                }),
+                SizedBox(height: 10.5.h),
               ],
             ),
           ),

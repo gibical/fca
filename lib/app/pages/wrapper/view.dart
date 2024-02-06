@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/pages/plus_section/view.dart';
+import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/wallet/view.dart';
 
 import '../../widgets/bottomnavwidget.dart';
@@ -31,7 +31,7 @@ class MainWrapperScreen extends GetView<WrapperController> {
           splashColor: Colors.transparent,
           backgroundColor: AppColor.primaryLightColor,
           onPressed: () {
-            Get.to(PlusSectionPage());
+            Get.toNamed(PageRoutes.UPLOAD);
           },
           child: Icon(
             Icons.add,

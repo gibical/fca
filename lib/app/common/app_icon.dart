@@ -33,5 +33,9 @@ class AppIcon{
   static const  wallet1Icon = 'assets/icons/wallet1.svg';
   static const  account1Icon = 'assets/icons/account1.svg';
   static const  playIcon = 'assets/icons/play.svg';
+  static const  addImageIcon = 'assets/icons/addImage.png';
+  static const  boxcircleIcon = 'assets/icons/boxcircle.svg';
+  static const  uploadIcon = 'assets/icons/upload.svg';
+  static const  saveIcon = 'assets/icons/save.svg';
 
 }
