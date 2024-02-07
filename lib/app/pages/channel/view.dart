@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/font_style.dart';
+import 'package:mediaverse/app/pages/channel/logic.dart';
 import 'package:mediaverse/app/pages/channel/tab/calendar_tab.dart';
 import 'package:mediaverse/app/pages/channel/tab/channel_tab.dart';
 import 'package:mediaverse/app/pages/channel/widgets/custom_calendar_widget.dart';
@@ -20,9 +21,13 @@ class ChannelScreen extends StatefulWidget {
   State<ChannelScreen> createState() => _ChannelScreenState();
 }
 
-class _ChannelScreenState extends State<ChannelScreen>     with SingleTickerProviderStateMixin {
+class _ChannelScreenState extends State<ChannelScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _selectedTabIndex = 0;
+
+  final ChanelLogic _logic = Get.put(ChanelLogic());
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +38,7 @@ class _ChannelScreenState extends State<ChannelScreen>     with SingleTickerProv
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +64,12 @@ class _ChannelScreenState extends State<ChannelScreen>     with SingleTickerProv
                 child: Container(
                   height: 6.h,
                   width: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: AppColor.grayLightColor.withOpacity(0.1)),
+                    color: Color(0xff0E0E12).withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 18),
                     child: Row(
@@ -65,16 +77,13 @@ class _ChannelScreenState extends State<ChannelScreen>     with SingleTickerProv
                       children: [
                         Text(
                           'Search',
-                          style: FontStyleApp.bodyLarge.copyWith(color: Color(0xff666680)),
+                          style: FontStyleApp.bodyLarge
+                              .copyWith(color: Color(0xff666680)),
                         ),
-                        SvgPicture.asset(AppIcon.searchIcon, color: Color(0xff666680)),
+                        SvgPicture.asset(AppIcon.searchIcon,
+                            color: Color(0xff666680)),
                       ],
                     ),
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColor.grayLightColor.withOpacity(0.1)),
-                    color: Color(0xff0E0E12).withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
@@ -131,16 +140,11 @@ class _ChannelScreenState extends State<ChannelScreen>     with SingleTickerProv
     );
   }
 
-
-  Widget _buildTab(
-      BuildContext context, int tabIndex , String label) {
+  Widget _buildTab(BuildContext context, int tabIndex, String label) {
     return Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(label)
-
-        ],
+        children: [Text(label)],
       ),
     );
   }
