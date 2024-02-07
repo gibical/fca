@@ -8,6 +8,7 @@ import 'package:mediaverse/app/pages/plus_section/view.dart';
 import 'package:mediaverse/app/pages/wallet/view.dart';
 
 import '../../widgets/bottomnavwidget.dart';
+import '../channel/view.dart';
 import '../home/view.dart';
 import '../profile/view.dart';
 import 'logic.dart';
@@ -45,15 +46,7 @@ class MainWrapperScreen extends GetView<WrapperController> {
         controller: controller.pageController,
         children: [
           HomeScreen(),
-          Scaffold(
-            backgroundColor: Colors.amber,
-            body: Center(
-              child: Text(
-                'Add Screen',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
+          ChannelScreen(),
           WalletScreen(),
           ProfileScreen(),
         ],

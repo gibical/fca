@@ -2,7 +2,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_instance/get_instance.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/font_style.dart';
 import 'package:mediaverse/app/pages/channel/logic.dart';
@@ -399,18 +398,18 @@ class _AddChannelCardWidgetState extends State<AddChannelCardWidget> {
                               borderRadius: BorderRadius.circular(100)),
                           onPressed: () async {
                             if (_logic.typeString.value == "Google") {
-                              GoogleSignIn _googleSignIn = GoogleSignIn(
-                                scopes: [
-                                  'email',
-                                  'https://www.googleapis.com/auth/contacts.readonly',
-                                ],
-                              );
-
-                              try {
-                                await _googleSignIn.signIn();
-                              } catch (error) {
-                                print(error);
-                              }
+                              // GoogleSignIn _googleSignIn = GoogleSignIn(
+                              //   scopes: [
+                              //     'email',
+                              //     'https://www.googleapis.com/auth/contacts.readonly',
+                              //   ],
+                              // );
+                              //
+                              // try {
+                              //   await _googleSignIn.signIn();
+                              // } catch (error) {
+                              //   print(error);
+                              // }
                             }
                           },
                           color: Colors.black54,

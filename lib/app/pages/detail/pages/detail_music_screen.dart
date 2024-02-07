@@ -20,7 +20,7 @@ class DetailMusicScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DetailController>();
+    final controller = Get.put(DetailController(),tag: "${DateTime.now().microsecondsSinceEpoch}");
 
     return Scaffold(
       backgroundColor: AppColor.primaryDarkColor,

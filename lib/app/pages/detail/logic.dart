@@ -23,6 +23,7 @@ class DetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    print('DetailController.onInit');
     fetchVideoData();
     fetchImageData();
     fetchMusicData();
@@ -33,10 +34,14 @@ class DetailController extends GetxController {
   }
   //==================================== fetch data Detail page =======================================//
   void fetchVideoData() async {
+    print('DetailController.onInit 1 ');
+
     await _fetchMediaData('videos', videoDetails, isLoadingVideos);
   }
 
   void fetchImageData() async {
+    print('DetailController.onInit 2 ');
+
     await _fetchMediaData('images', imageDetails, isLoadingImages);
   }
 
@@ -59,6 +64,7 @@ class DetailController extends GetxController {
   Future<void> _fetchMediaData(
 
       String type, RxMap<String, dynamic>? details, RxBool isLoading) async {
+
     try {
       final token = GetStorage().read("token");
       isLoading.value = true;
@@ -71,6 +77,7 @@ class DetailController extends GetxController {
         'Authorization': 'Bearer $token',
       }));
 
+      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
       if (response.statusCode == 200) {
         details?.value = RxMap<String, dynamic>.from(response.data);
         print(response.data);
@@ -79,6 +86,7 @@ class DetailController extends GetxController {
       }
     } catch (e) {
       // Handle errors
+      print('DetailController._fetchMediaData = $e');
     } finally {
       isLoading.value = false;
     }

@@ -16,7 +16,8 @@ class DetailImageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageController = Get.find<DetailController>();
+    final imageController = Get.put(DetailController(),tag: "${DateTime.now().microsecondsSinceEpoch}");
+
     return Scaffold(
 
       backgroundColor: AppColor.primaryDarkColor,
@@ -105,7 +106,7 @@ class DetailImageScreen extends StatelessWidget {
                     //
                     //
                     //     CardMarkSinglePageWidget(label: 'Suffix' , type: '${selectedItem['suffix']}'),
-                    CardMarkSinglePageWidget(label: 'Type' , type: imageController.getTypeString(imageController.imageDetails?['asset']['type'])),
+                  if(imageController.imageDetails?['asset']!=null)  CardMarkSinglePageWidget(label: 'Type' , type: imageController.getTypeString(imageController.imageDetails?['asset']['type'])),
                     //     CardMarkSinglePageWidget(label: 'Lanuage' , type: '${selectedItem['language']}'),
                     //   ],
                     // ),
