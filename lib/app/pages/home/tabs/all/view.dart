@@ -39,6 +39,7 @@ class AllTabScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                           onTap: (){
+                            print('AllTabScreen.build');
                             final channelId = logic.channels[index].id;
                            Get.toNamed(PageRoutes.LIVE , arguments: {'channelId': channelId});
 
