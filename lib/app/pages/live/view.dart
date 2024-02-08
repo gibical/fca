@@ -145,7 +145,9 @@ class _LiveScreenState extends State<LiveScreen> {
                                 }, icon: Image.asset(AppIcon.recIcon , scale: 5.5, color: Colors.white,),
                               ),
 
-                              IconButton(onPressed: (){},
+                              IconButton(onPressed: (){
+                                liveController.takeScreenShot();
+                              },
                                   icon: Image.asset(AppIcon.screenshotIcon , scale: 5.8, color: Colors.white,)
                               ),
                             ],
