@@ -1,9 +1,13 @@
 
 
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:screenshot/screenshot.dart';
 
 class LiveController extends GetxController{
   RxMap<String, dynamic>? liveDetails = RxMap<String, dynamic>();
@@ -132,6 +136,41 @@ class LiveController extends GetxController{
     }
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //Screenshot and save to gallery
+  ScreenshotController screenshotController = ScreenshotController();
+
+  saveScreenShot(Uint8List byte)async {
+
+    final time = DateTime.now();
+    final name = 'Mediaverse $time';
+    await ImageGallerySaver.saveImage(byte , name: name);
+  }
+
+  takeScreenShot(){
+    screenshotController.capture().then((Uint8List? image){
+      saveScreenShot(image!);
+    });
+
+    Get.snackbar('Success', 'The screenshot is saved in your gallery' , backgroundColor: Colors.green);
+  }
 }
 
 

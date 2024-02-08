@@ -28,7 +28,7 @@ class AllTabScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 16.h),
-              TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.videoIcon, title: 'Live Channels'),
+              GestureDetector(child: TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.videoIcon, title: 'Live Channels')),
               SizedBox(height: 1.5.h),
               SizedBox(
                 height: 21.h,
@@ -41,6 +41,7 @@ class AllTabScreen extends StatelessWidget {
                           onTap: (){
                             final channelId = logic.channels[index].id;
                            Get.toNamed(PageRoutes.LIVE , arguments: {'channelId': channelId});
+
 
                           },
                           child: BestChannelsWidget(model: logic.channels.elementAt(index)

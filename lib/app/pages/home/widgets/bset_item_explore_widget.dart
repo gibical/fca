@@ -206,24 +206,19 @@ class BestChannelsWidget extends GetView<HomeLogic> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return GestureDetector(
-      onTap: (){
-        // int itemId = elementAt['id'];
-        // Get.toNamed(PageRoutes.DETAILVIDEO, arguments: {'id': itemId});
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
           width: 40.w,
           height: 20.w,
           decoration: BoxDecoration(
-            color: theme.onBackground.withOpacity(0.1),
-           image: DecorationImage(image: NetworkImage(model.thumbnail??"",) , fit: BoxFit.cover),
-            border: Border.symmetric(horizontal: BorderSide(
-              width: 0.9,
-              color: theme.onBackground.withOpacity(0.2 , ),
-            )),
-            borderRadius: BorderRadius.all(Radius.circular(20.sp))
+              color: theme.onBackground.withOpacity(0.1),
+              image: DecorationImage(image: NetworkImage(model.thumbnail??"",) , fit: BoxFit.cover),
+              border: Border.symmetric(horizontal: BorderSide(
+                width: 0.9,
+                color: theme.onBackground.withOpacity(0.2 , ),
+              )),
+              borderRadius: BorderRadius.all(Radius.circular(20.sp))
           ),
           child: Stack(
             alignment: Alignment.bottomRight,
@@ -233,15 +228,15 @@ class BestChannelsWidget extends GetView<HomeLogic> {
                 height: 190,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20.sp)),
-                  gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        Colors.black.withOpacity(0.6),
-                        Colors.black.withOpacity(0.4),
-                       Colors.transparent,
+                    gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                          Colors.black.withOpacity(0.6),
+                          Colors.black.withOpacity(0.4),
+                          Colors.transparent,
 
-                  ])
+                        ])
                 ),
               ),
               Padding(
@@ -250,7 +245,6 @@ class BestChannelsWidget extends GetView<HomeLogic> {
               )
             ],
           )
-        ),
       ),
     );
   }

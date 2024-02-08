@@ -59,6 +59,8 @@ dependencies:
   audio_waveforms: ^1.0.4
   path_provider: any
   file_picker: any
+  screenshot: ^2.1.0
+  image_gallery_saver: ^2.0.3
 
 dev_dependencies:
   flutter_test:

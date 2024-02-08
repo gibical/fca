@@ -1,16 +1,20 @@
 
 
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../common/app_color.dart';
 import '../../../common/app_icon.dart';
+import '../logic.dart';
 
 
 
@@ -25,6 +29,8 @@ class VideoLiveWidget extends StatefulWidget {
 
 class _VideoLiveWidgetState extends State<VideoLiveWidget> {
   late VideoPlayerController _controller;
+
+  LiveController liveController = Get.find<LiveController>();
   late bool _isPlaying;
   double _sliderValue = 0.0;
 
@@ -59,9 +65,12 @@ class _VideoLiveWidgetState extends State<VideoLiveWidget> {
       children: [
         Stack(
           children: [
-            AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              child: VideoPlayer(_controller),
+            Screenshot(
+              controller: liveController.screenshotController,
+              child: AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(_controller),
+              ),
             ),
             Positioned(
               top: 4.h,
@@ -76,6 +85,8 @@ class _VideoLiveWidgetState extends State<VideoLiveWidget> {
                   child: GestureDetector(
                     onTap: (){
                       Get.back();
+
+
                     },
                     child: Container(
                       height: 5.h,
