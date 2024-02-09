@@ -60,6 +60,11 @@ dependencies:
   path_provider: any
   file_picker: any
   flutter_launcher_icons: ^0.13.1
+  google_sign_in: ^6.1.6
+  image_gallery_saver: ^2.0.3
+  screenshot: ^2.1.0
+  widget_zoom: ^0.0.3
+  pinch_zoom: ^2.0.0
 
 dev_dependencies:
   flutter_test:

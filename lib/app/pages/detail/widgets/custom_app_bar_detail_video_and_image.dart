@@ -5,19 +5,21 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:mediaverse/app/common/app_color.dart';
+import 'package:mediaverse/app/pages/detail/widgets/image_full_screen_dialog.dart';
 import 'package:sizer/sizer.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../common/app_icon.dart';
 
 class CustomAppBarVideoAndImageDetailWidget extends StatelessWidget {
-  const CustomAppBarVideoAndImageDetailWidget({
+   CustomAppBarVideoAndImageDetailWidget({
     super.key,
     required this.selectedItem, required this.isVideo,
   });
 
   final  selectedItem;
   final bool isVideo;
+  String imageURL = "";
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +27,12 @@ class CustomAppBarVideoAndImageDetailWidget extends StatelessWidget {
 
     try {
       imageProvider = NetworkImage(selectedItem['asset']['thumbnails']['336x366']);
+      imageURL = selectedItem['asset']['thumbnails']['3090x1396'];
     } catch (e) {
 
       imageProvider = AssetImage('assets/images/tum_image.jpeg');
     }
+
 
     return SliverToBoxAdapter(
       child: GestureDetector(
@@ -38,7 +42,11 @@ class CustomAppBarVideoAndImageDetailWidget extends StatelessWidget {
             builder: (BuildContext context) {
              return VideoDialog(videoUrl: selectedItem['asset']
              ?['file']?['url'],);
-            }) : null;
+            }) : showDialog(
+             context: context,
+             builder: (BuildContext context) {
+               return FullScreenDialogWidget(imageURL);
+             });
         },
         child: Stack(
           children: [

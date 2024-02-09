@@ -142,34 +142,38 @@ class SettingScreen extends StatelessWidget {
             SizedBox(height: 4.h),
             Padding(
               padding:  EdgeInsets.symmetric(horizontal: 7.5.w),
-              child: Container(
-                width: double.infinity,
-                child: Column(
-                  children: [
-                    ItemSettingScreenWidget(
-                      onTap: (){
-                        print('Analytics');
-                      },
-                      icon: AppIcon.AnalyticsIcon, title: 'Analytics', subTitle: '' , iconSize: 19,),
-                    ItemSettingScreenWidget(
-                      onTap: (){
-                        print('Share');
-                      },
-                      icon: AppIcon.shareIcon,
-                      title: 'Share account',
-                      subTitle: '',
-                      iconSize: 19,
-                    ),
+              child: Opacity(
+                opacity: 0.3,
+                child: Container(
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      ItemSettingScreenWidget(
+                        onTap: (){
+                          print('Analytics');
+                        },
+                        icon: AppIcon.AnalyticsIcon, title: 'Analytics', subTitle: '' , iconSize: 19,
+                      enable: false,),
+                      ItemSettingScreenWidget(
+                        onTap: (){
+                          print('Share');
+                        },
+                        icon: AppIcon.shareIcon,
+                        title: 'Share account',
+                        subTitle: '',
+                        iconSize: 19,enable: false,
+                      ),
 
-                  ],
-                ),
-                decoration: BoxDecoration(
-                  color: Color(0xff4E4E61).withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(16.sp),
-                  border: Border(
-                    top: BorderSide(color: Colors.grey.withOpacity(0.4) , width: 0.9),
-                    left: BorderSide(color: Colors.grey.withOpacity(0.4) , width: 0.5),
-                  )
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color(0xff4E4E61).withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(16.sp),
+                    border: Border(
+                      top: BorderSide(color: Colors.grey.withOpacity(0.4) , width: 0.9),
+                      left: BorderSide(color: Colors.grey.withOpacity(0.4) , width: 0.5),
+                    )
+                  ),
                 ),
               ),
 
@@ -186,15 +190,53 @@ class ItemSettingScreenWidget extends StatelessWidget {
   final String title;
   final String subTitle;
   final double iconSize;
+  final bool enable;
   final bool? boxMassage;
   final Function() onTap;
   const ItemSettingScreenWidget({
-    super.key, required this.icon, required this.title, required this.subTitle, required this.iconSize,  this.boxMassage, required this.onTap,
+    super.key, required this.icon, required this.title, required this.subTitle, required this.iconSize,
+    this.boxMassage, required this.onTap, this.enable=true,
   });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return this.enable? InkWell(
+
+      onTap: onTap,
+      child: SizedBox(
+        height: 8.h,
+        child: Padding(
+          padding:  EdgeInsets.symmetric(horizontal: 6.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SvgPicture.asset(icon , height: iconSize,),
+              SizedBox(width: 4.w),
+              Text(title , style: FontStyleApp.titleSmall.copyWith(
+                color: AppColor.whiteColor,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),),
+              Spacer(),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 2 , horizontal: 8),
+                decoration: BoxDecoration(
+                  color:boxMassage == true ?  Colors.white : Colors.transparent,
+                  borderRadius: BorderRadius.circular(50)
+                ),
+                child: Text(subTitle , style: FontStyleApp.bodyMedium.copyWith(
+                  color: boxMassage == true ? Colors.black:AppColor.grayLightColor.withOpacity(0.5),
+                  fontWeight: FontWeight.w600,
+                ),),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ):InkWell(
+      splashFactory: NoSplash.splashFactory,
+      highlightColor: Colors.transparent,
+      hoverColor: Colors.transparent,
       onTap: onTap,
       child: SizedBox(
         height: 8.h,

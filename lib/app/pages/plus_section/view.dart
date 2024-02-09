@@ -51,7 +51,7 @@ class _PlusSectionPageState extends State<PlusSectionPage> {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                      height: 140,
+                      height: 120,
                       width: 100.w,
 
                       child: Align(
@@ -87,7 +87,7 @@ class _PlusSectionPageState extends State<PlusSectionPage> {
                                           color: "#030340".toColor(),
                                           shape: BoxShape.circle
                                       ),
-                                      margin: EdgeInsets.only(top: 25),
+                                      margin: EdgeInsets.only(top: 15),
                                       child: Center(child: SvgPicture.asset(
                                           "assets/images/plus_${logic
                                               .getTopIcon()}.svg"))),
@@ -102,7 +102,7 @@ class _PlusSectionPageState extends State<PlusSectionPage> {
                                         shape: BoxShape.circle
                                     ),
                                     margin: EdgeInsets.only(
-                                        left: 35, bottom: 20),
+                                        left: 35, bottom: 10),
                                     child: MaterialButton(
                                         onPressed: () {
                                           logic.getLeftClick();
@@ -126,7 +126,7 @@ class _PlusSectionPageState extends State<PlusSectionPage> {
                                         shape: BoxShape.circle
                                     ),
                                     margin: EdgeInsets.only(
-                                        right: 35, bottom: 20),
+                                        right: 35, bottom: 10),
                                     child: MaterialButton(
                                         onPressed: () {
                                           logic.getRightClick();
