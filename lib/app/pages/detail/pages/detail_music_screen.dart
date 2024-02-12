@@ -7,6 +7,7 @@ import 'package:mediaverse/app/common/font_style.dart';
 import 'package:mediaverse/app/pages/detail/widgets/buy_card_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/card_mark_singlepage_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
+import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_icon.dart';
@@ -16,12 +17,11 @@ import '../logic.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
 
 class DetailMusicScreen extends StatelessWidget {
-  const DetailMusicScreen({super.key});
+  final controller = Get.put(DetailController(),
+      tag: "${DateTime.now().microsecondsSinceEpoch}");
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(DetailController(),tag: "${DateTime.now().microsecondsSinceEpoch}");
-
     return Scaffold(
       backgroundColor: AppColor.primaryDarkColor,
       bottomNavigationBar: Obx(() {
@@ -38,7 +38,7 @@ class DetailMusicScreen extends StatelessWidget {
               return SizedBox();
             } else if (plan == 2 || plan == 3) {
               return BuyCardWidget(
-                selectedItem:controller.musicDetails ,
+                  selectedItem: controller.musicDetails,
                   title: controller.musicDetails!['asset']['plan'] == 2
                       ? 'Ownership'
                       : controller.musicDetails!['asset']['plan'] == 3
@@ -251,6 +251,46 @@ class DetailMusicScreen extends StatelessWidget {
                           SizedBox(
                             height: 2.h,
                           ),
+                          Row(
+                            children: [
+                              InkWell(
+                                  onTap: () {
+                                    controller.sendShareYouTube();
+                                  },
+                                  child: SvgPicture.asset(
+                                    "assets/icons/icon__video-white.svg",
+                                    width: 6.w,
+                                  )),
+                              SizedBox(
+                                width: 3.w,
+                              ),
+                              InkWell(
+                                  onTap: () {
+                                    controller.soundConvertToText();
+                                  },
+                                  child: SvgPicture.asset(
+                                    "assets/icons/icon__single-convert-to-text.svg",
+                                    width: 6.w,
+                                  )),
+                              SizedBox(
+                                width: 3.w,
+                              ),
+                              InkWell(
+                                  onTap: () {
+                                    controller.soundTranslate();
+                                  },
+                                  child: SvgPicture.asset(
+                                    "assets/icons/icon__single-tranlate.svg",
+                                    width: 6.w,
+                                  )),
+                              SizedBox(
+                                width: 3.w,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
                           Wrap(
                             children: [
                               CardMarkSinglePageWidget(
@@ -262,7 +302,6 @@ class DetailMusicScreen extends StatelessWidget {
                           SizedBox(
                             height: 2.h,
                           ),
-
                           GetBuilder<DetailController>(
                             builder: (context) {
                               if (controller.musicDetails != null &&
@@ -273,16 +312,20 @@ class DetailMusicScreen extends StatelessWidget {
                                     height: 15.5.h,
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                        color: AppColor.whiteColor.withOpacity(0.1),
+                                        color: AppColor.whiteColor
+                                            .withOpacity(0.1),
                                         border: Border(
                                             right: BorderSide(
-                                                color: Colors.white.withOpacity(0.2),
+                                                color: Colors.white
+                                                    .withOpacity(0.2),
                                                 width: 0.9),
                                             bottom: BorderSide(
-                                                color: Colors.white.withOpacity(0.2),
+                                                color: Colors.white
+                                                    .withOpacity(0.2),
                                                 width: 0.4)),
-                                        borderRadius: BorderRadius.circular(14.sp)),
-                                    child:Column(
+                                        borderRadius:
+                                            BorderRadius.circular(14.sp)),
+                                    child: Column(
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.symmetric(
@@ -290,9 +333,9 @@ class DetailMusicScreen extends StatelessWidget {
                                           child: SliderTheme(
                                             data: SliderThemeData(
                                               thumbColor:
-                                              AppColor.primaryLightColor,
+                                                  AppColor.primaryLightColor,
                                               activeTrackColor:
-                                              AppColor.primaryLightColor,
+                                                  AppColor.primaryLightColor,
                                               inactiveTrackColor: AppColor
                                                   .whiteColor
                                                   .withOpacity(0.3),
@@ -318,7 +361,7 @@ class DetailMusicScreen extends StatelessWidget {
                                               horizontal: 12.w),
                                           child: Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
                                                 DurationMusic.formtTime(
@@ -343,8 +386,8 @@ class DetailMusicScreen extends StatelessWidget {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            controller.toggleMusic(
-                                                controller.musicDetails?['asset']
+                                            controller.toggleMusic(controller
+                                                    .musicDetails?['asset']
                                                 ?['file']?['url']);
                                           },
                                           child: Container(
@@ -364,12 +407,7 @@ class DetailMusicScreen extends StatelessWidget {
                                           ),
                                         ),
                                       ],
-                                    )
-
-
-                                );
-
-
+                                    ));
                               } else {
                                 return SizedBox();
                               }
@@ -379,10 +417,11 @@ class DetailMusicScreen extends StatelessWidget {
                             height: 4.h,
                           ),
                           GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               int itemId = controller.musicDetails?['asset_id'];
                               print(itemId);
-                              Get.toNamed(PageRoutes.COMMENT, arguments: {'id': itemId});
+                              Get.toNamed(PageRoutes.COMMENT,
+                                  arguments: {'id': itemId});
                             },
                             child: CustomCommentSinglePageWidget(),
                           ),

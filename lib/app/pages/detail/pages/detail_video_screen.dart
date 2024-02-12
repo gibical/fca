@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_route.dart';
@@ -16,10 +17,10 @@ import '../widgets/custom_comment_single_pageWidget.dart';
 class DetailVideoScreen extends StatelessWidget {
    DetailVideoScreen({super.key});
 
+    final videoController = Get.find<DetailController>();
 
   @override
   Widget build(BuildContext context) {
-    final videoController = Get.find<DetailController>();
     return Scaffold(
 
       backgroundColor: AppColor.primaryDarkColor,
@@ -104,8 +105,50 @@ class DetailVideoScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
+                      height: 2.h,
+                    ),
+                    Row(
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              videoController.screenShotOfTheVideo();
+                            },
+                            child: SvgPicture.asset(
+                              "assets/icons/icon__screenshot.svg",
+                              width: 6.w,
+                            )),
+
+                        SizedBox(
+                          width: 3.w,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              videoController.videoConvertToAudio();
+                            },
+                            child: SvgPicture.asset(
+                              "assets/icons/icon__single-convert-to-audio.svg",
+                              width: 6.w,
+                            )),
+                        SizedBox(
+                          width: 3.w,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              videoController.sendShareYouTube();
+                            },
+                            child: SvgPicture.asset(
+                              "assets/icons/icon__video-white.svg",
+                              width: 6.w,
+                            )),
+                        SizedBox(
+                          width: 3.w,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
                       height: 3.h,
                     ),
+
                     Wrap(
                       children: [
                         //

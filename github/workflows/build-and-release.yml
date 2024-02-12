@@ -1,0 +1,93 @@
+name: Build and Release APK For MediaVerse
+
+on:
+  push:
+    branches:
+      - release  # Trigger the workflow on pushes to the master branch
+
+jobs:
+  build:
+    permissions: write-all
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2  # Fetch tags and commits
+
+      # Set up JDK 11 for Android builds
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      # Install and setup Flutter
+      - name: Install Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.16.9'
+
+      # Decrypt the signing key
+      - name: Decrypt signing key
+        run: gpg --quiet --batch --yes --decrypt --passphrase="$GPG_PASSPHRASE" --output android/app/sign.jks android/app/sign.jks.gpg
+        env:
+          GPG_PASSPHRASE: ${{ secrets.KEYSTORE_PASSPHRASE }}
+
+      # Get all Flutter dependencies
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build Fat APK
+        run: flutter build apk --release
+
+      - name: Build Split APKs per ABI
+        run: flutter build apk --release --split-per-abi
+
+      - name: Build AAB
+        run: flutter build appbundle --release
+
+      - name: Sign APKs and AAB
+        run: |
+          for file in build/app/outputs/flutter-apk/*-release.apk; do
+            jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore android/app/sign.jks "$file" "${KEY_ALIAS}" -storepass "${STORE_PASSWORD}" -keypass "${KEY_PASSWORD}"
+          done
+          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore android/app/sign.jks build/app/outputs/bundle/release/app-release.aab "${KEY_ALIAS}" -storepass "${STORE_PASSWORD}" -keypass "${KEY_PASSWORD}"
+        env:
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+
+      # Extract version and release notes from the commit message
+      - name: Extract Version and Release Notes
+        id: extract_info
+        run: |
+          # Placeholder for your script to extract version and release notes
+          VERSION=$(git log -1 --pretty=%B | grep -oP 'version: \K.*')
+          RELEASE_NOTES=$(git log -1 --pretty=%B | grep -oP 'Release note:\K.*')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "RELEASE_NOTES=$RELEASE_NOTES" >> $GITHUB_ENV
+          echo "::set-output name=version::$VERSION"
+          echo "::set-output name=release_notes::$RELEASE_NOTES"
+
+      # Create and push a new tag with the extracted version
+      - name: Create Tag
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag ${{ steps.extract_info.outputs.version }}
+          git push origin ${{ steps.extract_info.outputs.version }}
+
+      # Upload the built APK to GitHub Releases
+      - name: Upload APK to GitHub Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            build/app/outputs/flutter-apk/*-release.apk
+            build/app/outputs/bundle/release/app-release.aab
+          tag_name: ${{ steps.extract_info.outputs.version }}
+          body: ${{ steps.extract_info.outputs.release_notes }}
+        env:
+
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -24,7 +24,7 @@ class WalletScreen extends StatelessWidget {
         init: logic,
         builder: (logic) {
       return Obx(() {
-        return logic.isloading.value ? Scaffold(
+        return (logic.isloading.value||logic.isloadingWallet.value) ? Scaffold(
           backgroundColor: AppColor.blueDarkColor,
 
           body: Container(

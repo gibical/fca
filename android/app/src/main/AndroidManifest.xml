@@ -3,6 +3,18 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
 
+    <queries>
+        <!-- If your app checks for SMS support -->
+
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="http" />
+        </intent>
+    </queries>
     <application
         android:label="Mediaverse Studio"
         android:name="${applicationName}"
@@ -26,6 +38,16 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with https://YOUR_HOST -->
+                <data
+                    android:scheme="mediaverse"
+                    android:host="media.verse"
+                    />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

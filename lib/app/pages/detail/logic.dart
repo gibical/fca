@@ -1,10 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../common/app_config.dart';
 import '../../common/utils/duraton_music_helper.dart';
 
 class DetailController extends GetxController {
@@ -19,6 +22,16 @@ class DetailController extends GetxController {
   RxBool isLoadingImages = false.obs;
   RxBool isLoadingMusic = false.obs;
   RxBool isLoadingText = false.obs;
+
+
+  String id = Get.arguments['id'].toString();
+
+  //==================================== for youtube share =======================================//
+  bool isSeletedNow = true;
+  bool isSeletedDate = false;
+  DateTime dateTime = DateTime.now();
+  TextEditingController titleEditingController = TextEditingController();
+  TextEditingController desEditingController = TextEditingController();
 
   @override
   void onInit() {
@@ -278,6 +291,130 @@ class DetailController extends GetxController {
     // TODO: implement onClose
     super.onClose();
     player.stop();
+  }
+
+
+  void soundConvertToText() async{
+    try {
+      final token = GetStorage().read("token");
+
+      String apiUrl =
+          '${Constant.HTTP_HOST}convert/audio-text';
+      var response = await Dio().post(apiUrl, options: Options(headers: {
+        'accept': 'application/json',
+        'X-App': '_Android',
+        'Accept-Language': 'en-US',
+        'Authorization': 'Bearer $token',
+      }),data: {
+        "audio":id
+      });
+
+      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+      if (response.statusCode == 200) {
+
+
+        Constant.showMessege("Request Succesful : ${response.data['status']}");
+        print(response.data);
+      } else {
+        // Handle errors
+        Constant.showMessege("Request Denied : ${response.data['status']}");
+
+      }
+    } catch (e) {
+      // Handle errors
+      Constant.showMessege("Request Denied : ${e.toString()}");
+
+      print('DetailController._fetchMediaData = $e');
+    } finally {
+
+    }
+  }
+  void soundTranslate() async{
+    try {
+      final token = GetStorage().read("token");
+
+      String apiUrl =
+          '${Constant.HTTP_HOST}translate/audio';
+      var response = await Dio().post(apiUrl, options: Options(headers: {
+        'accept': 'application/json',
+        'X-App': '_Android',
+        'Accept-Language': 'en-US',
+        'Authorization': 'Bearer $token',
+      }),data: {
+        "audio":id
+      });
+
+      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+      if (response.statusCode == 200) {
+
+
+        Constant.showMessege("Request Succesful : ${response.data['status']}");
+        print(response.data);
+      } else {
+        // Handle errors
+        Constant.showMessege("Request Denied : ${response.data['status']}");
+
+      }
+    } catch (e) {
+      // Handle errors
+      Constant.showMessege("Request Denied : ${e.toString()}");
+
+      print('DetailController._fetchMediaData = $e');
+    } finally {
+
+    }
+  }
+
+  void sendShareYouTube() {
+    showModalBottomSheet(
+      context: Get.context!,
+      builder: (context) => BottomSheet(
+        backgroundColor: Colors.black54,
+        enableDrag: false,
+        onClosing: () {},
+        builder: (context) {
+          return YoutubeShareBottomSheet(this);
+        },
+      ),
+    );
+  }
+
+  void screenShotOfTheVideo() {}
+
+  void videoConvertToAudio() async{
+    try {
+      final token = GetStorage().read("token");
+
+      String apiUrl =
+          '${Constant.HTTP_HOST}convert/video-audio';
+      var response = await Dio().post(apiUrl, options: Options(headers: {
+        'accept': 'application/json',
+        'X-App': '_Android',
+        'Accept-Language': 'en-US',
+        'Authorization': 'Bearer $token',
+      }),data: {
+        "video": id
+      });
+
+      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+      if (response.statusCode == 200) {
+
+
+        Constant.showMessege("Request Succesful : ${response.data['status']}");
+        print(response.data);
+      } else {
+        // Handle errors
+        Constant.showMessege("Request Denied : ${response.data['status']}");
+
+      }
+    } catch (e) {
+      // Handle errors
+      Constant.showMessege("Request Denied : ${e.toString()}");
+
+      print('DetailController._fetchMediaData = $e');
+    } finally {
+
+    }
   }
 
 }

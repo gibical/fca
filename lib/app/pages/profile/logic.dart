@@ -62,6 +62,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
   var isloading7 = false.obs;
   var isloading8 = false.obs;
   var isloading9 = false.obs;
+  var isloadingWallet = false.obs;
   var isloadingEdit = false.obs;
 
   @override
@@ -348,7 +349,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
     apiRequster.request("stripe/connect", ApiRequster.MHETOD_POST, 16,useToken: true);
   }
   getStripeGateWay(){
-    // isloading(true);
+    isloadingWallet(true);
     apiRequster.request("stripe/gateway", ApiRequster.MHETOD_GET, 17,useToken: true);
   }
   void parseJsonFromGetWalletBalance(source) {
@@ -379,6 +380,14 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   void parseJsonFromGateWay(source) {
+    isloadingWallet(false);
+    log('ProfileControllers.parseJsonFromGateWay = ${source}');
 
+    try {
+    var url = jsonDecode(source)['url'];
+      launchUrlString(url);
+    }  catch (e) {
+      // TODO
+    }
   }
 }

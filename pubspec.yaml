@@ -65,6 +65,7 @@ dependencies:
   screenshot: ^2.1.0
   widget_zoom: ^0.0.3
   pinch_zoom: ^2.0.0
+  app_links: ^3.5.0
 
 dev_dependencies:
   flutter_test:
