@@ -1,30 +1,41 @@
 const Map<String, String> enUS = {
-  "login_1": "Hello World",
-  "login_2": "Log In",
-  "login_3": "Don’t have an account?",
-  "login_4": "Sign Up",
-  "workspace_1": "Hey",
-  "workspace_3": "Empty",
-
-  "workspace_2": """Ready to peek into your world? 
-Simply select your workspace and voilà 
-– let the show begin! 🍿""",
-
-  "profile_1": "Profile",
-  "profile_2": "Hi ",
-  "profile_3": "Member since",
-  "profile_4": "Timezone",
-  "profile_5": "Theme",
-  "profile_6": "Log Out",
-  "profile_7": """To update your profile,""",
-  "profile_7_1": """log in to,""",
-  "profile_8": "on your desktop.",
 
 
+  "login_1":"Insert your number and password to login",
+  "login_2":"Insert cellphone..",
+  "login_3":"Insert password..",
+  "login_4":"Password",
+  "login_5":"Log in with email/Username",
+  "login_6":"Log in with username",
+  "login_7":"Dont have an account?",
+  "login_8":"Signup",
+  "login_9":"Log in",
+  "login_10":"Email",
+  "login_11":"Insert email..",
+  "login_12":"Log in with phone",
+  "login_13":"Insert your email to login",
+  "login_14":"Insert your usemame to login",
+  "login_15":"Username/Email",
+  "login_16":"Insert username...",
+  "login_17":"Log in with phone",
+  "login_18":"Dont have an account?",
+  "login_19":"Signup",
+  "login_20":"Login With SMS",
 
-  "notif_1": "Notifications",
-  "notif_2": "Cloud Archiving: Resumed ",
-  "notif_3": "Cloud Archiving: Paused",
+
+
+
+  "intro_1":"By registering, you agree to our ",
+  "intro_2":"Terms of Use.",
+  "intro_3":"Lets start!",
+  "intro_4":"I have an account",
+
+
+
+
+
+
+
 
 
 };

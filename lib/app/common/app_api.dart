@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart' as gt;
 
 import 'package:get_storage/get_storage.dart';
+import 'package:mediaverse/app/common/utils/dio_inperactor.dart';
 import 'dart:io' as IO;
 import 'RequestInterface.dart';
 import 'app_config.dart';
@@ -16,26 +17,27 @@ class ApiRequster {
   static const int RECEIVE_TIMEOUT = 3000;
   static const int CONNECT_TIMEOUT = 10000;
 
-  static gt.Dio _create({bool useProxy = false}) {
-    gt.Dio _dio = new gt.Dio();
+  static gt.Dio _create() {
+    gt.Dio dio = gt.Dio();
     // 全局属性：请求前缀、连接超时时间、响应超时时间
     gt.BaseOptions options = gt.BaseOptions(
-        sendTimeout: Duration(seconds: SEND_TIMEOUT),
-        connectTimeout: Duration(seconds: CONNECT_TIMEOUT),
-        receiveTimeout: Duration(seconds: RECEIVE_TIMEOUT),
+        sendTimeout: const Duration(seconds: SEND_TIMEOUT),
+        connectTimeout: const Duration(seconds: CONNECT_TIMEOUT),
+        receiveTimeout: const Duration(seconds: RECEIVE_TIMEOUT),
         receiveDataWhenStatusError: true);
-    _dio = new gt.Dio(options);
+    dio = gt.Dio(options);
 
-    (_dio?.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (client) {
       //这一段是解决https抓包的问题
       client.badCertificateCallback =
           (X509Certificate cert, String host, int port) {
         return true;
       };
+      return null;
       //设置花瓶的代理ip
     };
-    return _dio;
+    return dio;
   }
 
   final RequestInterface _requestInterface;
@@ -49,14 +51,16 @@ class ApiRequster {
   static int MHETOD_POST = 2;
   static int MHETOD_DELETE = 4;
   static int MHETOD_PATCH = 3;
+  static int MHETOD_PUT = 5;
   String mainUrl = Constant.HTTP_HOST;
 
   final encoding = Encoding.getByName('utf-8');
 
   static final staticHeaders = {
-    'Accept': 'application/json',
+    'accept': 'application/json',
     'Content-Type': 'application/json',
-    'User-Agent': 'MobileApp',
+    'X-App': '_Android',
+    'Accept-Language': 'en-US',
   };
 
   void request(String endPointUrl, int reqMode, int reqCode,
@@ -77,11 +81,14 @@ class ApiRequster {
     Uri uri = Uri.parse((daynamicUrl ? endPointUrl : mainUrl + endPointUrl).trim());
 
     if (develperModel)
-      if (develperModel) print("uri  $reqCode = " + uri.toString() + "   = ${useToken}");
+      if (develperModel) {
+        print("uri  $reqCode = $uri   = $useToken");
+      }
 
-    if (develperModel) print('ApiRequster.request 0 1 = ${headers}');
+    if (develperModel) print('ApiRequster.request 0 1 = $headers');
 
-    gt.Dio dio = gt.Dio(gt.BaseOptions(headers: headers));
+    gt.Dio dio = gt.Dio(gt.BaseOptions(headers: headers,));
+    dio.interceptors.add(MediaVerseInterceptor(_requestInterface,reqCode));
     if (!kIsWeb) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (IO.HttpClient client) {
@@ -101,7 +108,7 @@ class ApiRequster {
             );
             if (develperModel) print('ApiRequster.request 2 2');
 
-            if (develperModel) print("uri  $reqCode = " + uri.toString());
+            if (develperModel) print("uri  $reqCode = $uri");
             if (develperModel) print('ApiRequster.request 2 3');
 
             final statusCode = response.statusCode;
@@ -110,11 +117,15 @@ class ApiRequster {
             if (response.statusCode == 200 || response.statusCode == 201) {
               String responseBody = response.data.toString();
               if (develperModel)
-                if (develperModel) print("onSucces body $reqCode = " + jsonEncode(response.data));
+                if (develperModel) {
+                  print("onSucces body $reqCode = ${jsonEncode(response.data)}");
+                }
               _requestInterface.onSucces(jsonEncode(response.data), reqCode);
             } else {
               if (develperModel)
-                if (develperModel) print("onError Body $reqCode = " + response.data);
+                if (develperModel) {
+                  print("onError Body $reqCode = " + response.data);
+                }
               _requestInterface.onError(
                   statusCode.toString(), reqCode, jsonEncode(response.data));
             }
@@ -131,15 +142,17 @@ class ApiRequster {
             daynamicUrl ? endPointUrl : mainUrl + endPointUrl,
             data: body,
           );
-          if (develperModel) print("uri  $reqCode = " + uri.toString());
+          if (develperModel) print("uri  $reqCode = $uri");
 
           final statusCode = response.statusCode;
-          if (develperModel) print('ApiRequster.request $reqCode - ${statusCode} = $body');
+          if (develperModel) print('ApiRequster.request $reqCode - $statusCode = $body');
           if (response.statusCode == 200 || response.statusCode == 201) {
             try {
               String responseBody = response.data.toString();
               if (develperModel)
-                if (develperModel) print("onSucces body $reqCode = " + jsonEncode(response.data));
+                if (develperModel) {
+                  print("onSucces body $reqCode = ${jsonEncode(response.data)}");
+                }
               _requestInterface.onSucces(jsonEncode(response.data), reqCode);
             }  catch (e) {
               // TODO
@@ -154,7 +167,9 @@ class ApiRequster {
             _requestInterface.onError(
                 statusCode.toString(), reqCode, jsonEncode(response.data));
             if (develperModel)
-              if (develperModel) print("onError Body $reqCode = " + response.data);
+              if (develperModel) {
+                print("onError Body $reqCode = " + response.data);
+              }
           }
           break;
         case 3:
@@ -164,19 +179,49 @@ class ApiRequster {
             daynamicUrl ? endPointUrl : mainUrl + endPointUrl,
             data: jsonEncode(body),
           );
-          if (develperModel) print("uri  $reqCode = " + uri.toString());
+          if (develperModel) print("uri  $reqCode = $uri");
 
           final statusCode = response.statusCode;
           if (response.statusCode == 200 || response.statusCode == 201) {
             String responseBody = response.data.toString();
             if (develperModel)
-              if (develperModel) print("onSucces body $reqCode = " + jsonEncode(response.data));
+              if (develperModel) {
+                print("onSucces body $reqCode = ${jsonEncode(response.data)}");
+              }
             _requestInterface.onSucces(jsonEncode(response.data), reqCode);
           } else {
             _requestInterface.onError(
                 statusCode.toString(), reqCode, jsonEncode(response.data));
             if (develperModel)
-              if (develperModel) print("onError Body $reqCode = " + response.data);
+              if (develperModel) {
+                print("onError Body $reqCode = " + response.data);
+              }
+          }
+          break;
+        case 5:
+          var response = await gt.Dio(gt.BaseOptions(
+            headers: headers,
+          )).put(
+            daynamicUrl ? endPointUrl : mainUrl + endPointUrl,
+            data: jsonEncode(body),
+          );
+          if (develperModel) print("uri  $reqCode = $uri");
+
+          final statusCode = response.statusCode;
+          if (response.statusCode == 200 || response.statusCode == 201) {
+            String responseBody = response.data.toString();
+            if (develperModel)
+              if (develperModel) {
+                print("onSucces body $reqCode = ${jsonEncode(response.data)}");
+              }
+            _requestInterface.onSucces(jsonEncode(response.data), reqCode);
+          } else {
+            _requestInterface.onError(
+                statusCode.toString(), reqCode, jsonEncode(response.data));
+            if (develperModel)
+              if (develperModel) {
+                print("onError Body $reqCode = " + response.data);
+              }
           }
           break;
         case 4:
@@ -186,19 +231,23 @@ class ApiRequster {
             daynamicUrl ? endPointUrl : mainUrl + endPointUrl,
             data: jsonEncode(body),
           );
-          if (develperModel) print("uri  $reqCode = " + uri.toString());
+          if (develperModel) print("uri  $reqCode = $uri");
 
           final statusCode = response.statusCode;
           if (response.statusCode == 200 || response.statusCode == 201) {
             String responseBody = response.data.toString();
             if (develperModel)
-              if (develperModel) print("onSucces body $reqCode = " + jsonEncode(response.data));
+              if (develperModel) {
+                print("onSucces body $reqCode = ${jsonEncode(response.data)}");
+              }
             _requestInterface.onSucces(jsonEncode(response.data), reqCode);
           } else {
             _requestInterface.onError(
                 statusCode.toString(), reqCode, jsonEncode(response.data));
             if (develperModel)
-              if (develperModel) print("onError Body $reqCode = " + response.data);
+              if (develperModel) {
+                print("onError Body $reqCode = " + response.data);
+              }
           }
           break;
       }
@@ -210,17 +259,23 @@ class ApiRequster {
         _requestInterface.onError(ex.response!.statusCode.toString(), reqCode,
             jsonEncode(ex.response!.data));
         if (develperModel)
-          if (develperModel) print("onError Body $reqCode = " + ex.response!.data);
+          if (develperModel) {
+            print("onError Body $reqCode = " + ex.response!.data);
+          }
       } catch (e) {
         // TODO
-        if (develperModel) print('ApiRequster.request 2= ${e} ');
+        if (develperModel) print('ApiRequster.request 2= $e ');
         if (develperModel)
-          if (develperModel) print('ApiRequster.request 2= ${ex.response!.statusCode} ');
+          if (develperModel) {
+            print('ApiRequster.request 2= ${ex.response!.statusCode} ');
+          }
         if (develperModel)
-          if (develperModel) print(
+          if (develperModel) {
+            print(
               'ApiRequster.request 2= ${ex.response!.data} - ${ex.requestOptions.data} - ${ex.response!.statusCode}');
+          }
         _requestInterface.onError(e.toString(), reqCode, ex.requestOptions.data);
-        if (develperModel) print("onError catch = " + e.toString());
+        if (develperModel) print("onError catch = $e");
       }
     } catch (e) {
       if (develperModel) print('ApiRequster.request 3 ');
@@ -228,7 +283,7 @@ class ApiRequster {
       // TODO
       if (develperModel) print('ApiRequster.request 1= $e');
       _requestInterface.onError(e.toString(), reqCode, "null");
-      if (develperModel) print("onError catch = " + e.toString());
+      if (develperModel) print("onError catch = $e");
     }
   }
 

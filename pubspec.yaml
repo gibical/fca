@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.2.2 <4.0.0'
+  sdk: '>=3.1.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -38,7 +38,34 @@ dependencies:
   get: ^4.6.6
   sizer: ^2.0.15
   get_storage: ^2.1.1
+  flutter_svg: ^2.0.9
   dio: ^5.4.0
+  flutter_spinkit: ^5.2.0
+  flutter_staggered_grid_view: ^0.7.0
+  country_code_picker: ^3.0.0
+  lottie: any
+  http: any
+  google_fonts: ^6.1.0
+  visibility_detector: any
+  focus_detector: any
+  dotted_border: ^2.1.0
+  pointycastle: 3.7.3
+  image_picker: ^1.0.7
+  just_audio: ^0.9.36
+  video_player: ^2.8.2
+  url_launcher: any
+  camera_camera: ^3.0.0
+  camera: ^0.10.5+9
+  audio_waveforms: ^1.0.4
+  path_provider: any
+  file_picker: any
+  flutter_launcher_icons: ^0.13.1
+  google_sign_in: ^6.1.6
+  image_gallery_saver: ^2.0.3
+  screenshot: ^2.1.0
+  widget_zoom: ^0.0.3
+  pinch_zoom: ^2.0.0
+  app_links: ^3.5.0
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +77,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/mainLogo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -63,8 +96,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/icons/
+    - assets/images/
+    - assets/json/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
