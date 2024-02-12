@@ -3,7 +3,7 @@ name: Build and Release APK For MediaVerse
 on:
   push:
     branches:
-      - release  # Trigger the workflow on pushes to the master branch
+      - master  # Trigger the workflow on pushes to the master branch
 
 jobs:
   build:
