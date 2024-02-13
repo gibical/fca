@@ -24,32 +24,32 @@ class DetailTextScreen extends StatefulWidget {
 class _DetailTextScreenState extends State<DetailTextScreen> {
   bool isExpanded = false;
 
+    final logic = Get.find<DetailController>();
   @override
   Widget build(BuildContext context) {
-    final textController = Get.find<DetailController>();
     return Scaffold(
       backgroundColor: AppColor.primaryDarkColor,
         bottomNavigationBar: Obx(() {
-          if (textController.isLoadingText.value) {
+          if (logic.isLoadingText.value) {
             return Center(child: CircularProgressIndicator());
           } else {
-            if (textController.textDetails != null &&
-                textController.textDetails!.containsKey('asset') &&
-                textController.textDetails!['asset'] != null &&
-                textController.textDetails!['asset'].containsKey('plan')) {
-              int plan = textController.textDetails!['asset']['plan'];
+            if (logic.textDetails != null &&
+                logic.textDetails!.containsKey('asset') &&
+                logic.textDetails!['asset'] != null &&
+                logic.textDetails!['asset'].containsKey('plan')) {
+              int plan = logic.textDetails!['asset']['plan'];
               print(plan);
               if (plan == 1) {
                 return SizedBox();
               } else if (plan == 2 || plan == 3) {
                 return BuyCardWidget(
-                    selectedItem:textController.textDetails ,
-                    title: textController.textDetails!['asset']['plan'] == 2
+                    selectedItem:logic.textDetails ,
+                    title: logic.textDetails!['asset']['plan'] == 2
                         ? 'Ownership'
-                        : textController.textDetails!['asset']['plan'] == 3
+                        : logic.textDetails!['asset']['plan'] == 3
                         ? 'Subscribe'
                         : '',
-                    price: textController.textDetails!['asset']['price']
+                    price: logic.textDetails!['asset']['price']
                 );
 
               } else {
@@ -61,7 +61,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
           }
         }),
       body: Obx((){
-        return textController.isLoadingText.value ? Center(child: CircularProgressIndicator(),): CustomScrollView(
+        return logic.isLoadingText.value ? Center(child: CircularProgressIndicator(),): CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
               child: Stack(
@@ -120,10 +120,10 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      '${textController.textDetails?['name']}',
+                                      '${logic.textDetails?['name']}',
                                       style: GoogleFonts.inter(
                                         color: Colors.white,
-                                        fontSize: textController.textDetails?['name'].length > 15 ? 17 : 21,
+                                        fontSize: logic.textDetails?['name'].length > 15 ? 17 : 21,
                                       ),
                                     ),
                                   ),
@@ -137,7 +137,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                         width: 2.w,
                                       ),
                                       Text(
-                                        textController.textDetails?['asset']['user']
+                                        logic.textDetails?['asset']['user']
                                         ['username'],
                                         style: FontStyleApp.bodySmall
                                             .copyWith(
@@ -183,15 +183,15 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                         });
                       },
                       child: Text(
-                        textController.textDetails?['description'] == null
+                        logic.textDetails?['description'] == null
                             ? ''
                             : isExpanded
-                            ? textController.textDetails!['description']
-                            : (textController.textDetails?['description'].length > 80
-                            ? textController.textDetails!['description']
+                            ? logic.textDetails!['description']
+                            : (logic.textDetails?['description'].length > 80
+                            ? logic.textDetails!['description']
                             .substring(0, 80) +
                             '...more'
-                            : textController.textDetails?['description']),
+                            : logic.textDetails?['description']),
                         style: GoogleFonts.inter(
                           color: Colors.white.withOpacity(0.7),
                           fontSize: 14,
@@ -201,10 +201,74 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                     SizedBox(
                       height: 2.h,
                     ),
+                    Row(
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              logic.textToText();
+                            },
+                            child: SvgPicture.asset(
+                              "assets/icons/icon__single-convert-to-text.svg",
+                              width: 6.w,
+                            )),
+
+                        SizedBox(
+                          width: 3.w,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              logic.textToImage();
+                            },
+                            child: SvgPicture.asset(
+                              "assets/icons/icon__single-convert-to-image.svg",
+                              width: 6.w,
+                            )),
+
+                        SizedBox(
+                          width: 3.w,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              logic.textConvertToAudio();
+                            },
+                            child: SvgPicture.asset(
+                              "assets/icons/icon__single-convert-to-audio.svg",
+                              width: 6.w,
+                            )),
+                        SizedBox(
+                          width: 3.w,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              logic.sendShareYouTube();
+                            },
+                            child: SvgPicture.asset(
+                              "assets/icons/icon__video-white.svg",
+                              width: 6.w,
+                            )),
+                        SizedBox(
+                          width: 3.w,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              logic.translateText();
+                            },
+                            child: SvgPicture.asset(
+                              "assets/icons/icon__single-tranlate.svg",
+                              width: 6.w,
+                            )),
+                        SizedBox(
+                          width: 3.w,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 3.h,
+                    ),
                     Wrap(
                       children: [
-                        CardMarkSinglePageWidget(label: 'Suffix' , type: (textController.textDetails?['suffix'] ?? 'null') ),
-                        CardMarkSinglePageWidget(label: 'Type' , type: textController.getTypeString(textController.textDetails?['asset']['type'])),
+                        CardMarkSinglePageWidget(label: 'Suffix' , type: (logic.textDetails?['suffix'] ?? 'null') ),
+                        CardMarkSinglePageWidget(label: 'Type' , type: logic.getTypeString(logic.textDetails?['asset']['type'])),
                       ],
                     ),
                     SizedBox(
@@ -218,7 +282,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                     ),
                     GestureDetector(
                       onTap: (){
-                        int itemId = textController.textDetails?['asset_id'];
+                        int itemId = logic.textDetails?['asset_id'];
                         print(itemId);
                         Get.toNamed(PageRoutes.COMMENT, arguments: {'id': itemId});
                       },

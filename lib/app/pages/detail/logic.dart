@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:mediaverse/app/common/app_extension.dart';
+import 'package:mediaverse/app/pages/detail/widgets/text_to_text.dart';
 import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
+import 'package:sizer/sizer.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../common/app_config.dart';
+import '../../common/utils/dio_inperactor.dart';
 import '../../common/utils/duraton_music_helper.dart';
 
 class DetailController extends GetxController {
@@ -416,5 +420,233 @@ class DetailController extends GetxController {
 
     }
   }
+  void textConvertToAudio() async{
 
+    String language =await _runCustomSelectBottomSheet(Constant.languages, "Select Language");
+    String loclae = Constant.languageMap[language]??"";
+    try {
+      final token = GetStorage().read("token");
+
+      String apiUrl =
+          '${Constant.HTTP_HOST}convert/text-audio';
+      var s = Dio();
+      s.interceptors.add(MediaVerseConvertInterceptor());
+      var response = await s. post(apiUrl, options: Options(headers: {
+        'accept': 'application/json',
+        'X-App': '_Android',
+        'Accept-Language': 'en-US',
+        'Authorization': 'Bearer $token',
+      },),data: {
+        "text": id,
+        "language": loclae
+
+      },);
+
+      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+      if (response.statusCode == 200) {
+
+
+        Constant.showMessege("Request Succesful : ${response.data['status']}");
+        print(response.data);
+      } else {
+        // Handle errors
+        //Constant.showMessege("Request Denied : ${response.data['status']}");
+
+      }
+    } catch ( e) {
+      // Handle errors
+     // Constant.showMessege("Request Denied : ${e.toString()}");
+
+      print('DetailController._fetchMediaData = $e');
+    } finally {
+
+    }
+  }
+
+  void textToImage() async{
+    try {
+      final token = GetStorage().read("token");
+
+      String apiUrl =
+          '${Constant.HTTP_HOST}convert/text-image';
+      var s = Dio();
+      s.interceptors.add(MediaVerseConvertInterceptor());
+      var response = await s. post(apiUrl, options: Options(headers: {
+        'accept': 'application/json',
+        'X-App': '_Android',
+        'Accept-Language': 'en-US',
+        'Authorization': 'Bearer $token',
+      },),data: {
+        "text": id,
+        "size": "512x512"
+      },);
+
+      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+      if (response.statusCode == 200) {
+
+
+        Constant.showMessege("Request Succesful : ${response.data['status']}");
+        print(response.data);
+      } else {
+        // Handle errors
+       // Constant.showMessege("Request Denied : ${response.data['status']}");
+
+      }
+    } catch ( e) {
+      // Handle errors
+     // Constant.showMessege("Request Denied : ${e.toString()}");
+
+      print('DetailController._fetchMediaData = $e');
+    } finally {
+
+    }
+  }
+
+  void translateText() async{
+
+    String language =await _runCustomSelectBottomSheet(Constant.languages, "Select Language");
+    String loclae = Constant.languageMap[language]??"";
+    try {
+      final token = GetStorage().read("token");
+
+      String apiUrl =
+          '${Constant.HTTP_HOST}translate/text';
+      var s = Dio();
+      s.interceptors.add(MediaVerseConvertInterceptor());
+      var response = await s. post(apiUrl, options: Options(headers: {
+        'accept': 'application/json',
+        'X-App': '_Android',
+        'Accept-Language': 'en-US',
+        'Authorization': 'Bearer $token',
+      },),data: {
+        "text": id,
+        "language": loclae
+      },);
+
+      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+      if (response.statusCode == 200) {
+
+
+        Constant.showMessege("Request Succesful : ${response.data['status']}");
+        print(response.data);
+      } else {
+        // Handle errors
+     //   Constant.showMessege("Request Denied : ${response.data['status']}");
+
+      }
+    } catch ( e) {
+      // Handle errors
+     // Constant.showMessege("Request Denied : ${e.toString()}");
+
+      print('DetailController._fetchMediaData = $e');
+    } finally {
+
+    }
+  }
+  void textToText() async{
+    showModalBottomSheet(
+      context: Get.context!,
+      builder: (context) => BottomSheet(
+        backgroundColor: Colors.black54,
+        enableDrag: false,
+        onClosing: () {},
+        builder: (context) {
+          return TextToTextWidget(this);
+        },
+      ),
+    );
+    // String language =await _runCustomSelectBottomSheet(Constant.languages, "Select Language");
+    // String loclae = Constant.languageMap[language]??"";
+    // try {
+    //   final token = GetStorage().read("token");
+    //
+    //   String apiUrl =
+    //       '${Constant.HTTP_HOST}translate/text';
+    //   var s = Dio();
+    //   s.interceptors.add(MediaVerseConvertInterceptor());
+    //   var response = await s. post(apiUrl, options: Options(headers: {
+    //     'accept': 'application/json',
+    //     'X-App': '_Android',
+    //     'Accept-Language': 'en-US',
+    //     'Authorization': 'Bearer $token',
+    //   },),data: {
+    //     "text": id,
+    //     "language": loclae
+    //   },);
+    //
+    //   print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+    //   if (response.statusCode == 200) {
+    //
+    //
+    //     Constant.showMessege("Request Succesful : ${response.data['status']}");
+    //     print(response.data);
+    //   } else {
+    //     // Handle errors
+    //  //   Constant.showMessege("Request Denied : ${response.data['status']}");
+    //
+    //   }
+    // } catch ( e) {
+    //   // Handle errors
+    //  // Constant.showMessege("Request Denied : ${e.toString()}");
+    //
+    //   print('DetailController._fetchMediaData = $e');
+    // } finally {
+    //
+    // }
+  }
+  Future<String> _runCustomSelectBottomSheet(List<String> models, String title)async {
+  var sxz =  await Get.bottomSheet(Container(
+      width: 100.w,
+      height: 50.h,
+      padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+      decoration: BoxDecoration(
+          color: "474755".toColor(),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+          )
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          SizedBox(height: 3.h,),
+          Expanded(child: ListView.builder(itemBuilder: (s,p){
+            return InkWell(
+              onTap: (){
+                try {
+                 return Get.back(result: models.elementAt(p));
+
+                }  catch (e) {
+                  // TODO
+                }
+                Get.back();
+              },
+              child: Container(
+                width: 100.w,
+                height: 4.h,
+                margin: EdgeInsets.symmetric(vertical: 6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(models.elementAt(p),style: TextStyle(
+                        color: Colors.white.withOpacity(0.4)
+                    ),),
+                    SizedBox(height: 5,),
+                    Container(
+                      width: 100.w,
+                      height: 1,
+                      color: Colors.white.withOpacity(0.15),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },itemCount: models.length,))
+        ],
+      ),
+    ));
+   return sxz.toString();
+  }
 }
