@@ -41,65 +41,73 @@ class ImageTabScreen extends StatelessWidget {
           onSendRequest.call();
         }
       },
-      child: Scaffold(
-        backgroundColor: theme.background,
-        body: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: 15.h),
+      child: RefreshIndicator(
+        onRefresh: ()async{
 
-                TitleExplore(theme: theme,
-                    textTheme: textTheme,
-                    icon: "assets/icons/sound_icons.svg",
-                    title: 'Best in month'),
-                SizedBox(height: 1.5.h),
-                SizedBox(
-                  height: 30.h,
-                  child: Obx(() {
-                    return ListView.builder(
-                        itemCount: list.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return  GestureDetector(
-                            onTap: (){
-                              int itemId = list[index]['id'];
-                              Get.toNamed(PageRoutes.DETAILIMAGE, arguments: {'id': itemId});
-                            },
-                            child: MostImageWidget(
-                                list.elementAt(index)),
-                          );
-                        });
-                  }),
-                ),
-                TitleExplore(theme: theme,
-                    textTheme: textTheme,
-                    icon: "assets/icons/sound_icons.svg",
-                    title: 'Recently'),
+          Get.find<HomeLogic>().getMainReueqst();
+          onSendRequest.call();
 
-                SizedBox(height: 4.h,),
+        },
+        child: Scaffold(
+          backgroundColor: theme.background,
+          body: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: 15.h),
 
-                Obx(() {
-                  var isloadingImage = list.length == 0;
-                  if (isloadingImage) {
-                    return Container(
-                      child: Lottie.asset(
-                          "assets/json/Y8IBRQ38bK.json", height: 10.h),
+                  TitleExplore(theme: theme,
+                      textTheme: textTheme,
+                      icon: "assets/icons/sound_icons.svg",
+                      title: 'Best in month'),
+                  SizedBox(height: 1.5.h),
+                  SizedBox(
+                    height: 30.h,
+                    child: Obx(() {
+                      return ListView.builder(
+                          itemCount: list.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return  GestureDetector(
+                              onTap: (){
+                                int itemId = list[index]['id'];
+                                Get.toNamed(PageRoutes.DETAILIMAGE, arguments: {'id': itemId});
+                              },
+                              child: MostImageWidget(
+                                  list.elementAt(index)),
+                            );
+                          });
+                    }),
+                  ),
+                  TitleExplore(theme: theme,
+                      textTheme: textTheme,
+                      icon: "assets/icons/sound_icons.svg",
+                      title: 'Recently'),
+
+                  SizedBox(height: 4.h,),
+
+                  Obx(() {
+                    var isloadingImage = list.length == 0;
+                    if (isloadingImage) {
+                      return Container(
+                        child: Lottie.asset(
+                            "assets/json/Y8IBRQ38bK.json", height: 10.h),
+                      );
+                    }
+                    return Column(
+                      children: [
+                        Container(child: CustomGridImageWidget(list.value)),
+                        // Container(child: CustomGridImageWidget(list.value,
+                        //   isReversed: true,)),
+                        // Container(child: CustomGridImageWidget(list,
+                        //   isReversed: false,)),
+                        SizedBox(height: 15.5.h),
+                      ],
                     );
-                  }
-                  return Column(
-                    children: [
-                      Container(child: CustomGridImageWidget(list.value)),
-                      // Container(child: CustomGridImageWidget(list.value,
-                      //   isReversed: true,)),
-                      // Container(child: CustomGridImageWidget(list,
-                      //   isReversed: false,)),
-                      SizedBox(height: 15.5.h),
-                    ],
-                  );
-                })
-              ],
+                  })
+                ],
+              ),
             ),
           ),
         ),

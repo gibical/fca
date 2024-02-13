@@ -32,62 +32,69 @@ class VideoTabScreen extends StatelessWidget {
     final textTheme = Theme
         .of(context)
         .textTheme;
-    return Scaffold(
-      backgroundColor: theme.background,
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 15.h),
+    return  RefreshIndicator(
+      onRefresh: ()async{
 
-              TitleExplore(theme: theme,
-                  textTheme: textTheme,
-                  icon: "assets/icons/sound_icons.svg",
-                  title: 'Best in month'),
-              SizedBox(height: 1.5.h),
-              Obx(() {
-                return SizedBox(
-                  height: 30.h,
-                  child: ListView.builder(
-                      itemCount: list.reversed.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return  BestItemExploreWidget(
-                            list.reversed
-                                .toList().elementAt(index));
-                      }),
-                );
-              }),
-              SizedBox(height: 2.h),
-              TitleExplore(theme: theme,
-                  textTheme: textTheme,
-                  icon: "assets/icons/sound_icons.svg",
-                  title: 'Recently'),
+        Get.find<HomeLogic>().getMainReueqst();
 
+      },
+      child: Scaffold(
+        backgroundColor: theme.background,
+        body: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 15.h),
 
-              SizedBox(height: 1.5.h),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: list.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      int itemId = list[index]['id'];
-                      print(itemId);
-                      Get.toNamed(PageRoutes.DETAILVIDEO, arguments: {'id': itemId});
-                    },
-                    child: ItemVideoTabScreen(
-                      list[index],
-                    ),
+                TitleExplore(theme: theme,
+                    textTheme: textTheme,
+                    icon: "assets/icons/sound_icons.svg",
+                    title: 'Best in month'),
+                SizedBox(height: 1.5.h),
+                Obx(() {
+                  return SizedBox(
+                    height: 30.h,
+                    child: ListView.builder(
+                        itemCount: list.reversed.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return  BestItemExploreWidget(
+                              list.reversed
+                                  .toList().elementAt(index));
+                        }),
                   );
+                }),
+                SizedBox(height: 2.h),
+                TitleExplore(theme: theme,
+                    textTheme: textTheme,
+                    icon: "assets/icons/sound_icons.svg",
+                    title: 'Recently'),
 
 
-                },
-              ),
-              SizedBox(height: 7.h),
-            ],
+                SizedBox(height: 1.5.h),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: list.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        int itemId = list[index]['id'];
+                        print(itemId);
+                        Get.toNamed(PageRoutes.DETAILVIDEO, arguments: {'id': itemId});
+                      },
+                      child: ItemVideoTabScreen(
+                        list[index],
+                      ),
+                    );
+
+
+                  },
+                ),
+                SizedBox(height: 7.h),
+              ],
+            ),
           ),
         ),
       ),

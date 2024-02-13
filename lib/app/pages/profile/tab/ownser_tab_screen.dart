@@ -93,7 +93,13 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                               "assets/json/Y8IBRQ38bK.json", height: 5.h),
                         );
                       }
-                      return CustomTabScreen(logic.ownerImages);
+                      return RefreshIndicator(
+                          onRefresh: ()async{
+
+
+                            logic.onGetAssetsPhoto();
+
+                          },child: CustomTabScreen(logic.ownerImages));
                     }),
                   ),
                   FocusDetector(
@@ -109,7 +115,13 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                               "assets/json/Y8IBRQ38bK.json", height: 5.h),
                         );
                       }
-                      return CustomTabScreen(logic.ownerVideos);
+                      return RefreshIndicator(
+                          onRefresh: ()async{
+
+
+                            logic.onGetAssetsVideo();
+
+                          },child: CustomTabScreen(logic.ownerVideos));
                     }),
                   ),
                   FocusDetector(
@@ -125,7 +137,13 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                               "assets/json/Y8IBRQ38bK.json", height: 5.h),
                         );
                       }
-                      return CustomTabScreen(logic.ownerAudios);
+                      return RefreshIndicator(
+                          onRefresh: ()async{
+
+
+                            logic.onGetAssetsAudioes();
+
+                          },child: CustomTabScreen(logic.ownerAudios));
                     }),
                   ),
                   FocusDetector(
@@ -141,7 +159,13 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                               "assets/json/Y8IBRQ38bK.json", height: 5.h),
                         );
                       }
-                      return CustomTabScreen(logic.ownerText);
+                      return RefreshIndicator(
+                          onRefresh: ()async{
+
+
+                            logic.onGetSubsAssetsText();
+
+                          },child: CustomTabScreen(logic.ownerText));
                     }),
                   ),
                 ],

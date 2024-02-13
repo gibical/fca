@@ -37,97 +37,105 @@ class SoundTabScreen extends StatelessWidget {
           onSendRequest.call();
         }
       },
-      child: Scaffold(
-        backgroundColor: theme.background,
-        body: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: 15.h),
+      child: RefreshIndicator(
+        onRefresh: ()async{
 
-                TitleExplore(theme: theme,
-                    textTheme: textTheme,
-                    icon: "assets/icons/sound_icons.svg",
-                    title: 'Best in month'),
-                SizedBox(height: 1.5.h),
-                SizedBox(
-                  height: 30.h,
-                  child: ListView.builder(
-                      itemCount: list.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
+          Get.find<HomeLogic>().getMainReueqst();
+          onSendRequest.call();
 
-                            onTap: (){
-                              int itemId = list[index]['id'];
-                              Get.toNamed(PageRoutes.DETAILMUSIC, arguments: {'id': itemId});
-                            },
-                            child: BestItemSongsWidget(list.toList().elementAt(index)));
-                      }),
-                ),
-                Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 2.w),
-                  child: TitleExplore(theme: theme,
+        },
+        child: Scaffold(
+          backgroundColor: theme.background,
+          body: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: 15.h),
+
+                  TitleExplore(theme: theme,
                       textTheme: textTheme,
-                      icon: AppIcon.soundIcon,
-                      title: 'Recently'),
-                ),
+                      icon: "assets/icons/sound_icons.svg",
+                      title: 'Best in month'),
+                  SizedBox(height: 1.5.h),
+                  SizedBox(
+                    height: 30.h,
+                    child: ListView.builder(
+                        itemCount: list.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
 
-                SizedBox(height: 4.h,),
+                              onTap: (){
+                                int itemId = list[index]['id'];
+                                Get.toNamed(PageRoutes.DETAILMUSIC, arguments: {'id': itemId});
+                              },
+                              child: BestItemSongsWidget(list.toList().elementAt(index)));
+                        }),
+                  ),
+                  Padding(
+                    padding:  EdgeInsets.symmetric(horizontal: 2.w),
+                    child: TitleExplore(theme: theme,
+                        textTheme: textTheme,
+                        icon: AppIcon.soundIcon,
+                        title: 'Recently'),
+                  ),
 
-                Obx(() {
-                  var isloadingImage = list.length==0;
-                  if(isloadingImage){
+                  SizedBox(height: 4.h,),
+
+                  Obx(() {
+                    var isloadingImage = list.length==0;
+                    if(isloadingImage){
+                      return Container(
+                        child: Lottie.asset("assets/json/Y8IBRQ38bK.json",height: 10.h),
+                      );
+                    }
                     return Container(
-                      child: Lottie.asset("assets/json/Y8IBRQ38bK.json",height: 10.h),
-                    );
-                  }
-                  return Container(
-                    height: 40.h,
-                    child: GridView.builder(
-                        itemCount: 4,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2
-                    ), itemBuilder: (s,q){
-                          var item = list.elementAt(q);
-                          return AspectRatio(
-                            aspectRatio: 1/1,
-                            child: Container(
+                      height: 40.h,
+                      child: GridView.builder(
+                          itemCount: 4,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2
+                      ), itemBuilder: (s,q){
+                            var item = list.elementAt(q);
+                            return AspectRatio(
+                              aspectRatio: 1/1,
+                              child: Container(
 
-                              margin: EdgeInsets.all(2.w),
-                              child: Stack(
-                                children: [
-                                  SizedBox.expand(
-                                    child: Image.asset("assets/images/sound_bg.png"),
-                                  ),
+                                margin: EdgeInsets.all(2.w),
+                                child: Stack(
+                                  children: [
+                                    SizedBox.expand(
+                                      child: Image.asset("assets/images/sound_bg.png"),
+                                    ),
 
-                                  SizedBox.expand(
-                                    child:Container(
-                                      decoration: ShapeDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment(0.00, 1.00),
-                                          end: Alignment(0, -1),
-                                          colors: [Color(0xFF0B0B31), Color(0x000A0A32)],
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          side: BorderSide(width: 1, color: Color(0x33CFCFFC)),
-                                          borderRadius: BorderRadius.circular(16),
+                                    SizedBox.expand(
+                                      child:Container(
+                                        decoration: ShapeDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment(0.00, 1.00),
+                                            end: Alignment(0, -1),
+                                            colors: [Color(0xFF0B0B31), Color(0x000A0A32)],
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            side: BorderSide(width: 1, color: Color(0x33CFCFFC)),
+                                            borderRadius: BorderRadius.circular(16),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  //if(item)
+                                    //if(item)
 
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
+                            );
 
-                    }),
-                  );
-                }),
-                SizedBox(height: 10.5.h),
-              ],
+                      }),
+                    );
+                  }),
+                  SizedBox(height: 10.5.h),
+                ],
+              ),
             ),
           ),
         ),

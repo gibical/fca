@@ -108,22 +108,29 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                         logic.onGetSubsAssetsPhoto();
                       }
                     },
-                    child: Obx(() {
-                      if (logic.isloading6.value) {
-                        return Container(
-                          child: Lottie.asset(
-                              "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                        );
-                      }
-                      return (logic.emptySubImages)?Container(
+                    child:RefreshIndicator(
+                      onRefresh: ()async{
 
-                        margin: EdgeInsets.only(
-                          top: 13.h,
-                          left: 4.w
-                        ),
-                        child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
-                      ): CustomTabScreen(logic.subImages);
-                    }),
+                        logic.onGetSubsAssetsPhoto();
+
+                      },
+                      child: Obx(() {
+                        if (logic.isloading6.value) {
+                          return Container(
+                            child: Lottie.asset(
+                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                          );
+                        }
+                        return (logic.emptySubImages)?Container(
+
+                          margin: EdgeInsets.only(
+                            top: 13.h,
+                            left: 4.w
+                          ),
+                          child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
+                        ): CustomTabScreen(logic.subImages);
+                      }),
+                    ),
                   ),
                   FocusDetector(
                     onFocusGained: () {
@@ -145,7 +152,12 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                           left: 4.w
                         ),
                         child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
-                      ): CustomTabScreen(logic.subVideos);
+                      ): RefreshIndicator(
+                          onRefresh: ()async{
+
+                            logic.onGetSubsAssetsVideo();
+
+                          },child: CustomTabScreen(logic.subVideos));
                     }),
                   ),
                   FocusDetector(
@@ -168,7 +180,12 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                           left: 4.w
                         ),
                         child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
-                      ): CustomTabScreen(logic.subAudios);
+                      ): RefreshIndicator(
+                          onRefresh: ()async{
+
+                            logic.onGetSubsAssetsAudioes();
+
+                          },child: CustomTabScreen(logic.subAudios));
                     }),
                   ),
                   FocusDetector(
@@ -184,13 +201,21 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                               "assets/json/Y8IBRQ38bK.json", height: 5.h),
                         );
                       }
-                      return (logic.emptySubText)?Container(
+                      return (logic.emptySubText)?RefreshIndicator(
+                        onRefresh: ()async{
 
-                        margin: EdgeInsets.only(
-                          top: 13.h,
-                          left: 4.w
+
+                          logic.onGetSubsAssetsText();
+
+                        },
+                        child: Container(
+
+                          margin: EdgeInsets.only(
+                            top: 13.h,
+                            left: 4.w
+                          ),
+                          child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
                         ),
-                        child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
                       ): CustomTabScreen(logic.subText);
                     }),
                   ),
@@ -341,23 +366,31 @@ class CustomTabScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-
-        padding: EdgeInsets.only(top: 13.h,bottom: 13.h),
-        height: 50.h,
-        child: GridView(
+    return RefreshIndicator(
+      onRefresh: ()async{
 
 
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2),
-          children: list
-              .asMap()
-              .entries
-              .map((e) {
-            return GridPostView(list.elementAt(e.key));
-          }).toList(),
+      //  logic.onGetSubsAssetsText();
 
-        ));
+      },
+      child: Container(
+
+          padding: EdgeInsets.only(top: 13.h,bottom: 13.h),
+          height: 50.h,
+          child: GridView(
+
+
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2),
+            children: list
+                .asMap()
+                .entries
+                .map((e) {
+              return GridPostView(list.elementAt(e.key));
+            }).toList(),
+
+          )),
+    );
   }
 
   List<T> randomisedList<T>(List<T> list) {

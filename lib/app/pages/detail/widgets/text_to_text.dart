@@ -32,7 +32,7 @@ class TextToTextWidget extends StatelessWidget {
                 MainAxisAlignment
                     .spaceBetween,
                 children: [
-                  const Text("Share To Youtube"),
+                  const Text("Text To Text Convert"),
                   TextButton(
                     onPressed: () {
                       Navigator.pop(
@@ -67,7 +67,7 @@ class TextToTextWidget extends StatelessWidget {
                     width: 3.w,
                   ),
                   const Text(
-                    "Title",
+                    "Prefix",
                     style: TextStyle(
                         color:
                         Colors.white54),
@@ -84,7 +84,7 @@ class TextToTextWidget extends StatelessWidget {
                   ),
                    Expanded(
                     child: TextField(
-                      controller: logic.titleEditingController,
+                      controller: logic.prefixEditingController,
                       decoration:
                       InputDecoration(
                         border:
@@ -94,7 +94,7 @@ class TextToTextWidget extends StatelessWidget {
                               .none,
                         ),
                         hintText:
-                        "Insert Title...",
+                        "Insert Prefix...",
                         hintStyle:
                         TextStyle(
                           color: Colors
@@ -106,69 +106,11 @@ class TextToTextWidget extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: 2.h,
-            ),
-            Container(
-              height: 6.h,
-              width: 100.w,
-              margin: EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                  borderRadius:
-                  BorderRadius.circular(
-                      10),
-                  color: Colors.black54),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 3.w,
-                  ),
-                  const Text(
-                    "Descriptions",
-                    style: TextStyle(
-                        color:
-                        Colors.white54),
-                  ),
-                  SizedBox(
-                    width: 1.w,
-                  ),
-                  Container(
-                    height: 28,
-                    width: 1.5,
-                    color: AppColor
-                        .whiteColor
-                        .withOpacity(0.2),
-                  ),
-                   Expanded(
-                    child: TextField(
-                      controller: logic.titleEditingController,
-                      decoration:
-                      InputDecoration(
-                        border:
-                        OutlineInputBorder(
-                          borderSide:
-                          BorderSide
-                              .none,
-                        ),
-                        hintText:
-                        "Insert Descriptions...",
-                        hintStyle:
-                        TextStyle(
-                          color: Colors
-                              .white60,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+
             SizedBox(
               height: 6.h,
             ),
-            SizedBox(
-              height: 1.h,
-            ),
+
 
             Padding(
               padding: EdgeInsets.only(
@@ -185,9 +127,12 @@ class TextToTextWidget extends StatelessWidget {
                     BorderRadius
                         .circular(
                         100)),
-                onPressed: () async {},
-                color: Colors.black54,
-                child: const Text("Add"),
+                onPressed: () async {
+                  Get.back(result: true);
+
+                },
+                color: "5979fe".toColor(),
+                child: const Text("Start Converting"),
               ),
             )
           ],

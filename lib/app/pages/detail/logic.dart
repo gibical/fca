@@ -36,6 +36,7 @@ class DetailController extends GetxController {
   DateTime dateTime = DateTime.now();
   TextEditingController titleEditingController = TextEditingController();
   TextEditingController desEditingController = TextEditingController();
+  TextEditingController prefixEditingController = TextEditingController();
 
   @override
   void onInit() {
@@ -544,55 +545,48 @@ class DetailController extends GetxController {
     }
   }
   void textToText() async{
-    showModalBottomSheet(
-      context: Get.context!,
-      builder: (context) => BottomSheet(
-        backgroundColor: Colors.black54,
-        enableDrag: false,
-        onClosing: () {},
-        builder: (context) {
-          return TextToTextWidget(this);
-        },
-      ),
-    );
-    // String language =await _runCustomSelectBottomSheet(Constant.languages, "Select Language");
-    // String loclae = Constant.languageMap[language]??"";
-    // try {
-    //   final token = GetStorage().read("token");
-    //
-    //   String apiUrl =
-    //       '${Constant.HTTP_HOST}translate/text';
-    //   var s = Dio();
-    //   s.interceptors.add(MediaVerseConvertInterceptor());
-    //   var response = await s. post(apiUrl, options: Options(headers: {
-    //     'accept': 'application/json',
-    //     'X-App': '_Android',
-    //     'Accept-Language': 'en-US',
-    //     'Authorization': 'Bearer $token',
-    //   },),data: {
-    //     "text": id,
-    //     "language": loclae
-    //   },);
-    //
-    //   print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
-    //   if (response.statusCode == 200) {
-    //
-    //
-    //     Constant.showMessege("Request Succesful : ${response.data['status']}");
-    //     print(response.data);
-    //   } else {
-    //     // Handle errors
-    //  //   Constant.showMessege("Request Denied : ${response.data['status']}");
-    //
-    //   }
-    // } catch ( e) {
-    //   // Handle errors
-    //  // Constant.showMessege("Request Denied : ${e.toString()}");
-    //
-    //   print('DetailController._fetchMediaData = $e');
-    // } finally {
-    //
-    // }
+ var s =   await Get.bottomSheet(TextToTextWidget(this),isScrollControlled: true);
+
+ if(s!=null&&s){
+
+   try {
+     final token = GetStorage().read("token");
+
+     String apiUrl =
+         '${Constant.HTTP_HOST}convert/text-text';
+     var s = Dio();
+     s.interceptors.add(MediaVerseConvertInterceptor());
+     var response = await s. post(apiUrl, options: Options(headers: {
+       'accept': 'application/json',
+       'X-App': '_Android',
+       'Accept-Language': 'en-US',
+       'Authorization': 'Bearer $token',
+     },),data: {
+       "text": id,
+       "prefix": prefixEditingController.text
+     },);
+
+     print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+     if (response.statusCode == 200) {
+
+
+       Constant.showMessege("Request Succesful : ${response.data['status']}");
+       print(response.data);
+     } else {
+       // Handle errors
+       //   Constant.showMessege("Request Denied : ${response.data['status']}");
+
+     }
+   } catch ( e) {
+     // Handle errors
+     // Constant.showMessege("Request Denied : ${e.toString()}");
+
+     print('DetailController._fetchMediaData = $e');
+   } finally {
+
+   }
+ }
+ prefixEditingController.clear();
   }
   Future<String> _runCustomSelectBottomSheet(List<String> models, String title)async {
   var sxz =  await Get.bottomSheet(Container(

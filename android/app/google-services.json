@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "56751096814",
+    "project_id": "argon-depot-370512",
+    "storage_bucket": "argon-depot-370512.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56751096814:android:c26a5a1296539fbe3704ff",
+        "android_client_info": {
+          "package_name": "com.emahdi1297.mediaverse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56751096814-cajpjrghrpphfo87o6jaqdu7hqegnhu4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.emahdi1297.mediaverse",
+            "certificate_hash": "4dc590de4417e31f6fb4a0cb5549aa3e46c4e907"
+          }
+        },
+        {
+          "client_id": "56751096814-96rr2tjp257q4pm1po8751tbk62jgth4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAewiZmrw5esWfaS5p83qOxMS84uA6xaPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56751096814-96rr2tjp257q4pm1po8751tbk62jgth4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "56751096814-3tfkjmp1oubdli5ei5ueaqo5d9hnmnle.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.emahdi1297.mediaverse"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

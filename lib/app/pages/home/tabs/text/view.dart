@@ -41,58 +41,66 @@ class TextTabScreen extends StatelessWidget {
           onSendRequest.call();
         }
       },
-      child: Scaffold(
-          backgroundColor: theme.background,
-          body: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: 13.h),
-                  TitleExplore(theme: theme, textTheme: textTheme,
-                      icon: "assets/icons/text_icon.svg", title: 'Top Text'),
-                  SizedBox(height: 1.5.h),
-                  SizedBox(
-                    height: 40.w,
-                    child: Obx(() {
-                      return ListView.builder(
-                          itemCount: list.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return  BestTextWidget(model: list.elementAt(index));
-                          });
-                    }),
-                  ),
-                  SizedBox(height: 3.5.h),
+      child:RefreshIndicator(
+        onRefresh: ()async{
 
-                  Obx(() {
-                    var isloadingImage = list.length == 0;
-                    if (isloadingImage) {
-                      return Container(
-                        child: Lottie.asset(
-                            "assets/json/Y8IBRQ38bK.json", height: 10.h),
-                      );
-                    }
-                    return Container(
-                      height: 40.h,
-                      child: GridView.builder(
-                          itemCount: list.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2
-                          ), itemBuilder: (s, q) {
-                        var item = list.elementAt(q);
-                        return AspectRatio(
-                          aspectRatio: 1 / 1,
-                          child: BestTextWidget(model: item),
-                        );
+          Get.find<HomeLogic>().getMainReueqst();
+          onSendRequest.call();
+
+        },
+        child: Scaffold(
+            backgroundColor: theme.background,
+            body: Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(height: 13.h),
+                    TitleExplore(theme: theme, textTheme: textTheme,
+                        icon: "assets/icons/text_icon.svg", title: 'Top Text'),
+                    SizedBox(height: 1.5.h),
+                    SizedBox(
+                      height: 40.w,
+                      child: Obx(() {
+                        return ListView.builder(
+                            itemCount: list.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return  BestTextWidget(model: list.elementAt(index));
+                            });
                       }),
-                    );
-                  }),
+                    ),
+                    SizedBox(height: 3.5.h),
 
-                ],
+                    Obx(() {
+                      var isloadingImage = list.length == 0;
+                      if (isloadingImage) {
+                        return Container(
+                          child: Lottie.asset(
+                              "assets/json/Y8IBRQ38bK.json", height: 10.h),
+                        );
+                      }
+                      return Container(
+                        height: 40.h,
+                        child: GridView.builder(
+                            itemCount: list.length,
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2
+                            ), itemBuilder: (s, q) {
+                          var item = list.elementAt(q);
+                          return AspectRatio(
+                            aspectRatio: 1 / 1,
+                            child: BestTextWidget(model: item),
+                          );
+                        }),
+                      );
+                    }),
+
+                  ],
+                ),
               ),
-            ),
-          )
+            )
+        ),
       ),
     );
   }
