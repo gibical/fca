@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/pages/home/logic.dart';
 import 'package:mediaverse/app/pages/home/widgets/bset_item_explore_widget.dart';
@@ -33,7 +34,12 @@ class AllTabScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 16.h),
-                GestureDetector(child: TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.videoIcon, title: 'Live Channels')),
+                TitleExplore(
+                    isViewAll: true,
+                    viewAllTap: (){
+                      Get.toNamed(PageRoutes.ViewAllChannel);
+                    },
+                    theme: theme, textTheme: textTheme, icon: AppIcon.videoIcon, title: 'Live Channels'),
                 SizedBox(height: 1.5.h),
                 SizedBox(
                   height: 21.h,
@@ -126,26 +132,42 @@ class TitleExplore extends StatelessWidget {
     required this.textTheme,
     required this.icon,
     required this.title,
+    this.isViewAll, this.viewAllTap
+
   });
 
   final ColorScheme theme;
   final TextTheme textTheme;
   final String icon;
   final String title;
+  final bool? isViewAll;
+  final Function()? viewAllTap;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5),
+      padding: EdgeInsets.symmetric(horizontal: 4.w),
       child: Row(
         children: [
           SvgPicture.asset(icon, height: 2.h, color: theme.onBackground),
           SizedBox(width: 1.5.w),
           Text(
             title,
-            style: textTheme.headlineMedium?.copyWith(
-                color: theme.onBackground, fontSize: 19),
+            style: GoogleFonts.inter(
+                fontSize: 13.5.sp
+            ),
           ),
+          Spacer(),
+          isViewAll ?? false ?  GestureDetector(
+            onTap: viewAllTap,
+            child: Text(
+              'View all',
+              style: GoogleFonts.inter(
+                  fontSize: 11.sp,
+                  color: AppColor.primaryLightColor
+              ),
+            ),
+          ) : SizedBox(),
         ],
       ),
     );

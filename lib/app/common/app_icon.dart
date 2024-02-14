@@ -41,5 +41,6 @@ class AppIcon{
   static const  screenshotIcon = 'assets/icons/screenshot.png';
   static const  recIcon = 'assets/icons/rec.png';
   static const  recActiveIcon = 'assets/icons/recActive.png';
+  static const  liveIcon = 'assets/icons/live.svg';
 
 }

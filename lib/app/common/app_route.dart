@@ -26,6 +26,8 @@ import '../pages/detail/pages/detail_image_screen.dart';
 import '../pages/detail/pages/detail_music_screen.dart';
 import '../pages/detail/pages/detail_video_screen.dart';
 import '../pages/splash/view.dart';
+import '../pages/view_all/channel/state.dart';
+import '../pages/view_all/channel/view.dart';
 
 
 class PageRoutes {
@@ -48,6 +50,7 @@ class PageRoutes {
   static const UPLOAD = '/Upload';
   static const COMMENT = '/Comment';
   static const LIVE = '/Live';
+  static const ViewAllChannel = '/ViewAllChannel';
 
 
   static List<GetPage> routes = [
@@ -173,6 +176,14 @@ class PageRoutes {
       page: () => LiveScreen(),
       binding: LiveState(),
     ),
+
+    GetPage(
+      name: PageRoutes.ViewAllChannel,
+      transition: Transition.rightToLeft,
+      page: () => ViewAllChannelScreen(),
+      binding: ViewAllChannelState(),
+    ),
+
 
   ];
 }
