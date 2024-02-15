@@ -309,15 +309,16 @@ class CustomTabScreen extends StatelessWidget {
 
 
   List<dynamic> list;
+  bool isExpended;
 
-  CustomTabScreen(this.list);
+  CustomTabScreen(this.list,{this.isExpended=false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
 
         padding: EdgeInsets.only(top: 13.h,bottom: 13.h),
-        height: 50.h,
+        height:isExpended?MediaQuery.of(context).size.height:50.h,
         child: GridView(
 
 

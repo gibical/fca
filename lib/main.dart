@@ -16,7 +16,7 @@ void main()async{
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
 
-  FirebaseController().init();
+ await FirebaseController().init();
   runApp(Sizer(builder: (context, orientation, deviceType) {
     return const MyApp();
   }));

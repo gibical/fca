@@ -4,12 +4,14 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/pages/home/logic.dart';
+import 'package:mediaverse/app/pages/view_all/videos/best_video_screen.dart';
 import 'package:mediaverse/app/pages/home/widgets/bset_item_explore_widget.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../common/app_color.dart';
 import '../../../../common/app_route.dart';
 import '../../../detail/logic.dart';
+import '../../../view_all/videos/view_all_grid.dart';
 import '../../widgets/custom_grid_image_widget.dart';
 import '../../widgets/custom_grid_view_widget.dart';
 
@@ -63,7 +65,12 @@ class AllTabScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 1.5.h),
 
-                TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.videoIcon, title: 'Best videos'),
+                TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.videoIcon, title: 'Best videos',                    isViewAll: true,
+
+                  viewAllTap: (){
+
+                  Get.to(BestVideoScreenPage());
+                },),
                 SizedBox(height: 1.5.h),
                 SizedBox(
                   height: 30.h,
@@ -76,12 +83,17 @@ class AllTabScreen extends StatelessWidget {
                       }),
                 ),
                 SizedBox(height: 3.h),
-                TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.imageIcon, title: 'Most viewed'),
+                TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.imageIcon, title: 'Most viewed',
+                isViewAll: true,viewAllTap: (){
+                    Get.to(ViewAllGrdiScreen(),arguments: [3]);
+                  },),
                 SizedBox(height: 12.5),
                if(logic.mostImages.length>0) CustomGridImageWidget(logic.mostImages),
                 SizedBox(height: 3.h),
                 TitleExplore(theme: theme, textTheme: textTheme,
-                    icon: "assets/icons/text_icon.svg", title: 'Top Text'),
+                    icon: "assets/icons/text_icon.svg", title: 'Top Text' , isViewAll: true,viewAllTap: (){
+                    Get.to(ViewAllGrdiScreen(),arguments: [4]);
+                  },),
                 SizedBox(height: 1.5.h),
                 SizedBox(
                   height: 40.w,
@@ -98,7 +110,9 @@ class AllTabScreen extends StatelessWidget {
                       }),
                 ),
                 SizedBox(height: 6.h),
-                TitleExplore(theme: theme, textTheme: textTheme, icon: "assets/icons/sound_icon.svg", title: 'Top Song'),
+                TitleExplore(theme: theme, textTheme: textTheme, icon: "assets/icons/sound_icon.svg", title: 'Top Song' , isViewAll: true,viewAllTap: (){
+                  Get.to(ViewAllGrdiScreen(),arguments: [5]);
+                },),
                 SizedBox(height: 1.5.h),
                 SizedBox(
                   height: 30.h,

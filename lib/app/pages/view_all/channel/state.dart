@@ -7,6 +7,6 @@ class ViewAllChannelState implements Bindings {
 
   @override
   void dependencies() {
-    Get.put(ViewAllChannelController());
+  //  Get.put(ViewAllChannelController());
   }
 }

@@ -21,7 +21,10 @@ TextEditingController textEditingController = TextEditingController();
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.primaryDarkColor,
-      body: GetBuilder<ViewAllChannelController>(builder: (controller){
+      body: GetBuilder<ViewAllChannelController>(
+          init: ViewAllChannelController(1),
+
+          builder: (controller){
         if (controller.isLoadingChannel == false) {
           return CustomScrollView(
             slivers: [
