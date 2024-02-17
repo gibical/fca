@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/font_style.dart';
 import 'package:mediaverse/app/pages/detail/widgets/buy_card_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/card_mark_singlepage_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
+import 'package:mediaverse/app/pages/detail/widgets/report_botton_sheet.dart';
 import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
 import 'package:sizer/sizer.dart';
 
@@ -36,14 +38,10 @@ class DetailMusicScreen extends StatelessWidget {
             print(plan);
             if (plan == 1) {
               return SizedBox();
-            } else if (plan == 2 || plan == 3) {
+            } else if ((plan == 2 || plan == 3)&&(!controller.asset_id.contains(GetStorage().read("userid")))) {
               return BuyCardWidget(
                   selectedItem: controller.musicDetails,
-                  title: controller.musicDetails!['asset']['plan'] == 2
-                      ? 'Ownership'
-                      : controller.musicDetails!['asset']['plan'] == 3
-                          ? 'Subscribe'
-                          : '',
+                  title: "${controller.asset_id.contains(GetStorage().read("userid"))}",
                   price: controller.musicDetails!['asset']['price']);
             } else {
               return SizedBox();
@@ -211,12 +209,17 @@ class DetailMusicScreen extends StatelessWidget {
                                               fontSize: 13,
                                             )),
                                         Spacer(),
-                                        Text('Report',
-                                            style: GoogleFonts.inter(
-                                              color:
-                                                  Colors.white.withOpacity(0.5),
-                                              fontSize: 13,
-                                            )),
+                                        GestureDetector(
+                                          onTap: (){
+                                            Get.bottomSheet(ReportBottomSheet(controller));
+                                          },
+                                          child: Text('Report',
+                                              style: GoogleFonts.inter(
+                                                color:
+                                                    Colors.white.withOpacity(0.5),
+                                                fontSize: 13,
+                                              )),
+                                        ),
                                       ],
                                     ),
                                   ),

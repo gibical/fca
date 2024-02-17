@@ -10,6 +10,7 @@ import 'package:sizer/sizer.dart';
 import '../../../common/app_route.dart';
 import '../logic.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
+import '../widgets/report_botton_sheet.dart';
 
 class DetailImageScreen extends StatelessWidget {
   const DetailImageScreen({super.key});
@@ -92,10 +93,15 @@ class DetailImageScreen extends StatelessWidget {
                             fontSize: 13
                         ),),
                         Spacer(),
-                        Text('8:15' , style: FontStyleApp.bodySmall.copyWith(
-                            color: AppColor.grayLightColor.withOpacity(0.8),
-                            fontSize: 13
-                        ),),
+                        GestureDetector(
+                          onTap: (){
+                            Get.bottomSheet(ReportBottomSheet(imageController));
+                          },
+                          child: Text('Report' , style: FontStyleApp.bodySmall.copyWith(
+                              color: AppColor.grayLightColor.withOpacity(0.8),
+                              fontSize: 13
+                          ),),
+                        ),
                       ],
                     ),
                     SizedBox(

@@ -21,6 +21,7 @@ class DetailController extends GetxController {
   RxMap<String, dynamic>? musicDetails = RxMap<String, dynamic>();
   RxMap<String, dynamic>? textDetails = RxMap<String, dynamic>();
 
+  var asset_id  ="";
   //==================================== loading Detail page =======================================//
   RxBool isLoadingVideos = false.obs;
   RxBool isLoadingImages = false.obs;
@@ -37,6 +38,7 @@ class DetailController extends GetxController {
   TextEditingController titleEditingController = TextEditingController();
   TextEditingController desEditingController = TextEditingController();
   TextEditingController prefixEditingController = TextEditingController();
+  TextEditingController reportEditingController = TextEditingController();
 
   @override
   void onInit() {
@@ -95,9 +97,10 @@ class DetailController extends GetxController {
         'Authorization': 'Bearer $token',
       }));
 
-      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data} - ${response.data['asset_id']}');
       if (response.statusCode == 200) {
         details?.value = RxMap<String, dynamic>.from(response.data);
+        asset_id= response.data['asset_id'].toString();
         print(response.data);
       } else {
         // Handle errors
@@ -642,5 +645,54 @@ class DetailController extends GetxController {
       ),
     ));
    return sxz.toString();
+  }
+
+  void reportPost()async {
+    try {
+      final token = GetStorage().read("token");
+
+      String apiUrl =
+          '${Constant.HTTP_HOST}reports';
+      var s = Dio();
+      s.interceptors.add(MediaVerseConvertInterceptor());
+      print('DetailController._fetchMediaData =${{
+        "type": 1,
+        "asset_id": asset_id,
+        "description": reportEditingController.text
+      }} ');
+      var response = await s. post(apiUrl, options: Options(headers: {
+        'accept': 'application/json',
+        'X-App': '_Android',
+        'Accept-Language': 'en-US',
+        'Authorization': 'Bearer $token',
+      },),data: {
+      "type": 1,
+      "asset_id": asset_id,
+      "description": reportEditingController.text
+      });
+
+      print('DetailController._fetchMediaData =${{
+        "type": 1,
+        "asset_id": asset_id,
+        "description": reportEditingController.text
+      }} ${response.statusCode}  - ${response.data}');
+      if (response.statusCode == 200) {
+
+
+        Constant.showMessege("Request Succesful");
+        print(response.data);
+      } else {
+        // Handle errors
+        //   Constant.showMessege("Request Denied : ${response.data['status']}");
+
+      }
+    } catch ( e) {
+      // Handle errors
+      // Constant.showMessege("Request Denied : ${e.toString()}");
+
+      print('DetailController._fetchMediaData = $e');
+    } finally {
+
+    }
   }
 }

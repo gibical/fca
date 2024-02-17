@@ -13,6 +13,7 @@ import 'package:sizer/sizer.dart';
 import '../../../common/app_route.dart';
 import '../logic.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
+import '../widgets/report_botton_sheet.dart';
 
 class DetailTextScreen extends StatefulWidget {
   DetailTextScreen({super.key});
@@ -146,13 +147,18 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                             fontSize: 13),
                                       ),
                                       Spacer(),
-                                      Text(
-                                        'report',
-                                        style: FontStyleApp.bodySmall
-                                            .copyWith(
-                                            color: AppColor.grayLightColor
-                                                .withOpacity(0.8),
-                                            fontSize: 13),
+                                      GestureDetector(
+                                        onTap: (){
+                                          Get.bottomSheet(ReportBottomSheet(logic));
+                                        },
+                                        child: Text(
+                                          'report',
+                                          style: FontStyleApp.bodySmall
+                                              .copyWith(
+                                              color: AppColor.grayLightColor
+                                                  .withOpacity(0.8),
+                                              fontSize: 13),
+                                        ),
                                       ),
                                     ],
                                   ),

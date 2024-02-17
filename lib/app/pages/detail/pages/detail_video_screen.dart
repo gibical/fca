@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/common/font_style.dart';
@@ -12,6 +13,7 @@ import 'package:video_player/video_player.dart';
 
 import '../logic.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
+import '../widgets/report_botton_sheet.dart';
 
 
 class DetailVideoScreen extends StatelessWidget {
@@ -36,7 +38,7 @@ class DetailVideoScreen extends StatelessWidget {
             print(plan);
             if (plan == 1) {
               return SizedBox();
-            } else if (plan == 2 || plan == 3) {
+            } else if ((plan == 2 || plan == 3)) {
               return BuyCardWidget(
                 selectedItem: videoController.videoDetails,
                   title: videoController.videoDetails!['asset']['plan'] == 2
@@ -98,10 +100,15 @@ class DetailVideoScreen extends StatelessWidget {
                             fontSize: 13
                         ),),
                         Spacer(),
-                        Text('Report' , style: FontStyleApp.bodySmall.copyWith(
-                            color: AppColor.grayLightColor.withOpacity(0.8),
-                            fontSize: 13
-                        ),),
+                        GestureDetector(
+                          onTap: (){
+                            Get.bottomSheet(ReportBottomSheet(videoController));
+                          },
+                          child: Text('Report' , style: FontStyleApp.bodySmall.copyWith(
+                              color: AppColor.grayLightColor.withOpacity(0.8),
+                              fontSize: 13
+                          ),),
+                        ),
                       ],
                     ),
                     SizedBox(

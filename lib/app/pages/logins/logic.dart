@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/common/RequestInterface.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetLogins.dart';
 
@@ -40,6 +41,7 @@ class LoginsLogic extends GetxController implements RequestInterface{
   void onSucces(source, int reqCdoe) {
     // TODO: implement onSucces
     list = jsonDecode(source)['data'];
+
     isloading(false);
   }
 }
