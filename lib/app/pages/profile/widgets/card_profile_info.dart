@@ -3,6 +3,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/font_style.dart';
 import 'package:mediaverse/app/pages/profile/logic.dart';
@@ -21,9 +22,9 @@ class CardProfileInfoWidget extends StatelessWidget {
       padding: const EdgeInsets.only(top: 140.0 , left: 15 , right: 15),
       child: Row(
         children: [
-          CardProfileInfoItem(title: '${logic.assetsModel.assets.toString()}' , subTitle: 'Assets'),
-          CardProfileInfoItem(title: '${logic.assetsModel.salesNumber.toString()}', subTitle: 'Sales'),
-          CardProfileInfoItem(title: '${logic.assetsModel.salesVolume.toString()}' , subTitle: 'Volume'),
+        if(logic.isassetInit.value)  CardProfileInfoItem(title: '${logic.assetsModel.assets.toString()}' , subTitle: 'Assets'),
+          if(logic.isassetInit.value)    CardProfileInfoItem(title: '${logic.assetsModel.salesNumber.toString()}', subTitle: 'Sales'),
+          if(logic.isassetInit.value)   CardProfileInfoItem(title: '${logic.assetsModel.salesVolume.toString()}' , subTitle: 'Volume'),
 
 
 

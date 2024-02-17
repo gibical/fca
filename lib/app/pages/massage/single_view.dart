@@ -6,13 +6,19 @@ import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/font_style.dart';
 import 'package:mediaverse/app/pages/massage/logic.dart';
-import 'package:mediaverse/app/pages/massage/single_view.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetMesseges.dart';
 import 'package:sizer/sizer.dart';
 
 
-class MassageScreen extends StatelessWidget {
+class SingleMassageScreen extends StatefulWidget {
+  @override
+  State<SingleMassageScreen> createState() => _SingleMassageScreenState();
+}
+
+class _SingleMassageScreenState extends State<SingleMassageScreen> {
   final logic = Get.put(MessegeController());
+
+  MessegesModel model = Get.arguments[0];
 
   @override
   Widget build(BuildContext context) {
@@ -36,22 +42,19 @@ class MassageScreen extends StatelessWidget {
             Get.back();
           },
               icon: SvgPicture.asset(AppIcon.backIcon)),
-          title: Text('Massage', style: FontStyleApp.titleMedium.copyWith(
+          title: Text('Massage Details', style: FontStyleApp.titleMedium.copyWith(
               color: AppColor.whiteColor
           ),),
         ),
-        body: logic.list.isEmpty?  Container(
-            padding: EdgeInsets.zero,
-            child: Center(child: Text("No item to show"))):CustomScrollView(
-          slivers: [
-
-            SliverList.builder(
-                itemCount: logic.list.length,
-                itemBuilder: (context, index) {
-                  return MassageItemWidget(logic.list.elementAt(index));
-                }),
-          ],
-        ),
+        body: Container(
+          padding: EdgeInsets.all(16),
+          child: Text(
+            model.message??"",
+            style: TextStyle(
+              color: Colors.white
+            ),
+          ),
+        )
       );
     });
   }
@@ -62,7 +65,6 @@ class MassageScreen extends StatelessWidget {
       child: InkWell(
         onTap: (){
 
-          Get.to(SingleMassageScreen(),arguments: [elementAt]);
         },
         child: Container(
           height: 11.5.h,

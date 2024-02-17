@@ -51,6 +51,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
   FromJsonGetAllAsstes myAssets = FromJsonGetAllAsstes();
   FromJsonGetAllAsstes mysubsAssets = FromJsonGetAllAsstes();
   late AssetsModel assetsModel;
+  var isassetInit = false.obs;
   var isloading = false.obs;
 
   var isloading1 = false.obs;
@@ -248,6 +249,8 @@ class ProfileControllers extends GetxController implements RequestInterface {
     assetsModel = AssetsModel.fromJson(jsonDecode(source));
 
     isloading(false);
+    isassetInit(true);
+    update();
   }
 
   void praseJsonFromGetAllMyAssets(source) {
