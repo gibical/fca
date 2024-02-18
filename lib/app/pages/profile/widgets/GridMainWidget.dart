@@ -34,7 +34,7 @@ class _GridPostViewState extends State<GridPostView> {
       child: GestureDetector(
         onTap: (){
           log('_GridPostViewState.build = ${widget.model}');
-          _getRouteAndPushIt(widget.model['asset']['class']);
+          _getRouteAndPushIt(widget.model['id']);
         },
         child: Container(
             width: 40.w,

@@ -119,7 +119,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Expanded(
+                               if(logic.textDetails?['name']!=null)   Expanded(
                                     child: Text(
                                       '${logic.textDetails?['name']}',
                                       style: GoogleFonts.inter(
@@ -137,7 +137,8 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                       SizedBox(
                                         width: 2.w,
                                       ),
-                                      Text(
+                                    if( logic.textDetails?['user']
+                                  !=null)  Text(
                                         logic.textDetails?['user']
                                         ['username'],
                                         style: FontStyleApp.bodySmall

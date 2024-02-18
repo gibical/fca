@@ -86,7 +86,7 @@ class DetailController extends GetxController {
   Future<void> _fetchMediaData(
 
       String type, RxMap<String, dynamic>? details, RxBool isLoading) async {
-
+    print('DetailController._fetchMediaData = https://api.mediaverse.land/v2/$type/${Get.arguments['id']}');
     try {
       final token = GetStorage().read("token");
       isLoading.value = true;
@@ -102,7 +102,7 @@ class DetailController extends GetxController {
       log('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data} - ${response.data['type']}');
       if (response.statusCode == 200) {
         details?.value = RxMap<String, dynamic>.from(response.data['data']);
-        asset_id= response.data['asset_id'].toString();
+        asset_id= response.data['data']['asset_id'].toString();
 
       } else {
         // Handle errors
@@ -470,6 +470,12 @@ class DetailController extends GetxController {
   }
 
   void textToImage() async{
+    print('DetailController.textToImage = ${{
+      "text": id,
+      "asset": asset_id,
+      "size": "1024x1024"
+
+    }}');
     try {
       final token = GetStorage().read("token");
 
@@ -484,7 +490,9 @@ class DetailController extends GetxController {
         'Authorization': 'Bearer $token',
       },),data: {
         "text": id,
-        "size": "512x512"
+        "asset": asset_id,
+        "size": "1024x1024"
+
       },);
 
       print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');

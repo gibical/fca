@@ -33,8 +33,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: (){
-          log('_GridPostViewState.build = ${widget.model}');
-          _getRouteAndPushIt(widget.model['asset']['class']);
+          _getRouteAndPushIt(widget.model['id']);
         },
         child: Container(
             width: 40.w,
@@ -181,7 +180,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
   void _getRouteAndPushIt(model) {
     String route = "";
     print('_GridPostViewState._getRouteAndPushIt = ${widget.model['type']} - ${model}');
-    switch(widget.model['asset']['class']){
+    switch(widget.model['class']){
       case 1:
         route = PageRoutes.DETAILTEXT;
         break;
