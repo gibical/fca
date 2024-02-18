@@ -15,6 +15,7 @@ import 'package:sizer/sizer.dart';
 import '../../../common/app_color.dart';
 import '../../../common/app_icon.dart';
 import '../widgets/GridMainWidget.dart';
+import '../widgets/GridMainWidget2.dart';
 
 
 class OwnerTabScreen extends StatelessWidget {
@@ -328,7 +329,7 @@ class CustomTabScreen extends StatelessWidget {
               .asMap()
               .entries
               .map((e) {
-            return GridPostView(list.elementAt(e.key));
+            return GridPostViewForDetails(list.elementAt(e.key));
           }).toList(),
 
         ));

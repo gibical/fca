@@ -116,14 +116,13 @@ class DetailMusicScreen extends StatelessWidget {
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(20.sp),
-                                              child: (controller.musicDetails![
-                                                              'asset']
+                                              child: (controller.musicDetails!
                                                               ['thumbnails']
                                                           .toString()
                                                           .length >
                                                       3)
                                                   ? Image.network(
-                                                      "${controller.musicDetails?['asset']['thumbnails']['336x366']}",
+                                                      "${controller.musicDetails?['thumbnails']['336x366']}",
                                                       fit: BoxFit.cover)
                                                   : Image.asset(
                                                       "assets/images/tum_sound.jpeg",
@@ -189,19 +188,19 @@ class DetailMusicScreen extends StatelessWidget {
                                           width: 2.w,
                                         ),
                                         Text(
-                                            (controller.musicDetails!['asset']
+                                            (controller.musicDetails!
                                                             ['user']['username']
                                                         .toString()
                                                         .length >
                                                     10)
                                                 ? controller
-                                                        .musicDetails!['asset']
+                                                        .musicDetails!
                                                             ['user']['username']
                                                         .toString()
                                                         .substring(0, 10) +
                                                     '...'
                                                 : controller
-                                                        .musicDetails?['asset']
+                                                        .musicDetails?
                                                     ['user']['username'],
                                             style: GoogleFonts.inter(
                                               color:
@@ -299,7 +298,7 @@ class DetailMusicScreen extends StatelessWidget {
                               CardMarkSinglePageWidget(
                                   label: 'Type',
                                   type: controller.getTypeString(controller
-                                      .musicDetails?['asset']['type'])),
+                                      .musicDetails?['type'])),
                             ],
                           ),
                           SizedBox(

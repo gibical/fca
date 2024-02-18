@@ -11,19 +11,19 @@ import '../../../common/app_color.dart';
 import '../../../common/app_icon.dart';
 import '../../../common/app_route.dart';
 
-class GridPostView extends StatefulWidget {
+class GridPostViewForDetails extends StatefulWidget {
 
   dynamic model;
 
 
-  GridPostView(this.model);
+  GridPostViewForDetails(this.model);
 
   @override
-  State<GridPostView> createState() => _GridPostViewState();
+  State<GridPostViewForDetails> createState() => _GridPostViewForDetailsState();
 
 }
 
-class _GridPostViewState extends State<GridPostView> {
+class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -53,12 +53,12 @@ class _GridPostViewState extends State<GridPostView> {
                 SizedBox.expand(
                   child: Image.asset("assets/images/text_bg.png",fit: BoxFit.fill,),
                 ),
-                if(widget. model['asset']['class'] == 1)  SizedBox.expand(
+                if(widget. model['class'] == 1)  SizedBox.expand(
                   child: Container(
                       padding: EdgeInsets.all(5.w),
                       child: Column(
                         children: [
-                       if(widget. model['asset']['class'] == 1)   Align(
+                       if(widget. model['class'] == 1)   Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                              widget. model['name'],
@@ -71,7 +71,7 @@ class _GridPostViewState extends State<GridPostView> {
                               ),
                             ),
                           ),
-                          if(widget. model['asset']['class']==1)    Align(
+                          if(widget. model['class']==1)    Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               widget.    model['description']??" ",
@@ -90,7 +90,7 @@ class _GridPostViewState extends State<GridPostView> {
                               Image.asset("assets/images/avatar.jpeg",width: 4.w,),
                               SizedBox(width: 3.w,),
                               Text(
-                                widget.   model['asset']['user_id'].toString(),
+                                widget.   model['user_id'].toString(),
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.inter(
@@ -104,7 +104,7 @@ class _GridPostViewState extends State<GridPostView> {
                         ],
                       )),
                 ),
-                if(widget. model['asset']['class'] != 1)  SizedBox.expand(
+                if(widget. model['class'] != 1)  SizedBox.expand(
                   child:   Container(
                     height: 27.h,
                     width: double.infinity,
@@ -126,10 +126,10 @@ class _GridPostViewState extends State<GridPostView> {
                       ],
                     ),
                     decoration:
-                    (widget.model['asset']['thumbnails'].toString().length>3)?
+                    (widget.model['thumbnails'].toString().length>3)?
                     BoxDecoration(
                         borderRadius: BorderRadius.circular(12.sp),
-                        image: DecorationImage(image: NetworkImage('${widget.model['asset']['thumbnails']['origin']}' ) ,
+                        image: DecorationImage(image: NetworkImage('${widget.model['thumbnails']['origin']}' ) ,
                           fit: BoxFit.cover ,
                           colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.55), BlendMode.hardLight),
                         )

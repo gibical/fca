@@ -42,7 +42,8 @@ class ProfileModel {
     _image = image;
 }
 
-  ProfileModel.fromJson(dynamic json) {
+  ProfileModel.fromJson(dynamic jsons) {
+    var json = jsons['data'];
     _id = json['id'];
     _firstName = json['first_name'];
     _lastName = json['last_name'];

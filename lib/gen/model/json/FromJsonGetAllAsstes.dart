@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 class FromJsonGetAllAsstes {
   FromJsonGetAllAsstes({
       List<dynamic>? texts,
@@ -11,6 +14,8 @@ class FromJsonGetAllAsstes {
 }
 
   FromJsonGetAllAsstes.fromJson(dynamic json) {
+   // log('FromJsonGetAllAsstes.fromJson 1  = ${jsonDecode(json)}');
+
     if (json['texts'] != null) {
       _texts = [];
       json['texts'].forEach((v) {
@@ -19,6 +24,8 @@ class FromJsonGetAllAsstes {
     }
     if (json['images'] != null) {
       _images = [];
+
+     // log('FromJsonGetAllAsstes.fromJson 2 = ${jsonDecode(json['images'])}');
       json['images'].forEach((v) {
         _images?.add(v);
       });

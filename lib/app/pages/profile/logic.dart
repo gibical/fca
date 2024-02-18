@@ -70,7 +70,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster = ApiRequster(this, develperModel: true);
+    apiRequster = ApiRequster(this, develperModel: false);
     onGetProfileMethod();
     getWalletBalance();
     getStripe();
@@ -172,7 +172,9 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   void praseJsonFromGetProfile(source) {
+    print('ProfileControllers.praseJsonFromGetProfile  1 ${source}');
     model = ProfileModel.fromJson(jsonDecode(source));
+    print('ProfileControllers.praseJsonFromGetProfile  2 ');
     onGetProfileAssets();
 
     onGetAssetsAll();
@@ -254,11 +256,14 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   void praseJsonFromGetAllMyAssets(source) {
+    log('ProfileControllers.parseJsonFromGetAllImages 1  = ${source} -sd');
+
     myAssets = FromJsonGetAllAsstes.fromJson(jsonDecode(source));
     update();
   }
 
   void parseJsonFromGetAllImages(source) {
+    log('ProfileControllers.parseJsonFromGetAllImages 2  = ${source}');
     ownerImages = FromJsonGetImages.fromJson(jsonDecode(source)).data ?? [];
 
     isloading1(false);

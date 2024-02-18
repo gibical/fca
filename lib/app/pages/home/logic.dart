@@ -38,7 +38,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster  = ApiRequster(this,develperModel: true);
+    apiRequster  = ApiRequster(this,develperModel: false);
 
     getMainReueqst();
   }
@@ -99,6 +99,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
 
   void praseJsonFromBestVideos(source) {
     bestVideos = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
+
 
 
     _getMostVideos();

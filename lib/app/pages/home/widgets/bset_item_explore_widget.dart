@@ -51,8 +51,8 @@ class BestItemExploreWidget extends GetView<HomeLogic> {
                     width: 190,
                     height: 190,
                     decoration: BoxDecoration(
-                      image: (elementAt['asset']['thumbnails'].toString().length>3)?
-                      DecorationImage(image: NetworkImage("${elementAt['asset']['thumbnails']['336x366']}",) ,  fit: BoxFit.cover): DecorationImage(image: AssetImage('assets/images/tum_image.jpeg',) ,  fit: BoxFit.cover),
+                      image: (elementAt['thumbnails'].toString().length>3)?
+                      DecorationImage(image: NetworkImage("${elementAt['thumbnails']['336x366']}",) ,  fit: BoxFit.cover): DecorationImage(image: AssetImage('assets/images/tum_image.jpeg',) ,  fit: BoxFit.cover),
                         borderRadius: BorderRadius.all(Radius.circular(20.sp)),
                       gradient: LinearGradient(
                           begin: Alignment.bottomCenter,
@@ -88,7 +88,7 @@ class BestItemExploreWidget extends GetView<HomeLogic> {
                     children: [
                       Image.asset("assets/images/avatar.jpeg",width: 4.w,),
                       SizedBox(width: 3.w,),
-                      Text(elementAt['asset']['user']['username'],style: TextStyle(fontSize: 8.sp,
+                      Text(elementAt['user']['username'],style: TextStyle(fontSize: 8.sp,
                         color: Color(0xFF666680),
 
                       ),),
@@ -137,7 +137,7 @@ class BestItemSongsWidget extends GetView<HomeLogic> {
                   SizedBox.expand(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20.sp),
-                      child: (elementAt['asset']['thumbnails'].toString().length>3)?Image.network("${elementAt['asset']['thumbnails']['336x366']}", fit: BoxFit.cover)
+                      child: (elementAt['thumbnails'].toString().length>3)?Image.network("${elementAt['thumbnails']['336x366']}", fit: BoxFit.cover)
                               :Image.asset("assets/images/tum_sound.jpeg", fit: BoxFit.cover),
                     )
       ,
@@ -180,7 +180,7 @@ class BestItemSongsWidget extends GetView<HomeLogic> {
                     children: [
                       Image.asset("assets/images/avatar.jpeg",width: 4.w,),
                       SizedBox(width: 3.w,),
-                      Text(elementAt['asset']['user']['username'],style: TextStyle(fontSize: 8.sp,
+                      Text(elementAt['user']['username'],style: TextStyle(fontSize: 8.sp,
                         color: Color(0xFF666680),
 
                       ),),
@@ -262,7 +262,7 @@ class BestTextWidget extends GetView<HomeLogic> {
     return GestureDetector(
       onTap: (){
         int itemId = model['id'];
-        Get.toNamed(PageRoutes.DETAILVIDEO, arguments: {'id': itemId});
+        Get.toNamed(PageRoutes.DETAILTEXT, arguments: {'id': itemId});
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -320,7 +320,7 @@ class BestTextWidget extends GetView<HomeLogic> {
                               Image.asset("assets/images/avatar.jpeg",width: 4.w,),
                               SizedBox(width: 3.w,),
                               Text(
-                                model['asset']['user']['username']??" ",
+                                model['user']['username']??" ",
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.inter(

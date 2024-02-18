@@ -29,29 +29,29 @@ class FromJsonGetImages {
 }
 
   FromJsonGetImages.fromJson(dynamic json) {
-    _currentPage = json['current_page'];
-    if (json['data'] != null) {
+    // _currentPage = json['current_page'];
+     if (json['data'] != null) {
       _data = [];
       json['data'].forEach((v) {
         _data?.add(v);
       });
     }
-    _firstPageUrl = json['first_page_url'];
-    _from = json['from'];
-    _lastPage = json['last_page'];
-    _lastPageUrl = json['last_page_url'];
-    if (json['links'] != null) {
-      _links = [];
-      json['links'].forEach((v) {
-        _links?.add(Links.fromJson(v));
-      });
-    }
-    _nextPageUrl = json['next_page_url'];
-    _path = json['path'];
-    _perPage = json['per_page'];
-    _prevPageUrl = json['prev_page_url'];
-    _to = json['to'];
-    _total = json['total'];
+    // _firstPageUrl = json['first_page_url'];
+    // _from = json['from'];
+    // _lastPage = json['last_page'];
+    // _lastPageUrl = json['last_page_url'];
+    // if (json['links'] != null) {
+    //   _links = [];
+    //   json['links'].forEach((v) {
+    //     _links?.add(Links.fromJson(v));
+    //   });
+    // }
+    // _nextPageUrl = json['next_page_url'];
+    // _path = json['path'];
+    // _perPage = json['per_page'];
+    // _prevPageUrl = json['prev_page_url'];
+    // _to = json['to'];
+    // _total = json['total'];
   }
   num? _currentPage;
   List<dynamic>? _data;

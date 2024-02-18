@@ -75,8 +75,8 @@ class CustomGridImageWidget extends StatelessWidget {
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: (data['asset']['thumbnails'].toString().length > 3)
-              ? Image.network("${data['asset']['thumbnails']['336x366']}", fit: BoxFit.cover)
+          child: (data['thumbnails'].toString().length > 3)
+              ? Image.network("${data['thumbnails']['336x366']}", fit: BoxFit.cover)
               : Image.asset("assets/images/tum_video.jpeg", fit: BoxFit.cover),
         ),
       ),

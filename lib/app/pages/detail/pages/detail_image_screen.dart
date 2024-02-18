@@ -112,7 +112,7 @@ class DetailImageScreen extends StatelessWidget {
                     //
                     //
                     //     CardMarkSinglePageWidget(label: 'Suffix' , type: '${selectedItem['suffix']}'),
-                  if(imageController.imageDetails?['asset']!=null)  CardMarkSinglePageWidget(label: 'Type' , type: imageController.getTypeString(imageController.imageDetails?['asset']['type'])),
+                  if(imageController.imageDetails?['asset']!=null)  CardMarkSinglePageWidget(label: 'Type' , type: imageController.getTypeString(imageController.imageDetails?['type'])),
                     //     CardMarkSinglePageWidget(label: 'Lanuage' , type: '${selectedItem['language']}'),
                     //   ],
                     // ),

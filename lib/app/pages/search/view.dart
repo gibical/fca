@@ -7,6 +7,7 @@ import 'package:mediaverse/app/pages/home/tabs/sound/view.dart';
 import 'package:mediaverse/app/pages/home/tabs/text/view.dart';
 import 'package:mediaverse/app/pages/home/tabs/video/view.dart';
 import 'package:mediaverse/app/pages/home/widgets/custom_tab_bar_widget.dart';
+import 'package:mediaverse/app/pages/profile/widgets/GridMainWidget.dart';
 import 'package:mediaverse/app/pages/search/logic.dart';
 import 'package:mediaverse/app/pages/search/tabs/imageWidget.dart';
 import 'package:mediaverse/app/pages/search/tabs/soundWidget.dart';
@@ -249,7 +250,7 @@ class _SearchScreenState extends State<SearchScreen>
                               crossAxisCount: 2),
                       itemCount: _logic.pictureLST.length,
                       itemBuilder: (context, index) {
-                        return ImageWidget(elementAt: _logic.pictureLST[index]);
+                        return GridPostView( _logic.pictureLST[index]);
                       },
                     ),
                     GridView.builder(
@@ -258,9 +259,7 @@ class _SearchScreenState extends State<SearchScreen>
                               crossAxisCount: 2),
                       itemCount: _logic.bestVideos.length,
                       itemBuilder: (context, index) {
-                        return VidPage(
-                          item: _logic.bestVideos[index],
-                        );
+                        return GridPostView( _logic.bestVideos[index]);
                       },
                     ),
                     GridView.builder(
@@ -270,7 +269,7 @@ class _SearchScreenState extends State<SearchScreen>
                       ),
                       itemCount: _logic.audioLST.length,
                       itemBuilder: (context, index) {
-                        return SoundWidget(elementAt: _logic.audioLST[index]);
+                        return GridPostView( _logic.audioLST[index]);
                       },
                     ),
                     GridView.builder(
@@ -279,7 +278,7 @@ class _SearchScreenState extends State<SearchScreen>
                               crossAxisCount: 2),
                       itemCount: _logic.txtLST.length,
                       itemBuilder: (context, index) {
-                        return TxtWidget(model: _logic.txtLST[index]);
+                        return GridPostView( _logic.txtLST[index]);
                       },
                     ),
                   ],
@@ -464,22 +463,22 @@ class _SearchScreenState extends State<SearchScreen>
     List<Widget> s = [];
     if (_logic.pictureLST.isNotEmpty) {
       for (var element in _logic.pictureLST) {
-        s.add(ImageWidget(elementAt: element));
+        s.add(GridPostView(element));
       }
     }
     if (_logic.bestVideos.isNotEmpty) {
       for (var element in _logic.bestVideos) {
-        s.add(VidPage(item: element));
+        s.add(GridPostView(element));
       }
     }
     if (_logic.audioLST.isNotEmpty) {
       for (var element in _logic.audioLST) {
-        s.add(SoundWidget(elementAt: element));
+        s.add(GridPostView(element));
       }
     }
     if (_logic.txtLST.isNotEmpty) {
       for (var element in _logic.txtLST) {
-        s.add(TxtWidget(model: element));
+        s.add(GridPostView(element));
       }
     }
 

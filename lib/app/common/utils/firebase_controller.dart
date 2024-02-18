@@ -43,7 +43,7 @@ class FirebaseController extends GetxController implements RequestInterface {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster = ApiRequster(this,develperModel: true);
+    apiRequster = ApiRequster(this,develperModel: false);
 
   }
 

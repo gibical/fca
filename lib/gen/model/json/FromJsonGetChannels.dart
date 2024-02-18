@@ -5,9 +5,9 @@ class FromJsonGetChannels {
 }
 
   FromJsonGetChannels.fromJson(dynamic json) {
-    if (json != null) {
+    if (json['data'] != null) {
       _data = [];
-      json.forEach((v) {
+      json['data'].forEach((v) {
         _data?.add(ChannelModel.fromJson(v));
       });
     }

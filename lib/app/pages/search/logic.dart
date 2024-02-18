@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -36,6 +37,7 @@ class SearchLogic extends GetxController {
       "plan": !isTag.value ? tagOrPlan : "",
       "q": value,
     });
+    log('SearchLogic.searchMedia = ${response.data}');
 
     item = FromJsonGetAllAsstes.fromJson(response.data);
 

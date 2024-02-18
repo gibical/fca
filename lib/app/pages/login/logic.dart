@@ -52,7 +52,7 @@ class LoginController extends GetxController implements RequestInterface {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    apiRequster = ApiRequster(this,develperModel: true);
+    apiRequster = ApiRequster(this,develperModel: false);
   }
 
 

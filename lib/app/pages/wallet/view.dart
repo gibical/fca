@@ -74,8 +74,8 @@ class WalletScreen extends StatelessWidget {
                             Spacer(),
                             InkWell(
                               onTap: () {
-                                // Get.to(TransactionsPage());
-                                logic.getStripe();
+                                 Get.to(TransactionsPage());
+                                //logic.getStripe();
                               },
                               child: Text('History',
                                 style: FontStyleApp.bodyMedium.copyWith(

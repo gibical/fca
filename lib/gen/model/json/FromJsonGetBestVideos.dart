@@ -9,9 +9,9 @@ class FromJsonGetBestVideos {
 }
 
   FromJsonGetBestVideos.fromJson(dynamic json) {
-    if (json!= null) {
+    if (json['data']!= null) {
       _data = [];
-      json.forEach((v) {
+      json['data'].forEach((v) {
         _data?.add(v);
       });
     }
@@ -36,9 +36,9 @@ class FromJsonGetBestText {
 }
 
   FromJsonGetBestText.fromJson(dynamic json) {
-    if (json!= null) {
+    if (json['data']!= null) {
       _data = [];
-      json.forEach((v) {
+      json['data'].forEach((v) {
         _data?.add(v);
       });
     }

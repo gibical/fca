@@ -160,7 +160,7 @@ class DetailVideoScreen extends StatelessWidget {
                       children: [
                         //
                     if(videoController.videoDetails?['genre']!=null)    CardMarkSinglePageWidget(label: 'Genre' , type: (videoController.videoDetails?['genre'].length > 5) ? '${videoController.videoDetails?['genre'].substring(0, 5)}...' : videoController.videoDetails?['genre']),
-                        CardMarkSinglePageWidget(label: 'Type' , type: videoController.getTypeString(videoController.videoDetails?['asset']['type'])),
+                        CardMarkSinglePageWidget(label: 'Type' , type: videoController.getTypeString(videoController.videoDetails?['type']??1)),
                         CardMarkSinglePageWidget(label: 'Lanuage' , type: '${videoController.videoDetails?['language']}'),
                       ],
                     ),

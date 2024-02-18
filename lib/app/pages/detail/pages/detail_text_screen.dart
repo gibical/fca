@@ -138,7 +138,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                         width: 2.w,
                                       ),
                                       Text(
-                                        logic.textDetails?['asset']['user']
+                                        logic.textDetails?['user']
                                         ['username'],
                                         style: FontStyleApp.bodySmall
                                             .copyWith(
@@ -274,7 +274,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                     Wrap(
                       children: [
                         CardMarkSinglePageWidget(label: 'Suffix' , type: (logic.textDetails?['suffix'] ?? 'null') ),
-                        CardMarkSinglePageWidget(label: 'Type' , type: logic.getTypeString(logic.textDetails?['asset']['type'])),
+                        CardMarkSinglePageWidget(label: 'Type' , type: logic.getTypeString(logic.textDetails?['type']??1)),
                       ],
                     ),
                     SizedBox(

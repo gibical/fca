@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -97,11 +99,11 @@ class DetailController extends GetxController {
         'Authorization': 'Bearer $token',
       }));
 
-      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data} - ${response.data['asset_id']}');
+      log('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data} - ${response.data['type']}');
       if (response.statusCode == 200) {
-        details?.value = RxMap<String, dynamic>.from(response.data);
+        details?.value = RxMap<String, dynamic>.from(response.data['data']);
         asset_id= response.data['asset_id'].toString();
-        print(response.data);
+
       } else {
         // Handle errors
       }
