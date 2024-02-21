@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:mediaverse/app/pages/channel/all_tools.dart';
 import 'package:mediaverse/app/pages/detail/pages/detail_text_screen.dart';
 import 'package:mediaverse/app/pages/detail/state.dart';
 import 'package:mediaverse/app/pages/detail/view.dart';
@@ -51,6 +52,7 @@ class PageRoutes {
   static const COMMENT = '/Comment';
   static const LIVE = '/Live';
   static const ViewAllChannel = '/ViewAllChannel';
+  static const ALLTOOLS = '/AllTools';
 
 
   static List<GetPage> routes = [
@@ -182,6 +184,11 @@ class PageRoutes {
       transition: Transition.rightToLeft,
       page: () => ViewAllChannelScreen(),
       binding: ViewAllChannelState(),
+    ),
+    GetPage(
+      name: PageRoutes.ALLTOOLS,
+      transition: Transition.rightToLeft,
+      page: () => AllToolsScreen(),
     ),
 
 
