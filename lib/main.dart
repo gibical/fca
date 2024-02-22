@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
       title: 'MediaVerse',
       getPages: PageRoutes.routes,
 
-      initialRoute: PageRoutes.SPLASH,
+      initialRoute: PageRoutes.VIDEOEDITOR,
       translations: LocalizationService(),
       debugShowCheckedModeBanner: false,
       locale: LocalizationService().getCurrentLocale(),
@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
       themeMode: AppTheme().getCurrentTheme(),
       theme: AppTheme.darkMode,
       darkTheme:  AppTheme.darkMode,
-       navigatorObservers: <NavigatorObserver>[MyApp.observer],
+      // navigatorObservers: <NavigatorObserver>[MyApp.observer],
 
     );
   }
