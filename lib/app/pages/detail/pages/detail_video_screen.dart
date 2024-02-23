@@ -62,7 +62,7 @@ class DetailVideoScreen extends StatelessWidget {
 
         return videoController.isLoadingVideos.value ? Center(child: CircularProgressIndicator()) :CustomScrollView(
           slivers: [
-          CustomAppBarVideoAndImageDetailWidget(selectedItem: videoController.videoDetails, isVideo: true,),
+          CustomAppBarVideoAndImageDetailWidget(selectedItem: videoController.videoDetails, isVideo: true,detailController: videoController,),
             SliverToBoxAdapter(
               child: Padding(
                 padding:  EdgeInsets.symmetric(horizontal: 6.5.w),

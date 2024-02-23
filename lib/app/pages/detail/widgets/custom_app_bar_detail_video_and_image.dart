@@ -5,7 +5,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:mediaverse/app/common/app_color.dart';
+import 'package:mediaverse/app/pages/detail/logic.dart';
 import 'package:mediaverse/app/pages/detail/widgets/image_full_screen_dialog.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 import 'package:video_player/video_player.dart';
 
@@ -14,9 +16,10 @@ import '../../../common/app_icon.dart';
 class CustomAppBarVideoAndImageDetailWidget extends StatelessWidget {
    CustomAppBarVideoAndImageDetailWidget({
     super.key,
-    required this.selectedItem, required this.isVideo,
+    required this.selectedItem, required this.isVideo,required this.detailController,
   });
 
+   DetailController detailController;
   final  selectedItem;
   final bool isVideo;
   String imageURL = "";
@@ -26,8 +29,8 @@ class CustomAppBarVideoAndImageDetailWidget extends StatelessWidget {
     ImageProvider? imageProvider;
 
     try {
-      imageProvider = NetworkImage(selectedItem['asset']['thumbnails']['336x366']);
-      imageURL = selectedItem['asset']['thumbnails']['3090x1396'];
+      imageProvider = NetworkImage(selectedItem['thumbnails']['336x366']);
+      imageURL = selectedItem['thumbnails']['336x366'];
     } catch (e) {
 
       imageProvider = AssetImage('assets/images/tum_image.jpeg');
@@ -40,8 +43,7 @@ class CustomAppBarVideoAndImageDetailWidget extends StatelessWidget {
          isVideo ? showDialog(
             context: context,
             builder: (BuildContext context) {
-             return VideoDialog(videoUrl: selectedItem['asset']
-             ?['file']?['url'],);
+             return VideoDialog(videoUrl: selectedItem['file']?['url'],controller: detailController,);
             }) : showDialog(
              context: context,
              builder: (BuildContext context) {
@@ -97,7 +99,8 @@ class CustomAppBarVideoAndImageDetailWidget extends StatelessWidget {
 
 class VideoDialog extends StatefulWidget {
   final String videoUrl;
-  const VideoDialog({Key? key, required this.videoUrl}) : super(key: key);
+   VideoDialog({Key? key, required this.videoUrl, required this.controller}) : super(key: key);
+  final DetailController controller;
 
   @override
   _VideoDialogState createState() => _VideoDialogState();
@@ -153,7 +156,9 @@ class _VideoDialogState extends State<VideoDialog> {
       children: [
         AspectRatio(
                 aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller),
+                child: Screenshot(
+                    controller: widget.controller.screenshotController,
+                    child: VideoPlayer(_controller)),
               ),
         Material(
           child: Slider(
@@ -168,6 +173,54 @@ class _VideoDialogState extends State<VideoDialog> {
             },
           ),
         ),
+        SizedBox(height: 3.h,),
+        Material(
+          color: Colors.transparent,
+          child: Row(
+            children: [
+              InkWell(
+                  onTap: () {
+                    try {
+                      _controller.pause();
+                    }  catch (e) {
+                      // TODO
+                    }
+                    widget.controller.screenShotOfTheVideo();
+                  },
+                  child: SvgPicture.asset(
+                    "assets/icons/icon__screenshot.svg",
+                    width: 6.w,
+                  )),
+
+              SizedBox(
+                width: 3.w,
+              ),
+              InkWell(
+                  onTap: () {
+                    widget.controller.videoConvertToAudio();
+                  },
+                  child: SvgPicture.asset(
+                    "assets/icons/icon__single-convert-to-audio.svg",
+                    width: 6.w,
+                  )),
+              SizedBox(
+                width: 3.w,
+              ),
+              InkWell(
+                  onTap: () {
+                    widget.controller.sendShareYouTube();
+                  },
+                  child: SvgPicture.asset(
+                    "assets/icons/icon__video-white.svg",
+                    width: 6.w,
+                  )),
+              SizedBox(
+                width: 3.w,
+              ),
+            ],
+          ),
+        ),
+
       ],
     ) : CircularProgressIndicator(),
           Positioned(

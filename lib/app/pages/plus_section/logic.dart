@@ -19,6 +19,7 @@ import 'package:mediaverse/app/common/app_api.dart';
 import 'package:mediaverse/app/common/app_config.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/common/app_route.dart';
+import 'package:mediaverse/app/common/utils/dio_inperactor.dart';
 import 'package:mediaverse/app/pages/plus_section/widget/custom_plan_text_filed.dart';
 import 'package:mediaverse/app/pages/plus_section/widget/first_form.dart';
 import 'package:mediaverse/app/pages/plus_section/widget/upload_asset_file.dart';
@@ -319,7 +320,6 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     });
   }
 
-  // توقف تایمر و ریست کردن زمان ضبط
   void _stopRecordingTimer() {
     _recordingTimer?.cancel();
     _recordingDuration = Duration.zero;
@@ -624,6 +624,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       "description": captionController.text,
       "lat": 0,
       "lng": 0,
+      "type": 1,
       "forkability_status":
           editibaleController.text.contains("Yes") ? "0" : "1",
       "commenting_status": 1,
@@ -648,6 +649,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   void onError(String content, int reqCode, bodyError) {
     // TODO: implement onError
     isloading(false);
+    print('PlusSectionLogic.onError = ${jsonDecode(bodyError)}');
     try {
       var messege = jsonDecode(bodyError)['message'];
       ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
@@ -705,9 +707,9 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
 
   void peaseJsonFromAddAssets(source) {
     print(
-        'PlusSectionLogic.peaseJsonFromAddAssets = ${jsonDecode(source)['asset_id']} - ${imageOutPut}');
-    assetid = jsonDecode(source)['asset_id'].toString();
-    postUploadedId = jsonDecode(source)['id'].toString();
+        'PlusSectionLogic.peaseJsonFromAddAssets = ${jsonEncode(source)} - ${imageOutPut}');
+    assetid = jsonDecode(source)['data']['asset_id'].toString();
+    postUploadedId = jsonDecode(source)['data']['id'].toString();
 
     isloading(false);
 
@@ -722,6 +724,8 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
           filename: 'uploadfile'),
       'asset': assetid.toString(),
     });
+
+   dio.interceptors.add(MediaVerseConvertInterceptor());
 
     try {
       var response = await dio.post(
@@ -741,7 +745,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode! >= 200||response.statusCode! < 300) {
         print('File uploaded successfully = ${response.data}');
          Get.offAllNamed(PageRoutes.WRAPPER);
         Get.toNamed(_getRouteByMedia(),arguments: {'id': postUploadedId});

@@ -67,7 +67,7 @@ class ViewAllChannelController extends GetxController {
       }));
 
       if (response.statusCode == 200) {
-        channels = RxList<dynamic>.from(response.data);
+        channels = RxList<dynamic>.from(response.data['data']);
         filteredChannels = List.from(channels);
       } else {
       }

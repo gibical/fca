@@ -56,7 +56,7 @@ class DetailImageScreen extends StatelessWidget {
       body:Obx((){
         return imageController.isLoadingImages.value ? Center(child: CircularProgressIndicator(),): CustomScrollView(
           slivers: [
-           CustomAppBarVideoAndImageDetailWidget(selectedItem: imageController.imageDetails, isVideo: false,),
+           CustomAppBarVideoAndImageDetailWidget(selectedItem: imageController.imageDetails, isVideo: false,detailController: imageController,),
             SliverToBoxAdapter(
               child: Padding(
                 padding:  EdgeInsets.symmetric(horizontal: 6.5.w),
@@ -82,13 +82,11 @@ class DetailImageScreen extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        CircleAvatar(
-                          radius:3.w,
-                        ),
+                        Image.asset("assets/images/avatar.jpeg",width: 4.w,),
                         SizedBox(
                           width: 2.w,
                         ),
-                        Text('Ralph Edwards' , style: FontStyleApp.bodySmall.copyWith(
+                        Text('${imageController.imageDetails?['user']['username']}' , style: FontStyleApp.bodySmall.copyWith(
                             color: AppColor.grayLightColor.withOpacity(0.8),
                             fontSize: 13
                         ),),

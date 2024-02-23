@@ -1,5 +1,6 @@
 
 
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
@@ -7,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:mediaverse/app/pages/plus_section/logic.dart';
+import 'package:mediaverse/app/pages/plus_section/widget/first_form.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 
 class LiveController extends GetxController{
@@ -44,7 +48,7 @@ class LiveController extends GetxController{
       }));
 
       if (response.statusCode == 200) {
-        details?.value = RxMap<String, dynamic>.from(response.data);
+        details?.value = RxMap<String, dynamic>.from(response.data['data']);
         print(response.data);
       } else {
         // Handle errors
@@ -161,15 +165,42 @@ class LiveController extends GetxController{
 
     final time = DateTime.now();
     final name = 'Mediaverse $time';
-    await ImageGallerySaver.saveImage(byte , name: name);
-  }
 
+    File? saved  = await saveImage(byte);
+
+    PlusSectionLogic logic= Get.put(PlusSectionLogic(),tag: "Save_${DateTime.now().millisecondsSinceEpoch}");
+
+    logic.mediaMode = MediaMode.image;
+    logic.imageFile = saved!;
+    logic.imageOutPut = saved!.path;
+
+    Get.to(FirstForm(),arguments: [logic]);
+  }
+  Future<File?> saveImage(Uint8List bytes) async {
+    // Check storage permission (optional)
+    // ...
+
+    // Get app directory path
+    final appDir = await getApplicationCacheDirectory();
+
+    // Generate unique filename
+    final filename = "${DateTime.now().millisecondsSinceEpoch}.png";
+
+    // Create file object
+    final file = File('${appDir.path}/$filename');
+
+    // Write image bytes to file
+    await file.writeAsBytes(bytes);
+
+    // Return saved image path
+    return file;
+  }
   takeScreenShot(){
     screenshotController.capture().then((Uint8List? image){
       saveScreenShot(image!);
     });
 
-    Get.snackbar('Success', 'The screenshot is saved in your gallery' , backgroundColor: Colors.green);
+    //Get.snackbar('Success', 'The screenshot is saved in your gallery' , backgroundColor: Colors.green);
   }
 }
 

@@ -98,7 +98,7 @@ class _FirstFormState extends State<FirstForm> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Wrtie a cation",style: TextStyle(color: Colors.white,
+                          Text("Write a Caption",style: TextStyle(color: Colors.white,
                               fontWeight: FontWeight.bold),),
                           CustomTextFieldPlusWidget(
                               context: context,

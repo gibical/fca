@@ -117,12 +117,12 @@ class DetailMusicScreen extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.circular(20.sp),
                                               child: (controller.musicDetails!
-                                                              ['thumbnails']
+                                              ['data']['thumbnails']
                                                           .toString()
                                                           .length >
                                                       3)
                                                   ? Image.network(
-                                                      "${controller.musicDetails?['thumbnails']['336x366']}",
+                                                      "${controller.musicDetails?['data']['thumbnails']['336x366']}",
                                                       fit: BoxFit.cover)
                                                   : Image.asset(
                                                       "assets/images/tum_sound.jpeg",

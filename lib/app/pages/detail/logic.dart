@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,12 +12,16 @@ import 'package:just_audio/just_audio.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/pages/detail/widgets/text_to_text.dart';
 import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../common/app_config.dart';
 import '../../common/utils/dio_inperactor.dart';
 import '../../common/utils/duraton_music_helper.dart';
+import '../plus_section/logic.dart';
+import '../plus_section/widget/first_form.dart';
 
 class DetailController extends GetxController {
   //==================================== get Detail page =======================================//
@@ -22,6 +29,7 @@ class DetailController extends GetxController {
   RxMap<String, dynamic>? imageDetails = RxMap<String, dynamic>();
   RxMap<String, dynamic>? musicDetails = RxMap<String, dynamic>();
   RxMap<String, dynamic>? textDetails = RxMap<String, dynamic>();
+  ScreenshotController screenshotController = ScreenshotController();
 
   var asset_id  ="";
   //==================================== loading Detail page =======================================//
@@ -99,7 +107,7 @@ class DetailController extends GetxController {
         'Authorization': 'Bearer $token',
       }));
 
-      log('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data} - ${response.data['type']}');
+      log('DetailController._fetchMediaData = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['type']}');
       if (response.statusCode == 200) {
         details?.value = RxMap<String, dynamic>.from(response.data['data']);
         asset_id= response.data['data']['asset_id'].toString();
@@ -388,8 +396,41 @@ class DetailController extends GetxController {
       ),
     );
   }
+  Future<File?> saveImage(Uint8List bytes) async {
+    // Check storage permission (optional)
+    // ...
 
-  void screenShotOfTheVideo() {}
+    // Get app directory path
+    final appDir = await getApplicationCacheDirectory();
+
+    // Generate unique filename
+    final filename = "${DateTime.now().millisecondsSinceEpoch}.png";
+
+    // Create file object
+    final file = File('${appDir.path}/$filename');
+
+    // Write image bytes to file
+    await file.writeAsBytes(bytes);
+
+    // Return saved image path
+    return file;
+  }
+  void screenShotOfTheVideo() {
+    screenshotController.capture().then((Uint8List? image)async{
+      final time = DateTime.now();
+      final name = 'Mediaverse $time';
+
+      File? saved  = await saveImage(image!);
+
+      PlusSectionLogic logic= Get.put(PlusSectionLogic(),tag: "Save_${DateTime.now().millisecondsSinceEpoch}");
+
+      logic.mediaMode = MediaMode.image;
+      logic.imageFile = saved!;
+      logic.imageOutPut = saved!.path;
+
+      Get.to(FirstForm(),arguments: [logic]);
+    });
+  }
 
   void videoConvertToAudio() async{
     try {
