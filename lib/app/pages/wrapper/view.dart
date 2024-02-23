@@ -15,11 +15,38 @@ import '../profile/view.dart';
 import 'logic.dart';
 import 'package:flutter/material.dart';
 
-class MainWrapperScreen extends GetView<WrapperController> {
-  MainWrapperScreen({super.key});
+class MainWrapperScreen extends StatefulWidget {
+
+
 
   @override
+  State<MainWrapperScreen> createState() => _MainWrapperScreenState();
+}
+
+class _MainWrapperScreenState extends State<MainWrapperScreen> {
+  WrapperController controller = Get.find<WrapperController>();
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      try {
+        print('_MainWrapperScreenState.initState 1 ${Get.arguments[0]}');
+        int page = Get.arguments[0];
+        controller.navigatePages(page);
+        print('_MainWrapperScreenState.initState 2 ');
+
+      }  catch (e) {
+        // TODO
+      }
+    });
+  }
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       extendBody: true,
       backgroundColor: Theme.of(context).colorScheme.background,

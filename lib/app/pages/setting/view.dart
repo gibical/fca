@@ -121,7 +121,7 @@ class SettingScreen extends StatelessWidget {
                     ),
                     ItemSettingScreenWidget(
                       onTap: (){
-                        print('Wallet');
+                        Get.offAllNamed(PageRoutes.WRAPPER,arguments: [2]);
                       },
                       icon: AppIcon.wallet1Icon, title: 'Wallet', subTitle: '200' , iconSize: 18,),
 

@@ -78,6 +78,8 @@ class ApiRequster {
       var box = GetStorage();
       headers['Authorization'] = "Bearer " + box.read("token");
     }
+    if (develperModel) print("request Code Headers $reqCode = ${headers} ");
+
     Uri uri = Uri.parse((daynamicUrl ? endPointUrl : mainUrl + endPointUrl).trim());
 
     if (develperModel)

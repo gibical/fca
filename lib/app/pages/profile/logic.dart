@@ -70,7 +70,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster = ApiRequster(this, develperModel: false);
+    apiRequster = ApiRequster(this, develperModel: true);
     onGetProfileMethod();
     getWalletBalance();
     getStripe();
@@ -188,6 +188,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   onGetAssetsAll() {
+    print('ProfileControllers.onGetAssetsAll 1 ');
     isloading1(true);
     apiRequster.request("profile/assets", ApiRequster.MHETOD_GET, 3,
         useToken: true);
@@ -242,6 +243,8 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   onGetSubsAssetsAll() {
+    print('ProfileControllers.onGetAssetsAll 2 ');
+
     isloading5(true);
     apiRequster.request("profile/subscriptions", ApiRequster.MHETOD_GET, 8,
         useToken: true);
@@ -256,7 +259,6 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   void praseJsonFromGetAllMyAssets(source) {
-    log('ProfileControllers.parseJsonFromGetAllImages 1  = ${source} -sd');
 
     myAssets = FromJsonGetAllAsstes.fromJson(jsonDecode(source));
     update();
@@ -288,6 +290,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   void parseJsonFromGetSubsAll(source) {
+    print('ProfileControllers.parseJsonFromGetSubsAll = ${source}');
     mysubsAssets = FromJsonGetAllAsstes.fromJson(jsonDecode(source));
     isloading5(false);
 

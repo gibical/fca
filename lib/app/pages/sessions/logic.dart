@@ -17,7 +17,7 @@ class SessionsLogic extends GetxController implements RequestInterface {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster = ApiRequster(this,develperModel: false);
+    apiRequster = ApiRequster(this,develperModel: true);
     getSessions();
   }
   

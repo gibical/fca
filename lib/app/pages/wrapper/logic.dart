@@ -25,6 +25,11 @@ class WrapperController extends GetxController {
     final _appLinks = AppLinks();
 
 
+    try {
+
+    } catch (e) {
+      // TODO
+    }
     _appLinks.allUriLinkStream.listen((uri) {
       print('WrapperController.onReady allUriLinkStream = ${uri}');
       parseAndNavigate(uri);
