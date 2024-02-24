@@ -2,7 +2,11 @@ import 'dart:io';
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/pages/video_editor/widgets/crop_page.dart';
 import 'package:mediaverse/app/pages/video_editor/widgets/export_service.dart';
 
@@ -21,50 +25,167 @@ class VideoEditorScreen extends StatefulWidget {
 }
 
 class _VideoEditorScreenState extends State<VideoEditorScreen> {
+
+
   final ImagePicker _picker = ImagePicker();
 
   void _pickVideo() async {
     final XFile? file = await _picker.pickVideo(source: ImageSource.gallery);
 
     if (mounted && file != null) {
-      Navigator.push(
+      final videoController = VideoPlayerController.file(File(file.path));
+      await videoController.initialize();
+
+      // Access the duration of the video
+      Duration videoDuration = videoController.value.duration;
+      print('Video Duration: $videoDuration');
+
+      // Pass the video file and duration to VideoEditorScreen
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute<void>(
-          builder: (BuildContext context) => VideoEditor(file: File(file.path)),
+          builder: (BuildContext context) => VideoEditor(
+            file: File(file.path),
+            videoDuration: videoDuration,
+          ),
         ),
       );
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
+
+    final h = MediaQuery.of(context).size.height;
+    final w = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(title: const Text("Video Picker")),
-      backgroundColor: Colors.blue,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("Click on the button to select video"),
-            ElevatedButton(
-              onPressed: _pickVideo,
-              child: const Text("Pick Video From Gallery"),
+      backgroundColor: Color(0xff000033),
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          Positioned(
+              bottom: h * 0.17,
+              left: 0,
+              right: 0,
+              child: SizedBox(
+                  width: w,
+                  child: SvgPicture.asset('assets/images/line_editor.svg' , fit:BoxFit.cover,))),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Column(
+              children: [
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: h * 0.27,
+
+                    decoration: BoxDecoration(
+                        color: AppColor.primaryLightColor.withOpacity(0.6),
+                        borderRadius: BorderRadius.circular(18)
+                    ),
+
+                  ),
+                ),
+                SizedBox(height: h * 0.1),
+                Container(
+                  height: h * 0.3,
+                  color: Color(0xff000033),
+
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        height: 1,
+
+                        width: double.infinity,
+                      ),
+                      Container(
+                        height: 1,
+                        color: Colors.white.withOpacity(0.4),
+                        width: double.infinity,
+                      ),
+                      Container(
+                        height: 1,
+                        color: Colors.white.withOpacity(0.4),
+                        width: double.infinity,
+                      ),
+                      Container(
+                        height: 1,
+                        color: Colors.white.withOpacity(0.4),
+                        width: double.infinity,
+                      ),
+
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: h * 0.02),
+
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(onPressed: _pickVideo,
+                          icon: Icon(Icons.add , size: 27,)),
+                      IconButton(onPressed: (){      print('menu');},
+                          icon: SvgPicture.asset('assets/icons/menu_editor.svg')),
+                    ],
+                  ),
+                ),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                        width: w,
+                        child: SvgPicture.asset('assets/images/box_editor.svg' , fit: BoxFit.cover,)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                        children: [
+                          IconButton(onPressed: (){
+                            Get.back();
+                          },
+                              icon: Icon(Icons.close , size: 27,)),
+                          IconButton(onPressed: (){},
+                              icon: Icon(Icons.done ,  size: 27)),
+
+
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+
+          ),
+
+
+        ],
       ),
     );
   }
 }
 
+
+
 //-------------------//
 //VIDEO EDITOR SCREEN//
 //-------------------//
 class VideoEditor extends StatefulWidget {
-  const VideoEditor({super.key, required this.file});
+  const VideoEditor({super.key, required this.file, required this.videoDuration});
 
   final File file;
-
+  final Duration videoDuration;
   @override
   State<VideoEditor> createState() => _VideoEditorState();
 }
@@ -74,14 +195,44 @@ class _VideoEditorState extends State<VideoEditor> {
   final _isExporting = ValueNotifier<bool>(false);
   final double height = 60;
 
+
+  final ImagePicker _picker = ImagePicker();
+
+  void _pickVideo() async {
+    final XFile? file = await _picker.pickVideo(source: ImageSource.gallery);
+
+    if (mounted && file != null) {
+      final videoController = VideoPlayerController.file(File(file.path));
+      await videoController.initialize();
+
+      // Access the duration of the video
+      Duration videoDuration = videoController.value.duration;
+      print('Video Duration: $videoDuration');
+
+      // Pass the video file and duration to VideoEditorScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => VideoEditor(
+            file: File(file.path),
+            videoDuration: videoDuration,
+          ),
+        ),
+      );
+    }
+  }
   late final VideoEditorController _controller = VideoEditorController.file(
     widget.file,
     minDuration: const Duration(seconds: 1),
-    maxDuration: const Duration(seconds: 30),
+    maxDuration:  Duration(
+      seconds:  widget.videoDuration.inSeconds.toInt(),
+    ),
   );
 
   @override
   void initState() {
+   print("============================================${widget.videoDuration.inSeconds.toInt()}============================================");
+
     super.initState();
     _controller
         .initialize(aspectRatio: 9 / 16)
@@ -166,64 +317,188 @@ class _VideoEditorState extends State<VideoEditor> {
 
   @override
   Widget build(BuildContext context) {
+    final h = MediaQuery.of(context).size.height;
+    final w = MediaQuery.of(context).size.width;
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => true,
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Color(0xff000033),
         body: _controller.initialized
             ? SafeArea(
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
               Positioned(
+                  bottom: h * 0.17,
+                  child: SizedBox(
+                      width: w,
+                      child: SvgPicture.asset('assets/images/line_editor.svg' , fit:BoxFit.cover,))),
+              Positioned(
                 left: 0,
                 right: 0,
                 bottom: 0,
-                child: Container(
-                  height: 230,
-                  color: Color(0xff000033),
-                  child: Stack(
-                    children: [
-                      Container(
-                        height: 230,
+                child: Column(
+                  children: [
+                    SingleChildScrollView(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: h * 0.29,
 
-                        color: Colors.transparent,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            SizedBox(
-                              height: 1,
+                        decoration: BoxDecoration(
+                            color: AppColor.primaryLightColor.withOpacity(0.4),
 
-                              width: double.infinity,
+                        ),
+                        child: AspectRatio(
+                          aspectRatio: _controller.video.value.aspectRatio,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: SizedBox(
+                              width: _controller.videoWidth ?? 0,
+                              height: _controller.videoHeight ?? 0,
+                              child: VideoPlayer(_controller.video),
                             ),
-                            Container(
-                              height: 1,
-                              color: Colors.red,
-                              width: double.infinity,
-                            ),
-                            Container(
-                              height: 1,
-                              color: Colors.white.withOpacity(0.4),
-                              width: double.infinity,
-                            ),
-                            Container(
-                              height: 1,
-                              color: Colors.white.withOpacity(0.4),
-                              width: double.infinity,
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                      Column(
-                        mainAxisAlignment:
-                        MainAxisAlignment.start,
-                        children: _trimSlider(),
+                    ),
+
+
+                    SizedBox(height: h * 0.070),
+                    Container(
+                      height: h * 0.3,
+                      color: Color(0xff000033),
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 230,
+
+                            color: Colors.transparent,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                SizedBox(
+                                  height: 1,
+
+                                  width: double.infinity,
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: Colors.white.withOpacity(0.2),
+                                  width: double.infinity,
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: Colors.white.withOpacity(0.4),
+                                  width: double.infinity,
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: Colors.white.withOpacity(0.4),
+                                  width: double.infinity,
+                                ),
+
+                              ],
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment:
+                            MainAxisAlignment.start,
+                            children: _trimSlider(),
+                          ),
+
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    AnimatedBuilder(
+                      animation: Listenable.merge([
+                        _controller,
+                        _controller.video,
+                      ]),
+                      builder: (_, __) {
+                        final int duration = _controller.videoDuration.inSeconds;
+                        final double pos = _controller.trimPosition * duration;
+
+                        return   Text(
+                            formatter(Duration(seconds: pos.toInt() , ),),style: GoogleFonts.inter(
+                          color: AppColor.primaryLightColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600
+                        ),);
+                      },
+                    ),
+                   SizedBox(height: h * 0.02),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(onPressed: _pickVideo,
+                              icon: Icon(Icons.add , size: 27,)),
+                          IconButton(onPressed: (){      print('menu');},
+                              icon: SvgPicture.asset('assets/icons/menu_editor.svg')),
+                        ],
+                      ),
+                    ),
+
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+
+                        SizedBox(
+                          width: w,
+                            child: SvgPicture.asset('assets/images/box_editor.svg' , fit: BoxFit.cover,)),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                            children: [
+                              IconButton(onPressed: (){},
+                                  icon: Icon(Icons.close , size: 27,)),
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  SvgPicture.asset('assets/icons/play_btn.svg',),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 15),
+                                    child: Container(
+                                      height: 50,
+                                     width: 50,
+                                      decoration: BoxDecoration(
+                                          color: Color(0xff000033),
+                                        shape: BoxShape.circle
+                                      ),
+                                      child: IconButton(onPressed: (){
+                                        _controller.isPlaying ? _controller.video.pause() : _controller.video.play();
+                                        setState(() {
+
+                                        });
+                                      },
+                                          icon: Icon( _controller.isPlaying ?Icons.pause: Icons.play_arrow_outlined)),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              IconButton(onPressed: (){},
+                                  icon: Icon(Icons.done ,  size: 27)),
+
+
+                            ],
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+
+
+                  ],
                 ),
 
               ),
+
+
             ],
           ),
         )
@@ -340,7 +615,7 @@ class _VideoEditorState extends State<VideoEditor> {
               controller: _controller,
               textStyle: TextStyle(
                   color: Colors.white,
-                  fontSize: 11
+                  fontSize: 9
               ),
               padding: const EdgeInsets.only(top: 12, left: 10 , right: 10 ),
 
