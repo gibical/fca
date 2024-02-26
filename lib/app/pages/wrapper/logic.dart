@@ -7,12 +7,14 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/setting/view.dart';
 
 class WrapperController extends GetxController {
   final PageController pageController = PageController(initialPage: 0);
   Rx<int> selectedIndex = Rx<int>(0);
+  var userid ="";
   navigatePages(int index) {
     selectedIndex.value = index;
     pageController..animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.linear);
@@ -22,6 +24,7 @@ class WrapperController extends GetxController {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
+    userid = GetStorage().read("userid")??"0";
     final _appLinks = AppLinks();
 
 

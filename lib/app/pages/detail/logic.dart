@@ -12,6 +12,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/pages/detail/widgets/text_to_text.dart';
 import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
+import 'package:mediaverse/app/pages/wrapper/logic.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
@@ -49,6 +50,9 @@ class DetailController extends GetxController {
   TextEditingController desEditingController = TextEditingController();
   TextEditingController prefixEditingController = TextEditingController();
   TextEditingController reportEditingController = TextEditingController();
+
+
+  var isEditAvaiblae = false.obs;
 
   @override
   void onInit() {
@@ -111,6 +115,9 @@ class DetailController extends GetxController {
       if (response.statusCode == 200) {
         details?.value = RxMap<String, dynamic>.from(response.data['data']);
         asset_id= response.data['data']['asset_id'].toString();
+
+        isEditAvaiblae= response.data['data']['user_id'].toString().contains(Get.find<WrapperController>().userid.toString()).obs;
+
 
       } else {
         // Handle errors
@@ -745,5 +752,9 @@ class DetailController extends GetxController {
     } finally {
 
     }
+  }
+
+  void sendToEditProfile() {
+
   }
 }
