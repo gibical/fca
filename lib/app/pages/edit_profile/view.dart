@@ -5,7 +5,9 @@ import 'package:mediaverse/app/pages/detail/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
+import '../../common/app_config.dart';
 import '../login/widgets/custom_text_field.dart';
+import '../plus_section/widget/custom_plan_text_filed.dart';
 import 'logic.dart';
 
 class EditProfilePage extends StatelessWidget {
@@ -37,6 +39,7 @@ class EditProfilePage extends StatelessWidget {
                     ),),
                     SizedBox(height: 3.h,),
                     CustomTextFieldLogin(
+                      isFalsePadding: true,
                         prefix: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -59,8 +62,9 @@ class EditProfilePage extends StatelessWidget {
                         hintText: "",
                         editingController:logic.assetsEditingController,
                         context: context),
-                    SizedBox(height: 2.h,),
+                    SizedBox(height: 4.h,),
                     CustomTextFieldLogin(
+                      isFalsePadding: true,
                         prefix: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -70,7 +74,7 @@ class EditProfilePage extends StatelessWidget {
                             Text(
                               "Asset Description".tr,
                               style:
-                              TextStyle(color: "747491".toColor(), fontSize: 11.sp),
+                              TextStyle(color: "747491".toColor(), fontSize: 8.sp),
                             ),
                             Container(
                               height: 28,
@@ -83,7 +87,118 @@ class EditProfilePage extends StatelessWidget {
                         hintText: "",
                         editingController:logic.assetsDescreptionEditingController,
                         context: context),
+                   SizedBox(height: 4.h,),
+                    Text("Is editable for others",
+                      style: TextStyle(color: Colors.white,
+                          fontWeight: FontWeight.bold),),
+                    CustomTDropDownPlusWidget(
+                        models: [
+                          "Yes",
+                          "No"
+                        ],
+                        context: context,
+                        textEditingController: logic
+                            .isEditEditingController,
 
+                        titleText: 'Check Forkability status',
+                        hintText: 'Choose Language',
+                        needful: false),
+
+                   SizedBox(height: 4.h,),
+                    Text("Choose Your Plan",
+                      style: TextStyle(color: Colors.white,
+                          fontWeight: FontWeight.bold),),
+                    CustomTDropDownPlusWidget(
+                        context: context,
+                        textEditingController: logic.planController,
+
+                        titleText: 'Choose a plan',
+                        hintText: 'Insert your title',
+                        needful: false,
+                        models: [
+                          "Free", "Ownership", "Subscription"
+                        ]),
+
+                   SizedBox(height: 4.h,),
+                    Text("Select Genre",
+                      style: TextStyle(color: Colors.white,
+                          fontWeight: FontWeight.bold),),
+                    CustomTDropDownPlusWidget(
+                        context: context,
+                        textEditingController: logic.planController,
+
+                        titleText: 'Select Genre',
+                        hintText: 'Insert your title',
+                        needful: false,
+                        models: [
+                          "Free", "Ownership", "Subscription"
+                        ]),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Language",style: TextStyle(color: Colors.white,
+                            fontWeight: FontWeight.bold),),
+                        CustomTDropDownPlusWidget(
+                            models:Constant.languages,
+                            context: context,
+                            textEditingController: logic.languageController,
+
+                            titleText: 'Select language',
+                            hintText: 'Choose Language',
+                            needful: false),
+                      ],
+                    ),
+                    SizedBox(height: 3.h,),
+                    CustomTextFieldLogin(
+                        isFalsePadding: true,
+                        prefix: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              "IMDB score".tr,
+                              style:
+                              TextStyle(color: "747491".toColor(), fontSize: 11.sp),
+                            ),
+                            Container(
+                              height: 28,
+                              width: 1.5,
+                              margin: EdgeInsets.symmetric(horizontal: 3.w),
+                              color: AppColor.whiteColor.withOpacity(0.2),
+                            ),
+                          ],
+                        ),
+                        hintText: "",
+                        editingController:logic.imdbScooreController,
+                        context: context),                    SizedBox(height: 3.h,),
+                    CustomTextFieldLogin(
+                        isFalsePadding: true,
+                        prefix: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              "Production year".tr,
+                              style:
+                              TextStyle(color: "747491".toColor(), fontSize: 11.sp),
+                            ),
+                            Container(
+                              height: 28,
+                              width: 1.5,
+                              margin: EdgeInsets.symmetric(horizontal: 3.w),
+                              color: AppColor.whiteColor.withOpacity(0.2),
+                            ),
+                          ],
+                        ),
+                        hintText: "",
+                        editingController:logic.imdbYeaerController,
+                        context: context),
+                    SizedBox(height: 30.h,)
                   ],
                 ),
               ),

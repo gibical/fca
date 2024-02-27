@@ -10,10 +10,10 @@ import '../../../common/app_color.dart';
 import 'country_code_widget.dart';
 
 
-Widget CustomTextFieldLogin({required Widget prefix ,required String hintText , required context,required TextEditingController editingController} ){
+Widget CustomTextFieldLogin({required Widget prefix ,required String hintText , required context,required TextEditingController editingController,bool  isFalsePadding=false} ){
   final textTheme = Theme.of(context).textTheme;
   return  Padding(
-    padding: const EdgeInsets.only(left: 16 , right: 16),
+    padding:  EdgeInsets.only(left:isFalsePadding?0: 16 , right:isFalsePadding?0:  16),
     child: TextFormField(
      // showCursor: false,
       controller: editingController,
