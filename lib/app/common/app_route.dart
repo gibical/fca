@@ -3,6 +3,7 @@ import 'package:mediaverse/app/pages/channel/all_tools.dart';
 import 'package:mediaverse/app/pages/detail/pages/detail_text_screen.dart';
 import 'package:mediaverse/app/pages/detail/state.dart';
 import 'package:mediaverse/app/pages/detail/view.dart';
+import 'package:mediaverse/app/pages/edit_profile/view.dart';
 import 'package:mediaverse/app/pages/home/state.dart';
 import 'package:mediaverse/app/pages/home/view.dart';
 import 'package:mediaverse/app/pages/intro/view.dart';
@@ -53,6 +54,7 @@ class PageRoutes {
   static const LIVE = '/Live';
   static const ViewAllChannel = '/ViewAllChannel';
   static const ALLTOOLS = '/AllTools';
+  static const EDITPROFILE = '/EditProfile';
 
 
   static List<GetPage> routes = [
@@ -189,6 +191,11 @@ class PageRoutes {
       name: PageRoutes.ALLTOOLS,
       transition: Transition.rightToLeft,
       page: () => AllToolsScreen(),
+    ),
+    GetPage(
+      name: PageRoutes.EDITPROFILE,
+      transition: Transition.rightToLeft,
+      page: () => EditProfilePage(),
     ),
 
 

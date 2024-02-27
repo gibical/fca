@@ -13,9 +13,9 @@ import 'country_code_widget.dart';
 Widget CustomTextFieldLogin({required Widget prefix ,required String hintText , required context,required TextEditingController editingController} ){
   final textTheme = Theme.of(context).textTheme;
   return  Padding(
-    padding: const EdgeInsets.only(left: 25 , right: 25),
+    padding: const EdgeInsets.only(left: 16 , right: 16),
     child: TextFormField(
-      showCursor: false,
+     // showCursor: false,
       controller: editingController,
        //
       style: textTheme.bodyLarge?.copyWith(

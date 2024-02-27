@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
+import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/detail/widgets/text_to_text.dart';
 import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
 import 'package:mediaverse/app/pages/wrapper/logic.dart';
@@ -30,6 +31,7 @@ class DetailController extends GetxController {
   RxMap<String, dynamic>? imageDetails = RxMap<String, dynamic>();
   RxMap<String, dynamic>? musicDetails = RxMap<String, dynamic>();
   RxMap<String, dynamic>? textDetails = RxMap<String, dynamic>();
+  RxMap<String, dynamic>? detailss = RxMap<String, dynamic>();
   ScreenshotController screenshotController = ScreenshotController();
 
   var asset_id  ="";
@@ -114,6 +116,7 @@ class DetailController extends GetxController {
       log('DetailController._fetchMediaData = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['type']}');
       if (response.statusCode == 200) {
         details?.value = RxMap<String, dynamic>.from(response.data['data']);
+        detailss = RxMap<String, dynamic>.from(response.data['data']);
         asset_id= response.data['data']['asset_id'].toString();
 
         isEditAvaiblae= response.data['data']['user_id'].toString().contains(Get.find<WrapperController>().userid.toString()).obs;
@@ -756,5 +759,6 @@ class DetailController extends GetxController {
 
   void sendToEditProfile() {
 
+    Get.toNamed(PageRoutes.EDITPROFILE,arguments: this);
   }
 }
