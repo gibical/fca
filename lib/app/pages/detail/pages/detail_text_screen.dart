@@ -11,6 +11,7 @@ import 'package:mediaverse/app/pages/detail/widgets/card_mark_singlepage_widget.
 import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../gen/model/enums/post_type_enum.dart';
 import '../../../common/app_route.dart';
 import '../logic.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
@@ -395,7 +396,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                   borderRadius: BorderRadius.circular(1000)
                               ),
                               onPressed: () {
-                                logic.sendToEditProfile();
+                                logic.sendToEditProfile(PostType.text);
                               },
                               child: Center(
                                 child: Text("Edit information",

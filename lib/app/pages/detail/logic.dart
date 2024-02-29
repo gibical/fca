@@ -14,6 +14,7 @@ import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/detail/widgets/text_to_text.dart';
 import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
 import 'package:mediaverse/app/pages/wrapper/logic.dart';
+import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
@@ -757,8 +758,8 @@ class DetailController extends GetxController {
     }
   }
 
-  void sendToEditProfile() {
+  void sendToEditProfile(PostType type) {
 
-    Get.toNamed(PageRoutes.EDITPROFILE,arguments: this);
+    Get.toNamed(PageRoutes.EDITPROFILE,arguments: [this,type]);
   }
 }

@@ -1,8 +1,9 @@
 class FromJsonGetChannels {
   FromJsonGetChannels({
-      List<ChannelModel>? data,}){
+    List<ChannelModel>? data,
+  }) {
     _data = data;
-}
+  }
 
   FromJsonGetChannels.fromJson(dynamic json) {
     if (json['data'] != null) {
@@ -13,9 +14,12 @@ class FromJsonGetChannels {
     }
   }
   List<ChannelModel>? _data;
-FromJsonGetChannels copyWith({  List<ChannelModel>? data,
-}) => FromJsonGetChannels(  data: data ?? _data,
-);
+  FromJsonGetChannels copyWith({
+    List<ChannelModel>? data,
+  }) =>
+      FromJsonGetChannels(
+        data: data ?? _data,
+      );
   List<ChannelModel>? get data => _data;
 
   Map<String, dynamic> toJson() {
@@ -25,21 +29,21 @@ FromJsonGetChannels copyWith({  List<ChannelModel>? data,
     }
     return map;
   }
-
 }
 
 class ChannelModel {
   ChannelModel({
-      num? id, 
-      String? title, 
-      String? description, 
-      num? type, 
-      String? link, 
-      String? thumbnail, 
-      String? language,
+    num? id,
+    String? title,
+    String? description,
+    num? type,
+    String? link,
+    String? thumbnail,
+    String? language,
     String? country,
-      String? createdAt, 
-      String? updatedAt,}){
+    String? createdAt,
+    String? updatedAt,
+  }) {
     _id = id;
     _title = title;
     _description = description;
@@ -50,30 +54,19 @@ class ChannelModel {
     _country = country;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
-}
+  }
 
   ChannelModel.fromJson(dynamic json) {
-    print('ChannelModel.fromJson 1 ');
     _id = json['id'];
-    print('ChannelModel.fromJson 2 ');
     _title = json['title'];
-    print('ChannelModel.fromJson 3 ');
     _description = json['description'];
-    print('ChannelModel.fromJson 4 ');
     _type = json['type'];
-    print('ChannelModel.fromJson 5 ');
     _link = json['link'];
-    print('ChannelModel.fromJson 6 ');
     _thumbnail = json['thumbnail'];
-    print('ChannelModel.fromJson 7 ');
     _language = json['language'];
-    print('ChannelModel.fromJson 8 ');
     _country = json['country'].toString();
-    print('ChannelModel.fromJson 9 ');
     _createdAt = json['created_at'];
-    print('ChannelModel.fromJson 10 ');
     _updatedAt = json['updated_at'];
-    print('ChannelModel.fromJson 11 ');
   }
   num? _id;
   String? _title;
@@ -85,27 +78,30 @@ class ChannelModel {
   String? _country;
   String? _createdAt;
   String? _updatedAt;
-ChannelModel copyWith({  num? id,
-  String? title,
-  String? description,
-  num? type,
-  String? link,
-  String? thumbnail,
-  String? language,
-  String? country,
-  String? createdAt,
-  String? updatedAt,
-}) => ChannelModel(  id: id ?? _id,
-  title: title ?? _title,
-  description: description ?? _description,
-  type: type ?? _type,
-  link: link ?? _link,
-  thumbnail: thumbnail ?? _thumbnail,
-  language: language ?? _language,
-  country: country ?? _country,
-  createdAt: createdAt ?? _createdAt,
-  updatedAt: updatedAt ?? _updatedAt,
-);
+  ChannelModel copyWith({
+    num? id,
+    String? title,
+    String? description,
+    num? type,
+    String? link,
+    String? thumbnail,
+    String? language,
+    String? country,
+    String? createdAt,
+    String? updatedAt,
+  }) =>
+      ChannelModel(
+        id: id ?? _id,
+        title: title ?? _title,
+        description: description ?? _description,
+        type: type ?? _type,
+        link: link ?? _link,
+        thumbnail: thumbnail ?? _thumbnail,
+        language: language ?? _language,
+        country: country ?? _country,
+        createdAt: createdAt ?? _createdAt,
+        updatedAt: updatedAt ?? _updatedAt,
+      );
   num? get id => _id;
   String? get title => _title;
   String? get description => _description;
@@ -131,5 +127,4 @@ ChannelModel copyWith({  num? id,
     map['updated_at'] = _updatedAt;
     return map;
   }
-
 }

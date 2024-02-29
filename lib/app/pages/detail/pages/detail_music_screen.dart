@@ -11,6 +11,7 @@ import 'package:mediaverse/app/pages/detail/widgets/card_mark_singlepage_widget.
 import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
 import 'package:mediaverse/app/pages/detail/widgets/report_botton_sheet.dart';
 import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
+import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_icon.dart';
@@ -528,7 +529,7 @@ class DetailMusicScreen extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(1000)
                                   ),
                                   onPressed: () {
-                                    controller.sendToEditProfile();
+                                    controller.sendToEditProfile(PostType.audio);
                                   },
                                   child: Center(
                                     child: Text("Edit information",

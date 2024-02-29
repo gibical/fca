@@ -13,6 +13,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../../gen/model/enums/post_type_enum.dart';
 import '../../login/widgets/custom_register_button_widget.dart';
 import '../logic.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
@@ -302,7 +303,7 @@ class DetailVideoScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(1000)
                               ),
                               onPressed: () {
-                                videoController.sendToEditProfile();
+                                videoController.sendToEditProfile(PostType.video);
                               },
                               child: Center(
                                 child: Text("Edit information",

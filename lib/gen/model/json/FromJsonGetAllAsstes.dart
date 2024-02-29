@@ -16,6 +16,12 @@ class FromJsonGetAllAsstes {
   FromJsonGetAllAsstes.fromJson(dynamic json) {
    // log('FromJsonGetAllAsstes.fromJson 1  = ${jsonDecode(json)}');
 
+    if (json['data'] != null) {
+      _all = [];
+      json['data'].forEach((v) {
+        _all?.add(v);
+      });
+    }
     if (json['texts'] != null) {
       _texts = [];
       json['texts'].forEach((v) {
@@ -47,6 +53,7 @@ class FromJsonGetAllAsstes {
   List<dynamic>? _images;
   List<dynamic>? _audios;
   List<dynamic>? _videos;
+  List<dynamic>? _all;
 FromJsonGetAllAsstes copyWith({  List<dynamic>? texts,
   List<dynamic>? images,
   List<dynamic>? audios,
@@ -60,6 +67,7 @@ FromJsonGetAllAsstes copyWith({  List<dynamic>? texts,
   List<dynamic>? get images => _images;
   List<dynamic>? get audios => _audios;
   List<dynamic>? get videos => _videos;
+  List<dynamic>? get all => _all;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

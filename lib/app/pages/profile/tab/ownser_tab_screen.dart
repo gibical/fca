@@ -284,11 +284,11 @@ class AllTabScreen extends StatelessWidget {
 
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2),
-          children: combinedList
+          children:( model.all??[])
               .asMap()
               .entries
               .map((e) {
-            return GridPostView(combinedList.elementAt(e.key));
+            return GridPostView2(( model.all??[]).elementAt(e.key));
           }).toList(),
 
         ));

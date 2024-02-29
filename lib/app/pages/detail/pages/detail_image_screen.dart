@@ -7,6 +7,7 @@ import 'package:mediaverse/app/common/font_style.dart';
 import 'package:mediaverse/app/pages/detail/widgets/buy_card_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/card_mark_singlepage_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
+import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_route.dart';
@@ -227,7 +228,7 @@ class DetailImageScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(1000)
                               ),
                               onPressed: () {
-                                imageController.sendToEditProfile();
+                                imageController.sendToEditProfile(PostType.image);
                               },
                               child: Center(
                                 child: Text("Edit information",

@@ -259,13 +259,11 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   void praseJsonFromGetAllMyAssets(source) {
-
     myAssets = FromJsonGetAllAsstes.fromJson(jsonDecode(source));
     update();
   }
 
   void parseJsonFromGetAllImages(source) {
-    log('ProfileControllers.parseJsonFromGetAllImages 2  = ${source}');
     ownerImages = FromJsonGetImages.fromJson(jsonDecode(source)).data ?? [];
 
     isloading1(false);
@@ -290,15 +288,16 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   void parseJsonFromGetSubsAll(source) {
-    print('ProfileControllers.parseJsonFromGetSubsAll = ${source}');
     mysubsAssets = FromJsonGetAllAsstes.fromJson(jsonDecode(source));
     isloading5(false);
+    print('ProfileControllers.parseJsonFromGetSubsAll = ${mysubsAssets.all!.length}');
 
-    if((mysubsAssets.texts??[]).isEmpty&&(mysubsAssets.audios??[]).isEmpty&&(mysubsAssets.videos??[]).isEmpty&&(mysubsAssets.images??[]).isEmpty)emptySubAll=true;
+    if((mysubsAssets.all??[]).isEmpty)emptySubAll=true;
     update();
   }
 
   void parseJsonFromGetSubsImages(source) {
+    print('ProfileControllers.parseJsonFromGetSubsImages = ${source}');
     subImages = FromJsonGetImages.fromJson(jsonDecode(source)).data ?? [];
 
     if (subImages.isEmpty) emptySubImages = true;
@@ -306,6 +305,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   void parseJsonFromGetSubsVideos(source) {
+
     subVideos = FromJsonGetImages.fromJson(jsonDecode(source)).data ?? [];
 
     if (subVideos.isEmpty) emptySubVideos = true;
@@ -370,7 +370,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   void pareJsonFromStripe(source) {
-    print('ProfileControllers.pareJsonFromStripe = ${source}');
+   // print('ProfileControllers.pareJsonFromStripe = ${source}');
     isStripeConnected = true;
 
     update();
