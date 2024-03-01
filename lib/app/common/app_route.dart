@@ -20,6 +20,8 @@ import 'package:mediaverse/app/pages/setting/view.dart';
 import 'package:mediaverse/app/pages/signup/view.dart';
 import 'package:mediaverse/app/pages/splash/state.dart';
 import 'package:mediaverse/app/pages/upload/view.dart';
+import 'package:mediaverse/app/pages/video_editor/state.dart';
+import 'package:mediaverse/app/pages/video_editor/view.dart';
 import 'package:mediaverse/app/pages/wrapper/state.dart';
 import 'package:mediaverse/app/pages/wrapper/view.dart';
 
@@ -53,6 +55,7 @@ class PageRoutes {
   static const COMMENT = '/Comment';
   static const LIVE = '/Live';
   static const ViewAllChannel = '/ViewAllChannel';
+  static const VIDEOEDITOR = '/VideoEditor';
   static const ALLTOOLS = '/AllTools';
   static const EDITPROFILE = '/EditProfile';
 
@@ -198,6 +201,12 @@ class PageRoutes {
       page: () => EditProfilePage(),
     ),
 
+    GetPage(
+      name: PageRoutes.VIDEOEDITOR,
+      transition: Transition.rightToLeft,
+      page: () => VideoEditorScreen(),
+      binding: VideoEditorState()
+    ),
 
   ];
 }
