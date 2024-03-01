@@ -179,13 +179,20 @@ class EditProfilePage extends StatelessWidget {
                       if(logic.type ==
                           PostType.video) CustomTDropDownPlusWidget(
                           context: context,
-                          textEditingController: logic.planController,
+                          textEditingController: logic.genreController,
 
                           titleText: 'Select Genre',
                           hintText: 'Insert your title',
                           needful: false,
                           models: [
-                            "Free", "Ownership", "Subscription"
+                            "action",
+                            "adventure",
+                            "comedy",
+                            "educational",
+                            "fantasy",
+                            "horror",
+                            "romance",
+                            "thriller",
                           ]),
                       if(logic.type == PostType.video) SizedBox(height: 3.h,),
                       Column(

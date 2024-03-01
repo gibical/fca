@@ -228,15 +228,15 @@ class BestChannelsWidget extends GetView<HomeLogic> {
               height: 190,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20.sp)),
-                gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.6),
-                      Colors.black.withOpacity(0.4),
-                     Colors.transparent,
-
-                ])
+                // gradient: LinearGradient(
+                //     begin: Alignment.bottomCenter,
+                //     end: Alignment.topCenter,
+                //     colors: [
+                //       Colors.black.withOpacity(0.6),
+                //       Colors.black.withOpacity(0.4),
+                //      Colors.transparent,
+                //
+                // ])
               ),
             ),
             Padding(

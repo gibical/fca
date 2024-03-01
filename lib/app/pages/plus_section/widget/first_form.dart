@@ -14,14 +14,17 @@ import '../../signup/widgets/custom_text_field_form_register_widget.dart';
 import 'custom_plan_text_filed.dart';
 
 class FirstForm extends StatefulWidget {
-  const FirstForm({super.key});
+  PlusSectionLogic logic ;
+
+  FirstForm(this.logic);
+
 
   @override
   State<FirstForm> createState() => _FirstFormState();
 }
 
 class _FirstFormState extends State<FirstForm> {
-  PlusSectionLogic logic = Get.arguments[0];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +71,7 @@ class _FirstFormState extends State<FirstForm> {
                           fontWeight: FontWeight.bold),),
                           CustomTextFieldPlusWidget(
                               context: context,
-                              textEditingController: logic.titleController,
+                              textEditingController: widget.logic.titleController,
                               
                               titleText: 'Title',
                               hintText: 'Insert your title',isLarge: true,
@@ -85,7 +88,7 @@ class _FirstFormState extends State<FirstForm> {
                           CustomTDropDownPlusWidget(
                             models:Constant.languages,
                               context: context,
-                              textEditingController: logic.languageController,
+                              textEditingController: widget.logic.languageController,
                   
                               titleText: 'Select language',
                               hintText: 'Choose Language',
@@ -102,7 +105,7 @@ class _FirstFormState extends State<FirstForm> {
                               fontWeight: FontWeight.bold),),
                           CustomTextFieldPlusWidget(
                               context: context,
-                              textEditingController: logic.captionController,
+                              textEditingController: widget.logic.captionController,
                   
                               titleText: 'Title',
                               hintText: 'Insert your Caption',isLarge: true,
@@ -121,11 +124,11 @@ class _FirstFormState extends State<FirstForm> {
                               child: MaterialButton(
                                 onPressed: (){
                                   if(
-                                  logic.titleController.text.isNotEmpty&&
-                                  logic.languageController.text.isNotEmpty&&
-                                  logic.captionController.text.isNotEmpty
+                                  widget.logic.titleController.text.isNotEmpty&&
+                                      widget.logic.languageController.text.isNotEmpty&&
+                                      widget.logic.captionController.text.isNotEmpty
                                   ){
-                                    Get.to(SecendForm(),arguments: [logic]);
+                                    Get.to(SecendForm(),arguments: [widget.logic]);
                                   }else{
                                     Constant.showMessege("Please fill out the form first");
                                   }

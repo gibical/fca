@@ -17,7 +17,7 @@ class TransactionsLogic extends GetxController  implements RequestInterface{
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster = ApiRequster(this,develperModel: false);
+    apiRequster = ApiRequster(this,develperModel: true);
     getWalletBalance();
   }
 
@@ -46,7 +46,7 @@ class TransactionsLogic extends GetxController  implements RequestInterface{
   }
 
   void parseJsonFromGetWalletBalance(source) {
-
+    print('TransactionsLogic.parseJsonFromGetWalletBalance = ${source}');
     list = FromJsonGetTransactions.fromJson(jsonDecode(source)).data??[];
     isloading(false);
 

@@ -174,7 +174,7 @@ class LiveController extends GetxController{
     logic.imageFile = saved!;
     logic.imageOutPut = saved!.path;
 
-    Get.to(FirstForm(),arguments: [logic]);
+    Get.to(FirstForm(logic),arguments: [logic]);
   }
   Future<File?> saveImage(Uint8List bytes) async {
     // Check storage permission (optional)

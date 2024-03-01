@@ -22,6 +22,7 @@ import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/common/utils/dio_inperactor.dart';
 import 'package:mediaverse/app/pages/plus_section/widget/custom_plan_text_filed.dart';
 import 'package:mediaverse/app/pages/plus_section/widget/first_form.dart';
+import 'package:mediaverse/app/pages/plus_section/widget/secned_form.dart';
 import 'package:mediaverse/app/pages/plus_section/widget/upload_asset_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
@@ -188,7 +189,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       Constant.showMessege(e.description ?? "");
       return null;
     } finally {
-      Get.to(FirstForm(), arguments: [this]);
+      Get.to(FirstForm(this), arguments: [this]);
     }
   }
 
@@ -276,6 +277,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   }
 
   void middleClick() {
+    _clearTextFiled();
     switch (mediaMode) {
       case MediaMode.audio:
         // TODO: Handle this case.
@@ -286,7 +288,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
         // TODO: Handle this case.
         break;
       case MediaMode.text:
-        Get.to(FirstForm(), arguments: [this]);
+        Get.to(SecendForm(), arguments: [this]);
         break;
       // TODO: Handle this case.
       case MediaMode.video:
@@ -295,6 +297,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   }
 
   void getLeftClick() {
+    _clearTextFiled();
     switch (mediaMode) {
       case MediaMode.audio:
         // TODO: Handle this case.
@@ -347,7 +350,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
           debugPrint(path);
           soundOutPut = path ?? "";
           debugPrint("Recorded file size: ${File(path).lengthSync()}");
-          Get.to(FirstForm(), arguments: [this]);
+          Get.to(FirstForm(this), arguments: [this]);
         }
       } else {
         _startRecordingTimer(); // شروع تایمر و به‌روزرسانی وضعیت ضبط
@@ -363,6 +366,8 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   }
 
   void getRightClick() {
+    _clearTextFiled();
+
     switch (mediaMode) {
       case MediaMode.audio:
         // TODO: Handle this case.
@@ -389,91 +394,97 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
           height: 100.h,
           child: Scaffold(
             backgroundColor: "#02073D".toColor(),
-            body: Center(
-              child: SafeArea(
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 7.5.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  Get.back();
-                                },
-                                icon: Icon(
-                                  Icons.arrow_back,
-                                  color: "666680".toColor(),
-                                )),
-                            Text(
-                              "   ",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            Container(
-                              width: 16.w,
-                            )
-                          ],
+            body: FocusDetector(
+              onFocusGained: () {},
+              onFocusLost: () {
+                recorderController.dispose();
+              },
+              child: Center(
+                child: SafeArea(
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 7.5.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  icon: Icon(
+                                    Icons.arrow_back,
+                                    color: "666680".toColor(),
+                                  )),
+                              Text(
+                                "   ",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Container(
+                                width: 16.w,
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 20.h),
-                      Align(
-                          child: Text(
-                        getFormattedRecordingDuration(),
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.sp),
-                      )),
-                      Container(
-                        width: 100.w,
-                        height: 40.h,
-                        child: Stack(
-                          children: [
-                            SizedBox.expand(
-                                child: Image.asset(
-                              "assets/images/voicebackground.png",
-                              width: 100.w,
-                              fit: BoxFit.fitWidth,
-                            )),
-                            Align(
-                              child: isRecording
-                                  ? Container(
-                                      height: 30.h,
-                                      child: AudioWaveforms(
-                                        enableGesture: true,
-                                        size: Size(
-                                            MediaQuery.of(Get.context!)
-                                                .size
-                                                .width,
-                                            30.h),
-                                        recorderController: recorderController,
-                                        waveStyle: WaveStyle(
-                                            waveColor: Colors.white,
-                                            extendWaveform: true,
-                                            showMiddleLine: true,
-                                            middleLineColor: "597AFF".toColor(),
-                                            scaleFactor: 300),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                          // color: const Color(0xFF1E1B26),
+                        SizedBox(height: 20.h),
+                        Align(
+                            child: Text(
+                          getFormattedRecordingDuration(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp),
+                        )),
+                        Container(
+                          width: 100.w,
+                          height: 40.h,
+                          child: Stack(
+                            children: [
+                              SizedBox.expand(
+                                  child: Image.asset(
+                                "assets/images/voicebackground.png",
+                                width: 100.w,
+                                fit: BoxFit.fitWidth,
+                              )),
+                              Align(
+                                child: isRecording
+                                    ? Container(
+                                        height: 30.h,
+                                        child: AudioWaveforms(
+                                          enableGesture: true,
+                                          size: Size(
+                                              MediaQuery.of(Get.context!)
+                                                  .size
+                                                  .width,
+                                              30.h),
+                                          recorderController: recorderController,
+                                          waveStyle: WaveStyle(
+                                              waveColor: Colors.white,
+                                              extendWaveform: true,
+                                              showMiddleLine: true,
+                                              middleLineColor: "597AFF".toColor(),
+                                              scaleFactor: 300),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                            // color: const Color(0xFF1E1B26),
+                                          ),
+                                          padding:
+                                              const EdgeInsets.only(left: 18),
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 15),
                                         ),
-                                        padding:
-                                            const EdgeInsets.only(left: 18),
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 15),
-                                      ),
-                                    )
-                                  : Container(),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
+                                      )
+                                    : Container(),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -492,7 +503,9 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
               SizedBox.expand(
                   child: FocusDetector(
                       onFocusGained: () {},
-                      onFocusLost: () {},
+                      onFocusLost: () {
+                        controller?.dispose();
+                      },
                       child: CameraPreview(controller!))),
             Obx(() {
               return Visibility(
@@ -524,89 +537,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
         );
       case MediaMode.text:
         // TODO: Handle this case.
-        return Container(
-          width: 100.w,
-          height: 100.h,
-          child: Scaffold(
-            backgroundColor: AppColor.blueDarkColor,
-            body: Center(
-              child: SafeArea(
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 7.5.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  Get.back();
-                                },
-                                icon: Icon(
-                                  Icons.arrow_back,
-                                  color: "666680".toColor(),
-                                )),
-                            Text(
-                              "   ",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            Container(
-                              width: 16.w,
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 4.h),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Title",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          CustomTextFieldPlusWidget(
-                              context: Get.context!,
-                              textEditingController: textTitleController,
-                              titleText: 'Title',
-                              hintText: 'Insert your title',
-                              isLarge: false,
-                              needful: false),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 4.h,
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Caption",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          CustomTextFieldPlusWidget(
-                              context: Get.context!,
-                              textEditingController: textDisController,
-                              titleText: 'Select language',
-                              hintText: 'Insert Caption',
-                              needful: false),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
+        return FirstForm(this);
       case MediaMode.video:
         // TODO: Handle this case.
         return Container();
@@ -795,6 +726,18 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
         return PageRoutes.DETAILVIDEO;
 
     }
+  }
+
+  void _clearTextFiled() {
+    titleController.clear();
+    planController.clear();
+    editibaleController.clear();
+    captionController.clear();
+    languageController.clear();
+    priceController.clear();
+    subscrptionController.clear();
+    textTitleController.clear();
+    textDisController.clear();
   }
 }
 

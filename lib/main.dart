@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
       title: 'MediaVerse',
       getPages: PageRoutes.routes,
 
-      initialRoute: PageRoutes.VIDEOEDITOR,
+      initialRoute: PageRoutes.SPLASH,
       translations: LocalizationService(),
       debugShowCheckedModeBanner: false,
       locale: LocalizationService().getCurrentLocale(),

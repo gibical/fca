@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/channel/control_room/view.dart';
 import 'package:mediaverse/app/pages/channel/view.dart';
 import 'package:mediaverse/app/pages/channel/widgets/all_tools_button.dart';
@@ -39,7 +40,10 @@ class _AllToolsScreenState extends State<AllToolsScreen> {
                 Get.to(ControlRoomPage());
 
               }, icon: "assets/icons/all_tools_2.svg", name: "Control Room"),
-              AllToolsButtonWidget(onPressed: (){}, icon: "assets/icons/all_tools_3.svg", name: "Media Suit"),
+              AllToolsButtonWidget(onPressed: (){
+                Get.toNamed(PageRoutes.VIDEOEDITOR);
+
+              }, icon: "assets/icons/all_tools_3.svg", name: "Media Suit"),
               AllToolsButtonWidget(onPressed: (){}, icon: "assets/icons/all_tools_4.svg", name: "Studio",enable: false,),
               AllToolsButtonWidget(onPressed: (){}, icon: "assets/icons/all_tools_5.svg", name: "CG & Playout",enable: false,),
               AllToolsButtonWidget(onPressed: (){}, icon: "assets/icons/all_tools_6.svg", name: "AI & Production",enable: false,),

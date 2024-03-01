@@ -152,10 +152,8 @@ class _CommentScreenState extends State<CommentScreen> {
                             ),
                             ),
                             Spacer(),
-                            Text('Report' , style: GoogleFonts.inter(
 
-                            )
-                            ),
+
                           ],
                         ),
                         Padding(

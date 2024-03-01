@@ -369,7 +369,7 @@ class _GridPostView2State extends State<GridPostView2> {
   void _getRouteAndPushIt(model) {
     String route = "";
     print('_GridPostViewState._getRouteAndPushIt = ${widget.model['type']} - ${model}');
-    switch(widget.model['asset']['class']){
+    switch(widget.model['class']){
       case 1:
         route = PageRoutes.DETAILTEXT;
         break;

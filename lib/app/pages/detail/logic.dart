@@ -439,7 +439,7 @@ class DetailController extends GetxController {
       logic.imageFile = saved!;
       logic.imageOutPut = saved!.path;
 
-      Get.to(FirstForm(),arguments: [logic]);
+      Get.to(FirstForm(logic),arguments: [logic]);
     });
   }
 
