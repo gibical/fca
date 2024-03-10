@@ -138,14 +138,19 @@ class _SecendFormState extends State<SecendForm> {
                             Text("Subscription Period",
                               style: TextStyle(color: Colors.white,
                                   fontWeight: FontWeight.bold),),
-                            CustomTextFieldPlusWidget(
+                            CustomTDropDownPlusWidget(
+                                models: [
+                                  "1 Day",
+                                  "3 Days",
+                                  "1 Week",
+                                  "1 Month"
+                                ],
                                 context: context,
                                 textEditingController: logic
                                     .subscrptionController,
 
-
-                                titleText: 'Title',
-                                hintText: 'Insert Period',
+                                titleText: 'Check Forkability status',
+                                hintText: 'Insert Periood',
                                 needful: false),
                           ],
                         ),

@@ -41,12 +41,16 @@ class SearchLogic extends GetxController {
 
     item = FromJsonGetAllAsstes.fromJson(response.data);
 
-    bestVideos = response.data["videos"]
-        .map((e) => e)
-        .toList();
-    txtLST = response.data["texts"].map((e) => e).toList(); 
-    pictureLST = response.data["images"].map((e) => e).toList();
-    audioLST = response.data["audios"].map((e) => e).toList();
+    try {
+      bestVideos = item.all!.where((element) => element['class'].toString().contains("4")).toList();
+      txtLST = item.all!.where((element) => element['class'].toString().contains("1")).toList();
+      pictureLST = item.all!.where((element) => element['class'].toString().contains("2")).toList();
+      audioLST = item.all!.where((element) => element['class'].toString().contains("3")).toList();
+
+    }  catch (e) {
+      // TODO
+    }
+    print('SearchLogic.searchMedia = ${bestVideos}');
 
     isLoading.value = false;
   }

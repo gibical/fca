@@ -461,25 +461,14 @@ class _SearchScreenState extends State<SearchScreen>
 
   List<Widget> allItems() {
     List<Widget> s = [];
-    if (_logic.pictureLST.isNotEmpty) {
-      for (var element in _logic.pictureLST) {
-        s.add(GridPostView(element));
+    try {
+      if (_logic.item.all!.isNotEmpty) {
+        for (var element in _logic.item.all!) {
+          s.add(GridPostView(element));
+        }
       }
-    }
-    if (_logic.bestVideos.isNotEmpty) {
-      for (var element in _logic.bestVideos) {
-        s.add(GridPostView(element));
-      }
-    }
-    if (_logic.audioLST.isNotEmpty) {
-      for (var element in _logic.audioLST) {
-        s.add(GridPostView(element));
-      }
-    }
-    if (_logic.txtLST.isNotEmpty) {
-      for (var element in _logic.txtLST) {
-        s.add(GridPostView(element));
-      }
+    }  catch (e) {
+      // TODO
     }
 
     return s;

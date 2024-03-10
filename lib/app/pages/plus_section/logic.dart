@@ -40,9 +40,8 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   TextEditingController captionController = TextEditingController();
   TextEditingController languageController = TextEditingController();
   TextEditingController priceController = TextEditingController();
-  TextEditingController subscrptionController = TextEditingController();
-  TextEditingController textTitleController = TextEditingController();
-  TextEditingController textDisController = TextEditingController();
+  TextEditingController subscrptionController = TextEditingController(text: "1 day");
+
 
   String assetid = "";
   String postUploadedId = "";
@@ -277,7 +276,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   }
 
   void middleClick() {
-    _clearTextFiled();
+
     switch (mediaMode) {
       case MediaMode.audio:
         // TODO: Handle this case.
@@ -551,13 +550,13 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       "name": titleController.text,
       "user": box.read("userid"),
       "plan": _getPlanByDropDown(),
-      "subscription_period": subscrptionController.text,
+      "subscription_period": getSubscrptioonPeriod(),
       "description": captionController.text,
       "lat": 0,
       "lng": 0,
       "type": 1,
       "forkability_status":
-          editibaleController.text.contains("Yes") ? "0" : "1",
+          editibaleController.text.contains("Yes") ? "1" : "2",
       "commenting_status": 1,
       "tags": []
     };
@@ -648,13 +647,14 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   }
 
   Future<void> uploadFileWithDio() async {
-   textOutPut = await saveStringToTxtFile(textDisController.text);
+   textOutPut = await saveStringToTxtFile(captionController.text);
     var dio = Dio();
     var formData = d.FormData.fromMap({
       'file': await d.MultipartFile.fromFile(_getFilePathFromMediaEnum(),
           filename: 'uploadfile'),
       'asset': assetid.toString(),
     });
+   print('PlusSectionLogic.uploadFileWithDio = ${textOutPut} - ${formData}');
 
    dio.interceptors.add(MediaVerseConvertInterceptor());
 
@@ -736,8 +736,24 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     languageController.clear();
     priceController.clear();
     subscrptionController.clear();
-    textTitleController.clear();
-    textDisController.clear();
+
+  }
+
+  String getSubscrptioonPeriod(){
+
+    switch (subscrptionController.text){
+      case "1 Day":
+        return "24";
+      case "3 Days":
+        return "72";
+      case "1 Week":
+        return "168";
+      case "1 Month":
+        return "720";
+      default:
+        return "24";
+
+    }
   }
 }
 

@@ -363,7 +363,7 @@ class Constant {
   ];
 
   static bool isTabletMode = SizerUtil.deviceType == DeviceType.tablet;
-  static String HTTP_HOST ="https://api.mediaverse.studio/v2/";
+  static String HTTP_HOST ="https://api.mediaverse.land/v2/";
 
   static Map<String, dynamic> parseUrlScheme(String url) {
     Uri uri = Uri.parse(url);

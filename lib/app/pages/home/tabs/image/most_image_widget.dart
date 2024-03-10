@@ -34,7 +34,7 @@ class MostImageWidget extends GetView<HomeLogic> {
                   SizedBox.expand(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20.sp),
-                      child: (elementAt['asset']['thumbnails'].toString().length>3)?Image.network("${elementAt['asset']['thumbnails']['336x366']}", fit: BoxFit.cover)
+                      child: (elementAt['thumbnails'].toString().length>3)?Image.network("${elementAt['thumbnails']['336x366']}", fit: BoxFit.cover)
                           :Image.asset("assets/images/tum_sound.jpeg", fit: BoxFit.cover),
                     )
                     ,
@@ -77,7 +77,7 @@ class MostImageWidget extends GetView<HomeLogic> {
                   children: [
                     Image.asset("assets/images/avatar.jpeg",width: 4.w,),
                     SizedBox(width: 3.w,),
-                    Text(elementAt['asset']['user']['username'],style: TextStyle(fontSize: 8.sp,
+                    Text(elementAt['user']['username'],style: TextStyle(fontSize: 8.sp,
                       color: Color(0xFF666680),
 
                     ),),

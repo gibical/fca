@@ -64,7 +64,7 @@ class CardProfileInfoItem extends StatelessWidget {
                 color: Colors.white.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10.55.sp),
                 border: Border(
-                  left: BorderSide(width: 1.5, color: AppColor.grayLightColor.withOpacity(0.2), ),
+               //   left: BorderSide(width: 1.5, color: AppColor.grayLightColor.withOpacity(0.2), ),
                 ),
 
               ),
