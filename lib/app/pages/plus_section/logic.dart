@@ -746,9 +746,11 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
          Get.offAllNamed(PageRoutes.WRAPPER);
         Get.toNamed(_getRouteByMedia(),arguments: {'id': postUploadedId});
       } else {
+        Get.back();
         print('Failed to upload file: ${response.statusMessage}');
       }
     } on DioError catch (e) {
+      Get.back();
       print('DioError: ${e.message}');
     }
   }

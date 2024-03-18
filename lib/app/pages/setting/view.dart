@@ -123,7 +123,7 @@ class SettingScreen extends StatelessWidget {
                       onTap: (){
                         print('Wallet');
                       },
-                      icon: AppIcon.wallet1Icon, title: 'Wallet', subTitle: '200' , iconSize: 18,),
+                      icon: AppIcon.wallet1Icon, title: 'Wallet', subTitle: '${logic.walletModel.balance}' ?? '' , iconSize: 18,),
 
 
                   ],
@@ -200,7 +200,7 @@ class ItemSettingScreenWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return this.enable? InkWell(
+    return this.enable? GestureDetector(
 
       onTap: onTap,
       child: SizedBox(

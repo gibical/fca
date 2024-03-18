@@ -9,10 +9,22 @@ import '../../common/app_color.dart';
 import '../../common/app_icon.dart';
 import '../../common/font_style.dart';
 import 'logic.dart';
-
+import 'package:intl/intl.dart';
 class TransactionsPage extends StatelessWidget {
 
     final logic = Get.put(TransactionsLogic());
+    String formatDate(String inputDateTime) {
+
+      DateTime dateTime = DateTime.parse(inputDateTime);
+
+
+      DateFormat dateFormat = DateFormat('MMMM d  HH:mm');
+
+
+      String formattedDate = dateFormat.format(dateTime);
+
+      return formattedDate;
+    }
   @override
   Widget build(BuildContext context) {
 
@@ -82,6 +94,12 @@ class TransactionsPage extends StatelessWidget {
                         color: Colors.white
                     ),),
 
+                    Icon(Icons.attach_money , size: 15,),
+                    Spacer(),
+                    Text(' ${formatDate(elementAt.createdAt ?? '')}', style: FontStyleApp.bodySmall.copyWith(
+                        color: Colors.grey,
+                      fontSize: 11
+                    ),),
                   ],
                 ),
               ),
@@ -91,7 +109,7 @@ class TransactionsPage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 6.w),
                 child: Text(
-                  elementAt.updatedAt??"",
+                  elementAt.description??"no description",
                   style: FontStyleApp.bodyMedium.copyWith(
                     color: Colors.grey.withOpacity(0.7),
                   ),),

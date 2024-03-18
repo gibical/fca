@@ -105,50 +105,50 @@ class _ProfileScreenState extends State<ProfileScreen>
               Positioned(
                 bottom: 7.5.h,
                 left: 29.w,
-                child: Container(
-                  width: 100.w,
-                  child: Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('${logic.model.firstName??""} ${logic.model.lastName??""}', style: FontStyleApp.titleSmall
-                              .copyWith(
-                            color: AppColor.whiteColor,
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w600,
-                          ),),
+                right: 10.w,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('${logic.model.firstName??""} ${logic.model.lastName??""}', style: FontStyleApp.titleSmall
+                            .copyWith(
+                          color: AppColor.whiteColor,
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w600,
+                        ),),
 
-                          Text('${logic.model.email??""} ', style: FontStyleApp
-                              .bodyMedium.copyWith(
-                            color: AppColor.whiteColor.withOpacity(0.2),
-                            fontSize: 8.sp,
+                        Text('${logic.model.email??""} ', style: FontStyleApp
+                            .bodyMedium.copyWith(
+                          color: AppColor.whiteColor.withOpacity(0.2),
+                          fontSize: 8.sp,
 
-                          ),),
-                        ],
-                      ),
+                        ),),
+                      ],
+                    ),
+                    Spacer(),
                     GestureDetector(
-                        onTap: (){
-                          Get.toNamed(PageRoutes.SETTING);
-                        },
-                        child: Container(
-                          width: 45,
-                          height: 45,
-                          child: Transform.scale(
-                              scale: 0.5,
-                              child: SvgPicture.asset(AppIcon.settingIcon , height:50,)),
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.4),
-                              borderRadius: BorderRadius.circular(10.sp),
-                              border: Border.all(
-                                  color: Colors.grey.withOpacity(0.4)
-                              )
-                          ),
+                      onTap: (){
+                        Get.toNamed(PageRoutes.SETTING);
+                      },
+                      child: Container(
+                        width: 45,
+                        height: 45,
+                        child: Transform.scale(
+                            scale: 0.5,
+                            child: SvgPicture.asset(AppIcon.settingIcon , height:50,)),
+                        decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.4),
+                            borderRadius: BorderRadius.circular(10.sp),
+                            border: Border.all(
+                                color: Colors.grey.withOpacity(0.4)
+                            )
                         ),
                       ),
+                    ),
 
-                    ],
-                  ),
+                  ],
                 ),
               ),
 

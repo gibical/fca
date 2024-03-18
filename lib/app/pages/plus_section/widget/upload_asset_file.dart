@@ -39,9 +39,9 @@ class _UploadAssetPageState extends State<UploadAssetPage> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("Asset is uploading \n Please wait", style: TextStyle(
+                      Text("Asset is uploading\nPlease wait", style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),),
-          
+
                       SizedBox(height: 4.h,),
                       Align(
                         alignment: Alignment.centerLeft,
@@ -61,7 +61,7 @@ class _UploadAssetPageState extends State<UploadAssetPage> {
                           ),
                         ),
                       )
-          
+
                     ],
                   ),
                 ),
@@ -70,17 +70,13 @@ class _UploadAssetPageState extends State<UploadAssetPage> {
                   child: Container(
                     height: 50,
                     padding: EdgeInsets.symmetric(horizontal: 7.5.w),
-          
+
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          
+
                       children: [
-                        IconButton(onPressed: () {
-                          Get.back();
-                        },
-                            icon: Icon(Icons.arrow_back, color: "666680"
-                                .toColor(),)),
-                        Text("Upload Assets", style: TextStyle(color: Colors.white),),
+
+                        Center(child: Text("Upload Assets", style: TextStyle(color: Colors.white),)),
                         Container(
                           width: 16.w,
                         )
@@ -88,7 +84,7 @@ class _UploadAssetPageState extends State<UploadAssetPage> {
                     ),
                   ),
                 ),
-          
+
               ],
             ),
           ),
