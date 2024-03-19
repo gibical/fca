@@ -70,7 +70,10 @@ class AccountPage extends StatelessWidget {
                       ItemAccountScreenWidget(title: 'Seassions', onTap: () {
                         Get.to(SessionsPage());
                       },),
-          
+                ItemAccountScreenWidget(title: 'Change Password', onTap: () {
+                  Get.toNamed(PageRoutes.CHANGEPASSWORD);
+                  },),
+
           
                     ],
                   ),
@@ -184,6 +187,7 @@ class ItemAccountScreenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      radius: 500,
       child: SizedBox(
         height: 8.h,
         child: Padding(

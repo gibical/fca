@@ -110,6 +110,19 @@ class DetailImageScreen extends StatelessWidget {
                         SizedBox(
                           height: 3.h,
                         ),
+                        SizedBox(
+                          height: 3.h,
+                        ),
+
+                        Wrap(
+                          children: [
+                            //
+                         CardMarkSinglePageWidget(label: 'Suffix', type: "Somethi"),
+                         CardMarkSinglePageWidget(label: 'Type', type: "image"),
+                         CardMarkSinglePageWidget(label: 'Language', type: "en"),
+
+                          ],
+                        ),
                         // Wrap(
                         //   children: [
                         //

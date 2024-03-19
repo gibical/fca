@@ -365,6 +365,7 @@ class EditProfilePage extends StatelessWidget {
                             ),
                             onPressed: () {
 
+                              Get.back();
                             },
                             child: Center(
                               child: Text("Discard Changes",

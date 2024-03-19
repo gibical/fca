@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:mediaverse/app/pages/change_password/view.dart';
 import 'package:mediaverse/app/pages/channel/all_tools.dart';
 import 'package:mediaverse/app/pages/detail/pages/detail_text_screen.dart';
 import 'package:mediaverse/app/pages/detail/state.dart';
@@ -58,6 +59,7 @@ class PageRoutes {
   static const VIDEOEDITOR = '/VideoEditor';
   static const ALLTOOLS = '/AllTools';
   static const EDITPROFILE = '/EditProfile';
+  static const CHANGEPASSWORD = '/ChangePassword';
 
 
   static List<GetPage> routes = [
@@ -206,6 +208,10 @@ class PageRoutes {
       transition: Transition.rightToLeft,
       page: () => VideoEditorScreen(),
       binding: VideoEditorState()
+    ),
+    GetPage(
+      name: PageRoutes.CHANGEPASSWORD,
+      page: () => ChangePasswordPage(),
     ),
 
   ];

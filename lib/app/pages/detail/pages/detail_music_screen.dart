@@ -227,6 +227,7 @@ class DetailMusicScreen extends StatelessWidget {
                                           ],
                                         ),
                                       ),
+
                                     ],
                                   ),
                                 ),
@@ -296,14 +297,16 @@ class DetailMusicScreen extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                height: 2.h,
+                                height: 3.h,
                               ),
+
                               Wrap(
                                 children: [
-                                  CardMarkSinglePageWidget(
-                                      label: 'Type',
-                                      type: controller.getTypeString(controller
-                                          .musicDetails?['type'])),
+                                  //
+                                  CardMarkSinglePageWidget(label: 'Suffix', type: "Somethi"),
+                                  CardMarkSinglePageWidget(label: 'Type', type: "Sound"),
+                                  CardMarkSinglePageWidget(label: 'Language', type: "en"),
+
                                 ],
                               ),
                               SizedBox(

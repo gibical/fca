@@ -28,10 +28,10 @@ Widget ItemVideoTabScreen(dynamic model){
               ],
             ),
             decoration:
-            (model['asset']['thumbnails'].toString().length>3)?
+            (model['thumbnails'].toString().length>3)?
             BoxDecoration(
                 borderRadius: BorderRadius.circular(12.sp),
-                image: DecorationImage(image: NetworkImage('${model['asset']['thumbnails']['336x366']}' ) ,
+                image: DecorationImage(image: NetworkImage('${model['thumbnails']['336x366']}' ) ,
                   fit: BoxFit.cover ,
                   colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.55), BlendMode.hardLight),
                 )
@@ -53,7 +53,7 @@ Widget ItemVideoTabScreen(dynamic model){
             children: [
               Image.asset("assets/images/avatar.jpeg",width: 4.w,),
               SizedBox(width: 3.w,),
-              Text(model['asset']['user']['username'],style: TextStyle(fontSize: 8.sp,
+              Text(model['user']['username'],style: TextStyle(fontSize: 8.sp,
                 color: Color(0xFF666680),
 
               ),),
