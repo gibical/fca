@@ -38,7 +38,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster  = ApiRequster(this,develperModel: false);
+    apiRequster  = ApiRequster(this,develperModel: true);
 
     getMainReueqst();
   }
@@ -98,7 +98,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
 
   void praseJsonFromBestVideos(source) {
-  //  log('HomeLogic.praseJsonFromBestVideos = ${source}');
+    log('HomeLogic.praseJsonFromBestVideos = ${source}');
     bestVideos = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
 
 
@@ -143,7 +143,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
 
   void parseJsonFromNewsImage(source) {
     imagesRecently.value = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
-    print('HomeLogic.parseJsonFromNewsImage = ${imagesRecently.length}');
+    log('HomeLogic.parseJsonFromNewsImage = ${source}');
   }
 
   void sendSoundRecentlyReuqest() {
@@ -166,5 +166,6 @@ class HomeLogic extends GetxController implements  RequestInterface{
     textRecently.value = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
 
     print('HomeLogic.parseJsonFromNewsText = ${textRecently.length}');
+    update();
   }
 }

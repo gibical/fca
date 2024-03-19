@@ -8,6 +8,7 @@ import 'package:mediaverse/app/pages/profile/logic.dart';
 import 'package:mediaverse/app/pages/profile/tab/ownser_tab_screen.dart';
 import 'package:mediaverse/app/pages/profile/tab/subs_tab_screen.dart';
 import 'package:mediaverse/app/pages/profile/widgets/card_profile_info.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
@@ -87,70 +88,75 @@ class _ProfileScreenState extends State<ProfileScreen>
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 6.5.h),
                 child: Container(
-                  height: 85,
-                  width: 85,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColor.blueDarkColor,
-                  ),
+
                   child: Padding(
                     padding: const EdgeInsets.all(7),
-                    child: CircleAvatar(
-                      backgroundColor: AppColor.blueDarkColor,
-                      backgroundImage: AssetImage('assets/images/profile.png'),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 85,
+                          width: 85,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColor.blueDarkColor,
+                          ),
+                          child: CircleAvatar(
+                            backgroundColor: AppColor.blueDarkColor,
+                            backgroundImage: AssetImage('assets/images/profile.png'),
+                          ),
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('${logic.model.firstName??""} ${logic.model.lastName??""}', style: FontStyleApp.titleSmall
+                                      .copyWith(
+                                    color: AppColor.whiteColor,
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),),
+                          
+                                  Text('${logic.model.email??""} ', style: FontStyleApp
+                                      .bodyMedium.copyWith(
+                                    color: AppColor.whiteColor.withOpacity(0.2),
+                                    fontSize: 8.sp,
+                          
+                                  ),),
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: (){
+                                  Get.toNamed(PageRoutes.SETTING);
+                                },
+                                child: Container(
+                                  width: 45,
+                                  height: 45,
+                                  child: Transform.scale(
+                                      scale: 0.5,
+                                      child: SvgPicture.asset(AppIcon.settingIcon , height:50,)),
+                                  decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.4),
+                                      borderRadius: BorderRadius.circular(10.sp),
+                                      border: Border.all(
+                                          color: Colors.grey.withOpacity(0.4)
+                                      )
+                                  ),
+                                ),
+                              ),
+                          
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 7.5.h,
-                left: 29.w,
-                child: Container(
-                  width: 100.w,
-                  child: Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('${logic.model.firstName??""} ${logic.model.lastName??""}', style: FontStyleApp.titleSmall
-                              .copyWith(
-                            color: AppColor.whiteColor,
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w600,
-                          ),),
 
-                          Text('${logic.model.email??""} ', style: FontStyleApp
-                              .bodyMedium.copyWith(
-                            color: AppColor.whiteColor.withOpacity(0.2),
-                            fontSize: 8.sp,
-
-                          ),),
-                        ],
-                      ),
-                    GestureDetector(
-                        onTap: (){
-                          Get.toNamed(PageRoutes.SETTING);
-                        },
-                        child: Container(
-                          width: 45,
-                          height: 45,
-                          child: Transform.scale(
-                              scale: 0.5,
-                              child: SvgPicture.asset(AppIcon.settingIcon , height:50,)),
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.4),
-                              borderRadius: BorderRadius.circular(10.sp),
-                              border: Border.all(
-                                  color: Colors.grey.withOpacity(0.4)
-                              )
-                          ),
-                        ),
-                      ),
-
-                    ],
-                  ),
-                ),
-              ),
 
             ],
           ),

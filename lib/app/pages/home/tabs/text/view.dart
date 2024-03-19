@@ -28,6 +28,7 @@ class TextTabScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('TextTabScreen.build =  ${list.length}');
     final theme = Theme
         .of(context)
         .colorScheme;
