@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_color.dart';
+import 'package:mediaverse/app/common/app_config.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/common/font_style.dart';
 import 'package:mediaverse/app/pages/detail/widgets/buy_card_widget.dart';
@@ -118,8 +119,8 @@ class DetailImageScreen extends StatelessWidget {
                           children: [
                             //
                          CardMarkSinglePageWidget(label: 'Suffix', type: "Somethi"),
-                         CardMarkSinglePageWidget(label: 'Type', type: "image"),
-                         CardMarkSinglePageWidget(label: 'Language', type: "en"),
+                         CardMarkSinglePageWidget(label: 'Type', type: imageController.imageDetails!['file']['extension']),
+                     //    CardMarkSinglePageWidget(label: 'Language', type: "en"),
 
                           ],
                         ),
@@ -144,7 +145,7 @@ class DetailImageScreen extends StatelessWidget {
                           child: CustomCommentSinglePageWidget(),
                         ),
                         SizedBox(
-                          height: 6.h,
+                          height: 30.h,
                         ),
                       ],
                     ),
@@ -209,8 +210,15 @@ class DetailImageScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               Expanded(child: Text(
-                                  '${imageController.imageDetails?['name']}')),
-                              SvgPicture.asset("assets/images/download.svg")
+                                  '${Constant.getDropDownByPlan(imageController.imageDetails!['plan'].toString())}')),
+                            if(!imageController.imageDetails!['plan'].toString().contains("1"))  Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text("${imageController.imageDetails!['price'].toString()} €"),
+                                  SizedBox(width: 3.w,),
+                                  SvgPicture.asset("assets/images/download.svg"),
+                                ],
+                              )
                             ],
                           ),
                         ),

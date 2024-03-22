@@ -12,7 +12,7 @@ import '../../../common/app_color.dart';
 
 Widget CustomTextFieldRegisterWidget({required String hintText ,required String titleText , required bool needful  , required context ,
 
-TextEditingController? textEditingController} ){
+TextEditingController? textEditingController,bool? showCursor} ){
   final textTheme = Theme.of(context).textTheme;
   return     Padding(
     padding: const EdgeInsets.symmetric(vertical: 10 , horizontal: 25),
@@ -20,7 +20,7 @@ TextEditingController? textEditingController} ){
       height: 53,
       child: TextFormField(
         controller: textEditingController??TextEditingController(),
-        showCursor: false,
+        showCursor: showCursor??false,
 
         style: textTheme.bodyMedium?.copyWith(
           color:  AppColor.whiteColor

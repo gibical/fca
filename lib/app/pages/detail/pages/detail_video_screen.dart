@@ -14,6 +14,7 @@ import 'package:sizer/sizer.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../gen/model/enums/post_type_enum.dart';
+import '../../../common/app_config.dart';
 import '../../login/widgets/custom_register_button_widget.dart';
 import '../logic.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
@@ -206,7 +207,7 @@ class DetailVideoScreen extends StatelessWidget {
                           child: CustomCommentSinglePageWidget(),
                         ),
                         SizedBox(
-                          height: 6.h,
+                          height: 30.h,
                         ),
                       ],
                     ),
@@ -271,8 +272,15 @@ class DetailVideoScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               Expanded(child: Text(
-                                  '${videoController.videoDetails?['name']}')),
-                              SvgPicture.asset("assets/images/download.svg")
+                                  '${Constant.getDropDownByPlan(videoController.videoDetails!['plan'].toString())}')),
+                              if(!videoController.videoDetails!['plan'].toString().contains("1"))  Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text("${videoController.videoDetails!['price'].toString()} €"),
+                                  SizedBox(width: 3.w,),
+                                  SvgPicture.asset("assets/images/download.svg"),
+                                ],
+                              )
                             ],
                           ),
                         ),

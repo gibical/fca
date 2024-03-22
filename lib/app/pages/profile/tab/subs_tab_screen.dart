@@ -376,7 +376,7 @@ class CustomTabScreen extends StatelessWidget {
       child: Container(
 
           padding: EdgeInsets.only(top: 13.h,bottom: 13.h),
-          height: 50.h,
+          height: 90.h,
           child: GridView(
 
 

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:focus_detector/focus_detector.dart';
@@ -76,100 +77,102 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
           return Stack(
             children: [
 
-              TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _tabController,
-                children: [
-                  AllTabScreen(logic.myAssets),
-                  FocusDetector(
-                    onFocusGained: () {
-                      if (logic.ownerImages.length == 0) {
-                        logic.onGetAssetsPhoto();
-                      }
-                    },
-                    child: Obx(() {
-                      if (logic.isloading1.value) {
-                        return Container(
-                          child: Lottie.asset(
-                              "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                        );
-                      }
-                      return RefreshIndicator(
-                          onRefresh: ()async{
+              SizedBox.expand(
+                child: TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _tabController,
+                  children: [
+                    AllTabScreen(logic.myAssets),
+                    FocusDetector(
+                      onFocusGained: () {
+                        if (logic.ownerImages.length == 0) {
+                          logic.onGetAssetsPhoto();
+                        }
+                      },
+                      child: Obx(() {
+                        if (logic.isloading1.value) {
+                          return Container(
+                            child: Lottie.asset(
+                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                          );
+                        }
+                        return RefreshIndicator(
+                            onRefresh: ()async{
 
 
-                            logic.onGetAssetsPhoto();
+                              logic.onGetAssetsPhoto();
 
-                          },child: CustomTabScreen(logic.ownerImages));
-                    }),
-                  ),
-                  FocusDetector(
-                    onFocusGained: () {
-                      if (logic.ownerVideos.length == 0) {
-                        logic.onGetAssetsVideo();
-                      }
-                    },
-                    child: Obx(() {
-                      if (logic.isloading2.value) {
-                        return Container(
-                          child: Lottie.asset(
-                              "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                        );
-                      }
-                      return RefreshIndicator(
-                          onRefresh: ()async{
-
-
-                            logic.onGetAssetsVideo();
-
-                          },child: CustomTabScreen(logic.ownerVideos));
-                    }),
-                  ),
-                  FocusDetector(
-                    onFocusGained: () {
-                      if (logic.ownerAudios.length == 0) {
-                        logic.onGetAssetsAudioes();
-                      }
-                    },
-                    child: Obx(() {
-                      if (logic.isloading3.value) {
-                        return Container(
-                          child: Lottie.asset(
-                              "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                        );
-                      }
-                      return RefreshIndicator(
-                          onRefresh: ()async{
+                            },child: CustomTabScreen(logic.ownerImages));
+                      }),
+                    ),
+                    FocusDetector(
+                      onFocusGained: () {
+                        if (logic.ownerVideos.length == 0) {
+                          logic.onGetAssetsVideo();
+                        }
+                      },
+                      child: Obx(() {
+                        if (logic.isloading2.value) {
+                          return Container(
+                            child: Lottie.asset(
+                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                          );
+                        }
+                        return RefreshIndicator(
+                            onRefresh: ()async{
 
 
-                            logic.onGetAssetsAudioes();
+                              logic.onGetAssetsVideo();
 
-                          },child: CustomTabScreen(logic.ownerAudios));
-                    }),
-                  ),
-                  FocusDetector(
-                    onFocusGained: () {
-                      if (logic.ownerText.length == 0) {
-                        logic.onGetAssetsText();
-                      }
-                    },
-                    child: Obx(() {
-                      if (logic.isloading4.value) {
-                        return Container(
-                          child: Lottie.asset(
-                              "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                        );
-                      }
-                      return RefreshIndicator(
-                          onRefresh: ()async{
+                            },child: CustomTabScreen(logic.ownerVideos));
+                      }),
+                    ),
+                    FocusDetector(
+                      onFocusGained: () {
+                        if (logic.ownerAudios.length == 0) {
+                          logic.onGetAssetsAudioes();
+                        }
+                      },
+                      child: Obx(() {
+                        if (logic.isloading3.value) {
+                          return Container(
+                            child: Lottie.asset(
+                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                          );
+                        }
+                        return RefreshIndicator(
+                            onRefresh: ()async{
 
 
-                            logic.onGetSubsAssetsText();
+                              logic.onGetAssetsAudioes();
 
-                          },child: CustomTabScreen(logic.ownerText));
-                    }),
-                  ),
-                ],
+                            },child: CustomTabScreen(logic.ownerAudios));
+                      }),
+                    ),
+                    FocusDetector(
+                      onFocusGained: () {
+                        if (logic.ownerText.length == 0) {
+                          logic.onGetAssetsText();
+                        }
+                      },
+                      child: Obx(() {
+                        if (logic.isloading4.value) {
+                          return Container(
+                            child: Lottie.asset(
+                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                          );
+                        }
+                        return RefreshIndicator(
+                            onRefresh: ()async{
+
+
+                              logic.onGetSubsAssetsText();
+
+                            },child: CustomTabScreen(logic.ownerText));
+                      }),
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -319,7 +322,7 @@ class CustomTabScreen extends StatelessWidget {
     return Container(
 
         padding: EdgeInsets.only(top: 13.h,bottom: 13.h),
-        height:isExpended?MediaQuery.of(context).size.height:50.h,
+        height:isExpended?MediaQuery.of(context).size.height:150.h,
         child: GridView(
 
 

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/profile/logic.dart';
+import 'package:mediaverse/app/pages/wrapper/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
@@ -123,7 +124,7 @@ class SettingScreen extends StatelessWidget {
                       onTap: (){
                         Get.offAllNamed(PageRoutes.WRAPPER,arguments: [2]);
                       },
-                      icon: AppIcon.wallet1Icon, title: 'Wallet', subTitle: '200' , iconSize: 18,),
+                      icon: AppIcon.wallet1Icon, title: 'Wallet', subTitle: Get.find<WrapperController>().walletBalance , iconSize: 18,),
 
 
                   ],

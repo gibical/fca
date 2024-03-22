@@ -166,6 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           child: Column(
             children: [
               Container(
+                width: 100.w,
                 decoration: BoxDecoration(
                   color: AppColor.blueDarkColor,
                   borderRadius: BorderRadius.only(

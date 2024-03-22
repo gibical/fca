@@ -364,6 +364,26 @@ class Constant {
 
   static bool isTabletMode = SizerUtil.deviceType == DeviceType.tablet;
   static String HTTP_HOST ="https://api.mediaverse.land/v2/";
+  static getPlanByDropDown(var s) {
+    switch (s) {
+      case "Free":
+        return "1";
+      case "Ownership":
+        return "2";
+      case "Subscription":
+        return "3";
+    }
+  }
+  static getDropDownByPlan(var s) {
+    switch (s) {
+      case "1":
+        return "Free";
+      case "2":
+        return "Ownership";
+      case "3":
+        return "Subscription";
+    }
+  }
 
   static Map<String, dynamic> parseUrlScheme(String url) {
     Uri uri = Uri.parse(url);

@@ -65,29 +65,7 @@ class _UploadAssetPageState extends State<UploadAssetPage> {
                     ],
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    height: 50,
-                    padding: EdgeInsets.symmetric(horizontal: 7.5.w),
-          
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          
-                      children: [
-                        IconButton(onPressed: () {
-                          Get.back();
-                        },
-                            icon: Icon(Icons.arrow_back, color: "666680"
-                                .toColor(),)),
-                        Text("Upload Assets", style: TextStyle(color: Colors.white),),
-                        Container(
-                          width: 16.w,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+
           
               ],
             ),

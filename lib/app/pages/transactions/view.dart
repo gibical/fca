@@ -11,7 +11,27 @@ import '../../common/font_style.dart';
 import 'logic.dart';
 
 class TransactionsPage extends StatelessWidget {
-
+  Map<int, String> relationTypeDescriptions = {
+    1: 'Manual transaction by the operator',
+    2: 'Online payment',
+    3: 'Asset transition',
+    4: 'Asset subscription',
+    5: 'Asset transition commission',
+    6: 'Asset subscription commission',
+    8: 'File sharing',
+    9: 'Text to image',
+    10: 'Audio to text',
+    11: 'Translate audio',
+    12: 'Edit video',
+    13: 'Video to audio',
+    14: 'Translate text',
+    15: 'Text to audio',
+    16: 'Edit audio',
+    17: 'Create album',
+    18: 'Text to text',
+    19: 'Record channel',
+    20: 'Audio to image',
+  };
     final logic = Get.put(TransactionsLogic());
   @override
   Widget build(BuildContext context) {
@@ -78,7 +98,7 @@ class TransactionsPage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 6.w,),
                 child: Row(
                   children: [
-                    Text(' ${elementAt.amount??""}', style: FontStyleApp.bodyMedium.copyWith(
+                    Text(' ${relationTypeDescriptions[elementAt.relationType]}', style: FontStyleApp.bodyMedium.copyWith(
                         color: Colors.white
                     ),),
 

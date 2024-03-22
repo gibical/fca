@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:mediaverse/app/common/RequestInterface.dart';
 import 'package:mediaverse/app/common/app_api.dart';
 import 'package:mediaverse/app/common/app_config.dart';
+import 'package:mediaverse/app/pages/wrapper/logic.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetAllAsstes.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetAssets.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetProfile.dart';
@@ -365,6 +366,11 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
   void parseJsonFromGetWalletBalance(source) {
     walletModel = WalletModel.fromJson(jsonDecode(source)[0]);
+    try{
+      Get.find<WrapperController>().walletBalance = walletModel.balance.toString();
+    }catch(r){
+
+    }
     isloading(false);
 
   }

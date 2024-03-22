@@ -101,7 +101,7 @@ class _SecendFormState extends State<SecendForm> {
                                     .editibaleController,
 
                                 titleText: 'Check Forkability status',
-                                hintText: 'Choose Language',
+                                hintText: 'Choose Forkability status',
                                 needful: false),
                           ],
                         ),
@@ -172,7 +172,8 @@ class _SecendFormState extends State<SecendForm> {
                                 ),
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
-                                  logic.sendMainRequest();
+                                  print('_SecendFormState.build = ${logic.videoOutPut}');
+                                      logic.sendMainRequest();
                                 },
                                 child: logic.isloading.value ? Lottie.asset(
                                     "assets/json/Y8IBRQ38bK.json", height: 10.h) : Text(

@@ -56,14 +56,14 @@ class ChangePasswordPage extends StatelessWidget {
                       context: context,
                       textEditingController: logic.passwordController,
 
-                      titleText: 'Password',
+                      titleText: 'Password',showCursor: true,
                       hintText: 'Insert password',
                       needful: false),
                   CustomTextFieldRegisterWidget(
                       context: context,
                       textEditingController: logic.repeatPasswordController,
 
-                      titleText: 'Repeat Password',
+                      titleText: 'Repeat Password',showCursor: true,
                       hintText: 'Insert password',
                       needful: false),
 

@@ -14,6 +14,9 @@ import 'package:mediaverse/app/pages/setting/view.dart';
 class WrapperController extends GetxController {
   final PageController pageController = PageController(initialPage: 0);
   Rx<int> selectedIndex = Rx<int>(0);
+
+  var walletBalance = "";
+
   var userid ="";
   navigatePages(int index) {
     selectedIndex.value = index;

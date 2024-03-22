@@ -14,6 +14,7 @@ import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
 import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../common/app_config.dart';
 import '../../../common/app_icon.dart';
 import '../../../common/app_route.dart';
 import '../../../common/utils/duraton_music_helper.dart';
@@ -113,55 +114,68 @@ class DetailMusicScreen extends StatelessWidget {
                                               )),
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(20.sp))),
-                                          child: Stack(
-                                            alignment: Alignment.bottomRight,
-                                            children: [
-                                            if(controller.musicDetails!['thumbnails']
-                                            !=null)  SizedBox.expand(
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20.sp),
-                                                  child: (controller.musicDetails!
-                                                  ['thumbnails']
-                                                              .toString()
-                                                              .length >
-                                                          3)
-                                                      ? Image.network(
-                                                          "${controller.musicDetails?['thumbnails']['336x366']}",
-                                                          fit: BoxFit.cover)
-                                                      : Image.asset(
-                                                          "assets/images/tum_sound.jpeg",
-                                                          fit: BoxFit.cover),
+                                          child: GestureDetector(
+                                            onTap: (){
+                                              try {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return VideoDialog(videoUrl: controller.musicDetails!['file']?['url'],controller: controller,);
+                                                    });
+                                              }  catch (e) {
+                                                // TODO
+                                              }
+                                            },
+                                            child: Stack(
+                                              alignment: Alignment.bottomRight,
+                                              children: [
+                                              if(controller.musicDetails!['thumbnails']
+                                              !=null)  SizedBox.expand(
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(20.sp),
+                                                    child: (controller.musicDetails!
+                                                    ['thumbnails']
+                                                                .toString()
+                                                                .length >
+                                                            3)
+                                                        ? Image.network(
+                                                            "${controller.musicDetails?['thumbnails']['336x366']}",
+                                                            fit: BoxFit.cover)
+                                                        : Image.asset(
+                                                            "assets/images/tum_sound.jpeg",
+                                                            fit: BoxFit.cover),
+                                                  ),
                                                 ),
-                                              ),
-                                              Container(
-                                                width: 50.w,
-                                                height: 25.h,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.all(
-                                                        Radius.circular(20.sp)),
-                                                    gradient: LinearGradient(
-                                                        begin:
-                                                            Alignment.bottomCenter,
-                                                        end: Alignment.topCenter,
-                                                        colors: [
-                                                          Colors.black
-                                                              .withOpacity(0.6),
-                                                          Colors.black
-                                                              .withOpacity(0.4),
-                                                          Colors.transparent,
-                                                        ])),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 15, bottom: 10),
-                                                child: SvgPicture.asset(
-                                                    "assets/icons/sound_vector.svg",
-                                                    color: AppColor.grayLightColor
-                                                        .withOpacity(0.5),
-                                                    height: 1.8.h),
-                                              )
-                                            ],
+                                                Container(
+                                                  width: 50.w,
+                                                  height: 25.h,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.all(
+                                                          Radius.circular(20.sp)),
+                                                      gradient: LinearGradient(
+                                                          begin:
+                                                              Alignment.bottomCenter,
+                                                          end: Alignment.topCenter,
+                                                          colors: [
+                                                            Colors.black
+                                                                .withOpacity(0.6),
+                                                            Colors.black
+                                                                .withOpacity(0.4),
+                                                            Colors.transparent,
+                                                          ])),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      right: 15, bottom: 10),
+                                                  child: SvgPicture.asset(
+                                                      "assets/icons/sound_vector.svg",
+                                                      color: AppColor.grayLightColor
+                                                          .withOpacity(0.5),
+                                                      height: 1.8.h),
+                                                )
+                                              ],
+                                            ),
                                           )),
                                       SizedBox(
                                         height: 1.h,
@@ -305,7 +319,7 @@ class DetailMusicScreen extends StatelessWidget {
                                   //
                                   CardMarkSinglePageWidget(label: 'Suffix', type: "Somethi"),
                                   CardMarkSinglePageWidget(label: 'Type', type: "Sound"),
-                                  CardMarkSinglePageWidget(label: 'Language', type: "en"),
+                         //         CardMarkSinglePageWidget(label: 'Type', type: controller.musicDetails!['url']),
 
                                 ],
                               ),
@@ -436,12 +450,13 @@ class DetailMusicScreen extends StatelessWidget {
                                 child: CustomCommentSinglePageWidget(),
                               ),
                               SizedBox(
-                                height: 6.h,
+                                height:30.h,
                               ),
                             ],
                           ),
                         ),
                       ),
+
                     ],
                   ),
                 Obx(() {
@@ -500,8 +515,15 @@ class DetailMusicScreen extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Expanded(child: Text(
-                                      '${controller.musicDetails?['name']}')),
-                                  SvgPicture.asset("assets/images/download.svg")
+                                      '${Constant.getDropDownByPlan(controller.musicDetails!['plan'].toString())}')),
+                                  if(!controller.musicDetails!['plan'].toString().contains("1"))  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text("${controller.musicDetails!['price'].toString()} €"),
+                                      SizedBox(width: 3.w,),
+                                      SvgPicture.asset("assets/images/download.svg"),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),

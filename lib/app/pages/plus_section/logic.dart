@@ -36,7 +36,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   TextEditingController titleController = TextEditingController();
   TextEditingController planController = TextEditingController(text: "Free");
   TextEditingController editibaleController =
-      TextEditingController(text: "yes");
+      TextEditingController(text: "Yes");
   TextEditingController captionController = TextEditingController();
   TextEditingController languageController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -82,13 +82,16 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     if (!controller!.value.isRecordingVideo) {
       return;
     }
+
     try {
       XFile video = await controller!.stopVideoRecording();
       videoOutPut = video.path;
-      isRecordingTimeVisible.value = false; // ویجت زمان ضبط را مخفی می‌کنیم
-      _stopVideoRecordingTimer(); // توقف زمان‌سنج
+      isRecordingTimeVisible.value = false;
+      _stopVideoRecordingTimer();
+
       update();
-      print('Video recorded to ${video.path}');
+      print('Video recorded to ${video.path} = ${videoOutPut}');
+      Get.to(FirstForm(this), arguments: [this]);
     } catch (e) {
       print('Error stopping video recording: $e');
     }
@@ -555,6 +558,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       "lat": 0,
       "lng": 0,
       "type": 1,
+      "language": "ar",
       "forkability_status":
           editibaleController.text.contains("Yes") ? "1" : "2",
       "commenting_status": 1,
@@ -695,7 +699,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
         return soundOutPut;
       case MediaMode.image:
         // TODO: Handle this case.
-        return imageOutPut;
+        return imageOutPut+videoOutPut;
 
       case MediaMode.text:
         // TODO: Handle this case.
@@ -703,7 +707,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
 
       case MediaMode.video:
         // TODO: Handle this case.
-        return videoOutPut;
+        return videoOutPut+imageOutPut;
     }
   }
 

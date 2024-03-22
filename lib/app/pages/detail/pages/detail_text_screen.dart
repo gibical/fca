@@ -12,6 +12,7 @@ import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_
 import 'package:sizer/sizer.dart';
 
 import '../../../../gen/model/enums/post_type_enum.dart';
+import '../../../common/app_config.dart';
 import '../../../common/app_route.dart';
 import '../logic.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
@@ -300,7 +301,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                           child: CustomCommentSinglePageWidget(),
                         ),
                         SizedBox(
-                          height: 6.h,
+                          height: 30.h,
                         ),
                       ],
                     ),
@@ -364,8 +365,15 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                           child: Row(
                             children: [
                               Expanded(child: Text(
-                                  '${logic.textDetails?['name']}')),
-                              SvgPicture.asset("assets/images/download.svg")
+                                  '${Constant.getDropDownByPlan(logic.textDetails!['plan'].toString())}')),
+                              if(!logic.textDetails!['plan'].toString().contains("1"))  Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text("${logic.textDetails!['price'].toString()} €"),
+                                  SizedBox(width: 3.w,),
+                                  SvgPicture.asset("assets/images/download.svg"),
+                                ],
+                              )
                             ],
                           ),
                         ),

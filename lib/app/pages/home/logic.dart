@@ -21,6 +21,8 @@ class HomeLogic extends GetxController implements  RequestInterface{
   List<dynamic> mostSongs = [];
 
 
+
+
   ProfileControllers profileController = Get.put(ProfileControllers());
 
   var imagesRecently = [].obs;
