@@ -9,6 +9,7 @@ import 'package:mediaverse/app/common/font_style.dart';
 import 'package:mediaverse/app/pages/detail/widgets/buy_card_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/card_mark_singlepage_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
+import 'package:mediaverse/app/pages/media_suit/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../gen/model/enums/post_type_enum.dart';
@@ -65,6 +66,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
           }
         }),
       body: Obx((){
+
         return logic.isLoadingText.value ? Center(child: CircularProgressIndicator(),): Stack(
           children: [
             CustomScrollView(
@@ -272,6 +274,13 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                             SizedBox(
                               width: 3.w,
                             ),
+                               GestureDetector(
+                                 onTap: (){
+                                   Get.find<MediaSuitController>().setDataEditText(logic.textDetails?['name'] ?? '');
+                                   Get.toNamed(PageRoutes.MEDIASUIT);
+                                 },
+                              child:  Icon(Icons.edit),
+                            )
                           ],
                         ),
                         SizedBox(
@@ -407,7 +416,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                 logic.sendToEditProfile(PostType.text);
                               },
                               child: Center(
-                                child: Text("Edit information",
+                                child: Text("Edit informatiocn",
                                   style: TextStyle(color: "83839C".toColor()),),
                               ),
                             )

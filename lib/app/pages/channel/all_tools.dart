@@ -6,6 +6,7 @@ import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/channel/control_room/view.dart';
 import 'package:mediaverse/app/pages/channel/view.dart';
 import 'package:mediaverse/app/pages/channel/widgets/all_tools_button.dart';
+import 'package:mediaverse/app/pages/media_suit/view.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
@@ -41,7 +42,7 @@ class _AllToolsScreenState extends State<AllToolsScreen> {
 
               }, icon: "assets/icons/all_tools_2.svg", name: "Control Room"),
               AllToolsButtonWidget(onPressed: (){
-                Get.toNamed(PageRoutes.VIDEOEDITOR);
+                Get.toNamed(PageRoutes.MEDIASUIT);
 
               }, icon: "assets/icons/all_tools_3.svg", name: "Media Suit"),
               AllToolsButtonWidget(onPressed: (){}, icon: "assets/icons/all_tools_4.svg", name: "Studio",enable: false,),
