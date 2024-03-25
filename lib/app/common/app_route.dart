@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mediaverse/app/pages/change_password/view.dart';
 import 'package:mediaverse/app/pages/channel/all_tools.dart';
+import 'package:mediaverse/app/pages/detail/logic.dart';
 import 'package:mediaverse/app/pages/detail/pages/detail_text_screen.dart';
 import 'package:mediaverse/app/pages/detail/state.dart';
 import 'package:mediaverse/app/pages/detail/view.dart';
@@ -222,7 +223,7 @@ class PageRoutes {
     GetPage(
       name: PageRoutes.MEDIASUIT,
       page: () => MediaSuitScreen(),
-      binding:         MediaSuitState()
+      bindings:       [  MediaSuitState() , DetailState()]
     ),
 
   ];

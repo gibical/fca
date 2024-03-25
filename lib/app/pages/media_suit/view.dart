@@ -3,8 +3,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:mediaverse/app/pages/profile/view.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../common/app_color.dart';
+import '../detail/logic.dart';
 import 'logic.dart';
 
 
@@ -20,9 +22,14 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
   @override
   Widget build(BuildContext context) {
 
+
+
     final h = MediaQuery.of(context).size.height;
     final editorController = Get.find<MediaSuitController>();
     final w = MediaQuery.of(context).size.width;
+
+
+
     return Scaffold(
 
       backgroundColor: Color(0xff000033),
@@ -43,19 +50,30 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
             child: Column(
               children: [
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: h * 0.27,
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                //   child: Container(
+                //     width: MediaQuery.of(context).size.width,
+                //     height: h * 0.27,
+                //
+                //     decoration: BoxDecoration(
+                //         color: AppColor.primaryLightColor.withOpacity(0.6),
+                //         borderRadius: BorderRadius.circular(18)
+                //     ),
+                //
+                //   ),
+                // ),
+                // ,
 
-                    decoration: BoxDecoration(
-                        color: AppColor.primaryLightColor.withOpacity(0.6),
-                        borderRadius: BorderRadius.circular(18)
-                    ),
 
-                  ),
-                ),
+          Obx(() =>     editorController.editVideoDataList.isNotEmpty ?  VideoPlayerEditor(
+            key: UniqueKey(),
+            videoUrls: editorController.editVideoDataList
+                .map((editDataModel) => editDataModel.urlVideo)
+                .toList(),
+          ):SizedBox()),
+
+
                 SizedBox(height: h * 0.1),
                 Container(
                   height: h * 0.3,
@@ -221,7 +239,11 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                             Get.back();
                           },
                               icon: Icon(Icons.close , size: 27,)),
-                          IconButton(onPressed: (){},
+                          IconButton(onPressed: (){
+
+
+                            print(editorController.editVideoDataList.map((editDataModel) => editDataModel.urlVideo));
+                          },
                               icon: Icon(Icons.done ,  size: 27)),
 
 
@@ -241,3 +263,160 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
     );
   }
 }
+
+
+
+class VideoPlayerEditor extends StatefulWidget {
+  final List<dynamic> videoUrls;
+  VideoPlayerEditor({Key? key, required this.videoUrls}) : super(key: key);
+
+  @override
+  _VideoPlayerEditorState createState() => _VideoPlayerEditorState();
+}
+
+class _VideoPlayerEditorState extends State<VideoPlayerEditor> {
+  late VideoPlayerController _controller;
+  bool _isPlaying = false;
+  double _sliderValue = 0.0;
+  int _currentIndex = 0;
+  bool _isLoading = true;
+  late BuildContext _context;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _context = context;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeVideo();
+  }
+
+  void _initializeVideo() async {
+    _controller = VideoPlayerController.network(
+      widget.videoUrls[_currentIndex],
+    );
+
+    await _controller.initialize();
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    _controller.play();
+    _controller.addListener(_onVideoControllerUpdated);
+  }
+
+  void _onVideoControllerUpdated() {
+    setState(() {
+      _sliderValue = _controller.value.position.inSeconds.toDouble();
+    });
+    if (_controller.value.position == _controller.value.duration) {
+      if (_currentIndex < widget.videoUrls.length - 1) {
+        _currentIndex++;
+        _showLoadingSnackbar();
+        _controller = VideoPlayerController.network(
+          widget.videoUrls[_currentIndex],
+        )..initialize().then((_) {
+          setState(() {
+            _isPlaying = true;
+            _sliderValue = 0.0;
+            ScaffoldMessenger.of(_context).hideCurrentSnackBar();
+          });
+          _controller.play();
+          _controller.addListener(_onVideoControllerUpdated);
+        });
+      }
+    }
+  }
+
+  void _showLoadingSnackbar() {
+    ScaffoldMessenger.of(_context).showSnackBar(
+      SnackBar(
+        content: Text('Loading...'),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _isPlaying ? _controller.pause() : _controller.play();
+          _isPlaying = !_isPlaying;
+        });
+      },
+      child: Container(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _isLoading
+                ? CircularProgressIndicator()
+                : AspectRatio(
+              aspectRatio: _controller.value.aspectRatio,
+              child: VideoPlayer(_controller),
+            ),
+            !_isLoading
+                ? Material(
+              child: Slider(
+                value: _sliderValue,
+                min: 0.0,
+                max: _controller.value.duration.inSeconds.toDouble(),
+                onChanged: (value) {
+                  setState(() {
+                    _sliderValue = value;
+                    _controller.seekTo(Duration(seconds: value.toInt()));
+                  });
+                },
+              ),
+            )
+                : Container(),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.close),
+                  color: Colors.white,
+                  onPressed: () {
+                    if (_isPlaying) {
+                      _controller.pause();
+                    }
+                    Navigator.of(context).pop();
+                  },
+                ),
+                IconButton(
+                  icon: Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow),
+                  color: Colors.white,
+                  onPressed: () {
+                    setState(() {
+                      _isPlaying ? _controller.pause() : _controller.play();
+                      _isPlaying = !_isPlaying;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+

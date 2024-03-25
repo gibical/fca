@@ -48,7 +48,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
 
             Get.find<MediaSuitController>().setDataEditAudio(widget.model['name'].toString());
           }else{
-            Get.find<MediaSuitController>().setDataEditVideo(widget.model['name'].toString());
+            Get.find<MediaSuitController>().setDataEditVideo(widget.model['name'].toString()  , widget.model['file']['url']);
           }
 
 

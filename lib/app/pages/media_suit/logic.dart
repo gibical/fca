@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 
 class EditDataModel {
   final String name;
+  final String? urlVideo;
 
-  EditDataModel(this.name);
+  EditDataModel(this.name, this.urlVideo);
 }
 
 class MediaSuitController extends GetxController {
@@ -16,21 +17,21 @@ class MediaSuitController extends GetxController {
 
 
   void setDataEditText(String name) {
-    editTextDataList.add(EditDataModel(name));
+    editTextDataList.add(EditDataModel(name , ''));
 
   }
 
   void setDataEditImage(String name) {
-    editImageDataList.add(EditDataModel(name));
+    editImageDataList.add(EditDataModel(name , ''));
 
   }
 
-  void setDataEditVideo(String name) {
-    editVideoDataList.add(EditDataModel(name));
+  void setDataEditVideo(String name , String videoUrl) {
+    editVideoDataList.add(EditDataModel(name , videoUrl ));
 
   }
   void setDataEditAudio(String name) {
-    editAudioDataList.add(EditDataModel(name));
+    editAudioDataList.add(EditDataModel(name ,''));
 
   }
 }

@@ -46,7 +46,7 @@ class _GridPostViewState extends State<GridPostView> {
 
             Get.find<MediaSuitController>().setDataEditAudio(widget.model['name'].toString());
           }else{
-            Get.find<MediaSuitController>().setDataEditVideo(widget.model['name'].toString());
+            Get.find<MediaSuitController>().setDataEditVideo(widget.model['name'].toString()  , widget.model['file']['url']);
           }
 
 
@@ -252,7 +252,7 @@ class _GridPostView2State extends State<GridPostView2> {
 
             Get.find<MediaSuitController>().setDataEditAudio(widget.model['name'].toString());
           }else{
-            Get.find<MediaSuitController>().setDataEditVideo(widget.model['name'].toString());
+            Get.find<MediaSuitController>().setDataEditVideo(widget.model['name'].toString()  , widget.model['file']['url']);
           }
 
 
