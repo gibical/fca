@@ -195,7 +195,7 @@ class EditProfilePage extends StatelessWidget {
                             "thriller",
                           ]),
                       if(logic.type == PostType.video) SizedBox(height: 3.h,),
-                      Column(
+                      if(logic.type == PostType.video)Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -211,7 +211,7 @@ class EditProfilePage extends StatelessWidget {
                               needful: false),
                         ],
                       ),
-                      SizedBox(height: 3.h,),
+                      if(logic.type == PostType.video)  SizedBox(height: 3.h,),
                       if(logic.type == PostType.video) CustomTextFieldLogin(
                           isFalsePadding: true,
                           prefix: Row(

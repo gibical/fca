@@ -35,7 +35,7 @@ class OTPScreen extends StatelessWidget {
             SizedBox(
               height: 7.h,
             ),
-            Text('We send the code to +33700555123'),
+            Text('We send the code to ${logic.code.dialCode}${logic.eTextEditingControllerPhone.text}'),
             SizedBox(
               height: 3.h,
             ),

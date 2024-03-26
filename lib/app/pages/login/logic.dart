@@ -52,7 +52,7 @@ class LoginController extends GetxController implements RequestInterface {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    apiRequster = ApiRequster(this,develperModel: false);
+    apiRequster = ApiRequster(this,develperModel: true);
   }
 
 
@@ -211,7 +211,7 @@ class LoginController extends GetxController implements RequestInterface {
   void getOTPSumbit() {
     isloading(true);
     var body = {
-      "cellphone":eTextEditingControllerPhone.text,
+      "cellphone":"${code.dialCode}${eTextEditingControllerPhone.text}",
       "otp":eTextEditingControllerOTP.text,
     };
     apiRequster.request("auth/otp/submit", ApiRequster.MHETOD_POST, 1,body: body);

@@ -24,7 +24,7 @@ class MainWrapperScreen extends StatefulWidget {
 }
 
 class _MainWrapperScreenState extends State<MainWrapperScreen> {
-  WrapperController controller = Get.find<WrapperController>();
+  WrapperController controller = Get.put(WrapperController());
 
 
   @override

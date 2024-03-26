@@ -39,7 +39,11 @@ class EditProfileLogic extends GetxController implements RequestInterface {
     priceController.text = detailController.detailss!['price'].toString();
     isEditEditingController.text = detailController.detailss!['forkability_status'].toString().contains("1")?"Yes":"No";
     planController.text = _getDropDownByPlan(detailController.detailss!['plan'].toString());
-      languageController.text = Constant.reversedLanguageMap[detailController.detailss!['language']??""]!;
+      try {
+        languageController.text = Constant.reversedLanguageMap[detailController.detailss!['language']??""]!;
+      }  catch (e) {
+        // TODO
+      }
     planController.addListener(() {
       update();
     });
