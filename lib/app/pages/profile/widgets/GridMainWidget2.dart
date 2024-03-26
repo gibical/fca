@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mediaverse/app/pages/media_suit/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -29,10 +30,31 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
     final theme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
+
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: (){
+        onTap:Get.arguments == 'edit_screen' ? (){
+
+
+          if(widget. model['class']==1){
+
+            Get.find<MediaSuitController>().setDataEditText(widget.model['name'].toString());
+          }else if(widget. model['class']==2){
+
+               Get.find<MediaSuitController>().setDataEditImage(widget.model['name'].toString());
+          }else if(widget. model['class']==3){
+
+            Get.find<MediaSuitController>().setDataEditAudio(widget.model['name'].toString());
+          }else{
+            Get.find<MediaSuitController>().setDataEditVideo(widget.model['name'].toString()  , widget.model['file']['url']);
+          }
+
+
+          Get.back();
+
+        }:(){
           _getRouteAndPushIt(widget.model['id']);
         },
         child: Container(

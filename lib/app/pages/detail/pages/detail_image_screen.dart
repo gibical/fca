@@ -12,6 +12,7 @@ import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_route.dart';
+import '../../media_suit/logic.dart';
 import '../logic.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
 import '../widgets/report_botton_sheet.dart';
@@ -110,6 +111,13 @@ class DetailImageScreen extends StatelessWidget {
                         ),
                         SizedBox(
                           height: 3.h,
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            Get.find<MediaSuitController>().setDataEditImage(imageController.imageDetails?['name'] ?? '');
+                            Get.toNamed(PageRoutes.MEDIASUIT);
+                          },
+                          child:  Icon(Icons.edit),
                         ),
                         SizedBox(
                           height: 3.h,

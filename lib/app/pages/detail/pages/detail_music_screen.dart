@@ -18,6 +18,7 @@ import '../../../common/app_config.dart';
 import '../../../common/app_icon.dart';
 import '../../../common/app_route.dart';
 import '../../../common/utils/duraton_music_helper.dart';
+import '../../media_suit/logic.dart';
 import '../logic.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
 
@@ -308,6 +309,13 @@ class DetailMusicScreen extends StatelessWidget {
                                   SizedBox(
                                     width: 3.w,
                                   ),
+                                  GestureDetector(
+                                    onTap: (){
+                                      Get.find<MediaSuitController>().setDataEditAudio(controller.musicDetails?['name'] ?? '');
+                                      Get.toNamed(PageRoutes.MEDIASUIT);
+                                    },
+                                    child:  Icon(Icons.edit),
+                                  )
                                 ],
                               ),
                               SizedBox(

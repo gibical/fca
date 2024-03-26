@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mediaverse/app/pages/change_password/view.dart';
 import 'package:mediaverse/app/pages/channel/all_tools.dart';
+import 'package:mediaverse/app/pages/detail/logic.dart';
 import 'package:mediaverse/app/pages/detail/pages/detail_text_screen.dart';
 import 'package:mediaverse/app/pages/detail/state.dart';
 import 'package:mediaverse/app/pages/detail/view.dart';
@@ -12,6 +13,8 @@ import 'package:mediaverse/app/pages/live/state.dart';
 import 'package:mediaverse/app/pages/live/view.dart';
 import 'package:mediaverse/app/pages/login/view.dart';
 import 'package:mediaverse/app/pages/massage/view.dart';
+import 'package:mediaverse/app/pages/media_suit/state.dart';
+import 'package:mediaverse/app/pages/media_suit/view.dart';
 import 'package:mediaverse/app/pages/otp/view.dart';
 import 'package:mediaverse/app/pages/plus_section/view.dart';
 import 'package:mediaverse/app/pages/profile/view.dart';
@@ -60,6 +63,7 @@ class PageRoutes {
   static const ALLTOOLS = '/AllTools';
   static const EDITPROFILE = '/EditProfile';
   static const CHANGEPASSWORD = '/ChangePassword';
+  static const MEDIASUIT = '/MediaSuite';
 
 
   static List<GetPage> routes = [
@@ -118,28 +122,31 @@ class PageRoutes {
       name: PageRoutes.DETAILIMAGE,
       transition: Transition.downToUp,
       page: () => DetailImageScreen(),
-      binding: DetailState(),
+      bindings: [DetailState() ,         MediaSuitState()],
     ),
 
     GetPage(
       name: PageRoutes.DETAILMUSIC,
       transition: Transition.downToUp,
       page: () => DetailMusicScreen(),
-      binding: DetailState(),
+      bindings: [DetailState() ,         MediaSuitState()],
     ),
     //
     GetPage(
       name: PageRoutes.DETAILTEXT,
       transition: Transition.downToUp,
       page: () => DetailTextScreen(),
-      binding: DetailState(),
+      bindings: [DetailState() ,         MediaSuitState()],
     ),
 
     GetPage(
       name: PageRoutes.DETAILVIDEO,
       transition: Transition.downToUp,
       page: () => DetailVideoScreen(),
-      binding: DetailState()
+      bindings: [
+        DetailState(),
+        MediaSuitState()
+      ]
 
     ),
     GetPage(
@@ -211,6 +218,11 @@ class PageRoutes {
     GetPage(
       name: PageRoutes.CHANGEPASSWORD,
       page: () => ChangePasswordPage(),
+    ),
+    GetPage(
+      name: PageRoutes.MEDIASUIT,
+      page: () => MediaSuitScreen(),
+      bindings:       [  MediaSuitState() , DetailState()]
     ),
 
   ];

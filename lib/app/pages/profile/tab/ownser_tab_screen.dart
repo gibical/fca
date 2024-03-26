@@ -280,6 +280,7 @@ class AllTabScreen extends StatelessWidget {
     print('AllTabScreen.build = ${combinedList.length}');
     return Container(
 
+
         padding: EdgeInsets.only(top: 13.h),
         height: 50.h,
         child: GridView(
@@ -321,21 +322,23 @@ class CustomTabScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
 
-        padding: EdgeInsets.only(top: 13.h,bottom: 13.h),
+
+        padding: EdgeInsets.only(top: 13.h,bottom: Get.arguments == 'edit_screen' ?0:13.h),
         height:isExpended?MediaQuery.of(context).size.height:150.h,
         child: GridView(
 
 
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2),
-          children: list
-              .asMap()
-              .entries
-              .map((e) {
-            return GridPostViewForDetails(list.elementAt(e.key));
-          }).toList(),
+              crossAxisCount:            2),
+      children: list
+          .asMap()
+          .entries
+          .map((e) {
+        return GridPostViewForDetails(list.elementAt(e.key));
+      }).toList(),
 
-        ));
+        )
+    );
   }
 
   List<T> randomisedList<T>(List<T> list) {

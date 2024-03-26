@@ -16,6 +16,7 @@ import 'package:video_player/video_player.dart';
 import '../../../../gen/model/enums/post_type_enum.dart';
 import '../../../common/app_config.dart';
 import '../../login/widgets/custom_register_button_widget.dart';
+import '../../media_suit/logic.dart';
 import '../logic.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
 import '../widgets/report_botton_sheet.dart';
@@ -157,6 +158,7 @@ class DetailVideoScreen extends StatelessWidget {
                             SizedBox(
                               width: 3.w,
                             ),
+
                             InkWell(
                                 onTap: () {
                                   videoController.sendShareYouTube();
@@ -165,8 +167,16 @@ class DetailVideoScreen extends StatelessWidget {
                                   "assets/icons/icon__video-white.svg",
                                   width: 6.w,
                                 )),
+
                             SizedBox(
                               width: 3.w,
+                            ),
+                            GestureDetector(
+                              onTap: (){
+                                Get.find<MediaSuitController>().setDataEditVideo(videoController.videoDetails?['name'] ?? '' ,videoController.videoDetails?['file']['url'] );
+                                Get.toNamed(PageRoutes.MEDIASUIT);
+                              },
+                              child:  Icon(Icons.edit),
                             ),
                           ],
                         ),

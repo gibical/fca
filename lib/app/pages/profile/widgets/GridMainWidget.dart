@@ -10,6 +10,7 @@ import 'package:sizer/sizer.dart';
 import '../../../common/app_color.dart';
 import '../../../common/app_icon.dart';
 import '../../../common/app_route.dart';
+import '../../media_suit/logic.dart';
 
 class GridPostView extends StatefulWidget {
 
@@ -32,8 +33,26 @@ class _GridPostViewState extends State<GridPostView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: (){
-          log('_GridPostViewState.build = ${widget.model}');
+        onTap:Get.arguments == 'edit_screen' ? (){
+
+
+          if(widget. model['class']==1){
+
+            Get.find<MediaSuitController>().setDataEditText(widget.model['name'].toString());
+          }else if(widget. model['class']==2){
+
+            Get.find<MediaSuitController>().setDataEditImage(widget.model['name'].toString());
+          }else if(widget. model['class']==3){
+
+            Get.find<MediaSuitController>().setDataEditAudio(widget.model['name'].toString());
+          }else{
+            Get.find<MediaSuitController>().setDataEditVideo(widget.model['name'].toString()  , widget.model['file']['url']);
+          }
+
+
+          Get.back();
+
+        }:(){
           _getRouteAndPushIt(widget.model['id']);
         },
         child: Container(
@@ -220,8 +239,26 @@ class _GridPostView2State extends State<GridPostView2> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: (){
-          log('_GridPostViewState.build = ${widget.model}');
+        onTap:Get.arguments == 'edit_screen' ? (){
+
+
+          if(widget. model['class']==1){
+
+            Get.find<MediaSuitController>().setDataEditText(widget.model['name'].toString());
+          }else if(widget. model['class']==2){
+
+            Get.find<MediaSuitController>().setDataEditImage(widget.model['name'].toString());
+          }else if(widget. model['class']==3){
+
+            Get.find<MediaSuitController>().setDataEditAudio(widget.model['name'].toString());
+          }else{
+            Get.find<MediaSuitController>().setDataEditVideo(widget.model['name'].toString()  , widget.model['file']['url']);
+          }
+
+
+          Get.back();
+
+        }:(){
           _getRouteAndPushIt(widget.model['id']);
         },
         child: Container(
