@@ -27,47 +27,50 @@ class _UploadAssetPageState extends State<UploadAssetPage> {
     return GetBuilder<PlusSectionLogic>(
         init: logic,
         builder: (logic) {
-      return Scaffold(
-        backgroundColor: "#02073D".toColor(),
+      return WillPopScope(
+        onWillPop: ()async=>false,
+        child: Scaffold(
+          backgroundColor: "#02073D".toColor(),
 
-        body: SafeArea(
-          child: Container(
-            height: 100.h,
-            child: Stack(
-              children: [
-                Align(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text("Asset is uploading \n Please wait", style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),),
-          
-                      SizedBox(height: 4.h,),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: AnimatedContainer(
-                          margin: EdgeInsets.all(16),
-                          duration: Duration(
-                              milliseconds: 400
+          body: SafeArea(
+            child: Container(
+              height: 100.h,
+              child: Stack(
+                children: [
+                  Align(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text("Asset is uploading \n Please wait", style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),),
+
+                        SizedBox(height: 4.h,),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: AnimatedContainer(
+                            margin: EdgeInsets.all(16),
+                            duration: Duration(
+                                milliseconds: 400
+                            ),
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width * (logic.uploadedCount / 100),
+                            height: 6,
+                            decoration: BoxDecoration(
+                                color: "#5A7CF6".toColor(),
+                              borderRadius: BorderRadius.circular(500)
+                            ),
                           ),
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width * (logic.uploadedCount / 100),
-                          height: 6,
-                          decoration: BoxDecoration(
-                              color: "#5A7CF6".toColor(),
-                            borderRadius: BorderRadius.circular(500)
-                          ),
-                        ),
-                      )
-          
-                    ],
+                        )
+
+                      ],
+                    ),
                   ),
-                ),
 
-          
-              ],
+
+                ],
+              ),
             ),
           ),
         ),

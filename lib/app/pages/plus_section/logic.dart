@@ -40,6 +40,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   TextEditingController captionController = TextEditingController();
   TextEditingController languageController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+  TextEditingController genreController = TextEditingController();
   TextEditingController subscrptionController = TextEditingController(text: "1 day");
 
 
@@ -157,7 +158,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster = ApiRequster(this, develperModel: false);
+    apiRequster = ApiRequster(this, develperModel: true);
     initCamera();
     planController.addListener(() {
       update();
@@ -558,7 +559,10 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       "lat": 0,
       "lng": 0,
       "type": 1,
-      "language": "ar",
+      "genre": genreController.text,
+      "length": "10",
+      "language": Constant.languageMap[languageController.text],
+      "country": Constant.languageMap[languageController.text],
       "forkability_status":
           editibaleController.text.contains("Yes") ? "1" : "2",
       "commenting_status": 1,
@@ -616,6 +620,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
         return "audios";
       case MediaMode.image:
         // TODO: Handle this case.
+        if(videoOutPut.isNotEmpty&&videoOutPut.contains("mp4")) return "videos";
         return "images";
 
       case MediaMode.text:
@@ -719,6 +724,8 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
         return PageRoutes.DETAILMUSIC;
       case MediaMode.image:
         // TODO: Handle this case.
+        if(videoOutPut.isNotEmpty&&videoOutPut.contains("mp4")) return PageRoutes.DETAILVIDEO;
+
         return PageRoutes.DETAILIMAGE;
 
       case MediaMode.text:

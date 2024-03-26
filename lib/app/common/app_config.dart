@@ -124,6 +124,16 @@ class Constant {
     "Yoruba",
     "Zulu",
   ];
+  static List<String> generes = [
+    "action",
+    "adventure",
+    "comedy",
+    "educational",
+    "fantasy",
+    "horror",
+    "romance",
+    "thriller",
+  ];
   static Map<String, String> languageMap = {
     "Afrikaans": "af",
     "Albanian": "sq",

@@ -96,7 +96,23 @@ class _FirstFormState extends State<FirstForm> {
                         ],
                       ),
                       SizedBox(height: 4.h,),
-                  
+                      if(widget.logic.videoOutPut.isNotEmpty&&widget.logic.videoOutPut.contains("mp4"))   Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Genre",style: TextStyle(color: Colors.white,
+                          fontWeight: FontWeight.bold),),
+                          CustomTDropDownPlusWidget(
+                            models:Constant.generes,
+                              context: context,
+                              textEditingController: widget.logic.genreController,
+                              titleText: 'Select Genere',
+                              hintText: 'Choose Genre',
+                              needful: false),
+                        ],
+                      ),
+                      if(widget.logic.videoOutPut.isNotEmpty&&widget.logic.videoOutPut.contains("mp4"))  SizedBox(height: 4.h,),
+
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
