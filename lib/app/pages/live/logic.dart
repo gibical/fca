@@ -13,6 +13,8 @@ import 'package:mediaverse/app/pages/plus_section/widget/first_form.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 
+import '../../common/app_config.dart';
+
 class LiveController extends GetxController{
   RxMap<String, dynamic>? liveDetails = RxMap<String, dynamic>();
   RxBool isLoadingLive = false.obs;
@@ -39,7 +41,7 @@ class LiveController extends GetxController{
       final token = GetStorage().read("token");
       isLoading.value = true;
       String apiUrl =
-          'https://api.mediaverse.land/v2/channels/${Get.arguments['channelId']}';
+          '${Constant.HTTP_HOST}channels/${Get.arguments['channelId']}';
       var response = await Dio().get(apiUrl, options: Options(headers: {
         'accept': 'application/json',
         'X-App': '_Android',
@@ -94,7 +96,7 @@ class LiveController extends GetxController{
       isLoadingRecord.value = true;
 
       final token = GetStorage().read("token");
-      String apiUrl = 'https://api.mediaverse.land/v2/edit/channel/record';
+      String apiUrl = '${Constant.HTTP_HOST}edit/channel/record';
       var response = await Dio().post(
         apiUrl,
         data: {

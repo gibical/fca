@@ -101,12 +101,11 @@ class DetailController extends GetxController {
   Future<void> _fetchMediaData(
 
       String type, RxMap<String, dynamic>? details, RxBool isLoading) async {
-    print('DetailController._fetchMediaData = https://api.mediaverse.land/v2/$type/${Get.arguments['id']}');
     try {
       final token = GetStorage().read("token");
       isLoading.value = true;
       String apiUrl =
-          'https://api.mediaverse.land/v2/$type/${Get.arguments['id']}';
+          '${Constant.HTTP_HOST}$type/${Get.arguments['id']}';
       var response = await Dio().get(apiUrl, options: Options(headers: {
         'accept': 'application/json',
         'X-App': '_Android',
@@ -209,7 +208,7 @@ class DetailController extends GetxController {
     try {
       final token = GetStorage().read("token");
       isLoadingComment.value = true;
-      String apiUrl = 'https://api.mediaverse.land/v2/assets/${Get.arguments['id']}/comments';
+      String apiUrl = '${Constant.HTTP_HOST}assets/${Get.arguments['id']}/comments';
 
       var response = await Dio().get(
         apiUrl,
@@ -248,7 +247,7 @@ class DetailController extends GetxController {
   void postComment() async {
     try {
       final token = GetStorage().read("token");
-      String apiUrl = 'https://api.mediaverse.land/v2/assets/comments';
+      String apiUrl = '${Constant.HTTP_HOST}assets/comments';
       var response = await Dio().post(
         apiUrl,
         data: {
@@ -283,7 +282,7 @@ class DetailController extends GetxController {
   void buyAsset(int assetId) async {
     try {
       final token = GetStorage().read("token");
-      String apiUrl = 'https://api.mediaverse.land/v2/assets/$assetId/buy';
+      String apiUrl = '${Constant.HTTP_HOST}assets/$assetId/buy';
 
       var dio = Dio();
 

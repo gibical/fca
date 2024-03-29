@@ -687,7 +687,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
 
     try {
       var response = await dio.post(
-        'https://api.mediaverse.land/v2/files',
+        '${Constant.HTTP_HOST}files',
         data: formData,
         options: Options(
           headers: {

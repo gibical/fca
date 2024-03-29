@@ -58,7 +58,7 @@ class ViewAllChannelController extends GetxController {
       isLoadingChannel = true;
       update();
       String apiUrl =
-          'https://api.mediaverse.land/v2/channels?type=1';
+          '${Constant.HTTP_HOST}channels?type=1';
       var response = await Dio().get(apiUrl, options: Options(headers: {
         'accept': 'application/json',
         'X-App': '_Android',
