@@ -32,6 +32,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
 
 
 
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -158,7 +159,6 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
                         borderRadius: BorderRadius.circular(12.sp),
                         image: DecorationImage(image: AssetImage('assets/images/${_getBackground()}.jpeg' ) ,
                           fit: BoxFit.cover ,
-                          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.55), BlendMode.hardLight),
                         )
                     ),
                   ),

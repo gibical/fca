@@ -150,13 +150,13 @@ class _GridPostViewState extends State<GridPostView> {
                         borderRadius: BorderRadius.circular(12.sp),
                         image: DecorationImage(image: NetworkImage('${widget.model['thumbnails']['origin']}' ) ,
                           fit: BoxFit.cover ,
-                          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.55), BlendMode.hardLight),
+
                         )
                     ):BoxDecoration(
                         borderRadius: BorderRadius.circular(12.sp),
                         image: DecorationImage(image: AssetImage('assets/images/${_getBackground()}.jpeg' ) ,
                           fit: BoxFit.cover ,
-                          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.55), BlendMode.hardLight),
+
                         )
                     ),
                   ),
@@ -262,8 +262,8 @@ class _GridPostView2State extends State<GridPostView2> {
           _getRouteAndPushIt(widget.model['id']);
         },
         child: Container(
-            width: 40.w,
-            height: 20.w,
+            width: 45.w,
+            height: 45.w,
             decoration: BoxDecoration(
               // color: theme.onBackground.withOpacity(0.1),
               // border: Border.symmetric(horizontal: BorderSide(
@@ -356,13 +356,12 @@ class _GridPostView2State extends State<GridPostView2> {
                         borderRadius: BorderRadius.circular(12.sp),
                         image: DecorationImage(image: NetworkImage('${widget.model['thumbnails']['origin']}' ) ,
                           fit: BoxFit.cover ,
-                          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.55), BlendMode.hardLight),
+
                         )
                     ):BoxDecoration(
                         borderRadius: BorderRadius.circular(12.sp),
                         image: DecorationImage(image: AssetImage('assets/images/${_getBackground()}.jpeg' ) ,
                           fit: BoxFit.cover ,
-                          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.55), BlendMode.hardLight),
                         )
                     ),
                   ),

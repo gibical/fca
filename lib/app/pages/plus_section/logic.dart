@@ -159,7 +159,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     // TODO: implement onReady
     super.onReady();
     apiRequster = ApiRequster(this, develperModel: true);
-    initCamera();
+
     planController.addListener(() {
       update();
     });
@@ -192,7 +192,9 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       Constant.showMessege(e.description ?? "");
       return null;
     } finally {
-      Get.to(FirstForm(this), arguments: [this]);
+      controller ==null;
+      await Get.to(FirstForm(this), arguments: [this]);
+      update();
     }
   }
 
@@ -200,7 +202,10 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     _cameras = await availableCameras();
 
     controller = CameraController(_cameras[0], ResolutionPreset.max);
+    print('PlusSectionLogic.initCamera camera init 1');
     controller!.initialize().then((_) {
+      print('PlusSectionLogic.initCamera camera init 1');
+
       update();
     }).catchError((Object e) {
       if (e is CameraException) {
@@ -497,17 +502,30 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       case MediaMode.image:
         // TODO: Handle this case.
 
-        if (controller != null && !controller!.value.isInitialized) {
-          return FocusDetector(onFocusGained: () {}, child: Container());
+        print('PlusSectionLogic.getMainWidget 1 ${controller} ');
+        if (controller == null || !controller!.value.isInitialized) {
+          print('PlusSectionLogic.getMainWidget 1 - 1 ');
+
+          return FocusDetector(onFocusGained: () {
+            print('PlusSectionLogic.getMainWidget 2 ');
+                initCamera();
+          }, child: Container(
+            width: 100.w,
+            height: 100.h,
+          ));
         }
+        print('PlusSectionLogic.getMainWidget 3 ');
+
         return Stack(
           children: [
+
             if (controller != null)
               SizedBox.expand(
                   child: FocusDetector(
                       onFocusGained: () {},
                       onFocusLost: () {
-                        controller?.dispose();
+
+                        controller==null;
                       },
                       child: CameraPreview(controller!))),
             Obx(() {

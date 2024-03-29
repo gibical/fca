@@ -33,13 +33,13 @@ Widget ItemVideoTabScreen(dynamic model){
                 borderRadius: BorderRadius.circular(12.sp),
                 image: DecorationImage(image: NetworkImage('${model['thumbnails']['336x366']}' ) ,
                   fit: BoxFit.cover ,
-                  colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.55), BlendMode.hardLight),
+
                 )
             ):BoxDecoration(
                 borderRadius: BorderRadius.circular(12.sp),
                 image: DecorationImage(image: AssetImage('assets/images/tum_video.jpeg' ) ,
                   fit: BoxFit.cover ,
-                  colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.55), BlendMode.hardLight),
+
                 )
             ),
           ),

@@ -87,18 +87,22 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                     },
                     child: Obx(() {
                       if (logic.isloading5.value) {
-                        return Container(
-                          child: Lottie.asset(
-                              "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                        return Center(
+                          child: Container(
+                            child: Lottie.asset(
+                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                          ),
                         );
                       }
-                      return (logic.emptySubAll)?Container(
+                      return (logic.emptySubAll)?Center(
+                        child: Container(
 
-                        margin: EdgeInsets.only(
-                          top: 13.h,
-                          left: 4.w
+                          margin: EdgeInsets.only(
+                            top: 13.h,
+                            left: 4.w
+                          ),
+                          child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
                         ),
-                        child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
                       ):  AllTabScreen(logic.mysubsAssets);
                     }),
                   ),
@@ -116,18 +120,22 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                       },
                       child: Obx(() {
                         if (logic.isloading6.value) {
-                          return Container(
-                            child: Lottie.asset(
-                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                          return Center(
+                            child: Container(
+                              child: Lottie.asset(
+                                  "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                            ),
                           );
                         }
-                        return (logic.emptySubImages)?Container(
-
-                          margin: EdgeInsets.only(
-                            top: 13.h,
-                            left: 4.w
+                        return (logic.emptySubImages)?Center(
+                          child: Container(
+                          
+                            margin: EdgeInsets.only(
+                              top: 13.h,
+                              left: 4.w
+                            ),
+                            child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
                           ),
-                          child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
                         ): CustomTabScreen(logic.subImages);
                       }),
                     ),
@@ -140,18 +148,23 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                     },
                     child: Obx(() {
                       if (logic.isloading7.value) {
-                        return Container(
-                          child: Lottie.asset(
-                              "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                        return Center(
+                          child: Container(
+                            width: 10.w,
+                            child: Lottie.asset(
+                                "assets/json/Y8IBRQ38bK.json", height: 20.h),
+                          ),
                         );
                       }
-                      return (logic.emptySubVideos)?Container(
-
-                        margin: EdgeInsets.only(
-                          top: 13.h,
-                          left: 4.w
+                      return (logic.emptySubVideos)?Center(
+                        child: Container(
+                        
+                          margin: EdgeInsets.only(
+                            top: 13.h,
+                            left: 4.w
+                          ),
+                          child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
                         ),
-                        child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
                       ): RefreshIndicator(
                           onRefresh: ()async{
 
@@ -168,18 +181,22 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                     },
                     child: Obx(() {
                       if (logic.isloading8.value) {
-                        return Container(
-                          child: Lottie.asset(
-                              "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                        return Center(
+                          child: Container(
+                            child: Lottie.asset(
+                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                          ),
                         );
                       }
-                      return (logic.emptySubAudios)?Container(
-
-                        margin: EdgeInsets.only(
-                          top: 13.h,
-                          left: 4.w
+                      return (logic.emptySubAudios)?Center(
+                        child: Container(
+                        
+                          margin: EdgeInsets.only(
+                            top: 13.h,
+                            left: 4.w
+                          ),
+                          child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
                         ),
-                        child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
                       ): RefreshIndicator(
                           onRefresh: ()async{
 
@@ -196,9 +213,11 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                     },
                     child: Obx(() {
                       if (logic.isloading9.value) {
-                        return Container(
-                          child: Lottie.asset(
-                              "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                        return Center(
+                          child: Container(
+                            child: Lottie.asset(
+                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                          ),
                         );
                       }
                       return (logic.emptySubText)?RefreshIndicator(
@@ -208,13 +227,15 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                           logic.onGetSubsAssetsText();
 
                         },
-                        child: Container(
-
-                          margin: EdgeInsets.only(
-                            top: 13.h,
-                            left: 4.w
+                        child: Center(
+                          child: Container(
+                          
+                            margin: EdgeInsets.only(
+                              top: 13.h,
+                              left: 4.w
+                            ),
+                            child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
                           ),
-                          child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
                         ),
                       ): CustomTabScreen(logic.subText);
                     }),

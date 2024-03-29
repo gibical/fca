@@ -74,167 +74,179 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
         init: logic,
 
         builder: (logic) {
-          return Stack(
-            children: [
+          return Container(
 
-              SizedBox.expand(
-                child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: _tabController,
-                  children: [
-                    AllTabScreen(logic.myAssets),
-                    FocusDetector(
-                      onFocusGained: () {
-                        if (logic.ownerImages.length == 0) {
-                          logic.onGetAssetsPhoto();
-                        }
-                      },
-                      child: Obx(() {
-                        if (logic.isloading1.value) {
-                          return Container(
-                            child: Lottie.asset(
-                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                          );
-                        }
-                        return RefreshIndicator(
-                            onRefresh: ()async{
+            child: Stack(
+              children: [
+
+                SizedBox.expand(
+                  child: TabBarView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    controller: _tabController,
+                    children: [
+              RefreshIndicator(
+              onRefresh: ()async{
 
 
+           // logic.onGetAssetsPhoto();
+
+          },child: AllTabScreen(logic.myAssets)),
+                      Container(
+
+                        child: FocusDetector(
+                          onFocusGained: () {
+                            if (logic.ownerImages.length == 0) {
                               logic.onGetAssetsPhoto();
-
-                            },child: CustomTabScreen(logic.ownerImages));
-                      }),
-                    ),
-                    FocusDetector(
-                      onFocusGained: () {
-                        if (logic.ownerVideos.length == 0) {
-                          logic.onGetAssetsVideo();
-                        }
-                      },
-                      child: Obx(() {
-                        if (logic.isloading2.value) {
-                          return Container(
-                            child: Lottie.asset(
-                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                          );
-                        }
-                        return RefreshIndicator(
-                            onRefresh: ()async{
+                            }
+                          },
+                          child: Obx(() {
+                            if (logic.isloading1.value) {
+                              return Container(
+                                child: Lottie.asset(
+                                    "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                              );
+                            }
+                            return RefreshIndicator(
+                                onRefresh: ()async{
 
 
-                              logic.onGetAssetsVideo();
+                                  logic.onGetAssetsPhoto();
 
-                            },child: CustomTabScreen(logic.ownerVideos));
-                      }),
-                    ),
-                    FocusDetector(
-                      onFocusGained: () {
-                        if (logic.ownerAudios.length == 0) {
-                          logic.onGetAssetsAudioes();
-                        }
-                      },
-                      child: Obx(() {
-                        if (logic.isloading3.value) {
-                          return Container(
-                            child: Lottie.asset(
-                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                          );
-                        }
-                        return RefreshIndicator(
-                            onRefresh: ()async{
-
-
-                              logic.onGetAssetsAudioes();
-
-                            },child: CustomTabScreen(logic.ownerAudios));
-                      }),
-                    ),
-                    FocusDetector(
-                      onFocusGained: () {
-                        if (logic.ownerText.length == 0) {
-                          logic.onGetAssetsText();
-                        }
-                      },
-                      child: Obx(() {
-                        if (logic.isloading4.value) {
-                          return Container(
-                            child: Lottie.asset(
-                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                          );
-                        }
-                        return RefreshIndicator(
-                            onRefresh: ()async{
+                                },child: CustomTabScreen(logic.ownerImages));
+                          }),
+                        ),
+                      ),
+                      FocusDetector(
+                        onFocusGained: () {
+                          if (logic.ownerVideos.length == 0) {
+                            logic.onGetAssetsVideo();
+                          }
+                        },
+                        child: Obx(() {
+                          if (logic.isloading2.value) {
+                            return Container(
+                              child: Lottie.asset(
+                                  "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                            );
+                          }
+                          return RefreshIndicator(
+                              onRefresh: ()async{
 
 
-                              logic.onGetSubsAssetsText();
+                                logic.onGetAssetsVideo();
 
-                            },child: CustomTabScreen(logic.ownerText));
-                      }),
-                    ),
-                  ],
+                              },child: CustomTabScreen(logic.ownerVideos));
+                        }),
+                      ),
+                      FocusDetector(
+                        onFocusGained: () {
+                          if (logic.ownerAudios.length == 0) {
+                            logic.onGetAssetsAudioes();
+                          }
+                        },
+                        child: Obx(() {
+                          if (logic.isloading3.value) {
+                            return Container(
+                              child: Lottie.asset(
+                                  "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                            );
+                          }
+                          return RefreshIndicator(
+                              onRefresh: ()async{
+
+
+                                logic.onGetAssetsAudioes();
+
+                              },child: CustomTabScreen(logic.ownerAudios));
+                        }),
+                      ),
+                      FocusDetector(
+                        onFocusGained: () {
+                          if (logic.ownerText.length == 0) {
+                            logic.onGetAssetsText();
+                          }
+                        },
+                        child: Obx(() {
+                          if (logic.isloading4.value) {
+                            return Container(
+                              child: Lottie.asset(
+                                  "assets/json/Y8IBRQ38bK.json", height: 5.h),
+                            );
+                          }
+                          return RefreshIndicator(
+                              onRefresh: ()async{
+
+
+                                logic.onGetSubsAssetsText();
+
+                              },child: CustomTabScreen(logic.ownerText));
+                        }),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 25, vertical: 15),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(11.sp),
-                  child: ClipRect(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 25, vertical: 15),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(11.sp),
+                    child: ClipRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
 
-                      child: Container(
-                        height: 60,
-                        color: theme.secondary,
+                        child: Container(
+                          height: 60,
+                          color: theme.secondary,
 
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: TabBar(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: TabBar(
 
-                            physics: const BouncingScrollPhysics(),
-                            controller: _tabController,
-                            overlayColor: MaterialStateProperty.all(
-                                Colors.transparent),
-                            enableFeedback: false,
-                            indicatorWeight: 2,
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            indicatorColor: AppColor.primaryLightColor,
-                            unselectedLabelColor: Color(0xff666680),
-                            labelColor: AppColor.primaryLightColor,
-                            dividerColor: Colors.transparent,
-                            tabs: [
-                              _buildTab(context, AppIcon.imageIcon, 0, true),
-                              _buildTab(context, AppIcon.imageIcon, 1, false),
-                              _buildTab(context, AppIcon.videoIcon, 2, false),
-                              _buildTab(context, AppIcon.soundIcon, 3, false),
-                              _buildTab(context, AppIcon.textIcon, 4, false),
+                              physics: const BouncingScrollPhysics(),
+                              controller: _tabController,
+                              overlayColor: MaterialStateProperty.all(
+                                  Colors.transparent),
+                              enableFeedback: false,
+                              indicatorWeight: 2,
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              indicatorColor: AppColor.primaryLightColor,
+                              unselectedLabelColor: Color(0xff666680),
+                              labelColor: AppColor.primaryLightColor,
+                              dividerColor: Colors.transparent,
+                              tabs: [
+                                _buildTab(context, AppIcon.imageIcon, 0, true),
+                                _buildTab(context, AppIcon.imageIcon, 1, false),
+                                _buildTab(context, AppIcon.videoIcon, 2, false),
+                                _buildTab(context, AppIcon.soundIcon, 3, false),
+                                _buildTab(context, AppIcon.textIcon, 4, false),
 
 
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              // Obx(() {
-              //   return Visibility(
-              //     //visible: false,
-              //     visible: widget.homeLogic.isloading.value,
-              //     child: Container(
-              //       width: 100.w,
-              //       height: 100.h,
-              //       color: Colors.black.withOpacity(0.5),
-              //       child: Center(
-              //         child: Lottie.asset(
-              //             "assets/json/Y8IBRQ38bK.json", height: 18.h),
-              //       ),
-              //     ),
-              //   );
-              // })
+                // Obx(() {
+                //   return Visibility(
+                //     //visible: false,
+                //     visible: widget.homeLogic.isloading.value,
+                //     child: Container(
+                //       width: 100.w,
+                //       height: 100.h,
+                //       color: Colors.black.withOpacity(0.5),
+                //       child: Center(
+                //         child: Lottie.asset(
+                //             "assets/json/Y8IBRQ38bK.json", height: 18.h),
+                //       ),
+                //     ),
+                //   );
+                // })
 
-            ],
+              ],
+            ),
           );
         });
   }
@@ -320,6 +332,25 @@ class CustomTabScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+         return Container(
+
+
+        padding: EdgeInsets.only(top: 13.h),
+        child: SingleChildScrollView(
+          child: Wrap(
+          
+            //
+            // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //     crossAxisCount: 2),
+            children:( list)
+                .asMap()
+                .entries
+                .map((e) {
+              return GridPostView2(( list).elementAt(e.key));
+            }).toList(),
+          
+          ),
+        ));
     return Container(
 
 
