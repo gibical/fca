@@ -23,11 +23,23 @@ class _LiveScreenState extends State<LiveScreen> {
 
   LiveController liveController = Get.find<LiveController>();
 
+  late Widget videoWidget;
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      print('_LiveScreenState.initState = ${liveController.liveDetails?['link'] ?? ''}');
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: Obx(() {
+
       return liveController.isLoadingLive.value
           ? Center(
               child: CircularProgressIndicator(),
@@ -39,6 +51,7 @@ class _LiveScreenState extends State<LiveScreen> {
                   child: SizedBox(
                     child: Column(
                       children: [
+
                         VideoLiveWidget(
                             videoUrl: liveController.liveDetails?['link'] ?? ''),
                         SizedBox(height: 2.h),

@@ -73,6 +73,7 @@ dependencies:
   ffmpeg_kit_flutter_min: ^5.1.0
   video_editor: ^3.0.0
   fraction: ^4.1.4
+  chewie: ^1.7.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

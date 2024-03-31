@@ -1,5 +1,6 @@
 
 
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -111,23 +112,30 @@ class _VideoDialogState extends State<VideoDialog> {
   late bool _isPlaying;
   double _sliderValue = 0.0;
 
+  var chewieController ;
+
   @override
   void initState() {
     super.initState();
     _controller = VideoPlayerController.network(
       '${widget.videoUrl}',
     )..initialize().then((_) {
+      chewieController= ChewieController(
+        videoPlayerController: _controller,
+        autoPlay: true,
+        looping: true,
+      );
       setState(() {
-        _isPlaying = true;
+        //     _isPlaying = true;
       });
-      _controller.play();
+      //   _controller.play();
     });
-    _isPlaying = false;
-    _controller.addListener(() {
-      setState(() {
-        _sliderValue = _controller.value.position.inSeconds.toDouble();
-      });
-    });
+    // _isPlaying = false;
+    // _controller.addListener(() {
+    //   setState(() {
+    //     _sliderValue = _controller.value.position.inSeconds.toDouble();
+    //   });
+    // });
   }
 
   @override
@@ -158,68 +166,11 @@ class _VideoDialogState extends State<VideoDialog> {
                 aspectRatio: _controller.value.aspectRatio,
                 child: Screenshot(
                     controller: widget.controller.screenshotController,
-                    child: VideoPlayer(_controller)),
+                    child:  Chewie(
+                      controller: chewieController,
+                    )
+                ),
               ),
-        Material(
-          child: Slider(
-            value: _sliderValue,
-            min: 0.0,
-            max: _controller.value.duration.inSeconds.toDouble(),
-            onChanged: (value) {
-              setState(() {
-                _sliderValue = value;
-                _controller.seekTo(Duration(seconds: value.toInt()));
-              });
-            },
-          ),
-        ),
-        SizedBox(height: 3.h,),
-        Material(
-          color: Colors.transparent,
-          child: Row(
-            children: [
-              InkWell(
-                  onTap: () {
-                    try {
-                      _controller.pause();
-                    }  catch (e) {
-                      // TODO
-                    }
-                    widget.controller.screenShotOfTheVideo();
-                  },
-                  child: SvgPicture.asset(
-                    "assets/icons/icon__screenshot.svg",
-                    width: 6.w,
-                  )),
-
-              SizedBox(
-                width: 3.w,
-              ),
-              InkWell(
-                  onTap: () {
-                    widget.controller.videoConvertToAudio();
-                  },
-                  child: SvgPicture.asset(
-                    "assets/icons/icon__single-convert-to-audio.svg",
-                    width: 6.w,
-                  )),
-              SizedBox(
-                width: 3.w,
-              ),
-              InkWell(
-                  onTap: () {
-                    widget.controller.sendShareYouTube();
-                  },
-                  child: SvgPicture.asset(
-                    "assets/icons/icon__video-white.svg",
-                    width: 6.w,
-                  )),
-              SizedBox(
-                width: 3.w,
-              ),
-            ],
-          ),
-        ),
 
       ],
     ) : CircularProgressIndicator(),
