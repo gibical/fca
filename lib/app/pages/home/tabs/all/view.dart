@@ -92,7 +92,7 @@ class AllTabScreen extends StatelessWidget {
                 SizedBox(height: 3.h),
                 TitleExplore(theme: theme, textTheme: textTheme,
                     icon: "assets/icons/text_icon.svg", title: 'Top Text' , isViewAll: true,viewAllTap: (){
-                    Get.to(ViewAllGrdiScreen(),arguments: [4]);
+                    Get.to(ViewAllGrdiScreen(),arguments: [5]);
                   },),
                 SizedBox(height: 1.5.h),
                 SizedBox(
@@ -111,7 +111,7 @@ class AllTabScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 6.h),
                 TitleExplore(theme: theme, textTheme: textTheme, icon: "assets/icons/sound_icon.svg", title: 'Top Song' , isViewAll: true,viewAllTap: (){
-                  Get.to(ViewAllGrdiScreen(),arguments: [5]);
+                  Get.to(ViewAllGrdiScreen(),arguments: [4]);
                 },),
                 SizedBox(height: 1.5.h),
                 SizedBox(

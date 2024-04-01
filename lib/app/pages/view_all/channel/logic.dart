@@ -11,7 +11,7 @@ import '../../../../gen/model/json/FromJsonGetAllVideos.dart';
 class ViewAllChannelController extends GetxController {
   List<dynamic> channels = [];
   List<dynamic> filteredChannels = [];
-  List<VideoModel> videos = [];
+  List<dynamic> videos = [];
   List<dynamic> images = [];
   bool isLoadingChannel = false;
 
@@ -113,8 +113,9 @@ class ViewAllChannelController extends GetxController {
         isloading(false);
       if (response.statusCode == 200) {
 
-        videos = FromJsonGetAllVideos.fromJson(response.data).data??[];
-        isNextPageAvailabe = FromJsonGetAllVideos.fromJson(response.data).nextPageUrl!=null;
+        videos = response.data['data'];
+      //  videos = FromJsonGetAllVideos.fromJson(response.data).data??[];
+        isNextPageAvailabe = false;
         update();
       } else {
       }

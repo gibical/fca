@@ -88,12 +88,12 @@ class _BestVideoScreenPageState extends State<BestVideoScreenPage> {
                          var index = e.key;
                          return GestureDetector(
                            onTap: () {
-                             int itemId = logic.videos.elementAt(index).id!.toInt();
+                             int itemId = logic.videos.elementAt(index)['id'];
                              print(itemId);
                              Get.toNamed(PageRoutes.DETAILVIDEO, arguments: {'id': itemId});
                            },
                            child: ItemVideoTabScreen(
-                             logic.videos.elementAt(index).toJson(),
+                             logic.videos.elementAt(index),
                            ),
                          );
                                            }).toList(),

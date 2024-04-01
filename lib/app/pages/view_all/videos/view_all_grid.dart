@@ -83,7 +83,6 @@ class _ViewAllGrdiScreenState extends State<ViewAllGrdiScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 4.h),
 
                                          Expanded(child: GridView(
 
