@@ -705,8 +705,11 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
 
       if (response.statusCode! >= 200||response.statusCode! < 300) {
         print('File uploaded successfully = ${response.data}');
-         Get.offAllNamed(PageRoutes.WRAPPER);
-        Get.toNamed(_getRouteByMedia(),arguments: {'id': postUploadedId});
+
+
+        Get.offAndToNamed(_getRouteByMedia(), arguments: {'id': postUploadedId});
+
+
       } else {
         print('Failed to upload file: ${response.statusMessage}');
       }
