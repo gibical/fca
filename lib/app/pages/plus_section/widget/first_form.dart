@@ -13,6 +13,36 @@ import '../../../common/app_color.dart';
 import '../../signup/widgets/custom_text_field_form_register_widget.dart';
 import 'custom_plan_text_filed.dart';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:mediaverse/app/common/app_config.dart';
+import 'package:mediaverse/app/common/app_extension.dart';
+import 'package:mediaverse/app/pages/plus_section/logic.dart';
+import 'package:mediaverse/app/pages/plus_section/widget/secned_form.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../common/app_color.dart';
+import '../../signup/widgets/custom_text_field_form_register_widget.dart';
+import 'custom_plan_text_filed.dart';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:mediaverse/app/common/app_config.dart';
+import 'package:mediaverse/app/common/app_extension.dart';
+import 'package:mediaverse/app/pages/plus_section/logic.dart';
+import 'package:mediaverse/app/pages/plus_section/widget/secned_form.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../common/app_color.dart';
+import '../../signup/widgets/custom_text_field_form_register_widget.dart';
+import 'custom_plan_text_filed.dart';
+
 class FirstForm extends StatefulWidget {
   PlusSectionLogic logic ;
 
@@ -40,14 +70,14 @@ class _FirstFormState extends State<FirstForm> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                              
-                              
+
+
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 7.5.w),
-                              
+
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              
+
                           children: [
                             IconButton(onPressed: () {
                               Get.back();
@@ -62,34 +92,34 @@ class _FirstFormState extends State<FirstForm> {
                         ),
                       ),
                       SizedBox(height: 4.h),
-                              
+
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Title",style: TextStyle(color: Colors.white,
-                          fontWeight: FontWeight.bold),),
+                              fontWeight: FontWeight.bold),),
                           CustomTextFieldPlusWidget(
                               context: context,
                               textEditingController: widget.logic.titleController,
-                              
+
                               titleText: 'Title',
                               hintText: 'Insert your title',isLarge: true,
                               needful: false),
                         ],
                       ),
-                  SizedBox(height: 4.h,),
-                  Column(
+                      SizedBox(height: 4.h,),
+                      Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Language",style: TextStyle(color: Colors.white,
-                          fontWeight: FontWeight.bold),),
+                              fontWeight: FontWeight.bold),),
                           CustomTDropDownPlusWidget(
-                            models:Constant.languages,
+                              models:Constant.languages,
                               context: context,
                               textEditingController: widget.logic.languageController,
-                  
+
                               titleText: 'Select language',
                               hintText: 'Choose Language',
                               needful: false),
@@ -101,9 +131,9 @@ class _FirstFormState extends State<FirstForm> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Genre",style: TextStyle(color: Colors.white,
-                          fontWeight: FontWeight.bold),),
+                              fontWeight: FontWeight.bold),),
                           CustomTDropDownPlusWidget(
-                            models:Constant.generes,
+                              models:Constant.generes,
                               context: context,
                               textEditingController: widget.logic.genreController,
                               titleText: 'Select Genere',
@@ -122,7 +152,6 @@ class _FirstFormState extends State<FirstForm> {
                           CustomTextFieldPlusWidget(
                               context: context,
                               textEditingController: widget.logic.captionController,
-                  
                               titleText: 'Title',
                               hintText: 'Insert your Caption',isLarge: true,
                               needful: false),
@@ -151,7 +180,7 @@ class _FirstFormState extends State<FirstForm> {
                                 },
                                 padding: EdgeInsets.zero,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100)
+                                    borderRadius: BorderRadius.circular(100)
                                 ),
                                 child: Stack(
                                   children: [
@@ -165,7 +194,7 @@ class _FirstFormState extends State<FirstForm> {
                             ),
                             SizedBox(height: 1.h,),
                             Text("Save",style: TextStyle(
-                              color: Colors.white,fontWeight: FontWeight.bold
+                                color: Colors.white,fontWeight: FontWeight.bold
                             ),)
                           ],
                         ),
@@ -184,3 +213,8 @@ class _FirstFormState extends State<FirstForm> {
 
   }
 }
+
+
+
+
+

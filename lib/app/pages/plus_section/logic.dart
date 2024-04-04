@@ -71,8 +71,8 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     }
     try {
       await controller!.startVideoRecording();
-      isRecordingTimeVisible.value = true; // ویجت زمان ضبط را نمایش می‌دهیم
-      _startVideoRecordingTimer(); // شروع زمان‌سنج برای به‌روزرسانی زمان ضبط
+      isRecordingTimeVisible.value = true;
+      _startVideoRecordingTimer();
       update();
     } catch (e) {
       print('Error starting video recording: $e');
@@ -110,7 +110,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   void _stopVideoRecordingTimer() {
     _recordingTimer?.cancel();
     _recordingDuration = Duration.zero;
-    recordingTime.value = ''; // زمان ضبط را ریست می‌کنیم
+    recordingTime.value = '';
   }
 
   String _formatDuration(Duration duration) {

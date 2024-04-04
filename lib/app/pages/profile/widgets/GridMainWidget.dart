@@ -148,7 +148,7 @@ class _GridPostViewState extends State<GridPostView> {
                     (widget.model['thumbnails'].toString().length>3)?
                     BoxDecoration(
                         borderRadius: BorderRadius.circular(12.sp),
-                        image: DecorationImage(image: NetworkImage('${widget.model['thumbnails']['origin']}' ) ,
+                        image: DecorationImage(image: NetworkImage('${widget.model['thumbnails']['226x226']}' ) ,
                           fit: BoxFit.cover ,
 
                         )
@@ -235,10 +235,18 @@ class _GridPostView2State extends State<GridPostView2> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    String processTitle(String title) {
+      String processedTitle = title.length > 8
+          ? '${title.substring(0, 8)} ...'
+          : title;
+
+      return processedTitle;
+    }
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
+
         onTap:Get.arguments == 'edit_screen' ? (){
 
 
@@ -260,18 +268,13 @@ class _GridPostView2State extends State<GridPostView2> {
 
         }:(){
           _getRouteAndPushIt(widget.model['id']);
+
+
         },
         child: Container(
             width: 45.w,
             height: 45.w,
-            decoration: BoxDecoration(
-              // color: theme.onBackground.withOpacity(0.1),
-              // border: Border.symmetric(horizontal: BorderSide(
-              //   width: 0.9,
-              //   color: theme.onBackground.withOpacity(0.2 , ),
-              // )),
-              // borderRadius: BorderRadius.all(Radius.circular(20.sp))
-            ),
+
             child: Stack(
               alignment: Alignment.bottomRight,
               children: [
@@ -347,14 +350,17 @@ class _GridPostView2State extends State<GridPostView2> {
                         Positioned(
                             bottom: 10,
                             left: 20,
-                            child: Text(widget.model['name'])),
+                            child: 
+                            Text(processTitle(widget.model['name']))
+                          //  Text(widget.model['name'])
+                        ),
                       ],
                     ),
                     decoration:
                     (widget.model['thumbnails'].toString().length>3)?
                     BoxDecoration(
                         borderRadius: BorderRadius.circular(12.sp),
-                        image: DecorationImage(image: NetworkImage('${widget.model['thumbnails']['origin']}' ) ,
+                        image: DecorationImage(image: NetworkImage('${widget.model['thumbnails']['226x226']}' ) ,
                           fit: BoxFit.cover ,
 
                         )

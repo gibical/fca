@@ -124,6 +124,7 @@ class _VideoDialogState extends State<VideoDialog> {
         videoPlayerController: _controller,
         autoPlay: true,
         looping: true,
+        showOptions: false
       );
       setState(() {
         //     _isPlaying = true;

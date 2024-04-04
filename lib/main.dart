@@ -1,10 +1,13 @@
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/common/utils/firebase_controller.dart';
 import 'package:mediaverse/app/pages/channel/view.dart';
+import 'package:mediaverse/app/pages/wrapper/logic.dart';
+import 'package:mediaverse/app/pages/wrapper/state.dart';
 import 'package:sizer/sizer.dart';
 
 import 'app/common/app_color.dart';
@@ -36,6 +39,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
 
 
+
     return GetMaterialApp(
       title: 'MediaVerse',
       getPages: PageRoutes.routes,
@@ -48,6 +52,7 @@ class _MyAppState extends State<MyApp> {
       themeMode: AppTheme().getCurrentTheme(),
       theme: AppTheme.darkMode,
       darkTheme:  AppTheme.darkMode,
+
       // navigatorObservers: <NavigatorObserver>[MyApp.observer],
 
     );

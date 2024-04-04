@@ -28,7 +28,7 @@ class _UploadAssetPageState extends State<UploadAssetPage> {
         init: logic,
         builder: (logic) {
       return WillPopScope(
-        onWillPop: ()async=>false,
+        onWillPop: ()async=>true,
         child: Scaffold(
           backgroundColor: "#02073D".toColor(),
 
