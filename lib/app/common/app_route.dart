@@ -84,6 +84,7 @@ class PageRoutes {
       name: PageRoutes.WRAPPER,
       transition: Transition.noTransition,
       page: () => MainWrapperScreen(),
+
     ),
 
     GetPage(

@@ -54,7 +54,7 @@ class FirstForm extends StatefulWidget {
 }
 
 class _FirstFormState extends State<FirstForm> {
-
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +67,7 @@ class _FirstFormState extends State<FirstForm> {
             child: Stack(
               children: [
                 SingleChildScrollView(
+                  controller: _scrollController,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -105,6 +106,10 @@ class _FirstFormState extends State<FirstForm> {
 
                               titleText: 'Title',
                               hintText: 'Insert your title',isLarge: true,
+                              isFocus: true,
+                              onTap: (){
+                                _scrollToBottom();
+                              },
                               needful: false),
                         ],
                       ),
@@ -154,7 +159,14 @@ class _FirstFormState extends State<FirstForm> {
                               textEditingController: widget.logic.captionController,
                               titleText: 'Title',
                               hintText: 'Insert your Caption',isLarge: true,
-                              needful: false),
+                              needful: false,
+                            isFocus: true,
+                            onTap: (){
+                              _scrollToBottom();
+                            }
+
+
+                          ),
                         ],
                       ),
 
@@ -211,6 +223,13 @@ class _FirstFormState extends State<FirstForm> {
       ),
     );
 
+  }
+  void _scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 }
 
