@@ -20,6 +20,13 @@ class WalletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String processName(String title) {
+      String processedTitle = title.length > 10
+          ? '${title.substring(0, 10)} ...'
+          : title;
+
+      return processedTitle;
+    }
     return GetBuilder<ProfileControllers>(
         init: logic,
         builder: (logic) {
@@ -145,25 +152,15 @@ class WalletScreen extends StatelessWidget {
                                   ),
                                   SizedBox(
                                     height: 10.h,
-                                    width: 56.w,
+
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 20),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment
-                                            .spaceBetween,
-                                        children: [
-                                          Text('${logic.model.firstName??""} ${logic.model.lastName??""}',
-                                            style: FontStyleApp.bodyMedium
-                                                .copyWith(
-                                                color: Color(0xffCCCCFF)
-                                            ),),
-                                          Text('08/28',
-                                            style: FontStyleApp.bodyMedium
-                                                .copyWith(
-                                                color: Color(0xffCCCCFF)
-                                            ),),
-                                        ],),
+                                      child:  Text('${logic.model.firstName??""} ${processName(logic.model.lastName??"")}',
+                                        style: FontStyleApp.bodyMedium
+                                            .copyWith(
+                                            color: Color(0xffCCCCFF)
+                                        ),),
                                     ),
                                   ),
 

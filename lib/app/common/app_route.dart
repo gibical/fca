@@ -84,13 +84,13 @@ class PageRoutes {
       name: PageRoutes.WRAPPER,
       transition: Transition.noTransition,
       page: () => MainWrapperScreen(),
-
     ),
 
     GetPage(
       name: PageRoutes.HOME,
       transition: Transition.noTransition,
       page: () =>  HomeScreen(),
+      binding: HomeState()
     ),
     GetPage(
       name: PageRoutes.LOGIN,

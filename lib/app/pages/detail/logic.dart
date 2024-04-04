@@ -13,6 +13,7 @@ import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/detail/widgets/text_to_text.dart';
 import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
+import 'package:mediaverse/app/pages/wallet/view.dart';
 import 'package:mediaverse/app/pages/wrapper/logic.dart';
 import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
 import 'package:path_provider/path_provider.dart';
@@ -56,6 +57,8 @@ class DetailController extends GetxController {
 
 
   var isEditAvaiblae = false.obs;
+
+
 
   @override
   void onInit() {
@@ -319,6 +322,7 @@ class DetailController extends GetxController {
     // TODO: implement onClose
     super.onClose();
     player.stop();
+
   }
 
 
@@ -761,4 +765,6 @@ class DetailController extends GetxController {
 
     Get.toNamed(PageRoutes.EDITPROFILE,arguments: [this,type]);
   }
+
+
 }

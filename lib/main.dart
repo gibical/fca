@@ -53,6 +53,7 @@ class _MyAppState extends State<MyApp> {
       theme: AppTheme.darkMode,
       darkTheme:  AppTheme.darkMode,
 
+
       // navigatorObservers: <NavigatorObserver>[MyApp.observer],
 
     );
