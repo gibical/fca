@@ -146,6 +146,7 @@ class EditProfileLogic extends GetxController implements RequestInterface {
   void onSucces(source, int reqCdoe) {
     // TODO: implement onSucces
     Constant.showMessege("Request Succesfuly ");
+    Get.back();
     isloading(false);
 
   }
