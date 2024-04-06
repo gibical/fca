@@ -32,7 +32,7 @@ class VideoLiveWidget extends StatefulWidget {
 }
 
 class _VideoLiveWidgetState extends State<VideoLiveWidget> {
-  late VideoPlayerController _controller;
+
 
   LiveController liveController = Get.find<LiveController>();
   late bool _isPlaying;
@@ -42,43 +42,39 @@ class _VideoLiveWidgetState extends State<VideoLiveWidget> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(
+    liveController.controllerVideoPlay = VideoPlayerController.network(
       '${widget.videoUrl}',
     )..initialize().then((_) {
       chewieController= ChewieController(
-        videoPlayerController: _controller,
+        videoPlayerController:    liveController.controllerVideoPlay,
         autoPlay: true,
         looping: true,
+
       );
       setState(() {
-   //     _isPlaying = true;
+
       });
-   //   _controller.play();
+
     });
-    // _isPlaying = false;
-    // _controller.addListener(() {
-    //   setState(() {
-    //     _sliderValue = _controller.value.position.inSeconds.toDouble();
-    //   });
-    // });
+
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    liveController.controllerVideoPlay.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return   _controller.value.isInitialized  ? Column(
+    return      liveController.controllerVideoPlay.value.isInitialized  ? Column(
       children: [
         Stack(
           children: [
             Screenshot(
               controller: liveController.screenshotController,
               child: AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
+                aspectRatio:    liveController.controllerVideoPlay.value.aspectRatio,
                 child:  Chewie(
                   controller: chewieController,
                 ),

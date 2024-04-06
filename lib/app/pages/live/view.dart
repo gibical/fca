@@ -162,6 +162,7 @@ class _LiveScreenState extends State<LiveScreen> {
 
                               IconButton(onPressed: (){
                                 liveController.takeScreenShot();
+                                liveController.controllerVideoPlay.pause();
                               },
                                   icon: Image.asset(AppIcon.screenshotIcon , scale: 5.8, color: Colors.white,)
                               ),

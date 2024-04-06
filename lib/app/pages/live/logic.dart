@@ -12,6 +12,7 @@ import 'package:mediaverse/app/pages/plus_section/logic.dart';
 import 'package:mediaverse/app/pages/plus_section/widget/first_form.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../common/app_config.dart';
 
@@ -158,7 +159,7 @@ class LiveController extends GetxController{
 
 
 
-
+  late VideoPlayerController controllerVideoPlay;
 
   //Screenshot and save to gallery
   ScreenshotController screenshotController = ScreenshotController();
@@ -200,6 +201,8 @@ class LiveController extends GetxController{
   takeScreenShot(){
     screenshotController.capture().then((Uint8List? image){
       saveScreenShot(image!);
+
+
 
     });
     //Get.snackbar('Success', 'The screenshot is saved in your gallery' , backgroundColor: Colors.green);
