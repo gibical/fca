@@ -681,7 +681,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
           filename: 'uploadfile'),
       'asset': assetid.toString(),
     });
-   print('PlusSectionLogic.uploadFileWithDio = ${textOutPut} - ${formData}');
+   print('PlusSectionLogic.uploadFileWithDio = ${imageOutPut} - ${formData}');
 
    dio.interceptors.add(MediaVerseConvertInterceptor());
 
@@ -704,8 +704,15 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       );
 
       if (response.statusCode! >= 200||response.statusCode! < 300) {
+        print('==================================================================================================');
+        print('==================================================================================================');
+        print('==================================================================================================');
+        print('==================================================================================================');
         print('File uploaded successfully = ${response.data}');
-
+        print('==================================================================================================');
+        print('==================================================================================================');
+        print('==================================================================================================');
+        print('==================================================================================================');
 
         Get.offAndToNamed(_getRouteByMedia(), arguments: {'id': postUploadedId});
 

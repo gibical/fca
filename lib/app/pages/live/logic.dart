@@ -96,7 +96,7 @@ class LiveController extends GetxController{
       isLoadingRecord.value = true;
 
       final token = GetStorage().read("token");
-      String apiUrl = '${Constant.HTTP_HOST}edit/channel/record';
+      String apiUrl = 'https://api.mediaverse.land/v2/jobs/channel-record';
       var response = await Dio().post(
         apiUrl,
         data: {
@@ -112,7 +112,7 @@ class LiveController extends GetxController{
           },
         ),
       );
-
+      print("statusCode: ${response.statusCode}");
       if (response.statusCode == 200) {
         print(response.data);
         isSuccessRecord.value = true;
@@ -134,7 +134,7 @@ class LiveController extends GetxController{
       isSuccessRecord.value = false;
 
       Get.snackbar('Error', "Try again!" ,
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.yellow,
           icon: Icon(Icons.info)
       );
     } finally {
@@ -163,21 +163,21 @@ class LiveController extends GetxController{
   //Screenshot and save to gallery
   ScreenshotController screenshotController = ScreenshotController();
 
-  saveScreenShot(Uint8List byte)async {
-
+  saveScreenShot(Uint8List byte) async {
     final time = DateTime.now();
     final name = 'Mediaverse $time';
 
-    File? saved  = await saveImage(byte);
+    File? savedImage = await saveImage(byte);
 
-    PlusSectionLogic logic= Get.put(PlusSectionLogic(),tag: "Save_${DateTime.now().millisecondsSinceEpoch}");
+    PlusSectionLogic logic = Get.put(PlusSectionLogic(), tag: "Save_${DateTime.now().millisecondsSinceEpoch}");
 
     logic.mediaMode = MediaMode.image;
-    logic.imageFile = saved!;
-    logic.imageOutPut = saved!.path;
+    logic.imageFile = savedImage!;
+    logic.imageOutPut = savedImage.path;
 
-    Get.to(FirstForm(logic),arguments: [logic]);
+    Get.to(FirstForm(logic), arguments: [logic]);
   }
+
   Future<File?> saveImage(Uint8List bytes) async {
     // Check storage permission (optional)
     // ...
@@ -186,10 +186,10 @@ class LiveController extends GetxController{
     final appDir = await getApplicationCacheDirectory();
 
     // Generate unique filename
-    final filename = "${DateTime.now().millisecondsSinceEpoch}.png";
+    final screenShotName = "${DateTime.now().millisecondsSinceEpoch}.png";
 
     // Create file object
-    final file = File('${appDir.path}/$filename');
+    final file = File('${appDir.path}/$screenShotName');
 
     // Write image bytes to file
     await file.writeAsBytes(bytes);
@@ -200,8 +200,8 @@ class LiveController extends GetxController{
   takeScreenShot(){
     screenshotController.capture().then((Uint8List? image){
       saveScreenShot(image!);
-    });
 
+    });
     //Get.snackbar('Success', 'The screenshot is saved in your gallery' , backgroundColor: Colors.green);
   }
 }

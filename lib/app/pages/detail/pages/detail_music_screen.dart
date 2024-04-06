@@ -1,4 +1,7 @@
+import 'package:chewie/chewie.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,6 +16,7 @@ import 'package:mediaverse/app/pages/detail/widgets/report_botton_sheet.dart';
 import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
 import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
 import 'package:sizer/sizer.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../common/app_config.dart';
 import '../../../common/app_icon.dart';
@@ -121,7 +125,7 @@ class DetailMusicScreen extends StatelessWidget {
                                                 showDialog(
                                                     context: context,
                                                     builder: (BuildContext context) {
-                                                      return VideoDialog(videoUrl: controller.musicDetails!['file']?['url'],controller: controller,);
+                                                      return PlayMusicDialog(videoUrl: controller.musicDetails!['file']?['url'],controller: controller,);
                                                     });
                                               }  catch (e) {
                                                 // TODO
@@ -266,7 +270,7 @@ class DetailMusicScreen extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 2.w),
                                 child: Text(
-                                    '${controller.musicDetails?['description']}',
+                                    '${controller.musicDetails?['description'] ?? ''}',
                                     style: GoogleFonts.inter(
                                         fontSize: 14.5,
                                         color: Colors.white.withOpacity(0.5))),
@@ -580,6 +584,130 @@ class DetailMusicScreen extends StatelessWidget {
               ],
             );
       }),
+    );
+  }
+}
+
+
+class PlayMusicDialog extends StatefulWidget {
+  final String videoUrl;
+  PlayMusicDialog({Key? key, required this.videoUrl, required this.controller}) : super(key: key);
+  final DetailController controller;
+
+  @override
+  _PlayMusicDialogState createState() => _PlayMusicDialogState();
+}
+
+class _PlayMusicDialogState extends State<PlayMusicDialog> {
+  late VideoPlayerController _controller;
+  late bool _isPlaying;
+  double _sliderValue = 0.0;
+
+  var chewieController ;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.network(
+      '${widget.videoUrl}',
+    )..initialize().then((_) {
+      chewieController= ChewieController(
+          videoPlayerController: _controller,
+          autoPlay: true,
+          looping: true,
+          allowFullScreen: false,
+          showOptions: false,
+
+        materialProgressColors: ChewieProgressColors(
+
+          playedColor: Colors.black.withOpacity(0.2),
+          handleColor: AppColor.primaryDarkColor
+        )
+      );
+      setState(() {
+        //     _isPlaying = true;
+      });
+      //   _controller.play();
+    });
+
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _isPlaying ? _controller.pause() : _controller.play();
+          _isPlaying = !_isPlaying;
+        });
+      },
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+
+
+
+          _controller.value.isInitialized  ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned.fill(child: Image.network(widget.controller.musicDetails?['thumbnails']['336x366'] , fit: BoxFit.cover,)),
+                    Opacity(
+                      opacity: 0.8,
+                      child: Chewie(
+                        controller: chewieController,
+                      ),
+                    ),
+
+                  ],
+                )
+              ),
+
+            ],
+          ) : CircularProgressIndicator(),
+          Positioned(
+            top: 0,
+            right: 0,
+            left: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.close),
+                  color: Colors.white,
+                  onPressed: () {
+                  Get.back();
+
+
+                  },
+                ),
+                IconButton(
+                  icon: Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow),
+                  color: Colors.white,
+                  onPressed: () {
+                    setState(() {
+                      _isPlaying ? _controller.pause() : _controller.play();
+                      _isPlaying = !_isPlaying;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+
+
+        ],
+      ),
     );
   }
 }

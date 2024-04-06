@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -73,10 +74,11 @@ class DetailImageScreen extends StatelessWidget {
                         SizedBox(
                           height: 2.h,
                         ),
-                        Text('${imageController.imageDetails?['name']}', style: FontStyleApp.titleMedium.copyWith(
-                            color: AppColor.whiteColor,
-                            fontWeight: FontWeight.w600
-                        ),),
+                 Text('${imageController.imageDetails?['name']}', style: FontStyleApp.titleMedium.copyWith(
+                              color: AppColor.whiteColor,
+                              fontWeight: FontWeight.w600
+                          ),),
+
                         SizedBox(
                           height: 1.h,
                         ),

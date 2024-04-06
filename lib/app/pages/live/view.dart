@@ -136,7 +136,9 @@ class _LiveScreenState extends State<LiveScreen> {
                                                           backgroundColor: AppColor.primaryLightColor,
                                                         ),
                                                         onPressed: () {
-                                                          liveController.postTimeRecord(liveController.liveDetails?['id']);
+                                                         liveController.postTimeRecord(liveController.liveDetails?['id']);
+
+
 
                                                         },
                                                         child:liveController.isLoadingRecord.value ?CircularProgressIndicator(color: Colors.white,): Text('Start recording' , style: GoogleFonts.inter(

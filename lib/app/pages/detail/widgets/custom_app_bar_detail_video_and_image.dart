@@ -30,8 +30,8 @@ class CustomAppBarVideoAndImageDetailWidget extends StatelessWidget {
     ImageProvider? imageProvider;
 
     try {
-      imageProvider = NetworkImage(selectedItem['thumbnails']['336x366']);
-      imageURL = selectedItem['thumbnails']['336x366'];
+      imageProvider = NetworkImage(detailController.imageDetails?['file']?['url']);
+      imageURL = detailController.imageDetails?['file']?['url'];
     } catch (e) {
 
       imageProvider = AssetImage('assets/images/tum_image.jpeg');
@@ -48,8 +48,11 @@ class CustomAppBarVideoAndImageDetailWidget extends StatelessWidget {
             }) : showDialog(
              context: context,
              builder: (BuildContext context) {
-               return FullScreenDialogWidget(imageURL);
+               return FullScreenDialogWidget(detailController.imageDetails?['file']?['url']);
              });
+
+
+
         },
         child: Stack(
           children: [

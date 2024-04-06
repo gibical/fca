@@ -91,7 +91,7 @@ class DetailVideoScreen extends StatelessWidget {
                         SizedBox(
                           height: 1.h,
                         ),
-                        Text('${videoController.videoDetails?['description']}',
+                        Text('${videoController.videoDetails?['description'] ?? ''}',
                           style: FontStyleApp.bodyMedium.copyWith(
                             color: AppColor.grayLightColor.withOpacity(0.8),
                           ),),
