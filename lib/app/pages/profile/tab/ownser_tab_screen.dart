@@ -84,9 +84,10 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                   children: [
                     RefreshIndicator(
                         onRefresh: ()async{
+                          logic.onGetAssetsAll();
 
 
-                          // logic.onGetAssetsPhoto();
+
 
                         },child: AllTabScreen(logic.myAssets)),
                     Container(

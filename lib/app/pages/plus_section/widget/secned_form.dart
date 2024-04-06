@@ -100,8 +100,8 @@ class _SecendFormState extends State<SecendForm> {
                                 textEditingController: logic
                                     .editibaleController,
 
-                                titleText: 'Check Forkability status',
-                                hintText: 'Choose Forkability status',
+                                titleText: 'Check Editable status',
+                                hintText: 'Choose Editable status',
                                 needful: false),
                           ],
                         ),
@@ -120,6 +120,7 @@ class _SecendFormState extends State<SecendForm> {
                             CustomTextFieldPlusWidget(
                                 context: context,
                                 textEditingController: logic.priceController,
+
 
 
                                 titleText: 'Title',

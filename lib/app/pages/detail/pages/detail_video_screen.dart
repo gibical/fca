@@ -29,278 +29,252 @@ class DetailVideoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: ()async{
+        if(Get.arguments['idAssetMedia'] == "idAssetMedia"){
+          Get.offAllNamed(PageRoutes.WRAPPER);
+        }else{
+          Get.back();
+        }
 
-      backgroundColor: AppColor.primaryDarkColor,
-      bottomNavigationBar: Obx(() {
-        if (videoController.isLoadingVideos.value) {
-          return Center(child: CircularProgressIndicator());
-        } else {
-          if (videoController.videoDetails != null &&
-              videoController.videoDetails!.containsKey('asset') &&
-              videoController.videoDetails!['asset'] != null &&
-              videoController.videoDetails!['asset'].containsKey('plan')) {
-            int plan = videoController.videoDetails!['asset']['plan'];
-            print(plan);
-            if (plan == 1) {
-              return SizedBox();
-            } else if ((plan == 2 || plan == 3)) {
-              return BuyCardWidget(
-                  selectedItem: videoController.videoDetails,
-                  title: videoController.videoDetails!['asset']['plan'] == 2
-                      ? 'Ownership'
-                      : videoController.videoDetails!['asset']['plan'] == 3
-                      ? 'Subscribe'
-                      : '',
-                  price: videoController.videoDetails!['asset']['price']
-              );
+        return false;
+      },
+      child: Scaffold(
+
+        backgroundColor: AppColor.primaryDarkColor,
+        bottomNavigationBar: Obx(() {
+          if (videoController.isLoadingVideos.value) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            if (videoController.videoDetails != null &&
+                videoController.videoDetails!.containsKey('asset') &&
+                videoController.videoDetails!['asset'] != null &&
+                videoController.videoDetails!['asset'].containsKey('plan')) {
+              int plan = videoController.videoDetails!['asset']['plan'];
+              print(plan);
+              if (plan == 1) {
+                return SizedBox();
+              } else if ((plan == 2 || plan == 3)) {
+                return BuyCardWidget(
+                    selectedItem: videoController.videoDetails,
+                    title: videoController.videoDetails!['asset']['plan'] == 2
+                        ? 'Ownership'
+                        : videoController.videoDetails!['asset']['plan'] == 3
+                        ? 'Subscribe'
+                        : '',
+                    price: videoController.videoDetails!['asset']['price']
+                );
+              } else {
+                return SizedBox();
+              }
             } else {
               return SizedBox();
             }
-          } else {
-            return SizedBox();
           }
-        }
-      }),
+        }),
 
-      body: Obx(() {
-        return videoController.isLoadingVideos.value ? Center(
-            child: CircularProgressIndicator()) : Stack(
-          children: [
-            CustomScrollView(
-              slivers: [
-                CustomAppBarVideoAndImageDetailWidget(
-                  selectedItem: videoController.videoDetails,
-                  isVideo: true,
-                  detailController: videoController,),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 6.5.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        Text('${videoController.videoDetails?['name']}',
-                          style: FontStyleApp.titleMedium.copyWith(
-                              color: AppColor.whiteColor,
-                              fontWeight: FontWeight.w600
-                          ),),
+        body: Obx(() {
+          return videoController.isLoadingVideos.value ? Center(
+              child: CircularProgressIndicator()) : Stack(
+            children: [
+              CustomScrollView(
+                slivers: [
+                  CustomAppBarVideoAndImageDetailWidget(
+                    selectedItem: videoController.videoDetails,
+                    isVideo: true,
+                    detailController: videoController,),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 6.5.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          Text('${videoController.videoDetails?['name']}',
+                            style: FontStyleApp.titleMedium.copyWith(
+                                color: AppColor.whiteColor,
+                                fontWeight: FontWeight.w600
+                            ),),
 
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        Text('${videoController.videoDetails?['description'] ?? ''}',
-                          style: FontStyleApp.bodyMedium.copyWith(
-                            color: AppColor.grayLightColor.withOpacity(0.8),
-                          ),),
+                          SizedBox(
+                            height: 1.h,
+                          ),
+                          Text('${videoController.videoDetails?['description'] ?? ''}',
+                            style: FontStyleApp.bodyMedium.copyWith(
+                              color: AppColor.grayLightColor.withOpacity(0.8),
+                            ),),
 
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 3.w,
-                            ),
-                            SizedBox(
-                              width: 2.w,
-                            ),
-                            if(videoController.videoDetails?['asset'] !=
-                                null)Text(videoController
-                                .videoDetails?['asset']['user']['username'],
-                              style: FontStyleApp.bodySmall.copyWith(
-                                  color: AppColor.grayLightColor.withOpacity(
-                                      0.8),
-                                  fontSize: 13
-                              ),),
-                            Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                Get.bottomSheet(
-                                    ReportBottomSheet(videoController));
-                              },
-                              child: Text('Report',
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 3.w,
+                              ),
+                              SizedBox(
+                                width: 2.w,
+                              ),
+                              if(videoController.videoDetails?['asset'] !=
+                                  null)Text(videoController
+                                  .videoDetails?['asset']['user']['username'],
                                 style: FontStyleApp.bodySmall.copyWith(
                                     color: AppColor.grayLightColor.withOpacity(
                                         0.8),
                                     fontSize: 13
                                 ),),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        Row(
-                          children: [
-                            InkWell(
+                              Spacer(),
+                              GestureDetector(
                                 onTap: () {
-                                  videoController.screenShotOfTheVideo();
+                                  Get.bottomSheet(
+                                      ReportBottomSheet(videoController));
                                 },
-                                child: SvgPicture.asset(
-                                  "assets/icons/icon__screenshot.svg",
-                                  width: 6.w,
-                                )),
-
-                            SizedBox(
-                              width: 3.w,
-                            ),
-                            InkWell(
-                                onTap: () {
-                                  videoController.videoConvertToAudio();
-                                },
-                                child: SvgPicture.asset(
-                                  "assets/icons/icon__single-convert-to-audio.svg",
-                                  width: 6.w,
-                                )),
-                            SizedBox(
-                              width: 3.w,
-                            ),
-
-                            InkWell(
-                                onTap: () {
-                                  videoController.sendShareYouTube();
-                                },
-                                child: SvgPicture.asset(
-                                  "assets/icons/icon__video-white.svg",
-                                  width: 6.w,
-                                )),
-
-                            SizedBox(
-                              width: 3.w,
-                            ),
-                            GestureDetector(
-                              onTap: (){
-                                Get.find<MediaSuitController>().setDataEditVideo(videoController.videoDetails?['name'] ?? '' ,videoController.videoDetails?['file']['url'] );
-                                Get.toNamed(PageRoutes.MEDIASUIT);
-                              },
-                              child:  Icon(Icons.edit),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 3.h,
-                        ),
-
-                        Wrap(
-                          children: [
-                            //
-                            if(videoController.videoDetails?['genre'] !=
-                                null) CardMarkSinglePageWidget(label: 'Genre',
-                                type: (videoController.videoDetails?['genre']
-                                    .length > 5)
-                                    ? '${videoController.videoDetails?['genre']
-                                    .substring(0, 5)}...'
-                                    : videoController.videoDetails?['genre']),
-                            CardMarkSinglePageWidget(label: 'Type',
-                                type: videoController.getTypeString(
-                                    videoController.videoDetails?['type'] ??
-                                        1)),
-                            CardMarkSinglePageWidget(label: 'Lanuage',
-                                type: '${videoController
-                                    .videoDetails?['language']}'),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 4.h,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            int itemId = videoController
-                                .videoDetails?['asset_id'];
-                            print(itemId);
-                            Get.toNamed(
-                                PageRoutes.COMMENT, arguments: {'id': itemId});
-                          },
-                          child: CustomCommentSinglePageWidget(),
-                        ),
-                        SizedBox(
-                          height: 30.h,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-              ],
-            ),
-            Obx(() {
-              return Visibility(
-                visible: videoController.isEditAvaiblae.isTrue,
-
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    width: 100.w,
-                    height: 22.h,
-                    decoration: BoxDecoration(
-                        color: "191b47".toColor(),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(15.sp),
-                          topLeft: Radius.circular(15.sp),
-                        ),
-                        border: Border(
-                            top: BorderSide(
-                                color: Colors.white.withOpacity(0.3),
-                                width: 0.6),
-                            left: BorderSide(
-                                color: Colors.white.withOpacity(0.3),
-                                width: 0.8),
-
-                            right: BorderSide(
-                                color: Colors.white.withOpacity(0.3),
-                                width: 0.1)
-                        )
-                    ),
-
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-
-                      children: [
-                        Container(
-                          width: 100.w,
-                          height: 7.h,
-                          decoration: BoxDecoration(
-                              color: Color(0xff4E4E61).withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(10.sp),
-                              border: Border(
-                                  top: BorderSide(
-                                      color: Colors.white.withOpacity(0.3),
-                                      width: 0.6),
-                                  left: BorderSide(
-                                      color: Colors.white.withOpacity(0.3),
-                                      width: 0.8),
-
-                                  right: BorderSide(
-                                      color: Colors.white.withOpacity(0.3),
-                                      width: 0.1)
-                              )
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 3.w),
-                          child: Row(
-                            children: [
-                              Expanded(child: Text(
-                                  '${Constant.getDropDownByPlan(videoController.videoDetails!['plan'].toString())}')),
-                              if(!videoController.videoDetails!['plan'].toString().contains("1"))  Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text("${videoController.videoDetails!['price'].toString()} €"),
-                                  SizedBox(width: 3.w,),
-                                  SvgPicture.asset("assets/images/download.svg"),
-                                ],
-                              )
+                                child: Text('Report',
+                                  style: FontStyleApp.bodySmall.copyWith(
+                                      color: AppColor.grayLightColor.withOpacity(
+                                          0.8),
+                                      fontSize: 13
+                                  ),),
+                              ),
                             ],
                           ),
-                        ),
-                        SizedBox(height: 3.h,),
-                        Container(
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          Row(
+                            children: [
+                              InkWell(
+                                  onTap: () {
+                                    videoController.screenShotOfTheVideo();
+                                  },
+                                  child: SvgPicture.asset(
+                                    "assets/icons/icon__screenshot.svg",
+                                    width: 6.w,
+                                  )),
+
+                              SizedBox(
+                                width: 3.w,
+                              ),
+                              InkWell(
+                                  onTap: () {
+                                    videoController.videoConvertToAudio();
+                                  },
+                                  child: SvgPicture.asset(
+                                    "assets/icons/icon__single-convert-to-audio.svg",
+                                    width: 6.w,
+                                  )),
+                              SizedBox(
+                                width: 3.w,
+                              ),
+
+                              InkWell(
+                                  onTap: () {
+                                    videoController.sendShareYouTube();
+                                  },
+                                  child: SvgPicture.asset(
+                                    "assets/icons/icon__video-white.svg",
+                                    width: 6.w,
+                                  )),
+
+                              SizedBox(
+                                width: 3.w,
+                              ),
+                              GestureDetector(
+                                onTap: (){
+                                  Get.find<MediaSuitController>().setDataEditVideo(videoController.videoDetails?['name'] ?? '' ,videoController.videoDetails?['file']['url'] );
+                                  Get.toNamed(PageRoutes.MEDIASUIT);
+                                },
+                                child:  Icon(Icons.edit),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 3.h,
+                          ),
+
+                          Wrap(
+                            children: [
+                              //
+                              if(videoController.videoDetails?['genre'] !=
+                                  null) CardMarkSinglePageWidget(label: 'Genre',
+                                  type: (videoController.videoDetails?['genre']
+                                      .length > 5)
+                                      ? '${videoController.videoDetails?['genre']
+                                      .substring(0, 5)}...'
+                                      : videoController.videoDetails?['genre']),
+                              CardMarkSinglePageWidget(label: 'Type',
+                                  type: videoController.getTypeString(
+                                      videoController.videoDetails?['type'] ??
+                                          1)),
+                              CardMarkSinglePageWidget(label: 'Lanuage',
+                                  type: '${videoController
+                                      .videoDetails?['language']}'),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 4.h,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              int itemId = videoController
+                                  .videoDetails?['asset_id'];
+                              print(itemId);
+                              Get.toNamed(
+                                  PageRoutes.COMMENT, arguments: {'id': itemId});
+                            },
+                            child: CustomCommentSinglePageWidget(),
+                          ),
+                          SizedBox(
+                            height: 30.h,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+              Obx(() {
+                return Visibility(
+                  visible: videoController.isEditAvaiblae.isTrue,
+
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: 100.w,
+                      height: 22.h,
+                      decoration: BoxDecoration(
+                          color: "191b47".toColor(),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(15.sp),
+                            topLeft: Radius.circular(15.sp),
+                          ),
+                          border: Border(
+                              top: BorderSide(
+                                  color: Colors.white.withOpacity(0.3),
+                                  width: 0.6),
+                              left: BorderSide(
+                                  color: Colors.white.withOpacity(0.3),
+                                  width: 0.8),
+
+                              right: BorderSide(
+                                  color: Colors.white.withOpacity(0.3),
+                                  width: 0.1)
+                          )
+                      ),
+
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+
+                        children: [
+                          Container(
                             width: 100.w,
-                            height: 6.h,
+                            height: 7.h,
                             decoration: BoxDecoration(
                                 color: Color(0xff4E4E61).withOpacity(0.5),
-                                borderRadius: BorderRadius.circular(100.sp),
+                                borderRadius: BorderRadius.circular(10.sp),
                                 border: Border(
                                     top: BorderSide(
                                         color: Colors.white.withOpacity(0.3),
@@ -314,33 +288,70 @@ class DetailVideoScreen extends StatelessWidget {
                                         width: 0.1)
                                 )
                             ),
+                            padding: EdgeInsets.symmetric(horizontal: 3.w),
+                            child: Row(
+                              children: [
+                                Expanded(child: Text(
+                                    '${Constant.getDropDownByPlan(videoController.videoDetails!['plan'].toString())}')),
+                                if(!videoController.videoDetails!['plan'].toString().contains("1"))  Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text("${videoController.videoDetails!['price'].toString()} €"),
+                                    SizedBox(width: 3.w,),
+                                    SvgPicture.asset("assets/images/download.svg"),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 3.h,),
+                          Container(
+                              width: 100.w,
+                              height: 6.h,
+                              decoration: BoxDecoration(
+                                  color: Color(0xff4E4E61).withOpacity(0.5),
+                                  borderRadius: BorderRadius.circular(100.sp),
+                                  border: Border(
+                                      top: BorderSide(
+                                          color: Colors.white.withOpacity(0.3),
+                                          width: 0.6),
+                                      left: BorderSide(
+                                          color: Colors.white.withOpacity(0.3),
+                                          width: 0.8),
 
-                            child: MaterialButton(
-                              padding: EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(1000)
+                                      right: BorderSide(
+                                          color: Colors.white.withOpacity(0.3),
+                                          width: 0.1)
+                                  )
                               ),
-                              onPressed: () {
-                                videoController.sendToEditProfile(PostType.video);
-                              },
-                              child: Center(
-                                child: Text("Edit information",
-                                  style: TextStyle(color: "83839C".toColor()),),
-                              ),
-                            )
-                        ),
 
-                      ],
+                              child: MaterialButton(
+                                padding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(1000)
+                                ),
+                                onPressed: () {
+                                  videoController.sendToEditProfile(PostType.video);
+                                },
+                                child: Center(
+                                  child: Text("Edit information",
+                                    style: TextStyle(color: "83839C".toColor()),),
+                                ),
+                              )
+                          ),
+
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            })
-          ],
-        );
-      }),
+                );
+              })
+            ],
+          );
+        }),
 
 
+      ),
     );
   }
 
