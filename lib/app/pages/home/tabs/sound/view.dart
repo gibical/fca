@@ -93,7 +93,7 @@ class SoundTabScreen extends StatelessWidget {
                     return Container(
                       height: 40.h,
                       child: GridView.builder(
-                          itemCount: 4,
+                          itemCount:list.length,
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2
                       ), itemBuilder: (s,q){
                             var item = list.elementAt(q);
@@ -105,7 +105,12 @@ class SoundTabScreen extends StatelessWidget {
                                 child: Stack(
                                   children: [
                                     SizedBox.expand(
-                                      child: Image.asset("assets/images/sound_bg.png"),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: (item['thumbnails'].toString().length > 3)
+                                            ? Image.network("${item['thumbnails']['336x366']}", fit: BoxFit.cover)
+                                            : Image.asset("assets/images/tum_image.jpeg", fit: BoxFit.cover),
+                                      ),
                                     ),
 
                                     SizedBox.expand(
