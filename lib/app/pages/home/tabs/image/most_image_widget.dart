@@ -35,7 +35,7 @@ class MostImageWidget extends GetView<HomeLogic> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20.sp),
                       child: (elementAt['thumbnails'].toString().length>3)?Image.network("${elementAt['thumbnails']['336x366']}", fit: BoxFit.cover)
-                          :Image.asset("assets/images/tum_sound.jpeg", fit: BoxFit.cover),
+                          :Image.asset("assets/images/tum_image.jpeg", fit: BoxFit.cover),
                     )
                     ,
                   ),

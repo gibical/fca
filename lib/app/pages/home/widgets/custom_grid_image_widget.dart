@@ -77,7 +77,7 @@ class CustomGridImageWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           child: (data['thumbnails'].toString().length > 3)
               ? Image.network("${data['thumbnails']['336x366']}", fit: BoxFit.cover)
-              : Image.asset("assets/images/tum_video.jpeg", fit: BoxFit.cover),
+              : Image.asset("assets/images/tum_image.jpeg", fit: BoxFit.cover),
         ),
       ),
     );
