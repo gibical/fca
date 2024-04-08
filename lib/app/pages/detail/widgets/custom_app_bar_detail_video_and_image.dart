@@ -189,10 +189,13 @@ class _VideoDialogState extends State<VideoDialog> {
                   icon: Icon(Icons.close),
                   color: Colors.white,
                   onPressed: () {
-                    if (_isPlaying) {
+                    try {
                       _controller.pause();
+                    }  catch (e) {
+                      // TODO
                     }
-                    Navigator.of(context).pop();
+
+                  Get.back();
                   },
                 ),
                 IconButton(
