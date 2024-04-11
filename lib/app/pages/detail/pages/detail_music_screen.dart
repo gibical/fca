@@ -541,7 +541,7 @@ class DetailMusicScreen extends StatelessWidget {
                                     if(!controller.musicDetails!['plan'].toString().contains("1"))  Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text("${controller.musicDetails!['price'].toString()} €"),
+                                        Text("${(controller.musicDetails!['price']/100).toString()} €"),
                                         SizedBox(width: 3.w,),
                                         SvgPicture.asset("assets/images/download.svg"),
                                       ],
@@ -651,6 +651,7 @@ class _PlayMusicDialogState extends State<PlayMusicDialog> {
 
   @override
   Widget build(BuildContext context) {
+    print('_PlayMusicDialogState.build = ${widget.controller.musicDetails?['thumbnails']}');
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -672,7 +673,12 @@ class _PlayMusicDialogState extends State<PlayMusicDialog> {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    Positioned.fill(child: Image.network(widget.controller.musicDetails?['thumbnails']['336x366'] , fit: BoxFit.cover,)),
+                  (widget.controller.musicDetails!['thumbnails'].toString().length>3)?
+                  Positioned.fill(child: Image.network(widget.controller.musicDetails?['thumbnails']['336x366'] , fit: BoxFit.cover,)):SizedBox.expand(
+                    child: Image.asset(
+                        "assets/images/tum_sound.jpeg",
+                        fit: BoxFit.cover),
+                  ),
                     Opacity(
                       opacity: 0.8,
                       child: Chewie(

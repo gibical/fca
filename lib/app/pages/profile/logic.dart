@@ -260,6 +260,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   void praseJsonFromGetAllMyAssets(source) {
+    print('ProfileControllers.praseJsonFromGetAllMyAssets = ${source}');
     myAssets = FromJsonGetAllAsstes.fromJson(jsonDecode(source));
     update();
   }

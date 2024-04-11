@@ -21,7 +21,7 @@ class LiveScreen extends StatefulWidget {
 class _LiveScreenState extends State<LiveScreen> {
   HomeLogic logic = Get.find<HomeLogic>();
 
-  LiveController liveController = Get.find<LiveController>();
+  LiveController liveController = Get.put(LiveController(),tag: "time_${DateTime.now().millisecond}");
 
   late Widget videoWidget;
 
@@ -34,6 +34,13 @@ class _LiveScreenState extends State<LiveScreen> {
       print('_LiveScreenState.initState = ${liveController.liveDetails?['link'] ?? ''}');
 
     });
+
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    liveController.controllerVideoPlay.dispose();
   }
 
   @override
@@ -53,7 +60,7 @@ class _LiveScreenState extends State<LiveScreen> {
                       children: [
 
                         VideoLiveWidget(
-                            videoUrl: liveController.liveDetails?['link'] ?? ''),
+                            videoUrl: liveController.liveDetails?['link'] ?? '',liveController: liveController,),
                         SizedBox(height: 2.h),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 5.w),
@@ -203,9 +210,8 @@ class _LiveScreenState extends State<LiveScreen> {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                final channelId = logic.channels[index].id;
-                                Get.offAndToNamed(PageRoutes.LIVE,
-                                    arguments: {'channelId': channelId});
+
+                                _sendtoNewPage(index);
                               },
                               child: BestChannelsWidget(
                                   model: logic.channels.elementAt(index)),
@@ -217,6 +223,15 @@ class _LiveScreenState extends State<LiveScreen> {
               ],
             );
     }));
+  }
+
+  void _sendtoNewPage(index) async{
+    final channelId = logic.channels[index].id;
+    liveController.controllerVideoPlay.pause();
+    await Get.toNamed(PageRoutes.LIVE,
+        arguments: {'channelId': channelId} ,preventDuplicates: false);
+    liveController.controllerVideoPlay.play();
+
   }
 }
 

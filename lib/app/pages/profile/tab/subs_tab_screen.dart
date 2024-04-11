@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:focus_detector/focus_detector.dart';
+import 'ownser_tab_screen.dart' as own;
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mediaverse/app/pages/home/logic.dart';
@@ -15,6 +16,7 @@ import 'package:sizer/sizer.dart';
 import '../../../common/app_color.dart';
 import '../../../common/app_icon.dart';
 import '../widgets/GridMainWidget.dart';
+import 'ownser_tab_screen.dart';
 
 
 class SubscrTabScreen extends StatelessWidget {
@@ -81,165 +83,11 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                 controller: _tabController,
                 children: [
 
-                  FocusDetector(
-                    onFocusGained: () {
-
-                    },
-                    child: Obx(() {
-                      if (logic.isloading5.value) {
-                        return Center(
-                          child: Container(
-                            child: Lottie.asset(
-                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                          ),
-                        );
-                      }
-                      return (logic.emptySubAll)?Center(
-                        child: Container(
-
-                          margin: EdgeInsets.only(
-                            top: 13.h,
-                            left: 4.w
-                          ),
-                          child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
-                        ),
-                      ):  AllTabScreen(logic.mysubsAssets);
-                    }),
-                  ),
-                  FocusDetector(
-                    onFocusGained: () {
-                      if (logic.subImages.length == 0) {
-                        logic.onGetSubsAssetsPhoto();
-                      }
-                    },
-                    child:RefreshIndicator(
-                      onRefresh: ()async{
-
-                        logic.onGetSubsAssetsPhoto();
-
-                      },
-                      child: Obx(() {
-                        if (logic.isloading6.value) {
-                          return Center(
-                            child: Container(
-                              child: Lottie.asset(
-                                  "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                            ),
-                          );
-                        }
-                        return (logic.emptySubImages)?Center(
-                          child: Container(
-                          
-                            margin: EdgeInsets.only(
-                              top: 13.h,
-                              left: 4.w
-                            ),
-                            child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
-                          ),
-                        ): CustomTabScreen(logic.subImages);
-                      }),
-                    ),
-                  ),
-                  FocusDetector(
-                    onFocusGained: () {
-                      if (logic.subVideos.length == 0) {
-                        logic.onGetSubsAssetsVideo();
-                      }
-                    },
-                    child: Obx(() {
-                      if (logic.isloading7.value) {
-                        return Center(
-                          child: Container(
-                            width: 10.w,
-                            child: Lottie.asset(
-                                "assets/json/Y8IBRQ38bK.json", height: 20.h),
-                          ),
-                        );
-                      }
-                      return (logic.emptySubVideos)?Center(
-                        child: Container(
-                        
-                          margin: EdgeInsets.only(
-                            top: 13.h,
-                            left: 4.w
-                          ),
-                          child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
-                        ),
-                      ): RefreshIndicator(
-                          onRefresh: ()async{
-
-                            logic.onGetSubsAssetsVideo();
-
-                          },child: CustomTabScreen(logic.subVideos));
-                    }),
-                  ),
-                  FocusDetector(
-                    onFocusGained: () {
-                      if (logic.subAudios.length == 0) {
-                        logic.onGetSubsAssetsAudioes();
-                      }
-                    },
-                    child: Obx(() {
-                      if (logic.isloading8.value) {
-                        return Center(
-                          child: Container(
-                            child: Lottie.asset(
-                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                          ),
-                        );
-                      }
-                      return (logic.emptySubAudios)?Center(
-                        child: Container(
-                        
-                          margin: EdgeInsets.only(
-                            top: 13.h,
-                            left: 4.w
-                          ),
-                          child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
-                        ),
-                      ): RefreshIndicator(
-                          onRefresh: ()async{
-
-                            logic.onGetSubsAssetsAudioes();
-
-                          },child: CustomTabScreen(logic.subAudios));
-                    }),
-                  ),
-                  FocusDetector(
-                    onFocusGained: () {
-                      if (logic.subText.length == 0) {
-                        logic.onGetSubsAssetsText();
-                      }
-                    },
-                    child: Obx(() {
-                      if (logic.isloading9.value) {
-                        return Center(
-                          child: Container(
-                            child: Lottie.asset(
-                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                          ),
-                        );
-                      }
-                      return (logic.emptySubText)?RefreshIndicator(
-                        onRefresh: ()async{
-
-
-                          logic.onGetSubsAssetsText();
-
-                        },
-                        child: Center(
-                          child: Container(
-                          
-                            margin: EdgeInsets.only(
-                              top: 13.h,
-                              left: 4.w
-                            ),
-                            child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
-                          ),
-                        ),
-                      ): CustomTabScreen(logic.subText);
-                    }),
-                  ),
+                 CustomTabScreen(logic.ownerImages,"profile/subscriptions"),
+                 CustomTabScreen(logic.ownerImages,"profile/subscriptions/images"),
+                 CustomTabScreen(logic.ownerImages,"profile/subscriptions/videos"),
+                 CustomTabScreen(logic.ownerImages,"profile/subscriptions/audios"),
+                 CustomTabScreen(logic.ownerImages,"profile/subscriptions/texts"),
 
                 ],
               ),
@@ -378,50 +226,3 @@ class AllTabScreen extends StatelessWidget {
 
 }
 
-class CustomTabScreen extends StatelessWidget {
-
-
-  List<dynamic> list;
-
-  CustomTabScreen(this.list);
-
-  @override
-  Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: ()async{
-
-
-      //  logic.onGetSubsAssetsText();
-
-      },
-      child: Container(
-
-          padding: EdgeInsets.only(top: 13.h,bottom: 13.h),
-          height: 90.h,
-          child: GridView(
-
-
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2),
-            children: list
-                .asMap()
-                .entries
-                .map((e) {
-              return GridPostView(list.elementAt(e.key));
-            }).toList(),
-
-          )),
-    );
-  }
-
-  List<T> randomisedList<T>(List<T> list) {
-    for (int i = list.length - 1; i > 0; i--) {
-      int randomIndex = (i + new Random().nextInt(list.length - i)) as int;
-      T temp = list[i];
-      list[i] = list[randomIndex];
-      list[randomIndex] = temp;
-    }
-    return list;
-  }
-
-}

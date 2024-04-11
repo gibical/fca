@@ -27,8 +27,11 @@ class EditProfileLogic extends GetxController implements RequestInterface {
 
   late ApiRequster apiRequster;
   DetailController detailController;
-  EditProfileLogic(this.detailController);
+  EditProfileLogic(this.detailController,this.id);
   PostType type = Get.arguments[1];
+  String id ;
+
+
   @override
   void onReady() {
     // TODO: implement onReady
@@ -84,8 +87,8 @@ class EditProfileLogic extends GetxController implements RequestInterface {
     }
     print('PlusSectionLogic.sendMainRequest = ${body}');
 
-     apiRequster.request(_getUrlByMediaEnum(), ApiRequster.MHETOD_POST, 1,
-         body: body, useToken: true);
+     apiRequster.request(_getUrlByMediaEnum()+"/${id}", ApiRequster.MHETOD_PUT, 1,
+         body: body, useToken: true, );
   }
   String _getUrlByMediaEnum() {
     switch (type) {

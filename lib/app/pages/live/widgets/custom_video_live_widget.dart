@@ -24,8 +24,9 @@ import '../logic.dart';
 
 class VideoLiveWidget extends StatefulWidget {
   final String videoUrl;
+  LiveController liveController;
 
-   VideoLiveWidget({Key? key, required this.videoUrl}) : super(key: key);
+   VideoLiveWidget({Key? key, required this.videoUrl, required this.liveController}) : super(key: key);
 
   @override
   _VideoLiveWidgetState createState() => _VideoLiveWidgetState();
@@ -34,7 +35,6 @@ class VideoLiveWidget extends StatefulWidget {
 class _VideoLiveWidgetState extends State<VideoLiveWidget> {
 
 
-  LiveController liveController = Get.find<LiveController>();
   late bool _isPlaying;
   double _sliderValue = 0.0;
   var chewieController ;
@@ -42,11 +42,11 @@ class _VideoLiveWidgetState extends State<VideoLiveWidget> {
   @override
   void initState() {
     super.initState();
-    liveController.controllerVideoPlay = VideoPlayerController.network(
+   widget. liveController.controllerVideoPlay = VideoPlayerController.network(
       '${widget.videoUrl}',
     )..initialize().then((_) {
       chewieController= ChewieController(
-        videoPlayerController:    liveController.controllerVideoPlay,
+        videoPlayerController:     widget.liveController.controllerVideoPlay,
         autoPlay: true,
         looping: true,
 
@@ -61,28 +61,44 @@ class _VideoLiveWidgetState extends State<VideoLiveWidget> {
 
   @override
   void dispose() {
-    liveController.controllerVideoPlay.dispose();
+    widget. liveController.controllerVideoPlay.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return      liveController.controllerVideoPlay.value.isInitialized  ? Column(
-      children: [
-        Stack(
-          children: [
-            Screenshot(
-              controller: liveController.screenshotController,
-              child: AspectRatio(
-                aspectRatio:    liveController.controllerVideoPlay.value.aspectRatio,
-                child:  Chewie(
-                  controller: chewieController,
+    return      widget. liveController.controllerVideoPlay.value.isInitialized  ?FocusDetector(
+      onFocusLost: (){
+        try {
+          widget.   liveController.controllerVideoPlay.pause();
+        } on Exception catch (e) {
+          // TODO
+        }
+      },
+      onFocusGained: (){
+        try {
+          widget. liveController.controllerVideoPlay.play();
+        } on Exception catch (e) {
+          // TODO
+        }
+      },
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Screenshot(
+                controller:  widget.liveController.screenshotController,
+                child: AspectRatio(
+                  aspectRatio:   widget.  liveController.controllerVideoPlay.value.aspectRatio,
+                  child:  Chewie(
+                    controller: chewieController,
+                  ),
                 ),
               ),
-            ),
-])
+      ])
 
-      ],
+        ],
+      ),
     ): Padding(
       padding:  EdgeInsets.symmetric(vertical: 5.h),
       child: CircularProgressIndicator(),

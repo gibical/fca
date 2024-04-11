@@ -296,7 +296,7 @@ class DetailVideoScreen extends StatelessWidget {
                                 if(!videoController.videoDetails!['plan'].toString().contains("1"))  Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Text("${videoController.videoDetails!['price'].toString()} €"),
+                                    Text("${(videoController.videoDetails!['price']/100).toString()} €"),
                                     SizedBox(width: 3.w,),
                                     SvgPicture.asset("assets/images/download.svg"),
                                   ],

@@ -10,7 +10,12 @@ import '../../common/app_icon.dart';
 import '../../common/font_style.dart';
 import 'logic.dart';
 
-class TransactionsPage extends StatelessWidget {
+class TransactionsPage extends StatefulWidget {
+  @override
+  State<TransactionsPage> createState() => _TransactionsPageState();
+}
+
+class _TransactionsPageState extends State<TransactionsPage> {
   Map<int, String> relationTypeDescriptions = {
     1: 'Manual transaction by the operator',
     2: 'Online payment',
@@ -32,7 +37,18 @@ class TransactionsPage extends StatelessWidget {
     19: 'Record channel',
     20: 'Audio to image',
   };
+
     final logic = Get.put(TransactionsLogic());
+
+
+    @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    logic.    getWalletBalance();
+
+    }
+
   @override
   Widget build(BuildContext context) {
 
@@ -72,6 +88,7 @@ class TransactionsPage extends StatelessWidget {
       );
     });
   }
+
     Padding MassageItemWidget(TransactionModel elementAt) {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0.6.h),
@@ -124,5 +141,4 @@ class TransactionsPage extends StatelessWidget {
         ),
       );
     }
-
 }

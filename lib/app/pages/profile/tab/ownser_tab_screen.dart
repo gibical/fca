@@ -1,18 +1,24 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
+import 'package:loadmore/loadmore.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mediaverse/app/common/RequestInterface.dart';
+import 'package:mediaverse/app/common/app_api.dart';
 import 'package:mediaverse/app/pages/home/logic.dart';
 import 'package:mediaverse/app/pages/home/widgets/custom_tab_bar_widget.dart';
 import 'package:mediaverse/app/pages/profile/logic.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetAllAsstes.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../gen/model/json/FromJsonGetImages.dart';
 import '../../../common/app_color.dart';
 import '../../../common/app_icon.dart';
 import '../widgets/GridMainWidget.dart';
@@ -82,107 +88,13 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _tabController,
                   children: [
-                    RefreshIndicator(
-                        onRefresh: ()async{
-                          logic.onGetAssetsAll();
 
+                    CustomTabScreen(logic.ownerImages,"profile/assets",),
+                    CustomTabScreen(logic.ownerImages,"profile/images"),
+                    CustomTabScreen(logic.ownerImages,"profile/videos"),
+                    CustomTabScreen(logic.ownerImages,"profile/audios"),
+                    CustomTabScreen(logic.ownerImages,"profile/texts"),
 
-
-
-                        },child: AllTabScreen(logic.myAssets)),
-                    Container(
-
-
-
-                      child: FocusDetector(
-                        onFocusGained: () {
-                          if (logic.ownerImages.length == 0) {
-                            logic.onGetAssetsPhoto();
-                          }
-                        },
-                        child: Obx(() {
-                          if (logic.isloading1.value) {
-                            return Container(
-                              child: Lottie.asset(
-                                  "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                            );
-                          }
-                          return RefreshIndicator(
-                              onRefresh: ()async{
-
-
-                                logic.onGetAssetsPhoto();
-
-                              },child: CustomTabScreen(logic.ownerImages));
-                        }),
-                      ),
-                    ),
-                    FocusDetector(
-                      onFocusGained: () {
-                        if (logic.ownerVideos.length == 0) {
-                          logic.onGetAssetsVideo();
-                        }
-                      },
-                      child: Obx(() {
-                        if (logic.isloading2.value) {
-                          return Container(
-                            child: Lottie.asset(
-                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                          );
-                        }
-                        return RefreshIndicator(
-                            onRefresh: ()async{
-
-
-                              logic.onGetAssetsVideo();
-
-                            },child: CustomTabScreen(logic.ownerVideos));
-                      }),
-                    ),
-                    FocusDetector(
-                      onFocusGained: () {
-                        if (logic.ownerAudios.length == 0) {
-                          logic.onGetAssetsAudioes();
-                        }
-                      },
-                      child: Obx(() {
-                        if (logic.isloading3.value) {
-                          return Container(
-                            child: Lottie.asset(
-                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                          );
-                        }
-                        return RefreshIndicator(
-                            onRefresh: ()async{
-
-
-                              logic.onGetAssetsAudioes();
-
-                            },child: CustomTabScreen(logic.ownerAudios));
-                      }),
-                    ),
-                    FocusDetector(
-                      onFocusGained: () {
-                        if (logic.ownerText.length == 0) {
-                          logic.onGetAssetsText();
-                        }
-                      },
-                      child: Obx(() {
-                        if (logic.isloading4.value) {
-                          return Container(
-                            child: Lottie.asset(
-                                "assets/json/Y8IBRQ38bK.json", height: 5.h),
-                          );
-                        }
-                        return RefreshIndicator(
-                            onRefresh: ()async{
-
-
-                              logic.onGetSubsAssetsText();
-
-                            },child: CustomTabScreen(logic.ownerText));
-                      }),
-                    ),
                   ],
                 ),
               ),
@@ -323,73 +235,97 @@ class AllTabScreen extends StatelessWidget {
 
 }
 
-class CustomTabScreen extends StatelessWidget {
+class CustomTabScreen extends StatefulWidget {
 
 
+  String url;
   List<dynamic> list;
   bool isExpended;
 
-  CustomTabScreen(this.list,{this.isExpended=false});
+  CustomTabScreen(this.list,this.url,{this.isExpended=false,});
+
+  @override
+  State<CustomTabScreen> createState() => _CustomTabScreenState();
+}
+
+class _CustomTabScreenState extends State<CustomTabScreen> implements  RequestInterface{
+
+  late ApiRequster apiRequster;
+  EasyRefreshController _controller = EasyRefreshController(
+    controlFinishRefresh: true,
+    controlFinishLoad: true,
+  );
+  var isloading = true.obs;
+
+  int page= 1;
+  List<dynamic> mainList= [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    apiRequster = ApiRequster(this,develperModel: true);
+
+    onSendedRequest();
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (isloading.value) {
+      return Container(
+        child: Lottie.asset(
+            "assets/json/Y8IBRQ38bK.json", height: 5.h),
+      );
+    }
+    if(mainList.isEmpty)return Center(
+      child: Container(
+
+        margin: EdgeInsets.only(
+            top: 13.h,
+            left: 4.w
+        ),
+        child: Text("No Item to Show",style: TextStyle(color: Colors.white),),
+      ),
+    );
          return Scaffold(
 
 
 
-        body: GridView(
+        body: EasyRefresh(
 
-          padding: EdgeInsets.fromLTRB(12, 10.h, 12, 13.5.h),
+          onRefresh: ()async{
+            page=1;
+            mainList.clear();
+            isloading(true);
+            setState(() {
 
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2),
-          children:( list)
-              .asMap()
-              .entries
-              .map((e) {
-            return GridPostView2(( list).elementAt(e.key));
-          }).toList(),
+            });
+            onSendedRequest();
+          },
+          controller: _controller,
+          onLoad: () async{
+          page = page+1;
+          onSendedRequest();
+          return IndicatorResult.none;
+          },
 
+          child: GridView(
+
+            padding: EdgeInsets.fromLTRB(12, 10.h, 12, 13.5.h),
+
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2),
+            children:( mainList)
+                .asMap()
+                .entries
+                .map((e) {
+              return GridPostView2(( mainList).elementAt(e.key));
+            }).toList(),
+
+          ),
         ));
 
 
-        // SingleChildScrollView(
-        //   child: Padding(
-        //     padding: EdgeInsets.fromLTRB(12, 10.h, 12, 13.5.h),
-        //     child: Wrap(
-        //
-        //       //
-        //       // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        //       //     crossAxisCount: 2),
-        //       children:( list)
-        //           .asMap()
-        //           .entries
-        //           .map((e) {
-        //         return GridPostView2(( list).elementAt(e.key));
-        //       }).toList(),
-        //
-        //     ),
-        //   ),
-        // ));
-    return Container(
 
-
-        padding: EdgeInsets.only(top: 13.h,bottom: Get.arguments == 'edit_screen' ?0:13.h),
-        height:isExpended?MediaQuery.of(context).size.height:150.h,
-        child: GridView(
-
-
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount:            2),
-      children: list
-          .asMap()
-          .entries
-          .map((e) {
-        return GridPostViewForDetails(list.elementAt(e.key));
-      }).toList(),
-
-        )
-    );
   }
 
   List<T> randomisedList<T>(List<T> list) {
@@ -402,4 +338,32 @@ class CustomTabScreen extends StatelessWidget {
     return list;
   }
 
+  void onSendedRequest() {
+    apiRequster.request(widget.url+"?page=${page}", ApiRequster.MHETOD_GET, 1);
+  }
+
+  @override
+  void onError(String content, int reqCode, bodyError) {
+    // TODO: implement onError
+  }
+
+  @override
+  void onStartReuqest(int reqCode) {
+    // TODO: implement onStartReuqest
+
+  }
+
+  @override
+  void onSucces(source, int reqCdoe) {
+    // TODO: implement onSucces
+    mainList .addAll(FromJsonGetImages.fromJson(jsonDecode(source)).data ?? []);
+
+    isloading(false);
+    _controller.finishLoad(IndicatorResult.success);
+    _controller.finishRefresh(IndicatorResult.success);
+
+    setState(() {
+
+    });
+  }
 }

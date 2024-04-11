@@ -234,7 +234,7 @@ class DetailImageScreen extends StatelessWidget {
                               if(!imageController.imageDetails!['plan'].toString().contains("1"))  Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Text("${imageController.imageDetails!['price'].toString()} €"),
+                                    Text("${(imageController.imageDetails!['price']/100).toString()} €"),
                                     SizedBox(width: 3.w,),
                                     SvgPicture.asset("assets/images/download.svg"),
                                   ],

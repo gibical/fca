@@ -6,6 +6,7 @@ import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/font_style.dart';
+import 'package:mediaverse/app/common/font_style.dart';
 import 'package:mediaverse/app/pages/detail/widgets/buy_card_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/card_mark_singlepage_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
@@ -380,7 +381,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                 if(!logic.textDetails!['plan'].toString().contains("1"))  Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Text("${logic.textDetails!['price'].toString()} €"),
+                                    Text("${(logic.textDetails!['price']/100).toString()} €"),
                                     SizedBox(width: 3.w,),
                                     SvgPicture.asset("assets/images/download.svg"),
                                   ],

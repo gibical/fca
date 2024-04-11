@@ -193,7 +193,7 @@ TextEditingController textEditingController = TextEditingController();
                     return GestureDetector(
                       onTap: (){
                         final channelId = controller.filteredChannels[index]['id'];
-                        Get.toNamed(PageRoutes.LIVE , arguments: {'channelId': channelId});
+                        Get.toNamed(PageRoutes.LIVE , arguments: {'channelId': channelId},preventDuplicates: false);
                       },
                       child: Container(
                         margin: EdgeInsets.symmetric(

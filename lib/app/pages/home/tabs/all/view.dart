@@ -54,7 +54,7 @@ class AllTabScreen extends StatelessWidget {
                             onTap: (){
                               print('AllTabScreen.build');
                               final channelId = logic.channels[index].id;
-                             Get.toNamed(PageRoutes.LIVE , arguments: {'channelId': channelId});
+                             Get.toNamed(PageRoutes.LIVE , arguments: {'channelId': channelId},preventDuplicates: false);
 
 
                             },

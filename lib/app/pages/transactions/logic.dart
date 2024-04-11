@@ -18,10 +18,12 @@ class TransactionsLogic extends GetxController  implements RequestInterface{
     // TODO: implement onReady
     super.onReady();
     apiRequster = ApiRequster(this,develperModel: true);
-    getWalletBalance();
   }
 
   getWalletBalance(){
+    apiRequster = ApiRequster(this,develperModel: true);
+
+    print('TransactionsLogic.getWalletBalance');
     isloading(true);
     apiRequster.request("transactions", ApiRequster.MHETOD_GET, 1,useToken: true);
   }

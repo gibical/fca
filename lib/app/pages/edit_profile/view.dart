@@ -19,7 +19,7 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final logic = Get.put(EditProfileLogic(detailController));
+    final logic = Get.put(EditProfileLogic(detailController,detailController.id));
     final state = logic.state;
 
     return GetBuilder<EditProfileLogic>(
