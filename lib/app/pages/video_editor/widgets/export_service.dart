@@ -21,7 +21,7 @@ class ExportService {
         void Function(Object, StackTrace)? onError,
         void Function(Statistics)? onProgress,
       }) {
-    log('FFmpeg start process with command = ${execute.command}');
+   // log('FFmpeg start process with command = ${execute.command}');
     return FFmpegKit.executeAsync(
       execute.command,
           (session) async {
