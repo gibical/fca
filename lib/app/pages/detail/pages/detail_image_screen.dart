@@ -105,7 +105,7 @@ class DetailImageScreen extends StatelessWidget {
                               SizedBox(
                                 width: 2.w,
                               ),
-                              Text('${imageController.imageDetails?['user']['username']}' , style: FontStyleApp.bodySmall.copyWith(
+                             if(imageController.imageDetails?['user']!=null) Text('${imageController.imageDetails?['user']['username']}' , style: FontStyleApp.bodySmall.copyWith(
                                   color: AppColor.grayLightColor.withOpacity(0.8),
                                   fontSize: 13
                               ),),
@@ -139,7 +139,7 @@ class DetailImageScreen extends StatelessWidget {
                             children: [
                               //
                            CardMarkSinglePageWidget(label: 'Suffix', type: "Somethi"),
-                           CardMarkSinglePageWidget(label: 'Type', type: imageController.imageDetails!['file']['extension']),
+                        //   CardMarkSinglePageWidget(label: 'Type', type: imageController.imageDetails!['file']['extension']),
                        //    CardMarkSinglePageWidget(label: 'Language', type: "en"),
 
                             ],

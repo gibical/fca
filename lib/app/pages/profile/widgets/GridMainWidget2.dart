@@ -201,7 +201,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
 
   void _getRouteAndPushIt(model) {
     String route = "";
-    print('_GridPostViewState._getRouteAndPushIt = ${widget.model['type']} - ${model}');
+    print('_GridPostViewState._getRouteAndPushIt 3  = ${widget.model} -  ${widget.model['type']} - ${model}');
     switch(widget.model['class']){
       case 1:
         route = PageRoutes.DETAILTEXT;

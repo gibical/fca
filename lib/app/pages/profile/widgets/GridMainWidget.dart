@@ -199,7 +199,7 @@ class _GridPostViewState extends State<GridPostView> {
 
   void _getRouteAndPushIt(model) {
     String route = "";
-    print('_GridPostViewState._getRouteAndPushIt = ${widget.model['type']} - ${model}');
+    print('_GridPostViewState._getRouteAndPushIt 1  = ${widget.model} -  ${widget.model['type']} - ${model}');
     switch(widget.model['class']){
       case 1:
         route = PageRoutes.DETAILTEXT;
@@ -410,7 +410,7 @@ class _GridPostView2State extends State<GridPostView2> {
 
   void _getRouteAndPushIt(model) {
     String route = "";
-    print('_GridPostViewState._getRouteAndPushIt = ${widget.model['type']} - ${model}');
+    print('_GridPostViewState._getRouteAndPushIt 2  = ${widget.model} -  ${widget.model['type']} - ${model}');
     switch(widget.model['class']){
       case 1:
         route = PageRoutes.DETAILTEXT;

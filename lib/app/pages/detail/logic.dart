@@ -109,6 +109,7 @@ class DetailController extends GetxController {
       isLoading.value = true;
       String apiUrl =
           '${Constant.HTTP_HOST}$type/${Get.arguments['id']}';
+      print('DetailController._fetchMediaData = ${apiUrl}');
       var response = await Dio().get(apiUrl, options: Options(headers: {
         'accept': 'application/json',
         'X-App': '_Android',
