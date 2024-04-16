@@ -39,23 +39,36 @@ class _VideoLiveWidgetState extends State<VideoLiveWidget> {
   double _sliderValue = 0.0;
   var chewieController ;
 
+  
+  var isErrorHandling = false.obs;
   @override
   void initState() {
     super.initState();
-   widget. liveController.controllerVideoPlay = VideoPlayerController.network(
-      '${widget.videoUrl}',
-    )..initialize().then((_) {
-      chewieController= ChewieController(
-        videoPlayerController:     widget.liveController.controllerVideoPlay,
-        autoPlay: true,
-        looping: true,
+   try {
+     widget. liveController.controllerVideoPlay = VideoPlayerController.network(
+        '${widget.videoUrl}',
+      )..initialize().then((_) {
+        chewieController= ChewieController(
+          videoPlayerController:     widget.liveController.controllerVideoPlay,
+          autoPlay: true,
+          looping: true,
 
-      );
-      setState(() {
+        );
+        setState(() {
+
+        });
 
       });
+     widget. liveController.controllerVideoPlay.addListener(() {
+       if (widget. liveController.controllerVideoPlay.value.hasError) {
 
-    });
+       }
+
+     });
+   }  catch (e) {
+     // TODO
+     print('_VideoLiveWidgetState.initState catch ');
+    }
 
   }
 

@@ -36,25 +36,38 @@ class EditProfileLogic extends GetxController implements RequestInterface {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
+
+  }
+
+
+  startPageFunction(details){
     apiRequster = ApiRequster(this,develperModel: true);
-    assetsEditingController.text = detailController.detailss!['name'];
-    assetsDescreptionEditingController.text = detailController.detailss!['description']??"";
-    priceController.text = detailController.detailss!['price'].toString();
-    isEditEditingController.text = detailController.detailss!['forkability_status'].toString().contains("1")?"Yes":"No";
-    planController.text = _getDropDownByPlan(detailController.detailss!['plan'].toString());
-      try {
-        languageController.text = Constant.reversedLanguageMap[detailController.detailss!['language']??""]!;
-      }  catch (e) {
-        // TODO
-      }
+    assetsEditingController.text = details['name'];
+    assetsDescreptionEditingController.text = details['description']??"";
+    priceController.text = (details['price']/100).toString();
+    isEditEditingController.text = details['forkability_status'].toString().contains("1")?"Yes":"No";
+    print('EditProfileLogic.startPageFunction = ${details['plan'].toString()}');
+    planController.text = _getDropDownByPlan(details['plan'].toString());
+
+    try {
+      languageController.text = Constant.reversedLanguageMap[details['language']??""]!;
+    }  catch (e) {
+      // TODO
+    }
     planController.addListener(() {
       update();
     });
     if(type==PostType.video){
-      genreController.text = detailController.detailss!['genre']??"";
-      imdbScooreController.text = detailController.detailss!['imdb_score']??"";
-      imdbYeaerController.text = detailController.detailss!['production_year'].toString();
+      genreController.text = details['genre']??"";
+      try {
+        imdbScooreController.text = details['imdb_score']??"";
+      }  catch (e) {
+        // TODO
+      }
+      imdbYeaerController.text = details['production_year'].toString();
     }
+
+    update();
   }
   sendMainRequest() {
     isloading(true);
@@ -77,7 +90,7 @@ class EditProfileLogic extends GetxController implements RequestInterface {
       "tags": []
     };
     if (!_getPlanByDropDown().toString().contains("1")) {
-      body['price'] = priceController.text;
+      body['price'] = (double.tryParse((priceController.text))!*100).toInt().toString();
     }
     if(type == PostType.video){
       body['genre'] = genreController.text;

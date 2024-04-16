@@ -12,16 +12,49 @@ import '../login/widgets/custom_text_field.dart';
 import '../plus_section/widget/custom_plan_text_filed.dart';
 import 'logic.dart';
 
-class EditProfilePage extends StatelessWidget {
+class EditProfilePage extends StatefulWidget {
 
+  @override
+  State<EditProfilePage> createState() => _EditProfilePageState();
+}
+
+class _EditProfilePageState extends State<EditProfilePage> {
   DetailController detailController = Get.arguments[0];
 
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+  @override
   Widget build(BuildContext context) {
     final logic = Get.put(EditProfileLogic(detailController,detailController.id));
     final state = logic.state;
+    dynamic details;
+    switch(Get.arguments[1] as PostType){
 
+
+      case PostType.image:
+        // TODO: Handle this case.
+        details =detailController.imageDetails;
+
+      case PostType.video:
+        // TODO: Handle this case.
+        details =detailController.videoDetails;
+
+      case PostType.audio:
+        // TODO: Handle this case.
+        details =detailController.musicDetails;
+
+      case PostType.text:
+        // TODO: Handle this case.
+        details =detailController.textDetails;
+
+    }
+
+    logic.startPageFunction(details);
     return GetBuilder<EditProfileLogic>(
         init: logic,
         builder: (logic) {
