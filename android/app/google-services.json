@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "204876365682",
+    "project_id": "global-harmony-419616",
+    "storage_bucket": "global-harmony-419616.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204876365682:android:85084857a40e99a63c67eb",
+        "android_client_info": {
+          "package_name": "com.app.gibical"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204876365682-kls2ijo3bn48s4trva1r8u8ki7suojsv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbaylcDHBWHqcgkQPpTBAOyBcVdpwsgZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204876365682-kls2ijo3bn48s4trva1r8u8ki7suojsv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
