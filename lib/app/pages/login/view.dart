@@ -117,6 +117,16 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: 3.h,
                     ),
+                    CustomRegisterButtonWidget(onTap: () {
+                      //  logic.requestLogin();
+                      //signInWithGoogle();
+                      _googleLogIn();
+                    },
+                        title: 'login_9_1'.tr,
+                        isloading: false),
+                    SizedBox(
+                      height: 3.h,
+                    ),
                   ],
                 ),
               ),

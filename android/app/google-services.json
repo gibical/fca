@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "204876365682-kls2ijo3bn48s4trva1r8u8ki7suojsv.apps.googleusercontent.com",
+          "client_id": "204876365682-4jtc3cgsjcdlmc8fjc67chefgtj2sq9g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +27,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "204876365682-kls2ijo3bn48s4trva1r8u8ki7suojsv.apps.googleusercontent.com",
+              "client_id": "204876365682-4jtc3cgsjcdlmc8fjc67chefgtj2sq9g.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "204876365682-v5rv2jig534fc7um8jbsccttubtordku.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.emahdi1297.mediaverse"
+              }
             }
           ]
         }

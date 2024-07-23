@@ -43,7 +43,7 @@ class WrapperController extends GetxController {
   }
 
   void parseAndNavigate(Uri uri) {
-    if (uri.host == 'media.verse') {
+    if (uri.host == 'gibical.app') {
       if (uri.toString().contains('page')) {
         String? page = uri.queryParameters['page'];
         if (page == 'profile') {

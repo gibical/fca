@@ -10,6 +10,7 @@ const Map<String, String> enUS = {
   "login_7":"Dont have an account?",
   "login_8":"Signup",
   "login_9":"Log in",
+  "login_9_1":"Log in With Google",
   "login_10":"Email",
   "login_11":"Insert email..",
   "login_12":"Log in with phone",

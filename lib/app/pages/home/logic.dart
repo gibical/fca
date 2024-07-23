@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:gibical/app/common/RequestInterface.dart';
@@ -43,6 +44,8 @@ class HomeLogic extends GetxController implements  RequestInterface{
     // TODO: implement onReady
     super.onReady();
     apiRequster  = ApiRequster(this,develperModel: false);
+
+    FirebaseAnalytics.instance.logEvent(name: "Entered The Setting ");
 
     getMainReueqst();
   }

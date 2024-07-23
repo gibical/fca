@@ -51,6 +51,7 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     getDeviceInformation();
+    FirebaseAnalytics.instance.logEvent(name: "Entered The app");
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -46,6 +47,8 @@ class _ProfileScreenState extends State<ProfileScreen>
         _selectedTabIndex = _tabController.index;
       });
     });
+    FirebaseAnalytics.instance.logEvent(name: "Entered The Profile ");
+
   }
 
   @override
