@@ -30,7 +30,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.app.gibical"
-    compileSdk 35
+    compileSdk 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -59,10 +59,7 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('F:\\Dev\\project\\AndroidStudioProjects\\gibical\\android\\app\\newsign.jks')
-            storePassword 'ramanraman'
-            keyAlias 'raman'
-            keyPassword 'ramanraman'
+            storeFile file('C:\\Users\\Administrator\\StudioProjects\\fca\\android\\app\\debug.keystore')
         }
         release {
             if (System.getenv("CI")) {
