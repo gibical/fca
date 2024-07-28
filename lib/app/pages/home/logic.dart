@@ -43,9 +43,25 @@ class HomeLogic extends GetxController implements  RequestInterface{
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster  = ApiRequster(this,develperModel: false);
+    apiRequster  = ApiRequster(this,develperModel: true);
 
-    FirebaseAnalytics.instance.logEvent(name: "Entered The Setting ");
+    try {
+      print('HomeLogic.onReady 1');
+       FirebaseAnalytics.instance.logEvent(
+        name: "share_image",
+        parameters: {
+          "image_name": "name",
+          "full_text": "text",
+        },
+      );
+      FirebaseAnalytics.instance.logEvent(name: "Entered The Setting ");
+    }  catch (e) {
+      // TODO
+      print('HomeLogic.onReady catch');
+    }finally{
+      print('HomeLogic.onReady finally');
+
+    }
 
     getMainReueqst();
   }

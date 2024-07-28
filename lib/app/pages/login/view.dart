@@ -356,7 +356,7 @@ class LoginScreen extends StatelessWidget {
     scopes: [
       'email',
       'https://www.googleapis.com/auth/userinfo.profile',
-    ],
+    ],serverClientId: "204876365682-sb2v0j8u4cir941rtc5tmg7p5ba1tnsn.apps.googleusercontent.com"
   );
 
   Future<void> signInWithGoogle() async {

@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     getDeviceInformation();
-    FirebaseAnalytics.instance.logEvent(name: "Entered The app");
+    MyApp.analytics.logEvent(name: "entredapp");
   }
 
   @override
@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme:  AppTheme.darkMode,
 
 
-      // navigatorObservers: <NavigatorObserver>[MyApp.observer],
+       navigatorObservers: <NavigatorObserver>[MyApp.observer],
 
     );
   }
