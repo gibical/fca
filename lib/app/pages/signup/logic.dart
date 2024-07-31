@@ -1,14 +1,20 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:gibical/app/common/RequestInterface.dart';
 import 'package:gibical/app/common/app_api.dart';
 import 'package:gibical/app/common/app_route.dart';
 import 'package:meta/meta.dart';
 
+import '../../../gen/model/json/FromJsonGetCountriesModel.dart';
 import '../../common/app_color.dart';
+import '../../common/app_config.dart';
+import '../../common/utils/dio_inperactor.dart';
 
 class SignUpController extends GetxController implements RequestInterface{
 
@@ -18,7 +24,53 @@ class SignUpController extends GetxController implements RequestInterface{
   TextEditingController lastNameController = TextEditingController();
   TextEditingController usernameNameController = TextEditingController();
   TextEditingController passwordNameController = TextEditingController();
+  TextEditingController languageController = TextEditingController();
+  Map<String, dynamic> countreisModel ={};
+  List<String> countreisString =[];
 
+  Future<void> getAllCountries() async {
+
+    var dio = Dio();
+
+
+    //  debugger();
+    dio.interceptors.add(MediaVerseConvertInterceptor());
+
+    print('PlusSectionLogic.getAllCountries = ${Constant.HTTP_HOST}languages');
+    try {
+
+      print('PlusSectionLogic.getAllCountries 1');
+
+      var response = await dio.get(
+        '${Constant.HTTP_HOST}languages',
+        options: Options(
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-App': '_Android',
+          },
+        ),
+
+      );
+      print('PlusSectionLogic.getAllCountries 1 = ${response.statusCode}');
+
+      //   debugger();
+      if (response.statusCode! >= 200||response.statusCode! < 300) {
+        print('PlusSectionLogic.getAllCountries 2');
+
+
+        countreisModel = response.data;
+
+        (countreisModel.values).forEach((element) {
+          countreisString.add(element);
+        });
+        print('PlusSectionLogic.getAllCountries = ${countreisModel.length}');
+      } else {
+        print('Failed to upload file: ${response.statusMessage}');
+      }
+    } on DioError catch (e) {
+      print('DioError: ${e.message}');
+    }
+  }
 
   var isloading = false.obs;
 
@@ -27,6 +79,7 @@ class SignUpController extends GetxController implements RequestInterface{
     // TODO: implement onReady
     super.onReady();
     apiRequster = ApiRequster(this,develperModel: false);
+    getAllCountries();
   }
   signUpRequest(){
     isloading(true);
@@ -35,7 +88,8 @@ class SignUpController extends GetxController implements RequestInterface{
       "username": usernameNameController.text,
       "password": passwordNameController.text,
       "first_name": firstNameController.text,
-      "last_name": lastNameController.text
+      "last_name": lastNameController.text,
+      "country_iso":(Constant.reverseMap(countreisModel)[languageController.text]).toString().toUpperCase()
     };
     print('SignUpController.signUpRequest = ${body}');
     apiRequster.request("auth/sign-up-completion", ApiRequster.MHETOD_POST, 1,body: body);

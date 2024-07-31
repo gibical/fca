@@ -333,6 +333,7 @@ const Map<String, String> enUS = {
   "signup_8":"Username",
   "signup_9":"Insert your username",
   "signup_10":"Have an account?",
+  "signup_10_1":"Country",
   "signup_11":"Log in",
   "signup_12":"Save",
 

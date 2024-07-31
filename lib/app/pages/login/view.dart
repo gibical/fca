@@ -1,4 +1,5 @@
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -117,7 +118,7 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: 3.h,
                     ),
-                    CustomRegisterButtonWidget(onTap: () {
+                    GoogleCustomRegisterButtonWidget(onTap: () {
                       //  logic.requestLogin();
                       //signInWithGoogle();
                       _googleLogIn();
@@ -356,7 +357,7 @@ class LoginScreen extends StatelessWidget {
     scopes: [
       'email',
       'https://www.googleapis.com/auth/userinfo.profile',
-    ],serverClientId: "204876365682-sb2v0j8u4cir941rtc5tmg7p5ba1tnsn.apps.googleusercontent.com"
+    ],
   );
 
   Future<void> signInWithGoogle() async {
@@ -377,5 +378,40 @@ class LoginScreen extends StatelessWidget {
   }
   void _googleLogIn() async{
     signInWithGoogle();
+  }
+}
+class Authentication {
+  static Future<User?> signInWithGoogle() async {
+    print('Authentication.signInWithGoogle 1 ');
+    FirebaseAuth auth = FirebaseAuth.instance;
+    print('Authentication.signInWithGoogle 2 ');
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    print('Authentication.signInWithGoogle 3 ');
+
+    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+    print('Authentication.signInWithGoogle 4 ');
+    if (googleSignInAccount != null) {
+    print('Authentication.signInWithGoogle 5 ');
+      final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+    print('Authentication.signInWithGoogle 6 ');
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+    print('Authentication.signInWithGoogle 7 ');
+
+      try {
+    print('Authentication.signInWithGoogle 7 ');
+        final UserCredential userCredential = await auth.signInWithCredential(credential);
+    print('Authentication.signInWithGoogle 8 ${userCredential.credential!.accessToken}');
+        return userCredential.user;
+      } on FirebaseAuthException catch (e) {
+    print('Authentication.signInWithGoogle 9 ');
+        // Handle error
+      }
+    }
+    print('Authentication.signInWithGoogle 10 ');
+    return null;
   }
 }

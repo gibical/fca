@@ -83,6 +83,7 @@ dependencies:
   curl_logger_dio_interceptor: ^1.0.0
   sign_button: ^2.0.6
   device_info_plus: ^9.1.2
+  firebase_auth: ^4.20.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

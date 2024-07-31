@@ -9,6 +9,9 @@ import 'package:gibical/app/pages/signup/widgets/custom_text_field_form_register
 import 'package:gibical/app/widgets/logo_app_widget.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../common/app_config.dart';
+import '../plus_section/widget/custom_plan_text_filed.dart';
+
 
 class SignupScreen extends StatelessWidget {
 
@@ -68,7 +71,17 @@ class SignupScreen extends StatelessWidget {
                         hintText: 'signup_9'.tr,
                         textEditingController: logic.usernameNameController,
                         needful: true),
-
+                    Container(
+                      margin: EdgeInsets.fromLTRB(24, 0, 24, 0),
+                      child: CustomTDropDownPlusWidget(
+                          models: logic.countreisString,
+                          context: context,
+                          textEditingController: logic.languageController,
+                      
+                          titleText: 'plus_6'.tr,
+                          hintText: 'plus_7'.tr,
+                          needful: false),
+                    ),
                     SizedBox(height: 1.5.h,),
                     GestureDetector(
                       onTap: () {},
@@ -90,6 +103,7 @@ class SignupScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 1.5.h,),
+
 
                     Obx(() {
                       return CustomRegisterButtonWidget(title: 'signup_12'.tr,

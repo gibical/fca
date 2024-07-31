@@ -16,16 +16,17 @@ class CustomGridImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
 
+    if(mostViews.length<3)return Container();
     var sizeWidth = (33.w - 20);
     return Container(
       width: 100.w,
       child: Row(
-        children: isReversed ? _buildReversedLayout(sizeWidth) : _buildNormalLayout(sizeWidth),
+        children: isReversed ? _buildReversedLayout(sizeWidth) : _buildNormalLayout(sizeWidth,mostViews.length),
       ),
     );
   }
 
-  List<Widget> _buildNormalLayout(double sizeWidth) {
+  List<Widget> _buildNormalLayout(double sizeWidth, int length) {
     return [
       Column(
         children: List.generate(3, (index) => _buildImageContainer(mostViews[index], sizeWidth)),

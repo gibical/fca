@@ -219,7 +219,7 @@ class LoginController extends GetxController implements RequestInterface {
 
   void sendIDTokenToServer(String s) {
     apiRequster.request("auth/google", ApiRequster.MHETOD_POST, 1,body: {
-      "id_token":s
+      "access_token":s
     });
 
   }

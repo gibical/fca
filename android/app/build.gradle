@@ -48,7 +48,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.app.gibical"
+        applicationId "com.app.gibicalapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 24
@@ -58,9 +58,6 @@ android {
     }
 
     signingConfigs {
-        debug {
-            storeFile file('C:\\Users\\Administrator\\StudioProjects\\fca\\android\\app\\debug.keystore')
-        }
         release {
             if (System.getenv("CI")) {
 
