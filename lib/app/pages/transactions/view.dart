@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:gibical/gen/model/json/walletV2/FromJsomGetBills.dart';
 import 'package:lottie/lottie.dart';
 import 'package:gibical/gen/model/json/FromJsonGetTransactions.dart';
 import 'package:sizer/sizer.dart';
@@ -89,7 +90,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
     });
   }
 
-    Padding MassageItemWidget(TransactionModel elementAt) {
+    Padding MassageItemWidget(BilingModel elementAt) {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0.6.h),
         child: Container(
@@ -128,7 +129,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 6.w),
                 child: Text(
-                  elementAt.updatedAt??"",
+                  elementAt.createdAt??"",
                   style: FontStyleApp.bodyMedium.copyWith(
                     color: Colors.grey.withOpacity(0.7),
                   ),),

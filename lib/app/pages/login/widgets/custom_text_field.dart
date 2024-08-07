@@ -22,7 +22,6 @@ Widget CustomTextFieldLogin({required Widget prefix ,required String hintText , 
         color: AppColor.whiteColor
       ),
       onChanged: (s){
-        print('CustomTextFieldLogin = ${s.isEmail}');
       },
       decoration: InputDecoration(
         hintText: hintText,

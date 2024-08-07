@@ -52,9 +52,8 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   String videoOutPut = "";
   String soundOutPut = "";
   String textOutPut = "";
-  List<CountriesModel> countreisModel =[];
+  Map<String, dynamic> countreisModel ={};
   List<String> countreisString =[];
-
   double uploadedCount = 0.0;
 
   var isRecordingTimeVisible = false.obs;
@@ -593,7 +592,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       "genre": genreController.text,
       "length": "10",
       "language": Constant.languageMap[languageController.text],
-      "country":countreisModel.firstWhere((element) => element.title.toString().contains(languageController.text)).iso??"",
+      "country":(Constant.reverseMap(countreisModel)[languageController.text]).toString().toUpperCase(),
       "forkability_status":
           editibaleController.text.contains("Yes") ? "1" : "2",
       "commenting_status": 1,
@@ -745,7 +744,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     print('PlusSectionLogic.getAllCountries = ${Constant.HTTP_HOST}Languages');
     try {
       var response = await dio.get(
-        '${Constant.HTTP_HOST}Languages',
+        '${Constant.HTTP_HOST}languages',
         options: Options(
           headers: {
             'Authorization': 'Bearer ${GetStorage().read("token")}',
@@ -760,11 +759,11 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       if (response.statusCode! >= 200||response.statusCode! < 300) {
 
 
-        (response.data as List<dynamic>).forEach((element) {
-          countreisModel.add(CountriesModel.fromJson(element));
-        });
-        (countreisModel).forEach((element) {
-          countreisString.add(element.title??"");
+
+        countreisModel = response.data;
+
+        (countreisModel.values).forEach((element) {
+          countreisString.add(element);
         });
         print('PlusSectionLogic.getAllCountries = ${countreisModel.length}');
       } else {

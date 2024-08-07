@@ -920,7 +920,7 @@ class DetailController extends GetxController {
       print('DetailController._fetchMediaData = ${apiUrl}');
       var s = Dio();
      // s.interceptors.add(MediaVerseConvertInterceptor());
-    //  s.interceptors.add(CurlLoggerDioInterceptor());
+     s.interceptors.add(CurlLoggerDioInterceptor());
 
       var header =  {
         'accept': 'application/json',

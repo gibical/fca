@@ -253,6 +253,7 @@ const Map<String, String> faIR = {
   "setting_4":"جلسات",
   "setting_5":"تغییر رمز عبور",
   "setting_6":"خروج",
+  "setting_6_1":"حذف حساب کاربری",
   "setting_7":"نام",
   "setting_8":"نام خود را وارد کنید",
   "setting_9":"نام خانوادگی",

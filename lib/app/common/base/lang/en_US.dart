@@ -78,6 +78,7 @@ const Map<String, String> enUS = {
   "channel_34":"AI & Production",
   "channel_35":"Search",
   "channel_36":"Channels",
+  "channel_37":"Conductor",
 
 
   "details_1":"Comments",
@@ -278,6 +279,7 @@ const Map<String, String> enUS = {
   "setting_4":"Seassions",
   "setting_5":"Change Password",
   "setting_6":"Sign out",
+  "setting_6_1":"Delete Account",
   "setting_7":"First Name",
   "setting_8":"Insert your First name",
   "setting_9":"Last Name",
@@ -289,6 +291,9 @@ const Map<String, String> enUS = {
   "setting_15":"Massage",
   "setting_16":"Wallet",
   "setting_17":" Account Center ",
+  "delete_1":" Are You Sure the Delete Account ?",
+  "delete_2":" Yes",
+  "delete_3":" No",
 
 
   "share_1":"Add Channel",
@@ -339,7 +344,7 @@ const Map<String, String> enUS = {
 
 
 
-  "transaction_1":"Transaction History",
+  "transaction_1":"Billing History",
 
 
 
@@ -357,10 +362,10 @@ const Map<String, String> enUS = {
 
 
   "wallet_1":"Inventory",
-  "wallet_2":"History",
+  "wallet_2":"Billing",
   "wallet_3":"*** *** *** 2197",
-  "wallet_4":"Add card",
-  "wallet_5":"Add inventory",
+  "wallet_4":"Connect To the Stripe",
+  "wallet_5":"Subscription Setting",
 
 
 

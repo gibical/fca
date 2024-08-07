@@ -8,6 +8,7 @@ import 'package:gibical/app/common/app_extension.dart';
 import 'package:gibical/app/common/app_icon.dart';
 import 'package:gibical/app/common/app_route.dart';
 import 'package:gibical/app/pages/profile/logic.dart';
+import 'package:gibical/app/pages/setting/widget/delete_account_widget.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
@@ -112,11 +113,41 @@ class AccountPage extends StatelessWidget {
                 ),
           
               ),
-          
+              SizedBox(height: 4.h),
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 7.5.w),
+                child: Container(
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      ItemAccountScreenWidget(title: 'setting_6_1'.tr, onTap: () {
+                        deleteAccountConfirmation();
+
+                      },color: Colors.red,),
+
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                      color: Color(0xff4E4E61).withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(16.sp),
+                      border: Border(
+                        top: BorderSide(color: Colors.grey.withOpacity(0.4) , width: 0.9),
+                        left: BorderSide(color: Colors.grey.withOpacity(0.4) , width: 0.5),
+                      )
+                  ),
+                ),
+
+              ),
+
             ],
           ),
         ),
       ),
+    );
+  }
+  void deleteAccountConfirmation() {
+    Get.bottomSheet(
+DeleteAccountWidget()
     );
   }
 
@@ -179,9 +210,10 @@ class ItemSettingScreenWidget extends StatelessWidget {
 class ItemAccountScreenWidget extends StatelessWidget {
   final String title;
   final Function() onTap;
+  Color? color;
 
 
-  ItemAccountScreenWidget({required this.title,required this.onTap});
+  ItemAccountScreenWidget({required this.title,required this.onTap,this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -197,12 +229,12 @@ class ItemAccountScreenWidget extends StatelessWidget {
             children: [
 
               Text(title , style: FontStyleApp.titleSmall.copyWith(
-                color: AppColor.whiteColor,
+                color:color?? AppColor.whiteColor,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),),
               Spacer(),
-              Icon(Icons.arrow_forward_ios_outlined,size: 9.sp,)
+              Icon(Icons.arrow_forward_ios_outlined,size: 9.sp,color: color??Colors.white,)
             ],
           ),
         ),

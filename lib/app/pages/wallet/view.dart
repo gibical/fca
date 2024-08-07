@@ -190,30 +190,36 @@ class WalletScreen extends StatelessWidget {
                   SizedBox(
                     height: 3.h,
                   ),
-                  if(!logic.isStripeConnected)    InkWell(
-                    onTap: (){
-                      logic.getStripeConnect();
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 23.w),
-                      height: 7.h,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'wallet_4'.tr, style: FontStyleApp.bodyLarge.copyWith(
-                              color: Colors.grey
-                          ),),
-                          SizedBox(width: 2.w,),
-                          SvgPicture.asset(
-                              AppIcon.addIcon, height: 16, color: Colors.grey)
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.sp),
-                          border: Border.all(
-                            color: Colors.grey.withOpacity(0.5),
-                          )
+                  if(!logic.isStripeConnected)    Container(
+                    margin: EdgeInsets.only(top: 20.h),
+                    child: InkWell(
+                      onTap: (){
+                        logic.getStripeConnect();
+                      },
+                      child: Container(
+
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 23.w),
+                          height: 7.h,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'wallet_4'.tr, style: FontStyleApp.bodyLarge.copyWith(
+                                  color: Colors.grey
+                              ),),
+                              SizedBox(width: 2.w,),
+                              SvgPicture.asset(
+                                  AppIcon.addIcon, height: 16, color: Colors.grey)
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.sp),
+                              border: Border.all(
+                                color: Colors.grey.withOpacity(0.5),
+                              )
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -221,7 +227,7 @@ class WalletScreen extends StatelessWidget {
                     height: 4.h,
                   ),
                   if(logic.isStripeConnected)    InkWell(onTap: (){
-                    logic.getStripeGateWay();
+                    logic.getsubscriptionSetting();
                   },
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 14.w),

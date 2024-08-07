@@ -338,6 +338,7 @@ class BestTextWidget extends GetView<HomeLogic> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    print('BestTextWidget.build = ${model['user']}');
     return GestureDetector(
       onTap: () {
         int itemId = model['id'];

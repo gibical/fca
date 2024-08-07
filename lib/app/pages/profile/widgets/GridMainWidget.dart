@@ -263,6 +263,7 @@ class _GridPostView2State extends State<GridPostView2> {
         onTap:Get.arguments == 'edit_screen' ? (){
 
 
+         // debugger();
           if(widget. model['class']==1){
 
             Get.find<MediaSuitController>().setDataEditText(widget.model['name'].toString() ,widget.model['file']['url'] , widget.model['file_id'].toString());

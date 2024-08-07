@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 
 import '../../../gen/model/json/FromJsonGetTransactions.dart';
+import '../../../gen/model/json/walletV2/FromJsomGetBills.dart';
 import '../../common/RequestInterface.dart';
 import '../../common/app_api.dart';
 import 'state.dart';
@@ -13,7 +14,7 @@ class TransactionsLogic extends GetxController  implements RequestInterface{
 
   var isloading = false.obs;
 
-  List<TransactionModel> list = [ ];
+  List<BilingModel> list = [ ];
   @override
   void onReady() {
     // TODO: implement onReady
@@ -26,7 +27,7 @@ class TransactionsLogic extends GetxController  implements RequestInterface{
 
     print('TransactionsLogic.getWalletBalance');
     isloading(true);
-    apiRequster.request("transactions", ApiRequster.MHETOD_GET, 1,useToken: true);
+    apiRequster.request("bills", ApiRequster.MHETOD_GET, 1,useToken: true);
   }
 
   @override
@@ -50,8 +51,9 @@ class TransactionsLogic extends GetxController  implements RequestInterface{
 
   void parseJsonFromGetWalletBalance(source) {
    // debugger();
+
+    list = FromJsomGetBills.fromJson(jsonDecode(source)).data??[];
     print('TransactionsLogic.parseJsonFromGetWalletBalance = ${source}');
-    list = FromJsonGetTransactions.fromJson(jsonDecode(source)).data??[];
     isloading(false);
 
   }

@@ -13,7 +13,7 @@ Widget LogoAppWidget(){
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Image.asset("assets/images/splashlogoo.png",
+      Image.asset("assets/images/splash_ic2.png",
       height: 10.h,)
     ],
   );

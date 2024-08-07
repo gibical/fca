@@ -199,44 +199,13 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                           SizedBox(
                             height: 2.4.h,
                           ),
-                          DownloadDisplayText(url: logic.textDetails?['file']['url'], style: TextStyle()),
-                          SizedBox(
-                            height: 2.h,
-                          ), 
-                          GestureDetector(
-                            onTap: (){
-                              setState(() {
-                                isExpanded = !isExpanded;
-                              });
-                            },
-                            child: Text(
-                              logic.textDetails?['description'] == null
-                                  ? ''
-                                  : isExpanded
-                                  ? logic.textDetails!['description']
-                                  : (logic.textDetails?['description'].length > 80
-                                  ? logic.textDetails!['description']
-                                  .substring(0, 80) +
-                                  '...more'
-                                  : logic.textDetails?['description']),
-                              style: Theme
-                                  .of(context)
-                                  .textTheme.bodySmall?.copyWith(
-                                color: Colors.white.withOpacity(0.7),
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                    if(!logic.file_id.toString().contains("null"))      Row(
+                          if(!logic.file_id.toString().contains("null"))      Row(
                             children: [
                               InkWell(
                                   onTap: () {
                                     print(
                                         '_DetailTextScreenState.build');
-                                              logic.textToText();
+                                    logic.textToText();
                                   },
                                   child: SvgPicture.asset(
                                     "assets/icons/icon__single-convert-to-text.svg",
@@ -303,6 +272,39 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                           if(!logic.file_id.toString().contains("null"))      SizedBox(
                             height: 3.h,
                           ),
+                          DownloadDisplayText(url: logic.textDetails?['file']['url'], style: TextStyle()),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+
+                          GestureDetector(
+                            onTap: (){
+                              setState(() {
+                                isExpanded = !isExpanded;
+                              });
+                            },
+                            child: Text(
+                              logic.textDetails?['description'] == null
+                                  ? ''
+                                  : isExpanded
+                                  ? logic.textDetails!['description']
+                                  : (logic.textDetails?['description'].length > 80
+                                  ? logic.textDetails!['description']
+                                  .substring(0, 80) +
+                                  '...more'
+                                  : logic.textDetails?['description']),
+                              style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
+                                color: Colors.white.withOpacity(0.7),
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+
                           Wrap(
                             children: [
                               CardMarkSinglePageWidget(label: 'Suffix' , type: (logic.textDetails?['suffix'] ?? 'null') ),

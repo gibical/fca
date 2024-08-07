@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:gibical/app/pages/profile/view.dart';
 import 'package:lottie/lottie.dart';
 import 'package:gibical/app/common/app_extension.dart';
 import 'package:gibical/app/common/app_icon.dart';
@@ -11,6 +12,7 @@ import 'package:sizer/sizer.dart';
 import '../../common/app_color.dart';
 import '../../common/font_style.dart';
 import '../home/logic.dart';
+import '../plus_section/widget/custom_plan_text_filed.dart';
 import '../signup/widgets/custom_text_field_form_register_widget.dart';
 
 class GeneralInformationPage extends StatefulWidget {
@@ -97,9 +99,20 @@ class _GeneralInformationPageState extends State<GeneralInformationPage> {
                       titleText: 'setting_11'.tr,
                       hintText: 'setting_12'.tr,
                       needful: false),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(24, 0, 24, 0),
+                    child: CustomTDropDownPlusWidget(
+                        models: logic.countreisString,
+                        context: context,
+                        textEditingController: logic.languageController,
 
+                        titleText: 'plus_6'.tr,
+                        hintText: 'plus_7'.tr,
+                        needful: false),
+                  )
                 ],
               ),
+
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
@@ -135,5 +148,16 @@ class _GeneralInformationPageState extends State<GeneralInformationPage> {
         ),
       ),
     );
+  }
+}
+
+
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

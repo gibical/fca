@@ -63,6 +63,7 @@ class SignUpController extends GetxController implements RequestInterface{
         (countreisModel.values).forEach((element) {
           countreisString.add(element);
         });
+        update();
         print('PlusSectionLogic.getAllCountries = ${countreisModel.length}');
       } else {
         print('Failed to upload file: ${response.statusMessage}');

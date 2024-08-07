@@ -134,7 +134,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn(
 
       );
-      final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+      final GoogleSignInAuthentication googleAuth = await googleUser !.authentication;
 
       String? token = googleAuth.accessToken; // Save the token to send to your backend
 
@@ -474,7 +474,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
         url = "shares/google-drive";
         break;
       case "Share":
-        url = "shares/youtube";
+        url = "";
         break;
       case "Stream":
         url = "shares/stream";

@@ -159,6 +159,7 @@ class EditProfileLogic extends GetxController implements RequestInterface {
     update();
   }
   sendMainRequest() {
+    print('EditProfileLogic.sendMainRequest = ${languageController.text}');
     isloading(true);
     var box = GetStorage();
     var body = {
@@ -186,7 +187,7 @@ class EditProfileLogic extends GetxController implements RequestInterface {
       body['production_year'] = imdbYeaerController.text;
 
     }
-    print('PlusSectionLogic.sendMainRequest = ${body}');
+    print('PlusSectionLogic.sendMainRequest = ${_getUrlByMediaEnum()+"/${id}"}');
 
      apiRequster.request(_getUrlByMediaEnum()+"/${id}", ApiRequster.MHETOD_PUT, 1,
          body: body, useToken: true, );
