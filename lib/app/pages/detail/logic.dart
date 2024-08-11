@@ -893,18 +893,19 @@ class DetailController extends GetxController {
   }
 
   void onSendYouTubeRequest(bool youtubeMode)async {
- //   debugger();
-    var body = {
+    Map<String,dynamic> body = {
       "file": file_id,
       "account": externalAccountlist.where((element) => element.type.toString().contains("1")).elementAt(enableChannel).id.toString(),
 
     };
+    print('DetailController.onSendYouTubeRequest = ${formatDateTime( isSeletedNow?DateTime.now():dateTime)}');
     if(!isSeletedNow){
       body["times"]= [
     formatDateTime( isSeletedNow?DateTime.now():dateTime)
-    ] as String;
+    ];
 
     }
+
     if(youtubeMode){
       body['title'] = titleEditingController.text;
       body['description'] = desEditingController.text;

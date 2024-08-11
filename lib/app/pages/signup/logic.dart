@@ -25,7 +25,7 @@ class SignUpController extends GetxController implements RequestInterface{
   TextEditingController usernameNameController = TextEditingController();
   TextEditingController passwordNameController = TextEditingController();
   TextEditingController languageController = TextEditingController();
-  Map<String, dynamic> countreisModel ={};
+  List<CountriesModel> countreisModel =[];
   List<String> countreisString =[];
 
   Future<void> getAllCountries() async {
@@ -36,13 +36,13 @@ class SignUpController extends GetxController implements RequestInterface{
     //  debugger();
     dio.interceptors.add(MediaVerseConvertInterceptor());
 
-    print('PlusSectionLogic.getAllCountries = ${Constant.HTTP_HOST}languages');
+    print('PlusSectionLogic.getAllCountries = ${Constant.HTTP_HOST}countries');
     try {
 
       print('PlusSectionLogic.getAllCountries 1');
 
       var response = await dio.get(
-        '${Constant.HTTP_HOST}languages',
+        '${Constant.HTTP_HOST}countries',
         options: Options(
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -51,17 +51,18 @@ class SignUpController extends GetxController implements RequestInterface{
         ),
 
       );
-      print('PlusSectionLogic.getAllCountries 1 = ${response.statusCode}');
+      print('PlusSectionLogic.getAllCountries 1 = ${response.statusCode}  - ${response.data}');
 
       //   debugger();
       if (response.statusCode! >= 200||response.statusCode! < 300) {
         print('PlusSectionLogic.getAllCountries 2');
 
 
-        countreisModel = response.data;
-
-        (countreisModel.values).forEach((element) {
-          countreisString.add(element);
+        (response.data as List<dynamic>).forEach((element) {
+          countreisModel.add(CountriesModel.fromJson(element));
+        });
+        (countreisModel).forEach((element) {
+          countreisString.add(element.title??"");
         });
         update();
         print('PlusSectionLogic.getAllCountries = ${countreisModel.length}');
@@ -90,7 +91,7 @@ class SignUpController extends GetxController implements RequestInterface{
       "password": passwordNameController.text,
       "first_name": firstNameController.text,
       "last_name": lastNameController.text,
-      "country_iso":(Constant.reverseMap(countreisModel)[languageController.text]).toString().toUpperCase()
+      "country_iso":countreisModel.firstWhere((element) => element.title.toString().contains(languageController.text)).iso??"",
     };
     print('SignUpController.signUpRequest = ${body}');
     apiRequster.request("auth/sign-up-completion", ApiRequster.MHETOD_POST, 1,body: body);

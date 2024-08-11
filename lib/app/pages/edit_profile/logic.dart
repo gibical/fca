@@ -173,7 +173,7 @@ class EditProfileLogic extends GetxController implements RequestInterface {
       "language": Constant.languageMap[languageController.text],
       "country":countreisModel.firstWhere((element) => element.title.toString().contains(languageController.text)).iso??"",
       "type": 1,
-      "length":  detailController.detailss!['length'],
+    //  "length":  detailController.detailss!['length'],
       "forkability_status": isEditEditingController.text.contains("Yes") ? "1" : "2",
       "commenting_status": 1,
       "tags": []
