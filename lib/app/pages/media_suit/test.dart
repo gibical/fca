@@ -330,7 +330,14 @@ class _CustomRulerTimelineOtherAssetsWidget1State
   @override
   void initState() {
     super.initState();
-    _sliderValue = widget.value;
+    // _sliderValue = widget.value;
+    // if (widget.scrollController != null) {
+    //   widget.scrollController!.addListener(_rulerScrollListener);
+    // }
+    // if (widget.listScrollController != null) {
+    //   widget.listScrollController!.addListener(_listScrollListener);
+    // }
+    _sliderValue = widget.value.clamp(widget.minValue, widget.maxValue);
     if (widget.scrollController != null) {
       widget.scrollController!.addListener(_rulerScrollListener);
     }
@@ -350,49 +357,79 @@ class _CustomRulerTimelineOtherAssetsWidget1State
     super.dispose();
   }
 
+  // @override
+  // void didUpdateWidget(CustomRulerTimelineOtherAssetsWidget1 oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   // Update _sliderValue when the value property changes
+  //   if (oldWidget.value != widget.value) {
+  //     setState(() {
+  //       _sliderValue = widget.value;
+  //     });
+  //   }
+  // }
   @override
   void didUpdateWidget(CustomRulerTimelineOtherAssetsWidget1 oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Update _sliderValue when the value property changes
     if (oldWidget.value != widget.value) {
       setState(() {
-        _sliderValue = widget.value;
+        _sliderValue = widget.value.clamp(widget.minValue, widget.maxValue);
       });
     }
   }
 
+  // void _rulerScrollListener() {
+  //   if (!_isRulerScrolling) {
+  //     _isRulerScrolling = true;
+  //     final newPosition = widget.scrollController!.offset;
+  //     final divisions = widget.totalSeconds;
+  //     final stepWidth = 10.0; // 10 pixels for each second
+  //     final newSliderValue = newPosition / stepWidth;
+  //
+  //     // Ensure the slider value does not exceed the maximum value
+  //     final maxSliderValue = widget.maxValue;
+  //     if (newSliderValue > maxSliderValue) {
+  //       setState(() {
+  //         _sliderValue = maxSliderValue;
+  //       });
+  //       if (widget.onChanged != null) {
+  //         widget.onChanged!(maxSliderValue);
+  //       }
+  //       if (widget.listScrollController != null) {
+  //         final newPosition = maxSliderValue * stepWidth;
+  //         widget.listScrollController!.jumpTo(newPosition);
+  //       }
+  //     } else {
+  //       setState(() {
+  //         _sliderValue = newSliderValue;
+  //       });
+  //       if (widget.onChanged != null) {
+  //         widget.onChanged!(newSliderValue);
+  //       }
+  //       if (widget.listScrollController != null) {
+  //         final newPosition = newSliderValue * stepWidth;
+  //         widget.listScrollController!.jumpTo(newPosition);
+  //       }
+  //     }
+  //   }
+  //   _isRulerScrolling = false;
+  // }
   void _rulerScrollListener() {
     if (!_isRulerScrolling) {
       _isRulerScrolling = true;
       final newPosition = widget.scrollController!.offset;
-      final divisions = widget.totalSeconds;
-      final stepWidth = 10.0; // 10 pixels for each second
-      final newSliderValue = newPosition / stepWidth;
+      final stepWidth = 10.0;
+      final newSliderValue = (newPosition / stepWidth)
+          .clamp(widget.minValue, widget.maxValue);
 
-      // Ensure the slider value does not exceed the maximum value
-      final maxSliderValue = widget.maxValue;
-      if (newSliderValue > maxSliderValue) {
-        setState(() {
-          _sliderValue = maxSliderValue;
-        });
-        if (widget.onChanged != null) {
-          widget.onChanged!(maxSliderValue);
-        }
-        if (widget.listScrollController != null) {
-          final newPosition = maxSliderValue * stepWidth;
-          widget.listScrollController!.jumpTo(newPosition);
-        }
-      } else {
-        setState(() {
-          _sliderValue = newSliderValue;
-        });
-        if (widget.onChanged != null) {
-          widget.onChanged!(newSliderValue);
-        }
-        if (widget.listScrollController != null) {
-          final newPosition = newSliderValue * stepWidth;
-          widget.listScrollController!.jumpTo(newPosition);
-        }
+      setState(() {
+        _sliderValue = newSliderValue;
+      });
+      if (widget.onChanged != null) {
+        widget.onChanged!(newSliderValue);
+      }
+      if (widget.listScrollController != null) {
+        widget.listScrollController!
+            .jumpTo(newSliderValue * stepWidth);
       }
     }
     _isRulerScrolling = false;
@@ -402,27 +439,46 @@ class _CustomRulerTimelineOtherAssetsWidget1State
     if (!_isRulerScrolling) {
       _isRulerScrolling = true;
       final newPosition = widget.listScrollController!.offset;
-      final divisions = widget.totalSeconds;
-      final stepWidth = 10.0; // 10 pixels for each second
-      final newSliderValue = newPosition / stepWidth;
-
-      // Ensure the slider value stays within the minimum and maximum values
-      final minSliderValue = widget.minValue;
-      final maxSliderValue = widget.maxValue;
-      final clampedValue = newSliderValue.clamp(minSliderValue, maxSliderValue);
+      final stepWidth = 10.0;
+      final newSliderValue = (newPosition / stepWidth)
+          .clamp(widget.minValue, widget.maxValue);
 
       setState(() {
-        _sliderValue = clampedValue;
+        _sliderValue = newSliderValue;
       });
-
       if (widget.scrollController != null) {
-        // Adjust the position of the other scroll controller
-        final newPosition = clampedValue * stepWidth;
-        widget.scrollController!.jumpTo(newPosition);
+        widget.scrollController!
+            .jumpTo(newSliderValue * stepWidth);
       }
     }
     _isRulerScrolling = false;
   }
+
+  // void _listScrollListener() {
+  //   if (!_isRulerScrolling) {
+  //     _isRulerScrolling = true;
+  //     final newPosition = widget.listScrollController!.offset;
+  //     final divisions = widget.totalSeconds;
+  //     final stepWidth = 10.0; // 10 pixels for each second
+  //     final newSliderValue = newPosition / stepWidth;
+  //
+  //     // Ensure the slider value stays within the minimum and maximum values
+  //     final minSliderValue = widget.minValue;
+  //     final maxSliderValue = widget.maxValue;
+  //     final clampedValue = newSliderValue.clamp(minSliderValue, maxSliderValue);
+  //
+  //     setState(() {
+  //       _sliderValue = clampedValue;
+  //     });
+  //
+  //     if (widget.scrollController != null) {
+  //       // Adjust the position of the other scroll controller
+  //       final newPosition = clampedValue * stepWidth;
+  //       widget.scrollController!.jumpTo(newPosition);
+  //     }
+  //   }
+  //   _isRulerScrolling = false;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -465,19 +521,32 @@ class _CustomRulerTimelineOtherAssetsWidget1State
             max: widget.maxValue,
             divisions: divisions - 1,
             onChanged: (val) {
-              // Update the value and notify the parent widget
               setState(() {
-                _sliderValue = val;
+                _sliderValue = val.clamp(widget.minValue, widget.maxValue);
               });
               if (widget.onChanged != null) {
-                widget.onChanged!(val);
+                widget.onChanged!(val.clamp(widget.minValue, widget.maxValue));
               }
               if (widget.listScrollController != null) {
-                final newPosition =
-                    val * 10.0; // 10 pixels for each second
+                final newPosition = val * 10.0;
                 widget.listScrollController!.jumpTo(newPosition);
               }
             },
+
+            // onChanged: (val) {
+            //   // Update the value and notify the parent widget
+            //   setState(() {
+            //     _sliderValue = val;
+            //   });
+            //   if (widget.onChanged != null) {
+            //     widget.onChanged!(val);
+            //   }
+            //   if (widget.listScrollController != null) {
+            //     final newPosition =
+            //         val * 10.0; // 10 pixels for each second
+            //     widget.listScrollController!.jumpTo(newPosition);
+            //   }
+            // },
             label: _sliderValue.toStringAsFixed(widget.labelValuePrecision),
           ),
         ),

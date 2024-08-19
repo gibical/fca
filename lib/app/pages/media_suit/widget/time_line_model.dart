@@ -469,6 +469,8 @@
 //     });
 //   }
 // }
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -548,8 +550,8 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
                 width: (mediaController.maxPaddingValue + mediaController.minPaddingValue) * 3 +
                     (mediaController.editVideoDataList.contains(widget.model)
                         ? widget.model.defaultWidthVideo!
-                        : widget.model.witdh),
-                height: widget.model.hight,
+                        : widget.model.width),
+                height: widget.model.height,
                 decoration: BoxDecoration(
                   color: widget.color,
                   border: Border.all(
@@ -656,10 +658,10 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
                         GestureDetector(
                           onPanUpdate: (details) {
                             setState(() {
-                              widget.model.witdh += details.delta.dx;
+                              widget.model.width += details.delta.dx;
 
-                              if (widget.model.witdh < 80) {
-                                widget.model.witdh = 80;
+                              if (widget.model.width < 80) {
+                                widget.model.width = 80;
                               }
                              widget.model.updateTimings((80 / 6).toInt(), 0 );
                             });
@@ -714,4 +716,274 @@ class _TimeLineWidgetState extends State<TimeLineWidget> {
 
   }
 
+}
+
+class EditeBoxWidget extends StatefulWidget {
+  const EditeBoxWidget({
+    Key? key,
+    required this.index,
+    required this.model,
+
+    required this.scrollController, required this.color, required this.removeItem,
+  }) : super(key: key);
+
+  final EditDataModel model;
+  final int index;
+  final ScrollController scrollController;
+  final Color? color;
+  final Function() removeItem;
+  @override
+  State<EditeBoxWidget> createState() => _EditeBoxWidgetState();
+}
+
+class _EditeBoxWidgetState extends State<EditeBoxWidget> {
+  Timer? _resizeTimer;
+
+  double _lastPanUpdateDx = 0.0;
+  int _currentResizingIndex = -1;
+  bool _isTransparentContainerAdded = true;
+  bool _isForward = true;
+
+  MediaSuitController editorController = Get.find<MediaSuitController>();
+  bool isSelected = false;
+  @override
+  void initState() {
+    super.initState();
+    widget.scrollController.addListener(_scrollListener);
+    widget.model.updateTimings((80 / 6).toInt(), 0);
+  }
+
+  void _scrollListener() {
+    if (!_isTransparentContainerAdded &&
+        widget.scrollController.position.pixels >=
+            widget.scrollController.position.maxScrollExtent - 50) {
+      setState(() {
+        if (editorController.editImageDataList.isEmpty ||
+            editorController.editImageDataList.last.width != 500.0) {
+          editorController.editImageDataList.add(
+              EditDataModel('', 'urlMedia', null, ''  , 0)
+          );
+        }
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedVideoIndex = editorController.selectedVideoIndex.value;
+    final selectedImageIndex = editorController.selectedImageIndex.value;
+    final selectedAudioIndex = editorController.selectedAudioIndex.value;
+    final selectedTextIndex = editorController.selectedTextIndex.value;
+
+    isSelected = widget.color == Colors.purple
+        ? selectedVideoIndex == widget.index
+        : widget.color == Colors.orange
+        ? selectedImageIndex == widget.index
+        : widget.color == Colors.red
+        ? selectedAudioIndex == widget.index
+        : selectedTextIndex == widget.index;
+    return GetBuilder<MediaSuitController>(builder: (c){
+      return AnimatedOpacity(
+        opacity: isSelected ? 1.0 : 0.3,
+        duration:
+        Duration(milliseconds: Constant.animatiomDuration),
+        child: Container(
+          key: widget.key,
+
+          height: 100.0,
+          child: Row(
+            children: [
+              isSelected ?     GestureDetector(
+                onTap: () {
+                  Get.dialog(
+                    Dialog(
+
+                      backgroundColor: AppColor.primaryDarkColor,
+                      child: SizedBox(
+                        height: 159,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 7.w,
+                            vertical: 3.h,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(widget.model.name),
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              Text(
+                                'Delete this media?',
+                                style: TextStyle(
+                                  color: Colors.white.withOpacity(0.7),
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Spacer(),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                         widget.removeItem();
+                                      Get.back();
+                                    },
+                                    child: Text(
+                                      'Yes',
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 7.w,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    child: Text('No'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                  editorController.selectedTextIndex
+                      .value = null;
+                  editorController.selectedVideoIndex
+                      .value = null;
+                  editorController.selectedImageIndex
+                      .value = null;
+                  editorController.selectedAudioIndex
+                      .value = null;
+                },
+                child: AnimatedOpacity(
+                  opacity: isSelected ? 1.0 : 0.2,
+                  duration:
+                  Duration(milliseconds: Constant.animatiomDuration),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      width: 6.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                      ),
+                      child: Center(
+                        child: isSelected ?Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                          size: 10.sp,
+                        ):SizedBox(),
+                      ),
+                    ),
+                  ),
+                ),
+              ) : SizedBox(),
+              Container(
+                width: (editorController.maxPaddingValue + editorController.minPaddingValue) * 2 +
+                    (editorController.editVideoDataList.contains(widget.model)
+                        ? widget.model.defaultWidthVideo!
+                        : widget.model.width),
+                color: widget.color,
+                alignment: Alignment.center,
+                child: Text(
+                  widget.model.name ,
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              GestureDetector(
+                onPanStart: (details) {
+                  _resizeTimer?.cancel();
+                  _lastPanUpdateDx = details.localPosition.dx;
+                  _currentResizingIndex = widget.index;
+                },
+                onPanUpdate: (details) {
+                  if (_currentResizingIndex == widget.index) {
+                    setState(() {
+                      double deltaDx = details.localPosition.dx - _lastPanUpdateDx;
+                      _lastPanUpdateDx = details.localPosition.dx;
+
+                      _isForward = deltaDx > 0;
+
+                      widget.model.width += deltaDx;
+                      if (widget.model.width < 30.0) {
+                        widget.model.width = 30.0;
+                      }
+
+                      if (_resizeTimer == null) {
+                        _resizeTimer = Timer.periodic(Duration(milliseconds: 16), (timer) {
+                          setState(() {
+                            double scrollOffset = widget.scrollController.offset;
+                            double containerWidth = _getContainerWidth(widget.index);
+                            double screenWidth = MediaQuery.of(context).size.width;
+
+                            if (_isForward) {
+                              widget.model.width += 0.5;
+                              if (scrollOffset + screenWidth < containerWidth) {
+                                double newOffset = scrollOffset + 0.5;
+                                widget.scrollController.jumpTo(newOffset);
+                              }
+                            } else {
+                              widget.model.width -= 0.5;
+                              if (widget.model.width < 30.0) {
+                                widget.model.width = 30.0;
+                              }
+                              if (scrollOffset > 0) {
+                                double newOffset = scrollOffset - 0.5;
+                                widget.scrollController.jumpTo(newOffset);
+                              }
+                            }
+                          });
+                        });
+                      }
+                      widget.model.updateTimings((80 / 6).toInt(), 0 );
+                    });
+                  }
+                },
+                onPanEnd: (details) {
+                  _resizeTimer?.cancel();
+                  _resizeTimer = null;
+                  _currentResizingIndex = -1;
+                },
+                child: Stack(
+                  children: [
+                    Container(
+                      color: widget.color,
+                      width: 30.0,
+                      height: 100.0,
+                    ),
+                    Container(
+                      color: Colors.white.withOpacity(0.4),
+                      width: 30.0,
+                      height: 100.0,
+                      child: Center(
+                        child: Icon(
+                          Icons.arrow_forward_ios_sharp,
+                          color: Colors.white,
+                          size: 10.sp,
+                        ),
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  double _getContainerWidth(int index) {
+    double width = 0.0;
+    for (int i = 0; i <= index; i++) {
+      width += editorController.editImageDataList[i].width;
+    }
+    width += 16 * (index + 1); // Add margin for each container
+    return width;
+  }
 }

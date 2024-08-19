@@ -51,14 +51,43 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
   @override
   void initState() {
     super.initState();
+
+
     scrollSynchronizer = ScrollSynchronizer();
-    scrollSynchronizer.registerScrollController(_listScrollControllerVideo);
-    scrollSynchronizer.registerScrollController(_listScrollControllerText);
-    scrollSynchronizer.registerScrollController(_listScrollControllerImage);
-    scrollSynchronizer.registerScrollController(_listScrollControllerAudio);
+
+    // Register all scroll controllers initially
     scrollSynchronizer.registerScrollController(_rulerScrollController);
-    //initScroll();
+    scrollSynchronizer.registerScrollController(_listScrollControllerImage);
+    scrollSynchronizer.registerScrollController(_listScrollControllerText);
+    scrollSynchronizer.registerScrollController(_listScrollControllerAudio);
+    scrollSynchronizer.registerScrollController(_listScrollControllerVideo);
+
+    // Update scroll synchronizer based on the selected media type
+    // updateScrollSynchronizer();
   }
+
+  // void updateScrollSynchronizer() {
+  //   scrollSynchronizer.unregisterScrollController(_listScrollControllerVideo);
+  //   scrollSynchronizer.unregisterScrollController(_listScrollControllerImage);
+  //   scrollSynchronizer.unregisterScrollController(_listScrollControllerAudio);
+  //   scrollSynchronizer.unregisterScrollController(_listScrollControllerText);
+  //
+  //   if (editorController.selectedVideoIndex.value != null) {
+  //     scrollSynchronizer.registerScrollController(_listScrollControllerVideo);
+  //   } else if (editorController.selectedImageIndex.value != null) {
+  //     scrollSynchronizer.registerScrollController(_listScrollControllerImage);
+  //   } else if (editorController.selectedAudioIndex.value != null) {
+  //     scrollSynchronizer.registerScrollController(_listScrollControllerAudio);
+  //   } else if (editorController.selectedTextIndex.value != null) {
+  //     scrollSynchronizer.registerScrollController(_listScrollControllerText);
+  //   }
+  //
+  //   // Always register the ruler scroll controller
+  //   scrollSynchronizer.registerScrollController(_rulerScrollController);
+  // }
+
+
+
 
   // void initScroll() {
   //   final editorController = Get.find<MediaSuitController>();
@@ -98,8 +127,17 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
   final editorController = Get.find<MediaSuitController>();
 
 
+  Timer? _resizeTimer;
+  double _lastPanUpdateDx = 0.0;
+  int _currentResizingIndex = -1;
+  bool _isTransparentContainerAdded = true;
+  bool _isForward = true;
+
+
+
   @override
   Widget build(BuildContext context) {
+
     int totalItemCount = ((maxValue - minValue) / (itemWidth / 10)).round();
 
     final h = MediaQuery
@@ -258,6 +296,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                   // Set to 1 for closer ticks
                                   labelValuePrecision: 0,
                                   tickValuePrecision: 0,
+
                                   onChanged: (val) =>
                                       setState(() {
                                         value = val;
@@ -301,6 +340,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                               totalItemCount,
                                           scrollDirection: Axis.horizontal,
                                           itemBuilder: (context, index) {
+
                                             if (index <
                                                 editorController.editVideoDataList
                                                     .length) {
@@ -310,42 +350,42 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                                   .editVideoDataList[index].name;
 
                                               return GestureDetector(
-                                                key: Key('$index'),
+                                                key: ValueKey('item_$index'),
                                                 onTap: () {
                                                   setState(() {
-                                                    editorController
-                                                        .selectedTextIndex.value =
-                                                    null;
-                                                    editorController
-                                                        .selectedVideoIndex.value =
-                                                        index;
-                                                    editorController
-                                                        .selectedImageIndex.value =
-                                                    null;
-                                                    editorController
-                                                        .selectedAudioIndex.value =
-                                                    null;
-                                                  });
+                                                    if (isSelected) {
+                                                      // If already selected, do nothing
+                                                      return;
+                                                    } else {
+                                                      editorController
+                                                          .selectedTextIndex
+                                                          .value = null;
+                                                      editorController
+                                                          .selectedVideoIndex
+                                                          .value = index;
+                                                      editorController
+                                                          .selectedImageIndex
+                                                          .value = null;
+                                                      editorController
+                                                          .selectedAudioIndex
+                                                          .value = null;
+                                                    }
+                                                  }
+                                                  );
                                                 },
-                                                child: TimeLineWidget(
-                                                  model: model,
-                                                  color: Colors.purple,
-                                                  name: name,
-                                                  removeItem: () {
-                                                    editorController
-                                                        .editVideoDataList.removeAt(
-                                                        index);
-                                                  },
+                                                child: EditeBoxWidget(
+
                                                   index: index,
+                                                  model: model,
+                                                  scrollController: _listScrollControllerVideo, color: Colors.purple,  removeItem: () {
+                                                  editorController
+                                                      .editVideoDataList.removeAt(
+                                                      index);
+                                                },
                                                 ),
                                               );
                                             } else {
-                                              return Container(
-                                                key: ValueKey('transparent_$index'),
-                                                color: Colors.transparent,
-                                                height: 50,
-                                                width: itemWidth * itemWidth,
-                                              );
+                                              return _buildInfiniteScrollContainer();
                                             }
                                           },
                                           proxyDecorator: (child, index,
@@ -451,95 +491,63 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                   height: 1,
                                   width: double.infinity,
                                 ),
-                                Obx(
-                                      () =>
-                                      SizedBox(
-                                        height: h * 0.050,
-                                        child: ReorderableListView.builder(
-                                          itemCount:
-                                          editorController.editImageDataList
-                                              .length + totalItemCount,
+                                Obx(() {
+                                  return SizedBox(
+                                    height: h * 0.050,
+                                    child: ReorderableListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      scrollController: _listScrollControllerImage,
+                                      itemCount: editorController.editImageDataList.length + (_isTransparentContainerAdded ? 1 : 0),
+                                      itemBuilder: (context, index) {
+                                        if (index < editorController.editImageDataList.length) {
+                                          var model = editorController.editImageDataList[index];
+                                          return GestureDetector(
+                                            key: ValueKey('item_$index'),
+                                            onTap: () {
+                                              setState(() {
+                                                editorController
+                                                    .selectedTextIndex.value =
+                                                null;
+                                                editorController
+                                                    .selectedVideoIndex.value =
+                                                    null;
+                                                editorController
+                                                    .selectedImageIndex.value =
+                                                index;
+                                                editorController
+                                                    .selectedAudioIndex.value =
+                                                null;
+                                              });
+                                            },
+                                            child: EditeBoxWidget(
 
-                                          scrollDirection: Axis.horizontal,
-                                          scrollController: _listScrollControllerImage,
-                                          itemBuilder: (context, index) {
-                                            //   return TimeLineWidget(model: model, color: Colors.redAccent, name: name,);
-
-                                            if (index <
-                                                editorController.editImageDataList
-                                                    .length) {
-                                              var model =
+                                              index: index,
+                                              model: model,
+                                              scrollController: _listScrollControllerImage, color: Colors.orange,  removeItem: () {
                                               editorController
-                                                  .editImageDataList[index];
-                                              String name = editorController
-                                                  .editImageDataList[index].name;
-                                              return GestureDetector(
-                                                key: Key('${index}'),
-                                                onTap: () {
-                                                  setState(() {
-                                                    if (isSelected) {
-                                                      // If already selected, do nothing
-                                                      return;
-                                                    } else {
-                                                      editorController
-                                                          .selectedTextIndex
-                                                          .value = null;
-                                                      editorController
-                                                          .selectedVideoIndex
-                                                          .value = null;
-                                                      editorController
-                                                          .selectedImageIndex
-                                                          .value = index;
-                                                      editorController
-                                                          .selectedAudioIndex
-                                                          .value = null;
-                                                    }
-                                                  }
-                                                  );
-                                                },
-                                                child: TimeLineWidget(
-                                                  model: model,
-                                                  color: Colors.orange,
-                                                  name: name,
+                                                  .editImageDataList.removeAt(
+                                                  index);
+                                            },
+                                            ),
+                                          );
+                                        } else {
+                                          return _buildInfiniteScrollContainer();
+                                        }
+                                      },
+                                      onReorder: (int oldIndex, int newIndex) {
+                                        setState(() {
+                                          if (oldIndex < newIndex) {
+                                            newIndex -= 1;
+                                          }
+                                          final item = editorController.editImageDataList.removeAt(oldIndex);
+                                          editorController.editImageDataList.insert(newIndex, item);
+                                        });
+                                      },
+                                    ),
+                                  );
+                                }),
 
-                                                  removeItem: () {
-                                                    editorController
-                                                        .editImageDataList
-                                                        .removeAt(index);
-                                                  },
-                                                  index: index,
-                                                ),
-                                              );
-                                            } else {
-                                              return Container(
-                                                key: ValueKey('transparent_$index'),
-                                                color: Colors.transparent,
-                                                height: 50,
-                                                width: itemWidth * itemWidth,
-                                              );
-                                            }
-                                          },
-                                          proxyDecorator: (child, index,
-                                              animation) =>
-                                              _proxyDecorator(
-                                                  child, index, animation,
-                                                  Colors.orange,
-                                                  Colors.orange.shade300),
-                                          onReorder: (int oldIndex, int newIndex) {
-                                            setState(() {
-                                              if (oldIndex < newIndex) {
-                                                newIndex -= 1;
-                                              }
-                                              final item = editorController
-                                                  .editImageDataList
-                                                  .removeAt(oldIndex);
-                                              editorController.editImageDataList
-                                                  .insert(newIndex, item);
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                ),
+
                                 Container(
                                   color: Colors.grey.withOpacity(0.7),
                                   height: 1,
@@ -558,16 +566,14 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                           scrollController: _listScrollControllerAudio,
                                           itemBuilder: (context, index) {
                                             //   return TimeLineWidget(model: model, color: Colors.redAccent, name: name,);
-                                            if (index <
-                                                editorController.editAudioDataList
-                                                    .length) {
+                                            if (index < editorController.editAudioDataList.length) {
                                               var model =
                                               editorController
                                                   .editAudioDataList[index];
                                               String name = editorController
                                                   .editAudioDataList[index].name;
                                               return GestureDetector(
-                                                key: Key('${index}'),
+                                                key: ValueKey('item_$index'),
                                                 onTap: () {
                                                   setState(() {
                                                     if (isSelected) {
@@ -590,25 +596,19 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                                   }
                                                   );
                                                 },
-                                                child: TimeLineWidget(
-                                                  model: model,
-                                                  color: Colors.red,
-                                                  name: name,
-                                                  removeItem: () {
-                                                    editorController
-                                                        .editAudioDataList
-                                                        .removeAt(index);
-                                                  },
+                                                child: EditeBoxWidget(
+
                                                   index: index,
+                                                  model: model,
+                                                  scrollController: _listScrollControllerAudio, color: Colors.red,  removeItem: () {
+                                                  editorController
+                                                      .editAudioDataList.removeAt(
+                                                      index);
+                                                },
                                                 ),
                                               );
                                             } else {
-                                              return Container(
-                                                key: ValueKey('transparent_$index'),
-                                                color: Colors.transparent,
-                                                height: 50,
-                                                width: itemWidth * itemWidth,
-                                              );
+                                              return _buildInfiniteScrollContainer();
                                             }
                                           },
                                           proxyDecorator: (child, index,
@@ -649,16 +649,14 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                           scrollDirection: Axis.horizontal,
                                           scrollController: _listScrollControllerText,
                                           itemBuilder: (context, index) {
-                                            if (index <
-                                                editorController.editTextDataList
-                                                    .length) {
+                                            if (index < editorController.editTextDataList.length) {
                                               var model =
                                               editorController
                                                   .editTextDataList[index];
                                               String name = editorController
                                                   .editTextDataList[index].name;
                                               return GestureDetector(
-                                                key: Key('${index}'),
+                                                key: ValueKey('item_$index'),
                                                 onTap: () {
                                                   setState(() {
                                                     if (isSelected) {
@@ -679,28 +677,21 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                                           .value = null;
                                                     }
                                                   }
-
                                                   );
                                                 },
-                                                child: TimeLineWidget(
-                                                  model: model,
-                                                  color: Colors.green,
-                                                  name: name,
-                                                  removeItem: () {
-                                                    editorController
-                                                        .editTextDataList
-                                                        .removeAt(index);
-                                                  },
+                                                child: EditeBoxWidget(
+
                                                   index: index,
+                                                  model: model,
+                                                  scrollController: _listScrollControllerText, color: Colors.green,  removeItem: () {
+                                                  editorController
+                                                      .editTextDataList.removeAt(
+                                                      index);
+                                                },
                                                 ),
                                               );
                                             } else {
-                                              return Container(
-                                                key: ValueKey('transparent_$index'),
-                                                color: Colors.transparent,
-                                                height: 50,
-                                                width: itemWidth * itemWidth,
-                                              );
+                                              return _buildInfiniteScrollContainer();
                                             }
                                           },
                                           proxyDecorator: (child, index,
@@ -980,8 +971,113 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
       ),
     );
   }
-}
+  Widget _buildContainer({required EditDataModel model,required int index}) {
+    return Container(
+      key: Key('$index'), // Unique key for each container
+      height: 100.0,
+      child: Row(
+        children: [
+          Container(
+            width: model.width,
+            color: Colors.blue,
+            alignment: Alignment.center,
+            child: Text(
+              model.name,
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          GestureDetector(
+            onPanStart: (details) {
+              _resizeTimer?.cancel();
+              _lastPanUpdateDx = details.localPosition.dx;
+              _currentResizingIndex = index;
+            },
+            onPanUpdate: (details) {
+              if (_currentResizingIndex == index) {
+                setState(() {
+                  double deltaDx = details.localPosition.dx - _lastPanUpdateDx;
+                  _lastPanUpdateDx = details.localPosition.dx;
 
+                  _isForward = deltaDx > 0;
+
+                  model.width += deltaDx;
+                  if (model.width < 30.0) {
+                    model.width = 30.0;
+                  }
+
+                  if (_resizeTimer == null) {
+                    _resizeTimer = Timer.periodic(Duration(milliseconds: 16), (timer) {
+                      setState(() {
+                        double scrollOffset = _listScrollControllerImage.offset;
+                        double containerWidth = _getContainerWidth(index);
+                        double screenWidth = MediaQuery.of(context).size.width;
+
+                        if (_isForward) {
+                          model.width += 0.4; // Reduced speed
+                          if (scrollOffset + screenWidth < containerWidth) {
+                            double newOffset = scrollOffset + 1; // Reduced speed
+                            _listScrollControllerImage.jumpTo(newOffset);
+                          }
+                        } else {
+                          model.width -= 0.4; // Reduced speed
+                          if (model.width < 30.0) {
+                            model.width = 30.0;
+                          }
+                          if (scrollOffset > 0) {
+                            double newOffset = scrollOffset - 1; // Reduced speed
+                            _listScrollControllerImage.jumpTo(newOffset);
+                          }
+                        }
+                      });
+                    });
+                  }
+                });
+              }
+            },
+            onPanEnd: (details) {
+              _resizeTimer?.cancel();
+              _resizeTimer = null;
+              _currentResizingIndex = -1;
+            },
+            child: Container(
+              color: Colors.red,
+              width: 30.0,
+              height: 100.0,
+              child: Icon(
+                Icons.drag_handle,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfiniteScrollContainer() {
+    return Container(
+      key: ValueKey('orange'),
+      width: 100000.0,
+      color: Colors.transparent,
+    );
+  }
+
+  double _getContainerWidth(int index , ) {
+    double width = 0.0;
+    for (int i = 0; i <= index; i++) {
+      width +=   editorController.editImageDataList[i].width;
+    }
+    width += 16 * (index + 1); // Add margin for each container
+    return width;
+  }
+
+  @override
+  void dispose() {
+
+    _resizeTimer?.cancel();
+    super.dispose();
+  }
+}
 
 class VideoPlayerEditor extends StatefulWidget {
   final List<dynamic> videoUrls;

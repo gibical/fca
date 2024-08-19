@@ -37,26 +37,28 @@ import '../../common/utils/dio_inperactor.dart';
 
 class EditDataModel {
   final String name;
+   int? mediaClass;
    String? urlMedia;
-  double witdh = 80;
-  double hight = 0.050.h;
+  double width = 80;
+  double height = 0.050.h;
   double positionX = 0.0;
   double? defaultWidthVideo;
+
   int start = 0;
   int end = 0;
   int length = 0;
   String? assetId;
   bool isloading = false;
 
-  EditDataModel(this.name, this.urlMedia, this.defaultWidthVideo, this.assetId,
+  EditDataModel(this.name, this.urlMedia, this.defaultWidthVideo, this.assetId, this.mediaClass ,
       {this.isloading=false});
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
       'urlMedia': urlMedia,
-      'width': witdh.round(),
-      'height': hight.round(),
+      'width': width.round(),
+      'height': height.round(),
       'positionX': positionX,
       'start': start,
       'length': length,
@@ -70,8 +72,8 @@ class EditDataModel {
   }
 
   void updateSize(double newWidth, double newHeight) {
-    witdh = newWidth;
-    hight = newHeight;
+    width = newWidth;
+    height = newHeight;
   }
 
 
@@ -82,7 +84,7 @@ class EditDataModel {
       return;
     }
 
-    double durationInSeconds = witdh / pixelsPerSecond;
+    double durationInSeconds = width / pixelsPerSecond;
 
 
     start = previousEnd + 1;
@@ -524,33 +526,67 @@ class MediaSuitController extends GetxController {
 
 
 
+  //Multi Select
 
+  var tempSelectedItems = <EditDataModel>[].obs;
+  void confirmSelection() {
+    for (var item in tempSelectedItems) {
+      if (item.mediaClass == 1) {
+        setDataEditText(item.name, item.urlMedia!, item.assetId!, isloading: item.isloading);
+      } else if (item.mediaClass == 2) {
+        setDataEditImage(item.name, item.urlMedia!, item.assetId!, isloading: item.isloading);
+      } else if (item.mediaClass == 3) {
+        setDataEditAudio(item.name, item.urlMedia!, item.assetId!, isloading: item.isloading);
+      } else if (item.mediaClass == 4) {
+        setDataEditVideo(item.name, item.urlMedia!, item.length.toDouble(), item.assetId!, isloading: item.isloading);
+      }
+    }
+    tempSelectedItems.clear();
+  }
 
+  void addItemToTempList(String name, String url,widthVideoItem, String assetId, int mediaClass, {bool isloading = false}) {
+    if (mediaClass == 1) {
+      tempSelectedItems.add(EditDataModel(name, url, 0, assetId, 1 ,isloading: isloading));
+    } else if (mediaClass == 2) {
+      tempSelectedItems.add(EditDataModel(name, url, 0, assetId, 2 ,isloading: isloading));
+    } else if (mediaClass == 3) {
+      tempSelectedItems.add(EditDataModel(name, url, 0, assetId, 3 ,isloading: isloading));
+    } else if (mediaClass == 4) {
+      tempSelectedItems.add(EditDataModel(name, url, widthVideoItem.toDouble(), assetId, 4, isloading: isloading));
 
+    } else {
 
+    }
+  }
+  void removeItemFromTempList(String assetId) {
+    tempSelectedItems.removeWhere((item) => item.assetId == assetId);
+  }
 
   void setDataEditText(String name, String textUrl, String assetId,{bool isloading =false}) {
-    editTextDataList.add(EditDataModel(name, textUrl, 0, assetId,isloading: isloading));
+    editTextDataList.add(EditDataModel(name, textUrl, 0, assetId, 1 ,isloading: isloading));
+
     selectedTextIndex.value = editTextDataList.length - 1;
   }
 
   void setDataEditImage(String name, String imageUrl, String assetId,{bool isloading =false}) {
-    editImageDataList.add(EditDataModel(name, imageUrl, 0, assetId,isloading: isloading));
+
+    editImageDataList.add(EditDataModel(name, imageUrl, 0, assetId, 2 ,isloading: isloading));
     selectedImageIndex.value = editImageDataList.length - 1;
   }
 
   void setDataEditVideo(
-      String name, String videoUrl, int videoTime, String assetId,{bool isloading =false}) {
+      String name, String videoUrl, double videoTime, String assetId,{bool isloading =false}) {
     double widthVideoItem = videoTime * 16.0;
 
     editVideoDataList
-        .add(EditDataModel(name, videoUrl, widthVideoItem, assetId,isloading: isloading));
+        .add(EditDataModel(name, videoUrl, widthVideoItem, assetId,4,isloading: isloading));
 
     selectedVideoIndex.value = editVideoDataList.length - 1;
   }
 
   void setDataEditAudio(String name, String audioUrl, String assetId,{bool isloading =false}) {
-    editAudioDataList.add(EditDataModel(name, audioUrl, 0, assetId,isloading: isloading));
+    editAudioDataList.add(EditDataModel(name, audioUrl, 0, assetId, 3 ,isloading: isloading));
+
     selectedAudioIndex.value = editAudioDataList.length - 1;
   }
 
@@ -889,6 +925,35 @@ class DurationAudio {
 //     _controllers.remove(controller);
 //   }
 // }
+//v2
+// class ScrollSynchronizer {
+//   final List<ScrollController> _controllers = [];
+//   bool _scrolling = false;
+//
+//   void scrollListener(ScrollController controller) {
+//     if (_scrolling) return;
+//
+//     _scrolling = true;
+//     double currentScroll = controller.position.pixels;
+//
+//     for (var c in _controllers) {
+//       if (c != controller) {
+//         c.jumpTo(currentScroll);
+//       }
+//     }
+//
+//     _scrolling = false;
+//   }
+//
+//   void registerScrollController(ScrollController controller) {
+//     _controllers.add(controller);
+//     controller.addListener(() => scrollListener(controller));
+//   }
+//
+//   void unregisterScrollController(ScrollController controller) {
+//     _controllers.remove(controller);
+//   }
+// }
 class ScrollSynchronizer {
   final List<ScrollController> _controllers = [];
   bool _scrolling = false;
@@ -901,6 +966,7 @@ class ScrollSynchronizer {
 
     for (var c in _controllers) {
       if (c != controller) {
+        print('Synchronizing scroll position: ${currentScroll}');
         c.jumpTo(currentScroll);
       }
     }
@@ -908,13 +974,19 @@ class ScrollSynchronizer {
     _scrolling = false;
   }
 
+
   void registerScrollController(ScrollController controller) {
-    _controllers.add(controller);
-    controller.addListener(() => scrollListener(controller));
+    if (!_controllers.contains(controller)) {
+      _controllers.add(controller);
+      controller.addListener(() => scrollListener(controller));
+    }
   }
 
   void unregisterScrollController(ScrollController controller) {
-    _controllers.remove(controller);
+    if (_controllers.contains(controller)) {
+      controller.removeListener(() => scrollListener(controller));
+      _controllers.remove(controller);
+    }
   }
 }
 

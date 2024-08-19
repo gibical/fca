@@ -26,6 +26,28 @@ class GridPostView extends StatefulWidget {
 }
 
 class _GridPostViewState extends State<GridPostView> {
+  bool isSelected = false;
+  void toggleSelection() {
+    setState(() {
+      isSelected = !isSelected;
+    });
+
+    if (isSelected) {
+      Get.find<MediaSuitController>().addItemToTempList(
+        widget.model['name'].toString(),
+        widget.model['file']['url'],
+        widget.model['length'],
+        widget.model['file_id'].toString(),
+        widget.model['class'],
+      );
+    } else {
+      Get.find<MediaSuitController>().removeItemFromTempList(
+        widget.model['file_id'].toString(),
+      );
+    }
+    Get.find<MediaSuitController>().update();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -34,26 +56,8 @@ class _GridPostViewState extends State<GridPostView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap:Get.arguments == 'edit_screen' ? (){
-
-
-          if(widget. model['class']==1){
-
-            Get.find<MediaSuitController>().setDataEditText(widget.model['name'].toString() , widget.model['file']['url'] , widget.model['file_id'].toString() );
-          }else if(widget. model['class']==2){
-
-            Get.find<MediaSuitController>().setDataEditImage(widget.model['name'].toString() ,widget.model['file']['url'] , widget.model['file_id'].toString());
-          }else if(widget. model['class']==3){
-
-            Get.find<MediaSuitController>().setDataEditAudio(widget.model['name'].toString() , widget.model['file']['url'] , widget.model['file_id'].toString());
-          }else{
-            Get.find<MediaSuitController>().setDataEditVideo(widget.model['name'].toString()  , widget.model['file']['url'] ,  widget.model['length'] , widget.model['file_id'].toString());
-          }
-
-
-          Get.back();
-
-        }:Get.arguments == 'onTapChannelManagement' ? (){
+        onTap:Get.arguments == 'edit_screen'  ? toggleSelection
+            :Get.arguments == 'onTapChannelManagement' ? (){
 
           Get.find<ShareAccountLogic>().setModelShareData(widget.model['name'].toString() ,widget.model['file_id']);
 
@@ -174,6 +178,21 @@ class _GridPostViewState extends State<GridPostView> {
                     ),
                   ),
                 ),
+                if (isSelected)
+                  if (isSelected)
+                    SizedBox.expand(
+                      child: Container(color: Colors.black.withOpacity(0.5),),
+                    ),
+                if (isSelected)
+                  Positioned(
+                    top: 5,
+                    right: 5,
+                    child: Icon(
+                      Icons.check_circle,
+                      color: AppColor.primaryLightColor,
+                      size: 20.sp,
+                    ),
+                  ),
               ],
             )
         ),
@@ -244,6 +263,27 @@ class GridPostView2 extends StatefulWidget {
 }
 
 class _GridPostView2State extends State<GridPostView2> {
+  bool isSelected = false;
+  void toggleSelection() {
+    setState(() {
+      isSelected = !isSelected;
+    });
+
+    if (isSelected) {
+      Get.find<MediaSuitController>().addItemToTempList(
+        widget.model['name'].toString(),
+        widget.model['file']['url'],
+        widget.model['length'],
+        widget.model['file_id'].toString(),
+        widget.model['class'],
+      );
+    } else {
+      Get.find<MediaSuitController>().removeItemFromTempList(
+        widget.model['file_id'].toString(),
+      );
+    }
+    Get.find<MediaSuitController>().update();
+  }
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -260,27 +300,7 @@ class _GridPostView2State extends State<GridPostView2> {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
 
-        onTap:Get.arguments == 'edit_screen' ? (){
-
-
-         // debugger();
-          if(widget. model['class']==1){
-
-            Get.find<MediaSuitController>().setDataEditText(widget.model['name'].toString() ,widget.model['file']['url'] , widget.model['file_id'].toString());
-          }else if(widget. model['class']==2){
-
-            Get.find<MediaSuitController>().setDataEditImage(widget.model['name'].toString() ,widget.model['file']['url'] , widget.model['file_id'].toString());
-          }else if(widget. model['class']==3){
-
-            Get.find<MediaSuitController>().setDataEditAudio(widget.model['name'].toString() , widget.model['file']['url'] , widget.model['file_id'].toString());
-          }else{
-            Get.find<MediaSuitController>().setDataEditVideo(widget.model['name'].toString()  , widget.model['file']['url'] ,  widget.model['length'] , widget.model['file_id'].toString());
-          }
-
-
-          Get.back();
-
-        }:Get.arguments == 'onTapChannelManagement' ? (){
+        onTap:Get.arguments == 'edit_screen' ? toggleSelection:Get.arguments == 'onTapChannelManagement' ? (){
           Get.find<ShareAccountLogic>().setModelShareData(widget.model['name'].toString() ,widget.model['file_id']);
 
           Get.back();
@@ -398,6 +418,20 @@ class _GridPostView2State extends State<GridPostView2> {
                     ),
                   ),
                 ),
+                if (isSelected)
+                  SizedBox.expand(
+                    child: Container(color: Colors.black.withOpacity(0.5),),
+                  ),
+                if (isSelected)
+                  Positioned(
+                    top: 5,
+                    right: 5,
+                    child: Icon(
+                      Icons.check_circle,
+                      color: AppColor.primaryLightColor,
+                      size: 20.sp,
+                    ),
+                  ),
               ],
             )
         ),

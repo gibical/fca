@@ -23,6 +23,7 @@ import '../channel/widgets/custom_calendar_widget.dart';
 import '../home/logic.dart';
 import '../home/tabs/all/view.dart';
 import '../home/tabs/image/view.dart';
+import '../media_suit/logic.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({super.key});
@@ -220,52 +221,88 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ],
                 ),
               ),
-              body: DefaultTabController(
-                length: 2,
-                child: Column(
-                  children: [
-                    Container(
-                      width: 100.w,
-                      decoration: BoxDecoration(
-                        color: AppColor.blueDarkColor,
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(60.sp),
-                          bottomLeft: Radius.circular(60.sp),
+              body: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  DefaultTabController(
+                    length: 2,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 100.w,
+                          decoration: BoxDecoration(
+                            color: AppColor.blueDarkColor,
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(60.sp),
+                              bottomLeft: Radius.circular(60.sp),
+                            ),
+                          ),
+                          height: 60,
+                          child: TabBar(
+                            tabAlignment: TabAlignment.center,
+                            physics: const BouncingScrollPhysics(),
+                            isScrollable: true,
+                            controller: _tabController,
+                            labelPadding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            overlayColor: MaterialStateProperty.all(Colors.transparent),
+                            enableFeedback: false,
+                            indicatorWeight: 2,
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            indicatorColor: AppColor.primaryLightColor,
+                            unselectedLabelColor: Colors.grey,
+                            labelColor: AppColor.whiteColor,
+                            dividerColor: Colors.transparent,
+                            tabs: [
+                              _buildTab(context, 0, 'prof_1'.tr),
+                              _buildTab(context, 1, 'prof_2'.tr),
+                            ],
+                          ),
                         ),
-                      ),
-                      height: 60,
-                      child: TabBar(
-                        tabAlignment: TabAlignment.center,
-                        physics: const BouncingScrollPhysics(),
-                        isScrollable: true,
-                        controller: _tabController,
-                        labelPadding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        overlayColor: MaterialStateProperty.all(Colors.transparent),
-                        enableFeedback: false,
-                        indicatorWeight: 2,
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        indicatorColor: AppColor.primaryLightColor,
-                        unselectedLabelColor: Colors.grey,
-                        labelColor: AppColor.whiteColor,
-                        dividerColor: Colors.transparent,
-                        tabs: [
-                          _buildTab(context, 0, 'prof_1'.tr),
-                          _buildTab(context, 1, 'prof_2'.tr),
-                        ],
-                      ),
+
+                        Expanded(
+                          child: TabBarView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            controller: _tabController,
+                            children: [
+                              SubscrTabScreen(),
+                              OwnerTabScreen(),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: TabBarView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        controller: _tabController,
-                        children: [
-                          SubscrTabScreen(),
-                          OwnerTabScreen(),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  Get.arguments == 'edit_screen' ?  Obx((){
+                    if(     Get.arguments == 'edit_screen' &&   Get.find<MediaSuitController>().tempSelectedItems.value.length != 0){
+                      return GestureDetector(
+                        onTap: (){
+
+                          Get.find<MediaSuitController>().confirmSelection();
+
+
+                          Get.back();
+                        },
+                        child: Container(
+                          color: AppColor.blueDarkColor,
+
+                          height: 70,
+
+                          child: Center(
+                            child: Text('Back to editor - Item selected: ${Get.find<MediaSuitController>().tempSelectedItems.value.length}' , style: TextStyle(
+                              color: AppColor.primaryLightColor,
+                              fontSize: 15
+                            ),),
+                          ),
+                        ),
+                      );
+                    }else{
+                      return SizedBox();
+                    }
+
+
+                  }):SizedBox(),
+
+                ],
               ),
             );
     });
