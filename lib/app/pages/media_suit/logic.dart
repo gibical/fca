@@ -164,6 +164,15 @@ class MediaSuitController extends GetxController {
 
 
 
+  //clear timeline
+  void clearTimeline() {
+    editTextDataList.clear();
+    editImageDataList.clear();
+    editVideoDataList.clear();
+    editAudioDataList.clear();
+  }
+
+
 
 
   ///Convert asset TimeLine [selectedAudioIndex]
@@ -817,6 +826,7 @@ class MediaSuitController extends GetxController {
         print('==================================================================================================');
         print('Time line Asset Create successfully = ${response.data}');
         print('==================================================================================================');
+        clearTimeline();
         Constant.showMessege("Time line Asset Create successfully Wait To Render...");
 
 
