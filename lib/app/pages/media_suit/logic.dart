@@ -184,7 +184,7 @@ class MediaSuitController extends GetxController {
       final token = GetStorage().read("token");
 
       String apiUrl =
-          '${Constant.HTTP_HOST}jobs/audio-translate-text';
+          '${Constant.HTTP_HOST}tasks/audio-translate-text';
       var s = Dio();
       s.interceptors.add(MediaVerseConvertInterceptor());
 
@@ -229,7 +229,7 @@ class MediaSuitController extends GetxController {
       final token = GetStorage().read("token");
 
       String apiUrl =
-          '${Constant.HTTP_HOST}jobs/audio-text';
+          '${Constant.HTTP_HOST}tasks/audio-text';
       var s = Dio();
       s.interceptors.add(MediaVerseConvertInterceptor());
 
@@ -282,7 +282,7 @@ class MediaSuitController extends GetxController {
       final token = GetStorage().read("token");
 
       String apiUrl =
-          '${Constant.HTTP_HOST}jobs/video-audio';
+          '${Constant.HTTP_HOST}tasks/video-audio';
       var response = await Dio().post(apiUrl, options: Options(headers: {
         'accept': 'application/json',
         'X-App': '_Android',
@@ -394,7 +394,7 @@ class MediaSuitController extends GetxController {
       final token = GetStorage().read("token");
 
       String apiUrl =
-          '${Constant.HTTP_HOST}jobs/text-image';
+          '${Constant.HTTP_HOST}tasks/text-image';
       var s = Dio();
       s.interceptors.add(MediaVerseConvertInterceptor());
       var response = await s. post(apiUrl, options: Options(headers: {
@@ -445,7 +445,7 @@ class MediaSuitController extends GetxController {
       final token = GetStorage().read("token");
 
       String apiUrl =
-          '${Constant.HTTP_HOST}jobs/text-audio';
+          '${Constant.HTTP_HOST}tasks/text-audio';
       var s = Dio();
       s.interceptors.add(MediaVerseConvertInterceptor());
       var response = await s. post(apiUrl, options: Options(headers: {
@@ -492,7 +492,7 @@ class MediaSuitController extends GetxController {
       final token = GetStorage().read("token");
 
       String apiUrl =
-          '${Constant.HTTP_HOST}jobs/text-translate';
+          '${Constant.HTTP_HOST}tasks/text-translate';
       var s = Dio();
       s.interceptors.add(MediaVerseConvertInterceptor());
       var response = await s. post(apiUrl, options: Options(headers: {
@@ -811,7 +811,7 @@ class MediaSuitController extends GetxController {
 
     try {
       var response = await dio.post(
-        '${Constant.HTTP_HOST}jobs/mix',
+        '${Constant.HTTP_HOST}tasks/mix',
         data:jsonEncode(body),
         options: Options(
           headers: {

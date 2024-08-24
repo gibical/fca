@@ -552,7 +552,7 @@ class _CustomRulerTimelineOtherAssetsWidget1State
         ),
         Container(
           color: Colors.grey.withOpacity(0.3),
-          height: 40,
+          height: 45,
           child: SingleChildScrollView(
             controller: widget.scrollController,
             scrollDirection: Axis.horizontal,
@@ -589,7 +589,7 @@ class _CustomRulerTimelineOtherAssetsWidget1State
                         child: index % (widget.minorTick + 1) == 0
                             ? Text(
                           '${index + 1}',
-                          style: TextStyle(fontSize: 10, color: Colors.white),
+                          style: TextStyle(fontSize: 15, color: Colors.white),
                           textAlign: TextAlign.center,
                         )
                             : null,

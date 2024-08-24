@@ -749,6 +749,12 @@ class _EditeBoxWidgetState extends State<EditeBoxWidget> {
   @override
   void initState() {
     super.initState();
+
+
+    if ( widget.model.defaultWidthVideo != null) {
+      widget.model.width = widget.model.defaultWidthVideo!;
+    }
+
     widget.scrollController.addListener(_scrollListener);
     widget.model.updateTimings((80 / 6).toInt(), 0);
   }
@@ -882,10 +888,7 @@ class _EditeBoxWidgetState extends State<EditeBoxWidget> {
                 ),
               ) : SizedBox(),
               Container(
-                width: (editorController.maxPaddingValue + editorController.minPaddingValue) * 2 +
-                    (editorController.editVideoDataList.contains(widget.model)
-                        ? widget.model.defaultWidthVideo!
-                        : widget.model.width),
+                width: (editorController.maxPaddingValue + editorController.minPaddingValue) * 2 + widget.model.width,
                 color: widget.color,
                 alignment: Alignment.center,
                 child: Text(

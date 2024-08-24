@@ -100,7 +100,7 @@ class LiveController extends GetxController{
       isLoadingRecord.value = true;
 
       final token = GetStorage().read("token");
-      String apiUrl = 'https://api.gibical.app/v2/jobs/channel-record';
+      String apiUrl = 'https://api.gibical.app/v2/tasks/channel-record';
       var response = await Dio().post(
         apiUrl,
         data: {
