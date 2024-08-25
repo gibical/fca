@@ -82,27 +82,28 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: 10.h,
                     ),
-                    GestureDetector(
-                      //go to login screen
-                      onTap: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'login_18'.tr,
-                            style: textTheme.bodySmall,
-                          ),
-                          SizedBox(
-                            width: 1.w,
-                          ),
-                          Text(
-                            'login_18'.tr,
-                            style: textTheme.bodySmall!
-                                .copyWith(color: AppColor.primaryLightColor),
-                          )
-                        ],
-                      ),
-                    ),
+                    ///Deleted We Dont have a sign up form
+                    // GestureDetector(
+                    //   //go to login screen
+                    //   onTap: () {},
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         'login_18'.tr,
+                    //         style: textTheme.bodySmall,
+                    //       ),
+                    //       SizedBox(
+                    //         width: 1.w,
+                    //       ),
+                    //       Text(
+                    //         'login_18'.tr,
+                    //         style: textTheme.bodySmall!
+                    //             .copyWith(color: AppColor.primaryLightColor),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 2.h,
                     ),

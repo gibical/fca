@@ -84,6 +84,8 @@ dependencies:
   sign_button: ^2.0.6
   device_info_plus: ^9.1.2
   firebase_auth: ^4.20.0
+  country_picker: ^2.0.26
+  country_code_picker_plus: ^0.0.6
 dev_dependencies:
   flutter_test:
     sdk: flutter

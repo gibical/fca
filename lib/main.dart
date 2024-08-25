@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'gibical',
+      title: 'Gibical',
       getPages: PageRoutes.routes,
 
       initialRoute: PageRoutes.SPLASH,

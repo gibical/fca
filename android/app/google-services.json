@@ -37,6 +37,13 @@
             {
               "client_id": "204876365682-4jtc3cgsjcdlmc8fjc67chefgtj2sq9g.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "204876365682-p51l3rll6ieui2c0bj9aeloir9ajr58f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.gibicalapp"
+              }
             }
           ]
         }
