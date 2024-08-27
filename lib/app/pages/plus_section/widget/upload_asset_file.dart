@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gibical/app/common/app_extension.dart';
 import 'package:gibical/app/pages/plus_section/logic.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
 class UploadAssetPage extends StatefulWidget {
@@ -45,6 +46,10 @@ class _UploadAssetPageState extends State<UploadAssetPage> {
                             color: Colors.white, fontWeight: FontWeight.bold),),
 
                         SizedBox(height: 4.h,),
+                        Lottie.asset("assets/json/upload.json",),
+
+                        SizedBox(height: 4.h,),
+
                         Align(
                           alignment: Alignment.centerLeft,
                           child: AnimatedContainer(

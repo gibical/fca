@@ -91,7 +91,7 @@ class _DetailsBottomWidgetState extends State<DetailsBottomWidget> {
                         child: Text(
                             '${Constant.getDropDownByPlan(widget.detailController.detailss!['plan'].toString())}'),
                       ),
-                      Icon(Icons.share,color: Colors.white.withOpacity(0.7),)
+
                     ],
                   )),
                   if(!widget.detailController.detailss!['plan'].toString().contains("1"))  Row(
@@ -100,7 +100,8 @@ class _DetailsBottomWidgetState extends State<DetailsBottomWidget> {
                       if(!widget.detailController.detailss!['plan'].toString().contains("1"))    Text("${(widget.detailController.detailss!['price']/100).toString()} €"),
                       if(!widget.detailController.detailss!['plan'].toString().contains("1"))  SizedBox(width: 3.w,),
                     ],
-                  )
+                  ),
+                  Icon(Icons.share,color: Colors.white.withOpacity(0.7),)
                 ],
               ),
             ),
