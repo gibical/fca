@@ -155,11 +155,12 @@ class LoginController extends GetxController implements RequestInterface {
   void _getPhoneReuqest()async {
 
     var body = {
-      "cellphone":eTextEditingControllerPhone.text,
+      "cellphone": code.dialCode+eTextEditingControllerPhone.text,
       "password":eTextEditingControllerPassword.text
     };
      apiRequster.request("auth/sign-in", ApiRequster.MHETOD_POST, 1,body: body);
-   //  apiRequster.request("https://api64.ipify.org?format=json", ApiRequster.MHETOD_GET, 1, daynamicUrl: true);
+    print('LoginController._getPhoneReuqest = ${body}');
+    //  apiRequster.request("https://api64.ipify.org?format=json", ApiRequster.MHETOD_GET, 1, daynamicUrl: true);
   }
 
   void _getUseranmeReuqest() {
@@ -207,6 +208,7 @@ class LoginController extends GetxController implements RequestInterface {
     var body = {
       "cellphone":(code.dialCode??"")+(eTextEditingControllerPhone.text),
     };
+    print('LoginController._getOTPReuqest = ${body}');
     apiRequster.request("auth/otp/request", ApiRequster.MHETOD_POST, 2,body: body);
   }
   void getOTPSumbit() {

@@ -33,7 +33,7 @@ Widget CountryCodeWidget(context,LoginController controller){
             mode: CountryCodePickerMode.dialog,
             onChanged: (country) {
               controller.code  =country;
-              print('CountryCodeWidget = ${country.code}');
+              print('CountryCodeWidget = ${country.dialCode}');
             },
             initialSelection: 'DE',
             showFlag: true,

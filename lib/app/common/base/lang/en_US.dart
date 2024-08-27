@@ -5,7 +5,7 @@ const Map<String, String> enUS = {
   "login_2":"Insert cellphone..",
   "login_3":"Insert password..",
   "login_4":"Password",
-  "login_5":"Log in with email/Username",
+  "login_5":"Log in with Username",
   "login_6":"Log in with username",
   "login_7":"Dont have an account?",
   "login_8":"Signup",
@@ -18,10 +18,10 @@ const Map<String, String> enUS = {
   "login_14":"Insert your usemame to login",
   "login_15":"Username/Email",
   "login_16":"Insert username...",
-  "login_17":"Log in with phone",
+  "login_17":"Log in with Password",
   "login_18":"Dont have an account?",
   "login_19":"Signup",
-  "login_20":"Login With SMS",
+  "login_20":"OTP",
 
 
 

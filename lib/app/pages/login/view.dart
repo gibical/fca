@@ -185,27 +185,31 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: 3.h,
             ),
-            InkWell(
-                onTap: () {
-                  logic.loginEnum = LoginEnum.username;
-                  logic.update();
-                },
-                child: Text(
-                  "login_5".tr,
-                  style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
-                )),
-            SizedBox(
-              height: 2.h,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                    onTap: () {
+                      logic.loginEnum = LoginEnum.username;
+                      logic.update();
+                    },
+                    child: Text(
+                      ("login_5".tr) +" / ",
+                      style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
+                    )),
+                InkWell(
+                    onTap: () {
+                      logic.loginEnum = LoginEnum.SMS;
+                      logic.update();
+                    },
+                    child: Text(
+                      "login_20".tr,
+                      style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
+                    )),
+              ],
             ),
-          InkWell(
-                onTap: () {
-                  logic.loginEnum = LoginEnum.SMS;
-                  logic.update();
-                },
-                child: Text(
-                  "login_20".tr,
-                  style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
-                )),
+
+
             SizedBox(
               height: 2.h,
             ),
@@ -277,27 +281,34 @@ class LoginScreen extends StatelessWidget {
               height: 3.h,
             ),
 
-            InkWell(
-                onTap: () {
-                  logic.loginEnum = LoginEnum.phone;
-                  logic.update();
-                },
-                child: Text(
-                  "login_17".tr,
-                  style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
-                )),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                    onTap: () {
+                      logic.loginEnum = LoginEnum.phone;
+                      logic.update();
+                    },
+                    child: Text(
+                      ("login_12".tr) + " /  ",
+                      style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
+                    )),
+                InkWell(
+                    onTap: () {
+                      logic.loginEnum = LoginEnum.SMS;
+                      logic.update();
+                    },
+                    child: Text(
+                      "login_20".tr,
+                      style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
+                    )),
+              ],
+            ),
             SizedBox(
               height: 2.h,
             ),
-            InkWell(
-                onTap: () {
-                  logic.loginEnum = LoginEnum.SMS;
-                  logic.update();
-                },
-                child: Text(
-                  "login_20".tr,
-                  style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
-                )),
+
 
 
           ],
@@ -324,27 +335,31 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: 3.h,
             ),
-            InkWell(
-                onTap: () {
-                  logic.loginEnum = LoginEnum.username;
-                  logic.update();
-                },
-                child: Text(
-                  "login_5".tr,
-                  style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
-                )),
-            SizedBox(
-              height: 2.h,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                    onTap: () {
+                      logic.loginEnum = LoginEnum.username;
+                      logic.update();
+                    },
+                    child: Text(
+                      ("login_5".tr) + " /  ",
+                      style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
+                    )),
+                InkWell(
+                    onTap: () {
+                      logic.loginEnum = LoginEnum.phone;
+                      logic.update();
+                    },
+                    child: Text(
+                      "login_12".tr.substring("login_12".tr.indexOf("p")),
+                      style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
+                    )),
+              ],
             ),
-            InkWell(
-                onTap: () {
-                  logic.loginEnum = LoginEnum.phone;
-                  logic.update();
-                },
-                child: Text(
-                  "login_17".tr,
-                  style: TextStyle(color: "#83839C".toColor(), fontSize: 8.sp),
-                )),
+
+         
             SizedBox(
               height: 2.h,
             ),
@@ -354,6 +369,7 @@ class LoginScreen extends StatelessWidget {
 
     }
   }
+
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
