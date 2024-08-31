@@ -39,7 +39,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
         widget.model['file']['url'],
         widget.model['length'],
         widget.model['file_id'].toString(),
-        widget.model['class'],
+        widget.model['media_type'],
       );
     } else {
       Get.find<MediaSuitController>().removeItemFromTempList(
@@ -83,12 +83,12 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
                 SizedBox.expand(
                   child: Image.asset("assets/images/text_bg.png",fit: BoxFit.fill,),
                 ),
-                if(widget. model['class'] == 1)  SizedBox.expand(
+                if(widget. model['media_type'] == 1)  SizedBox.expand(
                   child: Container(
                       padding: EdgeInsets.all(5.w),
                       child: Column(
                         children: [
-                       if(widget. model['class'] == 1)   Align(
+                       if(widget. model['media_type'] == 1)   Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                              widget. model['name'],
@@ -103,7 +103,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
                               ),
                             ),
                           ),
-                          if(widget. model['class']==1)    Align(
+                          if(widget. model['media_type']==1)    Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               widget.    model['description']??" ",
@@ -140,7 +140,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
                         ],
                       )),
                 ),
-                if(widget. model['class'] != 1)  SizedBox.expand(
+                if(widget. model['media_type'] != 1)  SizedBox.expand(
                   child:   Container(
                     height: 27.h,
                     width: double.infinity,
@@ -200,7 +200,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
   }
 
   String _getIcon() {
-    switch(widget.model['type']){
+    switch(widget.model['media_type']){
       case 1:
         return AppIcon.textIcon;
       case 2:
@@ -215,7 +215,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
 
   _getBackground() {
     //tum_video
-    switch(widget.model['type']){
+    switch(widget.model['media_type']){
       case 1:
         return "tum_sound";
       case 2:
@@ -230,8 +230,8 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
 
   void _getRouteAndPushIt(model) {
     String route = "";
-    print('_GridPostViewState._getRouteAndPushIt 3  = ${widget.model} -  ${widget.model['type']} - ${model}');
-    switch(widget.model['class']){
+    print('_GridPostViewState._getRouteAndPushIt 3  = ${widget.model} -  ${widget.model['media_type']} - ${model}');
+    switch(widget.model['media_type']){
       case 1:
         route = PageRoutes.DETAILTEXT;
         break;

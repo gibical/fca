@@ -197,7 +197,7 @@ class ExternalAccountModel {
   ExternalAccountModel.fromJson(dynamic json) {
     _id = json['id'];
     _userId = json['user_id'];
-    _type = json['type'];
+    _type = json['media_type'];
     _title = json['title'];
     _information = json['information'] != null ? Information.fromJson(json['information']) : null;
     _createdAt = json['created_at'];
@@ -242,7 +242,7 @@ ExternalAccountModel copyWith({  num? id,
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['user_id'] = _userId;
-    map['type'] = _type;
+    map['media_type'] = _type;
     map['title'] = _title;
     if (_information != null) {
       map['information'] = _information?.toJson();

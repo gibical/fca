@@ -30,7 +30,7 @@ class CustomAppBarVideoAndImageDetailWidget extends StatelessWidget {
     ImageProvider? imageProvider;
 
     try {
-      imageProvider = NetworkImage(detailController.imageDetails?['file']?['url']);
+      imageProvider = NetworkImage(detailController.imageDetails?['file']?['url']);//
       imageURL = detailController.imageDetails?['file']?['url'];
     } catch (e) {
 

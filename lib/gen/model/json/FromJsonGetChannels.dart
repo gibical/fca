@@ -60,7 +60,7 @@ class ChannelModel {
     _id = json['id'];
     _title = json['title'];
     _description = json['description'];
-    _type = json['type'];
+    _type = json['media_type'];
     _link = json['link'];
     _thumbnail = json['thumbnail'];
     _language = json['language'];
@@ -118,7 +118,7 @@ class ChannelModel {
     map['id'] = _id;
     map['title'] = _title;
     map['description'] = _description;
-    map['type'] = _type;
+    map['media_type'] = _type;
     map['link'] = _link;
     map['thumbnail'] = _thumbnail;
     map['language'] = _language;

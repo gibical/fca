@@ -2,7 +2,7 @@ import 'dart:developer';
 
 class ProfileModel {
   ProfileModel({
-      num? id, 
+    String? id,
       String? firstName, 
       String? lastName, 
       String? username, 
@@ -74,7 +74,7 @@ class ProfileModel {
     _operator = json['operator'] != null ? Operator.fromJson(json['operator']) : null;
     _image = json['image'];
   }
-  num? _id;
+  String? _id;
   String? _firstName;
   String? _lastName;
   String? _username;
@@ -95,7 +95,7 @@ class ProfileModel {
   dynamic _address;
   Operator? _operator;
   dynamic _image;
-ProfileModel copyWith({  num? id,
+ProfileModel copyWith({  String? id,
   String? firstName,
   String? lastName,
   String? username,
@@ -136,7 +136,7 @@ ProfileModel copyWith({  num? id,
   operator: operator ?? _operator,
   image: image ?? _image,
 );
-  num? get id => _id;
+  String? get id => _id;
   String? get firstName => _firstName;
   String? get lastName => _lastName;
   String? get username => _username;

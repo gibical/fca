@@ -49,17 +49,17 @@ class DetailImageScreen extends StatelessWidget {
               if (imageController.imageDetails != null &&
                   imageController.imageDetails!.containsKey('asset') &&
                   imageController.imageDetails!['asset'] != null &&
-                  imageController.imageDetails!['asset'].containsKey('plan')) {
-                int plan = imageController.imageDetails!['asset']['plan'];
+                  imageController.imageDetails!['asset'].containsKey('license_type')) {
+                int plan = imageController.imageDetails!['asset']['license_type'];
                 print(plan);
                 if (plan == 1) {
                   return SizedBox();
                 } else if (plan == 2 || plan == 3) {
                   return BuyCardWidget(
                       selectedItem: imageController.imageDetails,
-                      title: imageController.imageDetails!['asset']['plan'] == 2
+                      title: imageController.imageDetails!['asset']['license_type'] == 2
                           ? 'Ownership'
-                          : imageController.imageDetails!['asset']['plan'] == 3
+                          : imageController.imageDetails!['asset']['license_type'] == 3
                           ? 'Subscribe'
                           : '',
                       price: imageController.imageDetails!['asset']['price']
@@ -88,7 +88,7 @@ class DetailImageScreen extends StatelessWidget {
                           SizedBox(
                             height: 2.h,
                           ),
-                   Text('${imageController.imageDetails?['name']}', style: FontStyleApp.titleMedium.copyWith(
+                   Text('${imageController.imageDetails?['media']['name']}', style: FontStyleApp.titleMedium.copyWith(
                                 color: AppColor.whiteColor,
                                 fontWeight: FontWeight.w600
                             ),),
@@ -153,7 +153,7 @@ class DetailImageScreen extends StatelessWidget {
                           //
                           //
                           //     CardMarkSinglePageWidget(label: 'Suffix' , type: '${selectedItem['suffix']}'),
-                        if(imageController.imageDetails?['asset']!=null)  CardMarkSinglePageWidget(label: 'details_8'.tr , type: imageController.getTypeString(imageController.imageDetails?['type'])),
+                        if(imageController.imageDetails?['asset']!=null)  CardMarkSinglePageWidget(label: 'details_8'.tr , type: imageController.getTypeString(imageController.imageDetails?['media_type'])),
                           //     CardMarkSinglePageWidget(label: 'Lanuage' , type: '${selectedItem['language']}'),
                           //   ],
                           // ),
@@ -162,7 +162,7 @@ class DetailImageScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: (){
-                              int itemId = imageController.imageDetails?['asset_id'];
+                              String itemId = imageController.imageDetails?['asset_id'];
                               print(itemId);
                               Get.toNamed(PageRoutes.COMMENT, arguments: {'id': itemId,"logic":imageController});
                             },

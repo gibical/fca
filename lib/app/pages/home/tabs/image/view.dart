@@ -71,7 +71,7 @@ class ImageTabScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return  GestureDetector(
                               onTap: (){
-                                int itemId = list[index]['id'];
+                                String itemId = list[index]['id'];
                                 Get.toNamed(PageRoutes.DETAILIMAGE, arguments: {'id': itemId});
                               },
                               child: MostImageWidget(

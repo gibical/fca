@@ -583,7 +583,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     var body = {
       "name": titleController.text,
       "user": box.read("userid"),
-      "plan": _getPlanByDropDown(),
+      "license_type": _getPlanByDropDown(),
       "subscription_period": getSubscrptioonPeriod(),
       "description": captionController.text,
       "lat": 0,
@@ -695,7 +695,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
           filename: 'uploadfile'),
       'asset': assetid.toString(),
     });
-   print('PlusSectionLogic.uploadFileWithDio = ${imageOutPut} - ${formData}');
+   print('PlusSectionLogic.uploadFileWithDio = ${imageOutPut} - ${formData.fields}');
 
    dio.interceptors.add(MediaVerseConvertInterceptor());
 
@@ -760,7 +760,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
 
 
 
-        (response.data as List<dynamic>).forEach((element) {
+        (response.data['data'] as List<dynamic>).forEach((element) {
           countreisModel.add(CountriesModel.fromJson(element));
         });
         (countreisModel).forEach((element) {

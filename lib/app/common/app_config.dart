@@ -384,7 +384,8 @@ class Constant {
   ];
 
   static bool isTabletMode = SizerUtil.deviceType == DeviceType.tablet;
-  static String HTTP_HOST ="https://api.gibical.app/v2/";
+  static String HTTP_HOST ="https://api.mediaverse.land/v2/";
+  static bool GIBICALAPP =false;
   static getPlanByDropDown(var s) {
     switch (s) {
       case "Free":

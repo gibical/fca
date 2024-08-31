@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -54,16 +56,16 @@ class DetailVideoScreen extends StatelessWidget {
                 videoController.videoDetails!.containsKey('asset') &&
                 videoController.videoDetails!['asset'] != null &&
                 videoController.videoDetails!['asset'].containsKey('plan')) {
-              int plan = videoController.videoDetails!['asset']['plan'];
+              int plan = videoController.videoDetails!['asset']['license_type'];
               print(plan);
               if (plan == 1) {
                 return SizedBox();
               } else if ((plan == 2 || plan == 3)) {
                 return BuyCardWidget(
                     selectedItem: videoController.videoDetails,
-                    title: videoController.videoDetails!['asset']['plan'] == 2
+                    title: videoController.videoDetails!['asset']['license_type'] == 2
                         ? 'Ownership'
-                        : videoController.videoDetails!['asset']['plan'] == 3
+                        : videoController.videoDetails!['asset']['license_type'] == 3
                         ? 'Subscribe'
                         : '',
                     price: videoController.videoDetails!['asset']['price']
@@ -96,7 +98,7 @@ class DetailVideoScreen extends StatelessWidget {
                           SizedBox(
                             height: 2.h,
                           ),
-                          Text('${videoController.videoDetails?['name']}',
+                          Text('${videoController.videoDetails?['media']['name']}',
                             style: FontStyleApp.titleMedium.copyWith(
                                 color: AppColor.whiteColor,
                                 fontWeight: FontWeight.w600
@@ -105,7 +107,7 @@ class DetailVideoScreen extends StatelessWidget {
                           SizedBox(
                             height: 1.h,
                           ),
-                          Text('${videoController.videoDetails?['description'] ?? ''}',
+                          Text('${videoController.videoDetails?['media']['description'] ?? ''}',
                             style: FontStyleApp.bodyMedium.copyWith(
                               color: AppColor.grayLightColor.withOpacity(0.8),
                             ),),
@@ -202,11 +204,11 @@ class DetailVideoScreen extends StatelessWidget {
                                       : videoController.videoDetails?['genre']),
                               CardMarkSinglePageWidget(label: 'details_8'.tr,
                                   type: videoController.getTypeString(
-                                      videoController.videoDetails?['type'] ??
+                                      videoController.videoDetails?['media_type'] ??
                                           1)),
                               CardMarkSinglePageWidget(label: 'details_10'.tr,
                                   type: '${videoController
-                                      .videoDetails?['language']}'),
+                                      .videoDetails?['media']['language']}'),
                             ],
                           ),
                           SizedBox(
@@ -214,7 +216,7 @@ class DetailVideoScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              int itemId = videoController
+                              String itemId = videoController
                                   .videoDetails?['asset_id'];
                               print(itemId);
                               Get.toNamed(

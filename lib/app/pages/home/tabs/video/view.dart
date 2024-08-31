@@ -94,7 +94,7 @@ class VideoTabScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
-                              int itemId = list[index]['id'];
+                              String itemId = list[index]['id'];
                               print(itemId);
                               Get.toNamed(PageRoutes.DETAILVIDEO, arguments: {'id': itemId});
                             },

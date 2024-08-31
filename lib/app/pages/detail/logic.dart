@@ -91,6 +91,7 @@ class DetailController extends GetxController {
 
 
   initFunction(){
+
     switch (index) {
       case 1:
         fetchTextData();
@@ -155,7 +156,7 @@ class DetailController extends GetxController {
         'Authorization': 'Bearer $token',
       }));
 
-     log('DetailController._fetchMediaData11111 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['type']}');
+     log('DetailController._fetchMediaData11111 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['media_type']}');
       if (response.statusCode == 200) {
         details?.value = RxMap<String, dynamic>.from(response.data['data']);
         detailss = RxMap<String, dynamic>.from(response.data['data']);
@@ -422,9 +423,10 @@ class DetailController extends GetxController {
       final token = GetStorage().read("token");
 
       String apiUrl =
-          '${Constant.HTTP_HOST}tasks/audio-text';
+          '${Constant.HTTP_HOST}jobs/audio-text';
       var s = Dio();
       s.interceptors.add(MediaVerseConvertInterceptor());
+      s.interceptors.add(CurlLoggerDioInterceptor());
 
       print('DetailController.soundConvertToText = ${fileIdMusic}');
       var response = await s.post(apiUrl, options: Options(headers: {
@@ -436,6 +438,7 @@ class DetailController extends GetxController {
         "file":fileIdMusic
       });
 
+      print('DetailController.soundConvertToText');
 
       if (response.statusCode == 200) {
 
@@ -869,7 +872,7 @@ class DetailController extends GetxController {
         'Authorization': 'Bearer $token',
       }));
 
-      log('DetailController._fetchMediaData11111 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['type']}');
+      log('DetailController._fetchMediaData11111 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['media_type']}');
       if (response.statusCode! >= 200&&response.statusCode! <300) {
         isLoadingChannel(false);
         externalAccountlist = FromJsonGetExternalAccount.fromJson(response.data??[]).data??[];
@@ -931,7 +934,7 @@ class DetailController extends GetxController {
       };
       var response = await s.post(apiUrl, options: Options(headers:header),data: body);
 
-      log('DetailController._fetchMediaData11111 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['type']}');
+      log('DetailController._fetchMediaData11111 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['media_type']}');
       if (response.statusCode! >= 200&&response.statusCode! <300) {
        // externalAccountlist = FromJsonGetExternalAccount.fromJson(response.data??[]).data??[];
 

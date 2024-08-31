@@ -57,7 +57,7 @@ class CalenderModel {
     _assetId = json['asset_id'];
     _externalAccountId = json['external_account_id'];
     _userId = json['user_id'];
-    _type = json['type'];
+    _type = json['media_type'];
     _details = json['details'];
     _time = json['time'];
     _status = json['status'];
@@ -112,7 +112,7 @@ CalenderModel copyWith({  num? id,
     map['asset_id'] = _assetId;
     map['external_account_id'] = _externalAccountId;
     map['user_id'] = _userId;
-    map['type'] = _type;
+    map['media_type'] = _type;
     map['details'] = _details;
     map['time'] = _time;
     map['status'] = _status;

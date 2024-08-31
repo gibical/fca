@@ -66,7 +66,7 @@ class CustomGridImageWidget extends StatelessWidget {
   Widget _buildImageContainer(dynamic data, double size, {bool isLarge = false}) {
     return  GestureDetector(
       onTap: (){
-        int itemId = data['id'];
+        String itemId = data['id'];
         Get.toNamed(PageRoutes.DETAILIMAGE, arguments: {'id': itemId});
       },
       child: Container(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +28,7 @@ class BestItemExploreWidget extends GetView<HomeLogic> {
     final textTheme = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: () {
-        int itemId = elementAt['id'];
+        String itemId = elementAt['id'];
         Get.toNamed(PageRoutes.DETAILVIDEO, arguments: {'id': itemId});
       },
       child: Padding(
@@ -94,7 +96,7 @@ class BestItemExploreWidget extends GetView<HomeLogic> {
                   Container(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: Text(
-                        elementAt['name'],
+                        elementAt['media']['name'],
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: Color(0xFF666680),
@@ -153,7 +155,7 @@ class BestItemSongsWidget extends GetView<HomeLogic> {
     final textTheme = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: () {
-        int itemId = elementAt['id'];
+        String itemId = elementAt['id'];
 
         Get.toNamed(PageRoutes.DETAILMUSIC, arguments: {
           'id': itemId,
@@ -221,7 +223,7 @@ class BestItemSongsWidget extends GetView<HomeLogic> {
                   Container(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: Text(
-                        elementAt['name'],
+                        elementAt['media']['name'],
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: Color(0xFF666680),
@@ -341,7 +343,7 @@ class BestTextWidget extends GetView<HomeLogic> {
     print('BestTextWidget.build = ${model['user']}');
     return GestureDetector(
       onTap: () {
-        int itemId = model['id'];
+        String itemId = model['id'];
         int fileId = model['file_id'];
         Get.toNamed(PageRoutes.DETAILTEXT,
             arguments: {'id': itemId, 'file_id': fileId});
@@ -376,7 +378,7 @@ class BestTextWidget extends GetView<HomeLogic> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              model['name'],
+                              model['media']['name'],
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme
@@ -391,7 +393,7 @@ class BestTextWidget extends GetView<HomeLogic> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              model['description'] ?? " ",
+                              model['media']['description'] ?? " ",
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: Theme

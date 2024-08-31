@@ -49,16 +49,16 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                 logic.textDetails!.containsKey('asset') &&
                 logic.textDetails!['asset'] != null &&
                 logic.textDetails!['asset'].containsKey('plan')) {
-              int plan = logic.textDetails!['asset']['plan'];
+              int plan = logic.textDetails!['asset']['license_type'];
               print(plan);
               if (plan == 1) {
                 return SizedBox();
               } else if (plan == 2 || plan == 3) {
                 return BuyCardWidget(
                     selectedItem:logic.textDetails ,
-                    title: logic.textDetails!['asset']['plan'] == 2
+                    title: logic.textDetails!['asset']['license_type'] == 2
                         ? 'Ownership'
-                        : logic.textDetails!['asset']['plan'] == 3
+                        : logic.textDetails!['asset']['license_type'] == 3
                         ? 'Subscribe'
                         : '',
                     price: logic.textDetails!['asset']['price']
@@ -308,7 +308,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                           Wrap(
                             children: [
                               CardMarkSinglePageWidget(label: 'Suffix' , type: (logic.textDetails?['suffix'] ?? 'null') ),
-                              CardMarkSinglePageWidget(label: 'Type' , type: logic.getTypeString(logic.textDetails?['type']??1)),
+                              CardMarkSinglePageWidget(label: 'Type' , type: logic.getTypeString(logic.textDetails?['media_type']??1)),
                             ],
                           ),
                           SizedBox(
@@ -322,7 +322,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                           ),
                           GestureDetector(
                             onTap: (){
-                              int itemId = logic.textDetails?['asset_id'];
+                              String itemId = logic.textDetails?['asset_id'];
                               print(itemId);
                               Get.toNamed(PageRoutes.COMMENT, arguments: {'id': itemId,"logic":logic});
                             },

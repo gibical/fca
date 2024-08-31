@@ -232,7 +232,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
   void praseJsonFromGetProfile(source) {
     print('ProfileControllers.praseJsonFromGetProfile  1 ${source}');
     model = ProfileModel.fromJson(jsonDecode(source));
-  //  print('ProfileControllers.praseJsonFromGetProfile  2 ');
+    print('ProfileControllers.praseJsonFromGetProfile  2 ');
     onGetProfileAssets();
 
     onGetAssetsAll();

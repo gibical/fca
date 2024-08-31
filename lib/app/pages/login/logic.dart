@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_code_picker_plus/country_code_picker_plus.dart';
@@ -16,6 +17,7 @@ import 'package:gibical/gen/model/enums/login_enum.dart';
 import 'package:gibical/gen/model/json/FromJsonGetLogin.dart';
 import 'package:meta/meta.dart';
 
+import '../../../gen/model/json/FromJsonGetLoginV2.dart';
 import '../../common/app_color.dart';
 
 class LoginController extends GetxController implements RequestInterface {
@@ -198,7 +200,7 @@ class LoginController extends GetxController implements RequestInterface {
 
     box.write("islogin", true);
 
-    FromJsonGetLogin getLogin = FromJsonGetLogin.fromJson(jsonDecode(source));
+    FromJsonGetLoginV2 getLogin = FromJsonGetLoginV2.fromJson(jsonDecode(source));
     box.write("token", getLogin.token??"");
     box.write("userid", getLogin.user!.id.toString());
     Get.offAllNamed(PageRoutes.WRAPPER);

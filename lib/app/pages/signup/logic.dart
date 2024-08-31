@@ -29,13 +29,14 @@ class SignUpController extends GetxController implements RequestInterface{
   List<String> countreisString =[];
 
   Future<void> getAllCountries() async {
-
+    print('SignUpController.getAllCountries 1 ');
     var dio = Dio();
 
 
     //  debugger();
     dio.interceptors.add(MediaVerseConvertInterceptor());
 
+    debugger();
     print('PlusSectionLogic.getAllCountries = ${Constant.HTTP_HOST}countries');
     try {
 
@@ -58,7 +59,7 @@ class SignUpController extends GetxController implements RequestInterface{
         print('PlusSectionLogic.getAllCountries 2');
 
 
-        (response.data as List<dynamic>).forEach((element) {
+        (response.data['data'] as List<dynamic>).forEach((element) {
           countreisModel.add(CountriesModel.fromJson(element));
         });
         (countreisModel).forEach((element) {

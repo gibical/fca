@@ -102,7 +102,7 @@ class BestVideosModel {
     _assetId = json['asset_id'];
     _name = json['name'];
     _description = json['description'];
-    _type = json['type'];
+    _type = json['media_type'];
     _summary = json['summary'];
     _language = json['language'];
     _genre = json['genre'];
@@ -197,7 +197,7 @@ BestVideosModel copyWith({  num? id,
     map['asset_id'] = _assetId;
     map['name'] = _name;
     map['description'] = _description;
-    map['type'] = _type;
+    map['media_type'] = _type;
     map['summary'] = _summary;
     map['language'] = _language;
     map['genre'] = _genre;

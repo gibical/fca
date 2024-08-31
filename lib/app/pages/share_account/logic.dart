@@ -501,7 +501,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       };
       var response = await s.post(apiUrl, options: Options(headers:header),data: body);
 
-      log('DetailController._fetchMediaData11111 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['type']}');
+      log('DetailController._fetchMediaData11111 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['media_type']}');
       isLoadingSendMain(false);
 
       if (response.statusCode! >= 200&&response.statusCode! <300) {
