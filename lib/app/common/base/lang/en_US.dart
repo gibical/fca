@@ -77,8 +77,10 @@ const Map<String, String> enUS = {
   "channel_33":"CG & Playout",
   "channel_34":"AI & Production",
   "channel_35":"Search",
-  "channel_36":"Channels",
-  "channel_37":"Conductor",
+  "channel_36":"Billing",
+  "channel_37":"Invoice",
+  "channel_38":"Income",
+  "channel_39":"Package",
 
 
   "details_1":"Comments",

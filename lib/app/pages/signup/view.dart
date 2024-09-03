@@ -78,8 +78,8 @@ class SignupScreen extends StatelessWidget {
                           context: context,
                           textEditingController: logic.languageController,
                       
-                          titleText: 'plus_6'.tr,
-                          hintText: 'plus_7'.tr,
+                          titleText: 'signup_10_1'.tr,
+                          hintText: 'signup_10_1'.tr,
                           needful: false),
                     ),
                     SizedBox(height: 1.5.h,),

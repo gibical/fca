@@ -280,7 +280,7 @@ class DetailMusicScreen extends StatelessWidget {
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 2.w),
                                   child: Text(
-                                      '${controller.musicDetails?['description'] ?? ''}',
+                                      '${controller.musicDetails?['media']['description'] ?? ''}',
                                       style: Theme
                                   .of(context)
                                   .textTheme.bodySmall?.copyWith(
@@ -328,7 +328,7 @@ class DetailMusicScreen extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: (){
-                                        Get.find<MediaSuitController>().setDataEditAudio(controller.musicDetails?['name'] ?? '' , controller.musicDetails?['name'] , controller.musicDetails!['file_id'].toString());
+                                        Get.find<MediaSuitController>().setDataEditAudio(controller.musicDetails?['media']['name'] ?? '' , controller.musicDetails?['media']['name'] , controller.musicDetails!['file_id'].toString());
                                         Get.toNamed(PageRoutes.MEDIASUIT);
                                       },
                                       child:  Icon(Icons.edit),

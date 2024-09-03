@@ -328,7 +328,7 @@ class _GridPostView2State extends State<GridPostView2> {
                        if(widget. model['media_type'] == 1)   Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                             widget. model['name'],
+                             widget. model['media']['name'],
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme
@@ -470,6 +470,7 @@ class _GridPostView2State extends State<GridPostView2> {
 
   void _getRouteAndPushIt(model) {
     String route = "";
+    debugger();
     print('_GridPostViewState._getRouteAndPushIt 2  = ${widget.model} -  ${widget.model['media_type']} - ${model}');
     switch(widget.model['media_type']){
       case 1:

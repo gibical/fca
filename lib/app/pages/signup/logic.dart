@@ -36,7 +36,6 @@ class SignUpController extends GetxController implements RequestInterface{
     //  debugger();
     dio.interceptors.add(MediaVerseConvertInterceptor());
 
-    debugger();
     print('PlusSectionLogic.getAllCountries = ${Constant.HTTP_HOST}countries');
     try {
 

@@ -55,7 +55,8 @@ class ProfileControllers extends GetxController implements RequestInterface {
   bool emptySubAudios = false;
   bool emptySubText = false;
 
-  var isStripeConnected = true;
+  var isBillingStripeConnected = true;
+  var isIncomeStripeConnected = true;
 
 
   FromJsonGetAllAsstes myAssets = FromJsonGetAllAsstes();
@@ -88,6 +89,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
     onGetProfileMethod();
     //getWalletBalance();
     getStripe();
+    getPayout();
     getAllCountries();
   }
 
@@ -143,7 +145,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
   void onError(String content, int reqCode, bodyError) {
     // TODO: implement onError
     if(reqCode==15){
-      isStripeConnected = false;
+      isBillingStripeConnected = false;
       update();
       //getStripeConnect();
     }else{
@@ -225,6 +227,21 @@ class ProfileControllers extends GetxController implements RequestInterface {
         break;
         case 17:
         parseJsonFromGateWay(source);
+        break;
+        case 18:
+        pareJsonFromPayout(source);
+        break;
+        case 19:
+        pareJsonFromPayoutConnect(source);
+        break;
+        case 20:
+        pareJsonFromBills(source);
+        break;
+        case 21:
+        pareJsonFromInoice(source);
+        break;
+        case 22:
+        pareJsonFromInoiceByLink(source);
         break;
     }
   }
@@ -422,6 +439,29 @@ class ProfileControllers extends GetxController implements RequestInterface {
   //  isloadingWallet(true);
     apiRequster.request("stripe/subscription/link", ApiRequster.MHETOD_GET, 16,useToken: true);
   }
+
+  getPayout(){
+    // isloading(true);
+    apiRequster.request("stripe/payout", ApiRequster.MHETOD_GET, 18,useToken: true);
+  }
+  getPayoutConnect(){
+    // isloading(true);
+    apiRequster.request("stripe/payout/link", ApiRequster.MHETOD_GET, 19,useToken: true);
+  }
+  getBiilss(){
+    // isloading(true);
+    apiRequster.request("bills", ApiRequster.MHETOD_GET, 20,useToken: true);
+  }
+  getInvoice(){
+    // isloading(true);
+    apiRequster.request("invoices", ApiRequster.MHETOD_GET, 21,useToken: true);
+  }
+  getInvoiceBylink(id){
+    // isloading(true);
+    apiRequster.request("invoices/${id}/link", ApiRequster.MHETOD_GET, 22,useToken: true);
+  }
+
+
   void parseJsonFromGetWalletBalance(source) {
    // print('ProfileControllers.parseJsonFromGetWalletBalance = ${source}');
     var balance  =jsonDecode(source)['available'][0]['amount'];
@@ -437,15 +477,33 @@ class ProfileControllers extends GetxController implements RequestInterface {
 
   void pareJsonFromStripe(source) {
     print('ProfileControllers.pareJsonFromStripe = ${source}');
-    isStripeConnected = jsonDecode(source)['enabled'];
+    isBillingStripeConnected = jsonDecode(source)['enabled'];
     var balance = jsonDecode(source)['debt'];
     Get.find<WrapperController>().walletBalance = balance.toString();
 
     update();
 
   }
+  void pareJsonFromPayout(source) {
+    print('ProfileControllers.pareJsonFromStripe = ${source}');
+    isIncomeStripeConnected = jsonDecode(source)['enabled'];
+
+    update();
+
+  }
 
   void pareJsonFromStripeConnect(source) {
+
+    update();
+    var url = jsonDecode(source)['link'];
+
+    try {
+      launchUrlString(url);
+    }  catch (e) {
+      // TODO
+    }
+  }
+  void pareJsonFromPayoutConnect(source) {
 
     update();
     var url = jsonDecode(source)['link'];
@@ -561,6 +619,25 @@ class ProfileControllers extends GetxController implements RequestInterface {
       }
     } on DioError catch (e) {
       print('DioError: ${e.message}');
+    }
+  }
+
+  void pareJsonFromBills(source) {
+
+  }
+
+  void pareJsonFromInoice(source) {
+
+  }
+
+  void pareJsonFromInoiceByLink(source) async{
+
+    try {
+      var url = jsonDecode(source)['url'];
+      await launchUrlString(url);
+      getStripe();
+    }  catch (e) {
+      // TODO
     }
   }
 

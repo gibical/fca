@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 extension FontWeightExtension on FontWeight {
   FontWeight get auto {
@@ -57,6 +58,10 @@ extension EmailValidator on String {
 
 
 
-
+extension DateTimeFormatting on DateTime {
+  String toFormattedDateString() {
+    return DateFormat('yyyy/MM/dd').format(this);
+  }
+}
 
 

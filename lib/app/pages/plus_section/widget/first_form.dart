@@ -119,15 +119,15 @@ class _FirstFormState extends State<FirstForm> {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("plus_5".tr,style: TextStyle(color: Colors.white,
+                            Text("signup_10_1".tr,style: TextStyle(color: Colors.white,
                                 fontWeight: FontWeight.bold),),
                             CustomTDropDownPlusWidget(
                                 models:widget.logic.countreisString,
                                 context: context,
                                 textEditingController: widget.logic.languageController,
 
-                                titleText: 'plus_6'.tr,
-                                hintText: 'plus_7'.tr,
+                                titleText: 'signup_10_1'.tr,
+                                hintText: 'signup_10_1'.tr,
                                 needful: false),
                           ],
                         ),
