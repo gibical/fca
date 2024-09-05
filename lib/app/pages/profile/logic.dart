@@ -90,6 +90,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
     //getWalletBalance();
     getStripe();
     getPayout();
+    getBiilss();
     getAllCountries();
   }
 
@@ -448,6 +449,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
     // isloading(true);
     apiRequster.request("stripe/payout/link", ApiRequster.MHETOD_GET, 19,useToken: true);
   }
+
   getBiilss(){
     // isloading(true);
     apiRequster.request("bills", ApiRequster.MHETOD_GET, 20,useToken: true);
@@ -623,7 +625,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   void pareJsonFromBills(source) {
-
+    print('ProfileControllers.pareJsonFromBills = ${source}');
   }
 
   void pareJsonFromInoice(source) {
