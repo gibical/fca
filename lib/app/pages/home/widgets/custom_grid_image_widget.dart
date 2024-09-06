@@ -49,6 +49,7 @@ class CustomGridImageWidget extends StatelessWidget {
   }
 
   Widget _buildRightSide(double sizeWidth) {
+    if(mostViews.length<4)return Container();
     return Column(
       children: [
         _buildImageContainer(mostViews[2], sizeWidth * 2 + 10, isLarge: true),

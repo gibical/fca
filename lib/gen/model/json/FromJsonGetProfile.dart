@@ -71,7 +71,7 @@ class ProfileModel {
       });
     }
     _address = json['address'];
-    _operator = json['operator'] != null ? Operator.fromJson(json['operator']) : null;
+   // _operator = json['operator'] != null ? Operator.fromJson(json['operator']) : null;
     _image = json['image'];
   }
   String? _id;

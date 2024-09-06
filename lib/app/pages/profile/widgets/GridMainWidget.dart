@@ -470,7 +470,6 @@ class _GridPostView2State extends State<GridPostView2> {
 
   void _getRouteAndPushIt(model) {
     String route = "";
-    debugger();
     print('_GridPostViewState._getRouteAndPushIt 2  = ${widget.model} -  ${widget.model['media_type']} - ${model}');
     switch(widget.model['media_type']){
       case 1:

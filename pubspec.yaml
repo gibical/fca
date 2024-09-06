@@ -86,11 +86,10 @@ dependencies:
   firebase_auth: ^4.20.0
   country_picker: ^2.0.26
   country_code_picker_plus: ^0.0.6
-  rtmp_broadcaster: 2.2.4
+  rtmp_broadcaster: 2.2.6
   wakelock: ^0.4.0
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
