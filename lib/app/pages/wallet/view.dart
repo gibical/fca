@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:gibical/app/pages/wallet/widget/billing/not_connected.dart';
 import 'package:gibical/app/pages/wallet/widget/income/income_widget.dart';
+import 'package:gibical/app/pages/wallet/widget/invoice/invoice_widget.dart';
 import 'package:gibical/app/pages/wallet/widget/package/package_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:gibical/app/common/app_color.dart';
@@ -99,9 +100,9 @@ class _WalletScreenState extends State<WalletScreen>   with SingleTickerProvider
                 controller: _tabController,
                 children: [
                   BillingWidget(logic),
+                  InvoiceWidget(logic),
                   IncomeWidget(logic),
-                  IncomeWidget(logic),
-                  PackageWidget(logic),
+                  PackageWidget(logic),//
                 ],
               ),
             ),

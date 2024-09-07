@@ -12,10 +12,10 @@ import '../../../profile/logic.dart';
 import '../../../transactions/view.dart';
 import '../../../wrapper/logic.dart';
 
-class IncomeWidget extends StatelessWidget {
+class InvoiceWidget extends StatelessWidget {
   ProfileControllers logic;
 
-  IncomeWidget(this.logic);
+  InvoiceWidget(this.logic);
 
   @override
   Widget build(BuildContext context) {

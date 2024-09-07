@@ -275,30 +275,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
             ),
           ),
           SizedBox(height: 1.5.h,),
-          Container(
-            width: 100.w,
-            height: 6.h,
-            decoration: BoxDecoration(
-                color: "2f2f3b".toColor(),
-                borderRadius: BorderRadius.circular(10)
-            ),
-            child: MaterialButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)
 
-              ),
-              padding: EdgeInsets.zero,
-              onPressed: (){
-                Get.back();
-                showRTSPform();
-              },
-              child: Center(
-                child: Text("share_18".tr,style: TextStyle(
-                    color: Colors.white,fontWeight: FontWeight.bold
-                ),),
-              ),
-            ),
-          ),
         ],
       ),
     ));

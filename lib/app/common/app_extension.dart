@@ -60,7 +60,7 @@ extension EmailValidator on String {
 
 extension DateTimeFormatting on DateTime {
   String toFormattedDateString() {
-    return DateFormat('yyyy/MM/dd').format(this);
+    return DateFormat('yyyy/MM/dd  HH:MM').format(this);
   }
 }
 

@@ -21,6 +21,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../gen/model/json/FromJsonGetImages.dart';
 import '../../../gen/model/json/FromJsonGetWallet.dart';
+import '../../../gen/model/json/walletV2/FromJsonGetBills.dart';
 import '../../common/app_color.dart';
 import 'package:dio/dio.dart' as d;
 
@@ -48,6 +49,8 @@ class ProfileControllers extends GetxController implements RequestInterface {
   List<dynamic> subVideos = [];
   List<dynamic> subAudios = [];
   List<dynamic> subText = [];
+  List<BillsModel> billsModel = [];
+
 
   bool emptySubAll = false;
   bool emptySubImages = false;
@@ -55,8 +58,8 @@ class ProfileControllers extends GetxController implements RequestInterface {
   bool emptySubAudios = false;
   bool emptySubText = false;
 
-  var isBillingStripeConnected = true;
-  var isIncomeStripeConnected = true;
+  var isBillingStripeConnected = false;
+  var isIncomeStripeConnected = false;
 
 
   FromJsonGetAllAsstes myAssets = FromJsonGetAllAsstes();
@@ -90,7 +93,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
     //getWalletBalance();
     getStripe();
     getPayout();
-    getBiilss();
+    getInvoice();
     getAllCountries();
   }
 
@@ -487,7 +490,8 @@ class ProfileControllers extends GetxController implements RequestInterface {
 
   }
   void pareJsonFromPayout(source) {
-    print('ProfileControllers.pareJsonFromStripe = ${source}');
+    print('ProfileControllers.pareJsonFromPayout = ${source}');
+
     isIncomeStripeConnected = jsonDecode(source)['enabled'];
 
     update();
@@ -625,11 +629,15 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   void pareJsonFromBills(source) {
-    print('ProfileControllers.pareJsonFromBills = ${source}');
+    billsModel.addAll(fromJsonGetBillsFromJson(source.toString()).data??[]);
+    billsModel.addAll(fromJsonGetBillsFromJson(source.toString()).data??[]);
+    billsModel.addAll(fromJsonGetBillsFromJson(source.toString()).data??[]);
+    billsModel.addAll(fromJsonGetBillsFromJson(source.toString()).data??[]);
+    update();
   }
 
   void pareJsonFromInoice(source) {
-
+    print('ProfileControllers.pareJsonFromInoice = ${source}');
   }
 
   void pareJsonFromInoiceByLink(source) async{

@@ -176,9 +176,9 @@ Links copyWith({  dynamic url,
 
 class ExternalAccountModel {
   ExternalAccountModel({
-      num? id, 
-      num? userId, 
-      num? type, 
+      String? id,
+    String? userId,
+    String? type,
       String? title, 
       Information? information, 
       String? createdAt, 
@@ -198,23 +198,23 @@ class ExternalAccountModel {
     _id = json['id'];
     _userId = json['user_id'];
     _type = json['media_type'];
-    _title = json['title'];
+    _title = json['title'].toString();
     _information = json['information'] != null ? Information.fromJson(json['information']) : null;
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _deletedAt = json['deleted_at'];
   }
-  num? _id;
-  num? _userId;
-  num? _type;
-  String? _title;
+  String? _id;
+  String? _userId;
+  String? _type;
+  String? _title;//
   Information? _information;
   String? _createdAt;
   String? _updatedAt;
   dynamic _deletedAt;
-ExternalAccountModel copyWith({  num? id,
-  num? userId,
-  num? type,
+ExternalAccountModel copyWith({  String? id,
+  String? userId,
+  String? type,
   String? title,
   Information? information,
   String? createdAt,
@@ -229,9 +229,9 @@ ExternalAccountModel copyWith({  num? id,
   updatedAt: updatedAt ?? _updatedAt,
   deletedAt: deletedAt ?? _deletedAt,
 );
-  num? get id => _id;
-  num? get userId => _userId;
-  num? get type => _type;
+  String? get id => _id;
+  String? get userId => _userId;
+  String? get type => _type;
   String? get title => _title;
   Information? get information => _information;
   String? get createdAt => _createdAt;
