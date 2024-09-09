@@ -20,6 +20,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../gen/model/json/FromJsonGetCalender.dart';
 import '../../../gen/model/json/FromJsonGetMesseges.dart';
+import '../../../gen/model/json/walletV2/FromJsonGetExternalAccount.dart';
 import '../../common/RequestInterface.dart';
 import '../../common/app_api.dart';
 import '../../common/app_color.dart';
@@ -70,9 +71,11 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   TextEditingController addUpcomingprivacy = TextEditingController(text: "Public");
 
   ProgramModel? selectedAccoount;
+  ExternalModel? selectedShareAccoount;
   var isloading = true.obs;
   var isBottomSheetloading = false.obs;
   List<ProgramModel> list = [];
+  List<ExternalModel> externalList = [];
   late ApiRequster apiRequster;
   @override
   void onReady() {
@@ -80,6 +83,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     super.onReady();
     apiRequster = ApiRequster(this,develperModel: true);
     getExternalAccount();
+    getExterNal();
     getShareSchedules();
   }
 
@@ -88,6 +92,14 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
 
+  getExterNal(){
+    apiRequster.request("external-accounts", ApiRequster.MHETOD_GET, 4,useToken: true);
+
+  }
+  getShareCustomAccounts(){
+    apiRequster.request("destinations", ApiRequster.MHETOD_GET, 4,useToken: true);
+
+  }
   getShareSchedules(){
     print('ShareAccountLogic.getShareSchedules = ${viewMonth}');
     apiRequster.request("share-schedules?from=${formatDateTime(DateTime(viewMonth.year,viewMonth.month,))}&to=${formatDateTime(DateTime(viewMonth.year,viewMonth.month+1,))}&", ApiRequster.MHETOD_GET, 3,useToken: true);
@@ -122,6 +134,9 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       case 3:
         parseJsonFromSchludes(source);
         break;
+      case 4:
+        parseJsonFromExternalAccount(source);
+        break;
     }
   }
   final GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -150,6 +165,9 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     }
   }
   void deleteModel(ProgramModel elementAt) {
+    apiRequster.request("external-accounts/${elementAt.id}", ApiRequster.MHETOD_DELETE, 1,useToken: true);
+  }
+  void deleteShareModel(ExternalModel elementAt) {
     apiRequster.request("external-accounts/${elementAt.id}", ApiRequster.MHETOD_DELETE, 1,useToken: true);
   }
 
@@ -400,6 +418,10 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     selectedAccoount=elementAt;
     update();
   }
+  void setSelectedShareChannel(ExternalModel elementAt) {
+    selectedShareAccoount=elementAt;
+    update();
+  }
 
   void onSelcetedDate(DateTime calenderDateTime) {
     getShareSchedules();
@@ -531,5 +553,11 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
      }
    };
    apiRequster.request("programs", ApiRequster.MHETOD_POST, 500,body: body);
+  }
+
+  void parseJsonFromExternalAccount(source) {
+    log('ShareAccountLogic.parseJsonFromExternalAccount = ${source}');
+    externalList = fromJsonGetExternalAccountFromJson(source).data??[];
+    update();
   }
 }

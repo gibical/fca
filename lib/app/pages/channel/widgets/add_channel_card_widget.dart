@@ -33,14 +33,14 @@ class _AddChannelCardWidgetState extends State<AddChannelCardWidget> {
         minWidth: double.infinity,
         onPressed: () {
 
-   //       _logic.showAddProgramBottomSheet();
-          _logic.sendRequestAddProgram();
+         _logic.showAddProgramBottomSheet();
+         // _logic.sendRequestAddProgram();
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'channel_6'.tr,
+              'Add Porgram'.tr,
               style: FontStyleApp.bodyMedium.copyWith(
                 color: AppColor.grayLightColor.withOpacity(0.5),
               ),
