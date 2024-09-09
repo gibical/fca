@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:gibical/gen/model/json/walletV2/FromJsonGetPrograms.dart';
 import 'package:lottie/lottie.dart';
 import 'package:gibical/app/common/app_extension.dart';
 import 'package:gibical/gen/model/json/FromJsonGetExternalAccount.dart';
@@ -148,7 +149,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
 
                   list = logics.list
                       .where(
-                          (element) => element.type.toString().contains(filter))
+                          (element) => element.name.toString().contains(filter))
                       .toList();
                 }
               } catch (e) {
@@ -291,7 +292,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
 
                   list = logics.list
                       .where(
-                          (element) => element.type.toString().contains(filter))
+                          (element) => element.name.toString().contains(filter))
                       .toList();
                 }
               } catch (e) {
@@ -411,7 +412,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
     });
   }
 
-  Padding MassageItemWidget(ExternalAccountModel elementAt) {
+  Padding MassageItemWidget(ProgramModel elementAt) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0.6.h),
       child: MaterialButton(
@@ -453,7 +454,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
                       child: Row(
                         children: [
                           Text(
-                            '${elementAt.title}',
+                            '${elementAt.name}',
                             style: FontStyleApp.bodyMedium
                                 .copyWith(color: Colors.white),
                           ),

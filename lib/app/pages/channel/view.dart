@@ -123,8 +123,8 @@ class _ChannelScreenState extends State<ChannelScreen>
                 labelColor: AppColor.primaryLightColor,
                 dividerColor: Colors.transparent,
                 tabs: [
-                  _buildTab(context, 0, 'channel_36'.tr),
-                  _buildTab(context, 1, 'channel_37'.tr),
+                  _buildTab(context, 0, 'Programs'.tr),
+                  _buildTab(context, 1, 'Conductor'.tr),
                 ],
               ),
             ),
@@ -133,7 +133,7 @@ class _ChannelScreenState extends State<ChannelScreen>
                 physics: const NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: [
-                  ChannelTab(),
+                  ProgramsTab(),
                   CustomCalendarWidget(),
                 ],
               ),

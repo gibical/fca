@@ -301,7 +301,7 @@ class _GridPostView2State extends State<GridPostView2> {
       child: GestureDetector(
 
         onTap:Get.arguments == 'edit_screen' ? toggleSelection:Get.arguments == 'onTapChannelManagement' ? (){
-          Get.find<ShareAccountLogic>().setModelShareData(widget.model['name'].toString() ,widget.model['file_id']);
+          Get.find<ShareAccountLogic>().setModelShareData(widget.model['media']['name'].toString() ,widget.model['file_id']);
 
           Get.back();
 

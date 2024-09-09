@@ -33,7 +33,8 @@ class _AddChannelCardWidgetState extends State<AddChannelCardWidget> {
         minWidth: double.infinity,
         onPressed: () {
 
-          _logic.showAccountType();
+   //       _logic.showAddProgramBottomSheet();
+          _logic.sendRequestAddProgram();
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

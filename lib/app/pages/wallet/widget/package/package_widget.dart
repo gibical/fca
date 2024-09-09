@@ -42,9 +42,10 @@ class PackageWidget extends StatelessWidget {
             ) : Scaffold(
                 body: Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
 
+                      SizedBox(height: 10.h,),
                       Visibility(child: Column(children: [
                         Text("Select Your Plan",style: TextStyle(
                             color: Colors.white,fontWeight: FontWeight.bold,fontSize: 19.sp
@@ -57,11 +58,11 @@ class PackageWidget extends StatelessWidget {
                           children: [
 
                             Column(
-                              children: [
-
-                                Container(
+                              children: logic.plansModel.asMap().entries.map((e){
+                                return    Container(
                                   width: 100.w,
                                   height: 10.h,
+
                                   decoration: BoxDecoration(
                                       color: Colors.grey.withOpacity(0.3),
                                       borderRadius: BorderRadius.circular(15.sp),
@@ -69,18 +70,17 @@ class PackageWidget extends StatelessWidget {
                                           color: AppColor.grayLightColor.withOpacity(0.1)
                                       )
                                   ),
-                                  margin: EdgeInsets.symmetric(horizontal: 32),
-                                  padding: EdgeInsets.symmetric(horizontal: 6.w),
+                                  margin: EdgeInsets.symmetric(horizontal: 32,vertical: 1.h),
+                                  padding: EdgeInsets.symmetric(horizontal: 6.w,vertical: 2.h),
                                   child: Row(
                                     children: [
                                       Expanded(child: Container(
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            SizedBox(height: 3.w,),
-                                            Text("GOLD"  ,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 11.sp),maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                            Text("orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, whe"
+                                            Text("${e.value.name}"  ,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 11.sp),maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                            Text("${e.value.description}"
                                                 "n an unknown printer took "  ,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 7.sp),maxLines: 3,overflow: TextOverflow.ellipsis,),
                                           ],
                                         ),
@@ -93,10 +93,10 @@ class PackageWidget extends StatelessWidget {
                                             width: 16.w,
                                             height: 3.h,
                                             decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColor.primaryLightColor
-                                              ),
-                                              borderRadius: BorderRadius.circular(5)
+                                                border: Border.all(
+                                                    color: AppColor.primaryLightColor
+                                                ),
+                                                borderRadius: BorderRadius.circular(5)
                                             ),
                                             child: MaterialButton(
                                               onPressed: (){},
@@ -106,7 +106,7 @@ class PackageWidget extends StatelessWidget {
                                                 child: Text("Subscribe",style: TextStyle(color:AppColor.primaryLightColor,fontWeight: FontWeight.w400 ),),
                                               ),
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(5)
+                                                  borderRadius: BorderRadius.circular(5)
                                               ),
                                             ),
                                           )
@@ -114,123 +114,8 @@ class PackageWidget extends StatelessWidget {
                                       )
                                     ],
                                   ),
-                                ),
-                                SizedBox(height: 2.h,),
-                                Container(
-                                  width: 100.w,
-                                  height: 10.h,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      borderRadius: BorderRadius.circular(15.sp),
-                                      border: Border.all(
-                                          color: AppColor.grayLightColor.withOpacity(0.1)
-                                      )
-                                  ),
-                                  margin: EdgeInsets.symmetric(horizontal: 32),
-                                  padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                  child: Row(
-                                    children: [
-                                      Expanded(child: Container(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            SizedBox(height: 3.w,),
-                                            Text("Silver"  ,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 11.sp),maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                            Text("orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, whe"
-                                                "n an unknown printer took "  ,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 7.sp),maxLines: 3,overflow: TextOverflow.ellipsis,),
-                                          ],
-                                        ),
-                                      )),
-                                      Row(
-                                        children: [
-
-
-                                          Container(
-                                            width: 16.w,
-                                            height: 3.h,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColor.primaryLightColor
-                                              ),
-                                              borderRadius: BorderRadius.circular(5)
-                                            ),
-                                            child: MaterialButton(
-                                              onPressed: (){},
-                                              padding: EdgeInsets.zero,
-
-                                              child: Center(
-                                                child: Text("Subscribe",style: TextStyle(color:AppColor.primaryLightColor,fontWeight: FontWeight.w400 ),),
-                                              ),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(5)
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 2.h,),
-
-                                Container(
-                                  width: 100.w,
-                                  height: 10.h,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      borderRadius: BorderRadius.circular(15.sp),
-                                      border: Border.all(
-                                          color: AppColor.grayLightColor.withOpacity(0.1)
-                                      )
-                                  ),
-                                  margin: EdgeInsets.symmetric(horizontal: 32),
-                                  padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                  child: Row(
-                                    children: [
-                                      Expanded(child: Container(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            SizedBox(height: 3.w,),
-                                            Text("Boronze"  ,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 11.sp),maxLines: 1,overflow: TextOverflow.ellipsis,),
-                                            Text("orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, whe"
-                                                "n an unknown printer took "  ,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 7.sp),maxLines: 3,overflow: TextOverflow.ellipsis,),
-                                          ],
-                                        ),
-                                      )),
-                                      Row(
-                                        children: [
-
-
-                                          Container(
-                                            width: 16.w,
-                                            height: 3.h,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColor.primaryLightColor
-                                              ),
-                                              borderRadius: BorderRadius.circular(5)
-                                            ),
-                                            child: MaterialButton(
-                                              onPressed: (){},
-                                              padding: EdgeInsets.zero,
-
-                                              child: Center(
-                                                child: Text("Subscribe",style: TextStyle(color:AppColor.primaryLightColor,fontWeight: FontWeight.w400 ),),
-                                              ),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(5)
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
+                                );
+                              }).toList(),
                             ),
 
                           ],

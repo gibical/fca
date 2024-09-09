@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 //import 'package:dio/dio.dart' as d;
 import 'package:get_storage/get_storage.dart';
+import 'package:gibical/app/pages/share_account/widgets/program_bottom_sheet.dart';
+import 'package:gibical/gen/model/json/FromJsonGetProfile.dart';
+import 'package:gibical/gen/model/json/walletV2/FromJsonGetPrograms.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 import 'package:gibical/app/common/app_extension.dart';
@@ -66,10 +69,10 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   TextEditingController addUpcomingdes = TextEditingController();
   TextEditingController addUpcomingprivacy = TextEditingController(text: "Public");
 
-  ExternalAccountModel? selectedAccoount;
+  ProgramModel? selectedAccoount;
   var isloading = true.obs;
   var isBottomSheetloading = false.obs;
-  List<ExternalAccountModel> list = [];
+  List<ProgramModel> list = [];
   late ApiRequster apiRequster;
   @override
   void onReady() {
@@ -81,7 +84,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   getExternalAccount(){
-    apiRequster.request("external-accounts", ApiRequster.MHETOD_GET, 1,useToken: true);
+    apiRequster.request("programs", ApiRequster.MHETOD_GET, 1,useToken: true);
   }
 
 
@@ -146,7 +149,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       print('Error signing in: $error');
     }
   }
-  void deleteModel(ExternalAccountModel elementAt) {
+  void deleteModel(ProgramModel elementAt) {
     apiRequster.request("external-accounts/${elementAt.id}", ApiRequster.MHETOD_DELETE, 1,useToken: true);
   }
 
@@ -223,6 +226,9 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
 
   }
 
+  void showAddProgramBottomSheet() {
+    Get.bottomSheet(ProgramBottomSheet(this));
+  }
   void showAccountType() {
     Get.bottomSheet(Container(
       width: 100.w,
@@ -367,7 +373,8 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   void parseJsonFromMainList(source) {
-    list = FromJsonGetExternalAccount.fromJson(jsonDecode(source)).data??[];
+    log('ShareAccountLogic.parseJsonFromMainList = ${source}');
+    list = FromJsonGetPrograms.fromJson(jsonDecode(source)).data??[];
     isloading(false);
   }
 
@@ -389,7 +396,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
 
   }
 
-  void setSelectedChannel(ExternalAccountModel elementAt) {
+  void setSelectedChannel(ProgramModel elementAt) {
     selectedAccoount=elementAt;
     update();
   }
@@ -513,5 +520,16 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   String formatDateTime(DateTime dateTime) {
     final DateFormat formatter = DateFormat('y-MM-dd HH:mm:ss'); // Use 'y' for year, 'MM' for zero-padded month, 'dd' for zero-padded day
     return formatter.format(dateTime);
+  }
+
+  void sendRequestAddProgram() {
+   var body = {
+     "source": "publishers",
+     "name":"adwdaaswd",
+     "details": {
+
+     }
+   };
+   apiRequster.request("programs", ApiRequster.MHETOD_POST, 500,body: body);
   }
 }

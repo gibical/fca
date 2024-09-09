@@ -20,8 +20,10 @@ import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../gen/model/json/FromJsonGetImages.dart';
+import '../../../gen/model/json/FromJsonGetInvoices.dart';
 import '../../../gen/model/json/FromJsonGetWallet.dart';
 import '../../../gen/model/json/walletV2/FromJsonGetBills.dart';
+import '../../../gen/model/json/walletV2/FromJsonGetPlans.dart';
 import '../../common/app_color.dart';
 import 'package:dio/dio.dart' as d;
 
@@ -50,6 +52,8 @@ class ProfileControllers extends GetxController implements RequestInterface {
   List<dynamic> subAudios = [];
   List<dynamic> subText = [];
   List<BillsModel> billsModel = [];
+  List<InvoiceModel> invoiceModel = [];
+  List<PlansModel> plansModel = [];
 
 
   bool emptySubAll = false;
@@ -94,6 +98,8 @@ class ProfileControllers extends GetxController implements RequestInterface {
     getStripe();
     getPayout();
     getInvoice();
+    getPlans();
+    getSubscribedPlans();
     getAllCountries();
   }
 
@@ -246,6 +252,12 @@ class ProfileControllers extends GetxController implements RequestInterface {
         break;
         case 22:
         pareJsonFromInoiceByLink(source);
+        break;
+        case 23:
+        pareJsonFromPlans(source);
+        break;
+        case 24:
+        pareJsonFromSubscribedPlans(source);
         break;
     }
   }
@@ -466,6 +478,15 @@ class ProfileControllers extends GetxController implements RequestInterface {
     apiRequster.request("invoices/${id}/link", ApiRequster.MHETOD_GET, 22,useToken: true);
   }
 
+  getPlans(){
+    // isloading(true);
+    apiRequster.request("plans", ApiRequster.MHETOD_GET, 23,useToken: true);
+  }
+  getSubscribedPlans(){
+    // isloading(true);
+    apiRequster.request("subscribed-plans", ApiRequster.MHETOD_GET, 24,useToken: true);
+  }
+
 
   void parseJsonFromGetWalletBalance(source) {
    // print('ProfileControllers.parseJsonFromGetWalletBalance = ${source}');
@@ -637,7 +658,9 @@ class ProfileControllers extends GetxController implements RequestInterface {
   }
 
   void pareJsonFromInoice(source) {
-    print('ProfileControllers.pareJsonFromInoice = ${source}');
+    log('ProfileControllers.pareJsonFromInoice = ${source}');
+    invoiceModel = fromJsonGetInvoicesFromJson(source).data??[];
+    update();
   }
 
   void pareJsonFromInoiceByLink(source) async{
@@ -649,6 +672,15 @@ class ProfileControllers extends GetxController implements RequestInterface {
     }  catch (e) {
       // TODO
     }
+  }
+
+  void pareJsonFromPlans(source) {
+    plansModel = fromJsonGetPlansFromJson(source.toString()).data??[];
+    update();
+  }
+
+  void pareJsonFromSubscribedPlans(source) {
+    print('ProfileControllers.pareJsonFromSubscribedPlans = ${source}');
   }
 
 }

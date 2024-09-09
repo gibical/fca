@@ -8,7 +8,7 @@ import 'package:sizer/sizer.dart';
 import '../../../common/app_color.dart';
 import '../../share_account/logic.dart';
 
-class ChannelTab extends StatelessWidget {
+class ProgramsTab extends StatelessWidget {
   final _logic = Get.find<ShareAccountLogic>();
 
   @override
@@ -39,7 +39,7 @@ class ChannelTab extends StatelessWidget {
               itemBuilder: (context, index) {
                 var model = _logic.list.elementAt(index);
                 return CardChannelWidget(
-                    title: (model.title??"").toString(), date: (model.createdAt??""),);
+                    title: (model.name??"").toString(), date: (model.createdAt??""),);
               })
         ],
       );

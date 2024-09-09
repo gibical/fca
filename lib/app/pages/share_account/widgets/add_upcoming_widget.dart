@@ -157,7 +157,7 @@ class _AddUpComingClassWidgetState extends State<AddUpComingClassWidget> {
                                 children: [
                                   Text(logic.selectedAccoount == null
                                       ? "share_5".tr
-                                      : logic.selectedAccoount!.title ?? ""),
+                                      : logic.selectedAccoount!.name ?? ""),
                                   const Spacer(),
                                   const Icon(
                                     Icons.arrow_drop_down,
