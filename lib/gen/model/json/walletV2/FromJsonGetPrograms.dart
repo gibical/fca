@@ -187,12 +187,12 @@ class ProgramModel {
     _name = json['name'];
     _userId = json['user_id'];
     _source = json['source'];
-    if (json['details'] != null) {
-      _details = [];
-      json['details'].forEach((v) {
-        _details?.add(v);
-      });
-    }
+    // if (json['details'] != null) {
+    //   _details = [];
+    //   json['details'].forEach((v) {
+    //     _details?.add(v);
+    //   });
+    // }
     _lastEvent = json['last_event'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];

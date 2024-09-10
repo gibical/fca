@@ -30,7 +30,8 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {//
+    print('_ProgramBottomSheetState.build = ${widget.shareAccountLogic.selectShareMode}');
     return Container(
       width: 100.w,
 
@@ -50,252 +51,255 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
             topRight: Radius.circular(15),
           )
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10
-            ),
-            child: Text("share_16".tr, style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold
-            ),),
-          ),
-          CustomTextFieldRegisterWidget(
-              context: Get.context!,
-              titleText: 'Name '.tr,
-              hintText: 'Insert Your Program Here'.tr,
-              textEditingController: TextEditingController(),
-              needful: true),
-          Container(
-            height: 75,
-            child: MaterialButton(
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                Get.toNamed(PageRoutes.SHAREACCOUNT, arguments: [
-                  "onTapChannelManagement",
-                  "asd"
-                ]);
-              },
-              child: Stack(
-                children: [
-                  SizedBox.expand(
-                    child: IgnorePointer(
-
-                      child: CustomTextFieldRegisterWidget(
-                          context: Get.context!,
-                          titleText: 'Stream Destinations '.tr,
-                          hintText: widget.shareAccountLogic.selectedAssetName
-                              .value.isNotEmpty
-                              ? widget.shareAccountLogic
-                              .selectedAssetName.value
-                              : 'Select Stream accounts'.tr,
-                          textEditingController: _nameEditingController,
-                          //
-                          needful: true),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 30),
-                        child: Icon(Icons.arrow_drop_down)),
-                  )
-                ],
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10
               ),
+              child: Text("share_16".tr, style: TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold
+              ),),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-            child: Row(
-              mainAxisAlignment:
-              MainAxisAlignment
-                  .spaceBetween,
-              children: [
-                Text("Live Show in Gibical".tr),
-                Obx(() {
-                  return CupertinoSwitch(
-                    value: isShowinGibical.value,
-                    onChanged: (value) {
-                      isShowinGibical.value = value;
-                    },
-                  );
-                }),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-            child: Row(
-              mainAxisAlignment:
-              MainAxisAlignment
-                  .spaceBetween,
-              children: [
-                Text("Stream From Asset".tr),
-                Obx(() {
-                  return CupertinoSwitch(
-                    value: isSelectFromAsset.value,
-                    onChanged: (value) {
-                      isSelectFromAsset.value = value;
-                    },
-                  );
-                }),
-              ],
-            ),
-          ),
-          SizedBox(height: 2.h,),
-          Obx(() {
-            return Visibility(
-              visible: isSelectFromAsset.value,
-              child: Center(
-                child: Container(
-                  height: 6.h,
-                  width: 100.w,
-                  margin: EdgeInsets.symmetric(horizontal: 25),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.black54),
-                  child: MaterialButton(
-                    onPressed: () {
-                      Get.to(
-                          ProfileScreen(),
-                          arguments: 'onTapChannelManagement');
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.add_circle_outline_outlined,
-                            color: Colors.white54),
-                        SizedBox(
-                          width: 1.w,
-                        ),
-                        Text(
-                          widget.shareAccountLogic.selectedAssetName.value
-                              .isNotEmpty ? widget.shareAccountLogic
-                              .selectedAssetName.value : "share_3".tr,
-                          style: TextStyle(color: Colors.white54),
-                        )
-
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }),
-          Obx(() {
-            return Visibility(
-              visible: !isSelectFromAsset.value,
-              child: Center(
-                child:Column(
+            CustomTextFieldRegisterWidget(
+                context: Get.context!,
+                titleText: 'Name '.tr,
+                hintText: 'Insert Your Program Here'.tr,
+                textEditingController: _nameEditingController,
+                needful: true),
+            Container(
+              height: 75,
+              child: MaterialButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+        
+                  onChannelClick();
+                },
+                child: Stack(
                   children: [
-
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-                      child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment
-                            .spaceBetween,
-                        children: [
-                          Text("Stream From Asset".tr),
-                         Row(
-                           mainAxisSize: MainAxisSize.min,
-                           children: [
-                             Radio(value: true, groupValue: streamRecord.value, onChanged: (s){
-                               streamRecord.value = s!;
-                               setState(() {
-
-                               });
-                             }),
-                             Text("Yes"),
-                           ],
-                         ),
-                         Row(
-                           mainAxisSize: MainAxisSize.min,
-                           children: [
-                             Radio(value: false, groupValue: streamRecord.value, onChanged: (s){
-                               streamRecord.value = s!;
-                               setState(() {
-
-                               });
-                             }),
-                             Text("No"),
-                           ],
-                         ),
-                        ],
+                    SizedBox.expand(
+                      child: IgnorePointer(
+        
+                        child: CustomTextFieldRegisterWidget(
+                            context: Get.context!,
+                            titleText: 'Stream Destinations '.tr,
+                            hintText: widget.shareAccountLogic.selectShareMode!=null
+                                ? (widget.shareAccountLogic.selectShareMode==SelectShareMode.stream?( widget.shareAccountLogic.selectedDestinationAccoount!.name??""):( widget.shareAccountLogic.selectedShareAccoount!.title??""))
+                                : 'Select Stream accounts'.tr,
+                            //
+                            needful: true),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-                      child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment
-                            .spaceBetween,
-                        children: [
-                          Text("Stream Start: Automatic".tr),
-                         Row(
-                           mainAxisSize: MainAxisSize.min,
-                           children: [
-                             Radio(value: true, groupValue: streamStartAuto.value, onChanged: (s){
-                               streamStartAuto.value = s!;
-                               setState(() {
-
-                               });
-                             }),
-                             Text("Yes"),
-                           ],
-                         ),
-                         Row(
-                           mainAxisSize: MainAxisSize.min,
-                           children: [
-                             Radio(value: false, groupValue: streamStartAuto.value, onChanged: (s){
-                               streamStartAuto.value = s!;
-                               setState(() {
-
-                               });
-                             }),
-                             Text("No"),
-                           ],
-                         ),
-                        ],
-                      ),
-                    ),
-
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 30),
+                          child: Icon(Icons.arrow_drop_down)),
+                    )
                   ],
                 ),
               ),
-            );
-          }),
-
-          SizedBox(height: 2.h,),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 25,
-              right: 25,
-              bottom: 5.h,
             ),
-            child: MaterialButton(
-              minWidth: double.infinity,
-              height: 5.h,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              onPressed: () async {
-
-              },
-              color: AppColor.primaryLightColor,
-              child: Obx(() {
-                return Center(child: widget.shareAccountLogic.isLoadingSendMain.value
-                    ? Lottie.asset(
-                    "assets/json/Y8IBRQ38bK.json", height: 3.h)
-                    : Text("Create Program"));
-              }),
+            Opacity(
+              opacity: 0.3,
+              child: IgnorePointer(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                  child: Row(
+                    mainAxisAlignment:
+                    MainAxisAlignment
+                        .spaceBetween,
+                    children: [
+                      Text("Live Show in Gibical".tr),
+                      Obx(() {
+                        return CupertinoSwitch(
+                          value: isShowinGibical.value,
+                          onChanged: (value) {
+                            isShowinGibical.value = value;
+                          },
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-
-        ],
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+              child: Row(
+                mainAxisAlignment:
+                MainAxisAlignment
+                    .spaceBetween,
+                children: [
+                  Text("Stream From Asset".tr),
+                  Obx(() {
+                    return CupertinoSwitch(
+                      value: isSelectFromAsset.value,
+                      onChanged: (value) {
+                        isSelectFromAsset.value = value;
+                      },
+                    );
+                  }),
+                ],
+              ),
+            ),
+            SizedBox(height: 2.h,),
+            Obx(() {
+              return Visibility(
+                visible: isSelectFromAsset.value,
+                child: Center(
+                  child: Container(
+                    height: 6.h,
+                    width: 100.w,
+                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.black54),
+                    child: MaterialButton(
+                      onPressed: () {
+                        Get.to(
+                            ProfileScreen(),
+                            arguments: 'onTapChannelManagement');
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+        
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.add_circle_outline_outlined,
+                              color: Colors.white54),
+                          SizedBox(
+                            width: 1.w,
+                          ),
+                          Text(
+                            widget.shareAccountLogic.selectedAssetName.value
+                                .isNotEmpty ? widget.shareAccountLogic
+                                .selectedAssetName.value : "share_3".tr,
+                            style: TextStyle(color: Colors.white54),
+                          )
+        
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }),
+            Obx(() {
+              return Visibility(
+                visible: !isSelectFromAsset.value,
+                child: Center(
+                  child:Column(
+                    children: [
+        
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                        child: Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment
+                              .spaceBetween,
+                          children: [
+                            Text("Stream From Asset".tr),
+                           Row(
+                             mainAxisSize: MainAxisSize.min,
+                             children: [
+                               Radio(value: true, groupValue: streamRecord.value, onChanged: (s){
+                                 streamRecord.value = s!;
+                                 setState(() {
+        
+                                 });
+                               }),
+                               Text("Yes"),
+                             ],
+                           ),
+                           Row(
+                             mainAxisSize: MainAxisSize.min,
+                             children: [
+                               Radio(value: false, groupValue: streamRecord.value, onChanged: (s){
+                                 streamRecord.value = s!;
+                                 setState(() {
+        
+                                 });
+                               }),
+                               Text("No"),
+                             ],
+                           ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                        child: Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment
+                              .spaceBetween,
+                          children: [
+                            Text("Stream Start: Automatic".tr),
+                           Row(
+                             mainAxisSize: MainAxisSize.min,
+                             children: [
+                               Radio(value: true, groupValue: streamStartAuto.value, onChanged: (s){
+                                 streamStartAuto.value = s!;
+                                 setState(() {
+        
+                                 });
+                               }),
+                               Text("Yes"),
+                             ],
+                           ),
+                           Row(
+                             mainAxisSize: MainAxisSize.min,
+                             children: [
+                               Radio(value: false, groupValue: streamStartAuto.value, onChanged: (s){
+                                 streamStartAuto.value = s!;
+                                 setState(() {
+        
+                                 });
+                               }),
+                               Text("No"),
+                             ],
+                           ),
+                          ],
+                        ),
+                      ),
+        
+                    ],
+                  ),
+                ),
+              );
+            }),
+        
+            SizedBox(height: 2.h,),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 25,
+                right: 25,
+                bottom: 5.h,
+              ),
+              child: MaterialButton(
+                minWidth: double.infinity,
+                height: 5.h,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                onPressed: () async {
+        
+                  widget.shareAccountLogic.sendRequestAddProgram(_nameEditingController.text, isSelectFromAsset.value);
+                },
+                color: AppColor.primaryLightColor,
+                child: Obx(() {
+                  return Center(child: widget.shareAccountLogic.iscreateProgramloading.value
+                      ? Lottie.asset(
+                      "assets/json/Y8IBRQ38bK.json", height: 3.h)
+                      : Text("Create Program"));
+                }),
+              ),
+            ),
+        
+          ],
+        ),
       ),
     );
   }
@@ -306,6 +310,16 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
         arguments: 'onTapChannelManagement');
     setState(() {
 
+    });
+  }
+
+  void onChannelClick() async{
+    await Get.toNamed(PageRoutes.SHAREACCOUNT, arguments: [
+      "onTapChannelManagement",
+      "asd"
+    ]);
+    setState(() {
+      
     });
   }
 }

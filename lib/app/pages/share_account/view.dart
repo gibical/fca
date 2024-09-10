@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:gibical/gen/model/json/walletV2/FromJsonGetDestination.dart';
 import 'package:gibical/gen/model/json/walletV2/FromJsonGetExternalAccount.dart';
 import 'package:gibical/gen/model/json/walletV2/FromJsonGetPrograms.dart';
 import 'package:lottie/lottie.dart';
@@ -127,7 +128,6 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
   }
 
   Widget getAcoountStream(){
-    print('ShareAccountPage.build = ${isSendedByCondactor}');
     return Obx(() {
       if (logic.isloading.value) {
         return Scaffold(
@@ -142,17 +142,19 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
         return GetBuilder<ShareAccountLogic>(
             init: logic,
             builder: (logics) {
-              var list = logics.list;
+
+              var list = logics.destinationModelList;
+              print('ShareAccountPage.build 1 = ${isSendedByCondactor} - ${ list.length}');
               try {
                 print('ShareAccountPage.build = ${upcomingWidget}');
-                if (upcomingWidget) {
-                  String filter = Get.arguments[1];
-
-                  list = logics.list
-                      .where(
-                          (element) => element.name.toString().contains(filter))
-                      .toList();
-                }
+                // if (upcomingWidget) {
+                //   String filter = Get.arguments[1];
+                //
+                //   list = logics.destinationModelList
+                //       .where(
+                //           (element) => element.name.toString().contains(filter))
+                //       .toList();
+                // }
               } catch (e) {
                 // TODO
               }
@@ -163,6 +165,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
                   padding: EdgeInsets.only(top: 6.h),
                   child: Stack(
                     children: [
+
                       list.isEmpty
                           ?    Container(
                           padding: EdgeInsets.zero,
@@ -173,7 +176,9 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
 
                                 itemCount: list.length,
                                 itemBuilder: (context, index) {
-                                  return MassageItemWidget(
+                                  print('ShareAccountPage.build 2 = ${isSendedByCondactor} - ${ list.length}');
+
+                                  return MassageItemWidgetDestination(
                                       list.elementAt(index));
                                 }),
                           ],
@@ -288,14 +293,14 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
               var list = logics.externalList;
               try {
                 print('ShareAccountPage.build = ${upcomingWidget}');
-                if (upcomingWidget) {
-                  String filter = Get.arguments[1];
-
-                  list = logics.externalList
-                      .where(
-                          (element) => element.title.toString().contains(filter))
-                      .toList();
-                }
+                // if (upcomingWidget) {
+                //   String filter = Get.arguments[1];
+                //
+                //   list = logics.externalList
+                //       .where(
+                //           (element) => element.title.toString().contains(filter))//
+                //       .toList();
+                // }
               } catch (e) {
                 // TODO
               }
@@ -420,7 +425,11 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
         padding: EdgeInsets.zero,
         onPressed: isSendedByCondactor
             ? () {
-                Get.find<ShareAccountLogic>().setSelectedChannel(elementAt);
+          print('_ShareAccountPageState.MassageItemWidget = 1');
+
+          Get.find<ShareAccountLogic>().setSelectedChannel(elementAt);
+                Get.find<ShareAccountLogic>().selectShareMode = SelectShareMode.stream;
+          print('_ShareAccountPageState.MassageItemWidget = ${elementAt} - ${Get.find<ShareAccountLogic>().selectShareMode }');
 
                 Get.back();
               }
@@ -510,7 +519,12 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
         padding: EdgeInsets.zero,
         onPressed: isSendedByCondactor
             ? () {
-                Get.find<ShareAccountLogic>().setSelectedShareChannel(elementAt);
+          print('_ShareAccountPageState.MassageItemWidget = 1');
+
+          Get.find<ShareAccountLogic>().setSelectedShareChannel(elementAt);
+                Get.find<ShareAccountLogic>().selectShareMode = SelectShareMode.share;
+          print('_ShareAccountPageState.MassageItemWidget = ${elementAt} - ${Get.find<ShareAccountLogic>().selectShareMode }');
+
 
                 Get.back();
               }
@@ -585,6 +599,99 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
                       logic.list.remove(elementAt);
                       logic.update();
                       logic.deleteShareModel(elementAt);
+                    },
+                    icon: Icon(Icons.delete))
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  Padding MassageItemWidgetDestination(DestinationModel elementAt) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0.6.h),
+      child: MaterialButton(
+        padding: EdgeInsets.zero,
+        onPressed: isSendedByCondactor
+            ? () {
+
+
+          Get.find<ShareAccountLogic>().setSelectedDestiniation(elementAt);
+          Get.find<ShareAccountLogic>().selectShareMode = SelectShareMode.stream;
+
+                Get.back();
+              }
+            : null,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.sp),
+        ),
+        child: Container(
+          height: 8.5.h,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: Color(0xff4E4E61).withOpacity(0.3),
+              borderRadius: BorderRadius.circular(16.sp),
+              border: Border(
+                left: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1),
+                bottom:
+                    BorderSide(color: Colors.grey.withOpacity(0.3), width: 0.4),
+              )),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 1.5.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 6.w,
+                      ),
+                      child: Row(
+                        children: [
+                          Text(
+                            '${elementAt.name}',
+                            style: FontStyleApp.bodyMedium
+                                .copyWith(color: Colors.white),
+                          ),
+                          Spacer(),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 0.8.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 6.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Type: Youtube",
+                            style: FontStyleApp.bodyMedium.copyWith(
+                              color: Colors.grey.withOpacity(0.7),
+                            ),
+                          ),
+                          Text(
+                            "Connected: on",//
+                            style: FontStyleApp.bodyMedium.copyWith(
+                              color: Colors.grey.withOpacity(0.7),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (!isSendedByCondactor)
+                IconButton(
+                    onPressed: () {
+                      logic.list.remove(elementAt);
+                      logic.update();
+                      logic.deleteDestinationModel(elementAt);
                     },
                     icon: Icon(Icons.delete))
             ],

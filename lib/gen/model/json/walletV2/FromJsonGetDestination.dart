@@ -36,8 +36,8 @@ class DestinationModel {
       String? id, 
       String? name, 
       String? userId, 
-      String? type, 
-      List<String>? details, 
+      String? type,
+      String? details,
       String? createdAt, 
       String? updatedAt,}){
     _id = id;
@@ -54,7 +54,7 @@ class DestinationModel {
     _name = json['name'];
     _userId = json['user_id'];
     _type = json['type'];
-    _details = json['details'] != null ? json['details'].cast<String>() : [];
+    _details = json['details'].toString();
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
   }
@@ -62,7 +62,7 @@ class DestinationModel {
   String? _name;
   String? _userId;
   String? _type;
-  List<String>? _details;
+  String? _details;
   String? _createdAt;
   String? _updatedAt;
 
@@ -70,7 +70,7 @@ class DestinationModel {
   String? get name => _name;
   String? get userId => _userId;
   String? get type => _type;
-  List<String>? get details => _details;
+  String? get details => _details;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
 
