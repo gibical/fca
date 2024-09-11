@@ -500,7 +500,7 @@ class DetailMusicScreen extends StatelessWidget {
                       ),
                     );
                   }),
-                  BackWidget()
+                  BackWidget(idAssetMedia: Get.arguments['idAssetMedia'] == "idAssetMedia",)
 
                 ],
               );

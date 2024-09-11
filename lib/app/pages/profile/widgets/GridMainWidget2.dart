@@ -35,7 +35,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
 
     if (isSelected) {
       Get.find<MediaSuitController>().addItemToTempList(
-        widget.model['name'].toString(),
+        widget.model['media']['name'].toString(),
         widget.model['file']['url'],
         widget.model['length'],
         widget.model['file_id'].toString(),
@@ -59,7 +59,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap:Get.arguments == 'edit_screen' ? toggleSelection:Get.arguments == 'onTapChannelManagement' ? (){
-          Get.find<ShareAccountLogic>().setModelShareData(widget.model['name'].toString() ,widget.model['file_id']);
+          Get.find<ShareAccountLogic>().setModelShareData(widget.model['media']['name'].toString() ,widget.model['file_id']);
 
           Get.back();
 
@@ -91,7 +91,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
                        if(widget. model['media_type'] == 1)   Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                             widget. model['name'],
+                             widget. model['media']['name'],
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme
@@ -158,7 +158,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
                         Positioned(
                             bottom: 10,
                             left: 20,
-                            child: Text(widget.model['name'])),
+                            child: Text(widget.model['media']['name'])),
                       ],
                     ),
                     decoration:

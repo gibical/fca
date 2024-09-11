@@ -3,8 +3,11 @@ import 'package:get/get.dart';
 import 'package:gibical/app/common/app_extension.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../common/app_route.dart';
+
 class BackWidget extends StatelessWidget {
-  const BackWidget({super.key});
+  bool? idAssetMedia;
+   BackWidget({super.key,this.idAssetMedia});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,11 @@ class BackWidget extends StatelessWidget {
               padding: EdgeInsets.all(8),
               onPressed: (){
 
-                Get.back();
+                if(idAssetMedia!=null&&idAssetMedia==true){
+                  Get.offAllNamed(PageRoutes.WRAPPER);
+                }else{
+                  Get.back();
+                }
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5000)

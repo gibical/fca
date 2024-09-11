@@ -24,7 +24,7 @@ Widget ItemVideoTabScreen(dynamic model){
                 Positioned(
                     bottom: 10,
                     left: 20,
-                    child: Text(model['name'])),
+                    child: Text(model['media']['name'])),
               ],
             ),
             decoration:

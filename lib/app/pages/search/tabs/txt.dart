@@ -38,7 +38,7 @@ class TxtWidget extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            model['name'],
+                            model['media']['name'],
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: Theme

@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:gibical/gen/model/json/FromJsonGetSessions.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../gen/model/json/walletV2/FromJsonGetSesseinsModel.dart';
 import '../../common/app_color.dart';
 import '../../common/app_icon.dart';
 import '../../common/font_style.dart';
@@ -56,7 +57,7 @@ class SessionsPage extends StatelessWidget {
     });
   }
 
-  Padding MassageItemWidget(SessionsModel elementAt) {
+  Padding MassageItemWidget(SessionsModels elementAt) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0.6.h),
       child: Container(
@@ -82,7 +83,7 @@ class SessionsPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 6.w,),
               child: Row(
                 children: [
-                  Text(' ${elementAt.app??""}', style: FontStyleApp.bodyMedium.copyWith(
+                  Text(' ${elementAt.name??""}', style: FontStyleApp.bodyMedium.copyWith(
                       color: Colors.white
                   ),),
 

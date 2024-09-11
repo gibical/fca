@@ -96,9 +96,9 @@ class DetailImageScreen extends StatelessWidget {
                           SizedBox(
                             height: 1.h,
                           ),
-                          // Text('${selectedItem['description']}' , style: FontStyleApp.bodyMedium.copyWith(
-                          //   color: AppColor.grayLightColor.withOpacity(0.8),
-                          // ),),
+                          Text('${imageController.imageDetails?['media']['description']}' , style: FontStyleApp.bodyMedium.copyWith(
+                            color: AppColor.grayLightColor.withOpacity(0.8),
+                          ),),
 
                           SizedBox(
                             height: 2.h,
@@ -189,7 +189,7 @@ class DetailImageScreen extends StatelessWidget {
                 );
               }),
 
-              BackWidget()
+              BackWidget(idAssetMedia: Get.arguments['idAssetMedia'] == "idAssetMedia",)
 
             ],
           );

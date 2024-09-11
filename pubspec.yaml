@@ -88,6 +88,7 @@ dependencies:
   country_code_picker_plus: ^0.0.6
   rtmp_broadcaster: 2.2.6
   wakelock: ^0.4.0
+  share_plus: ^10.0.0
 dev_dependencies:
 
 

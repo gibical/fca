@@ -98,9 +98,11 @@ class SoundTabScreen extends StatelessWidget {
                             );
                           }
                           return Container(
-                            height: 40.h,
+                            height: 80.h,
                             child: GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemCount:list.length,
+
                                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2
                             ), itemBuilder: (s,q){
                                   var item = list.elementAt(q);

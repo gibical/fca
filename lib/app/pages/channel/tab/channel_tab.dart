@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gibical/app/pages/share_account/widgets/program_show_bottom_sheet.dart';
 import 'package:lottie/lottie.dart';
 import 'package:gibical/app/pages/channel/widgets/add_channel_card_widget.dart';
 import 'package:gibical/app/pages/channel/widgets/card_channel_widget.dart';
@@ -39,7 +40,10 @@ class ProgramsTab extends StatelessWidget {
               itemBuilder: (context, index) {
                 var model = _logic.list.elementAt(index);
                 return CardChannelWidget(
-                    title: (model.name??"").toString(), date: (model.createdAt??""),);
+                    title: (model.name??"").toString(), date: (model.createdAt??""),onTap: (){
+
+                      Get.bottomSheet(ProgramShowBottomSheet(model));
+                });
               })
         ],
       );

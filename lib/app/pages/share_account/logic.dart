@@ -176,6 +176,9 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
      case 501:
         praseJsonFromAddDestination(source);
         break;
+       case 503:
+        praseJsonFromDeleteProgram(source);
+        break;
     }
   }
 
@@ -665,6 +668,20 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     Get.back();
     isloading(true);
     getExternalAccount();
+  }
+
+  void deleteProgram(String? id) {
+    apiRequster.request("programs/${id}", ApiRequster.MHETOD_DELETE, 503);
+    Get.back();
+    isloading(true);
+  Future.delayed(Duration(seconds: 1)).then((s){
+    getExternalAccount();
+  });
+  }
+
+  void praseJsonFromDeleteProgram(source) {
+
+
   }
 }
 

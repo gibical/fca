@@ -194,4 +194,8 @@ class StreamViewController extends GetxController {
     }
     onNewCameraSelected(cameras[selectedCamera]);
   }
+
+  void deleteProgram(String? id) {
+
+  }
 }
