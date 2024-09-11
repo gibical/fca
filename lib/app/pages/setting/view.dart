@@ -57,9 +57,13 @@ class SettingScreen extends StatelessWidget {
                     ) ,
                     child: Padding(
                       padding: const EdgeInsets.all(7),
-                      child: CircleAvatar(
-                        backgroundColor:AppColor.blueDarkColor,
-                        backgroundImage: AssetImage('assets/images/profile.png'),
+                      child:  SizedBox.expand(
+                        child: CircleAvatar(
+                          backgroundColor: AppColor.blueDarkColor,
+                          backgroundImage:
+                          NetworkImage(logic.model.imageUrl??""),
+                        ),
+
                       ),
                     ),
                   ),

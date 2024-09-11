@@ -106,8 +106,8 @@ class _GeneralInformationPageState extends State<GeneralInformationPage> {
                         context: context,
                         textEditingController: logic.languageController,
 
-                        titleText: 'plus_6'.tr,
-                        hintText: 'plus_7'.tr,
+                        titleText: 'Countries'.tr,
+                        hintText: 'Countries'.tr,
                         needful: false),
                   )
                 ],

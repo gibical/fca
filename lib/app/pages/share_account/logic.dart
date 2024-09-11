@@ -56,6 +56,9 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   RxString typeString = "Archive".obs;
   List<CalenderModel> todayModels = [];
   SelectShareMode? selectShareMode;
+
+  String selectShareModelName = "";
+  String selectShareModeid = "";
   List<CalenderModel> filterCalenderByDate(List<CalenderModel> calendarList,
       DateTime targetDate) {
     DateFormat dateFormat = DateFormat('yyyy-MM-dd');
@@ -615,7 +618,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     return formatter.format(dateTime);
   }
 
-  void sendRequestAddProgram(String name,bool selectFromAsset,) {
+  void sendRequestAddProgram(String name,bool selectFromAsset, bool isEdit, ProgramModel? model,) {
     iscreateProgramloading(true);
     Map<String,dynamic> body = {
       "source": selectFromAsset?"links":"publishers",
@@ -635,7 +638,13 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       };
     }
     print('ShareAccountLogic.sendRequestAddProgram = ${body}');
-    apiRequster.request("programs", ApiRequster.MHETOD_POST, 500, body: body);
+
+    var url = "programs";
+    if(isEdit){
+      url+= "/${model!.id}";
+    }
+    apiRequster.request(url, isEdit?ApiRequster.MHETOD_PUT
+        :ApiRequster.MHETOD_POST, 500, body: body);
   }
 
   void parseJsonFromExternalAccount(source) {

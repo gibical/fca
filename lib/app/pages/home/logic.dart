@@ -108,8 +108,11 @@ class HomeLogic extends GetxController implements  RequestInterface{
       channels = FromJsonGetChannels
           .fromJson(jsonDecode(source))
           .data ?? [];
+      print('HomeLogic.praseJsonFromChannels 1 =${channels}');
     }  catch (e) {
       // TODO
+      print('HomeLogic.praseJsonFromChannels 2');
+
     }
 
     _getBestVideos();

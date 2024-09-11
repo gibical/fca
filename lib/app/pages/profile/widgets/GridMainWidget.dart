@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:gibical/app/common/app_config.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gibical/app/pages/share_account/logic.dart';
 import 'package:sizer/sizer.dart';
@@ -123,16 +124,18 @@ class _GridPostViewState extends State<GridPostView> {
                             children: [
                               Image.asset("assets/images/avatar.jpeg",width: 4.w,),
                               SizedBox(width: 3.w,),
-                              Text(
-                                widget.   model['user_id'].toString(),
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme
-                                  .of(context)
-                                  .textTheme.bodySmall?.copyWith(
-                                  color: Color(0xFF666680),
-                                  fontSize: 8.sp,
-                                  fontWeight: FontWeight.w400,
+                              Expanded(
+                                child: Text(
+                                  widget.   model['user_id'].toString(),
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme
+                                    .of(context)
+                                    .textTheme.bodySmall?.copyWith(
+                                    color: Color(0xFF666680),
+                                    fontSize: 8.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
                               ),
                             ],
@@ -301,9 +304,13 @@ class _GridPostView2State extends State<GridPostView2> {
       child: GestureDetector(
 
         onTap:Get.arguments == 'edit_screen' ? toggleSelection:Get.arguments == 'onTapChannelManagement' ? (){
-          Get.find<ShareAccountLogic>().setModelShareData(widget.model['media']['name'].toString() ,widget.model['file_id']);
-
-          Get.back();
+          if (widget.model['media_type'].toString().contains("4")) {
+            Get.find<ShareAccountLogic>().setModelShareData(widget.model['media']['name'].toString() ,widget.model['file_id']);
+//
+            Get.back();
+          }else{
+            Constant.showMessege("Please Select Video ");
+          }
 
         }:(){
           _getRouteAndPushIt(widget.model['id']);

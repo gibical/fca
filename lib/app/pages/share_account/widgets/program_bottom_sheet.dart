@@ -7,6 +7,7 @@ import 'package:gibical/app/pages/share_account/logic.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../gen/model/json/walletV2/FromJsonGetPrograms.dart';
 import '../../../common/app_route.dart';
 import '../../profile/view.dart';
 import '../../signup/widgets/custom_text_field_form_register_widget.dart';
@@ -14,7 +15,10 @@ import '../../signup/widgets/custom_text_field_form_register_widget.dart';
 class ProgramBottomSheet extends StatefulWidget {
   ShareAccountLogic shareAccountLogic;
 
-  ProgramBottomSheet(this.shareAccountLogic, {super.key});
+  ProgramModel? model;
+  bool? isEditMode=false;
+
+  ProgramBottomSheet(this.shareAccountLogic,  {super.key,this.model, this.isEditMode,});
 
   @override
   State<ProgramBottomSheet> createState() => _ProgramBottomSheetState();
@@ -28,6 +32,26 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
   var streamRecord = true.obs;
   var streamStartAuto = true.obs;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(widget.isEditMode!=null&&widget.isEditMode!){
+      _nameEditingController = TextEditingController(text: widget.model!.name??"");
+      try {
+        widget.shareAccountLogic.selectShareModeid = widget.model!.destinations![0]['id'];
+        widget.shareAccountLogic.selectShareModelName = widget.model!.destinations![0]['name'];
+      } catch (e) {
+        // TODO
+      }
+      try {
+        widget.shareAccountLogic.selectedAssetName = widget.model!.destinations![0]['details']['inputs'][0]['value'];
+      }  catch (e) {
+        // TODO
+      }
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {//
@@ -35,7 +59,7 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
     return Container(
       width: 100.w,
 
-      height: 60.h,
+      height: 40.h,
       decoration: BoxDecoration(
           color: "3b3a5a".toColor(),
           border: Border(
@@ -85,7 +109,7 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
                             context: Get.context!,
                             titleText: 'Stream Destinations '.tr,
                             hintText: widget.shareAccountLogic.selectShareMode!=null
-                                ? (widget.shareAccountLogic.selectShareMode==SelectShareMode.stream?( widget.shareAccountLogic.selectedDestinationAccoount!.name??""):( widget.shareAccountLogic.selectedShareAccoount!.title??""))
+                                ? widget.shareAccountLogic.selectShareModelName
                                 : 'Select Stream accounts'.tr,
                             //
                             needful: true),
@@ -188,90 +212,7 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
                 ),
               );
             }),
-            Obx(() {
-              return Visibility(
-                visible: !isSelectFromAsset.value,
-                child: Center(
-                  child:Column(
-                    children: [
-        
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment
-                              .spaceBetween,
-                          children: [
-                            Text("Stream From Asset".tr),
-                           Row(
-                             mainAxisSize: MainAxisSize.min,
-                             children: [
-                               Radio(value: true, groupValue: streamRecord.value, onChanged: (s){
-                                 streamRecord.value = s!;
-                                 setState(() {
-        
-                                 });
-                               }),
-                               Text("Yes"),
-                             ],
-                           ),
-                           Row(
-                             mainAxisSize: MainAxisSize.min,
-                             children: [
-                               Radio(value: false, groupValue: streamRecord.value, onChanged: (s){
-                                 streamRecord.value = s!;
-                                 setState(() {
-        
-                                 });
-                               }),
-                               Text("No"),
-                             ],
-                           ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment
-                              .spaceBetween,
-                          children: [
-                            Text("Stream Start: Automatic".tr),
-                           Row(
-                             mainAxisSize: MainAxisSize.min,
-                             children: [
-                               Radio(value: true, groupValue: streamStartAuto.value, onChanged: (s){
-                                 streamStartAuto.value = s!;
-                                 setState(() {
-        
-                                 });
-                               }),
-                               Text("Yes"),
-                             ],
-                           ),
-                           Row(
-                             mainAxisSize: MainAxisSize.min,
-                             children: [
-                               Radio(value: false, groupValue: streamStartAuto.value, onChanged: (s){
-                                 streamStartAuto.value = s!;
-                                 setState(() {
-        
-                                 });
-                               }),
-                               Text("No"),
-                             ],
-                           ),
-                          ],
-                        ),
-                      ),
-        
-                    ],
-                  ),
-                ),
-              );
-            }),
-        
+
             SizedBox(height: 2.h,),
             Padding(
               padding: EdgeInsets.only(
@@ -286,7 +227,7 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
                     borderRadius: BorderRadius.circular(10)),
                 onPressed: () async {
         
-                  widget.shareAccountLogic.sendRequestAddProgram(_nameEditingController.text, isSelectFromAsset.value);
+                  widget.shareAccountLogic.sendRequestAddProgram(_nameEditingController.text, isSelectFromAsset.value,(widget.isEditMode!=null&&widget.isEditMode!),widget.model);
                 },
                 color: AppColor.primaryLightColor,
                 child: Obx(() {

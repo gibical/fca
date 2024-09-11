@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:gibical/app/common/app_color.dart';
 import 'package:gibical/app/common/app_extension.dart';
 import 'package:gibical/app/pages/share_account/logic.dart';
+import 'package:gibical/app/pages/share_account/widgets/program_bottom_sheet.dart';
 import 'package:gibical/app/pages/stream/logic.dart';
 import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
@@ -73,7 +74,7 @@ class _ProgramShowBottomSheetState extends State<ProgramShowBottomSheet> {
                   context: Get.context!,
                   titleText: 'Stream Destinations '.tr,
                   hintText: 'Insert Your Program Here'.tr,
-                  textEditingController: TextEditingController(text: widget.model.destinations![0]??""),
+                  textEditingController: TextEditingController(text: widget.model.destinations![0]['name']??""),
                   needful: true),
             ),
             Row(
@@ -123,7 +124,9 @@ class _ProgramShowBottomSheetState extends State<ProgramShowBottomSheet> {
                         borderRadius: BorderRadius.circular(7)
                       ),
                       onPressed: (){
-                        
+
+                        Get.back();
+                        Get.bottomSheet(ProgramBottomSheet(Get.find<ShareAccountLogic>(),isEditMode: true,model: widget.model,));
                       },
                       child: Center(
                         child: Text("Edit",style: TextStyle(color: AppColor.primaryDarkColor),),

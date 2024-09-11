@@ -19,6 +19,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../../gen/model/json/FromJsonGetCountriesModel.dart';
 import '../../../gen/model/json/FromJsonGetImages.dart';
 import '../../../gen/model/json/FromJsonGetInvoices.dart';
 import '../../../gen/model/json/FromJsonGetWallet.dart';
@@ -40,8 +41,9 @@ class ProfileControllers extends GetxController implements RequestInterface {
   late FromJsonGetImages fromJsonGetImages;
   ProfileModel model = ProfileModel();
   late ApiRequster apiRequster;
-  Map<String, dynamic> countreisModel ={};
+  List<CountriesModel> countreisModel =[];
   List<String> countreisString =[];
+
   List<dynamic> ownerImages = [];
   List<dynamic> ownerVideos = [];
   List<dynamic> ownerAudios = [];
@@ -121,7 +123,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
       print('PlusSectionLogic.getAllCountries 1');
 
       var response = await dio.get(
-        '${Constant.HTTP_HOST}languages',
+        '${Constant.HTTP_HOST}countries',
         options: Options(
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -137,10 +139,11 @@ class ProfileControllers extends GetxController implements RequestInterface {
         print('PlusSectionLogic.getAllCountries 2');
 
 
-        countreisModel = response.data;
-
-        (countreisModel.values).forEach((element) {
-          countreisString.add(element);
+        (response.data['data'] as List<dynamic>).forEach((element) {
+          countreisModel.add(CountriesModel.fromJson(element));
+        });
+        (countreisModel).forEach((element) {
+          countreisString.add(element.title??"");
         });
         print('PlusSectionLogic.getAllCountries = ${countreisModel.length}');
       } else {
@@ -423,7 +426,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
       "first_name": text,
       "last_name": text2,
       "email": text3,
-      "country_iso":(Constant.reverseMap(countreisModel)[languageController.text]).toString().toUpperCase()
+      "country_iso":countreisModel.firstWhere((element) => element.title.toString().contains(languageController.text)).iso??"",
 
     };
     print('ProfileControllers.sendEditRequest = ${body}');

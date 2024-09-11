@@ -33,7 +33,7 @@ class FromJsonGetChannels {
 
 class ChannelModel {
   ChannelModel({
-    num? id,
+    String? id,
     String? title,
     String? description,
     num? type,
@@ -68,7 +68,7 @@ class ChannelModel {
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
   }
-  num? _id;
+  String? _id;
   String? _title;
   String? _description;
   num? _type;
@@ -79,7 +79,7 @@ class ChannelModel {
   String? _createdAt;
   String? _updatedAt;
   ChannelModel copyWith({
-    num? id,
+    String? id,
     String? title,
     String? description,
     num? type,
@@ -102,7 +102,7 @@ class ChannelModel {
         createdAt: createdAt ?? _createdAt,
         updatedAt: updatedAt ?? _updatedAt,
       );
-  num? get id => _id;
+  String? get id => _id;
   String? get title => _title;
   String? get description => _description;
   num? get type => _type;

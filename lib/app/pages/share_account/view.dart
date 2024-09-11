@@ -429,7 +429,8 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
 
           Get.find<ShareAccountLogic>().setSelectedChannel(elementAt);
                 Get.find<ShareAccountLogic>().selectShareMode = SelectShareMode.stream;
-          print('_ShareAccountPageState.MassageItemWidget = ${elementAt} - ${Get.find<ShareAccountLogic>().selectShareMode }');
+                Get.find<ShareAccountLogic>().selectShareModelName = elementAt.name??"";
+                Get.find<ShareAccountLogic>().selectShareModeid = elementAt.id??"";
 
                 Get.back();
               }
@@ -519,13 +520,12 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
         padding: EdgeInsets.zero,
         onPressed: isSendedByCondactor
             ? () {
-          print('_ShareAccountPageState.MassageItemWidget = 1');
 
           Get.find<ShareAccountLogic>().setSelectedShareChannel(elementAt);
                 Get.find<ShareAccountLogic>().selectShareMode = SelectShareMode.share;
-          print('_ShareAccountPageState.MassageItemWidget = ${elementAt} - ${Get.find<ShareAccountLogic>().selectShareMode }');
 
-
+          Get.find<ShareAccountLogic>().selectShareModelName = elementAt.title??"";
+          Get.find<ShareAccountLogic>().selectShareModeid = elementAt.id??"";
                 Get.back();
               }
             : null,
@@ -618,7 +618,8 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
 
           Get.find<ShareAccountLogic>().setSelectedDestiniation(elementAt);
           Get.find<ShareAccountLogic>().selectShareMode = SelectShareMode.stream;
-
+          Get.find<ShareAccountLogic>().selectShareModelName = elementAt.name??"";
+          Get.find<ShareAccountLogic>().selectShareModeid = elementAt.id??"";
                 Get.back();
               }
             : null,
