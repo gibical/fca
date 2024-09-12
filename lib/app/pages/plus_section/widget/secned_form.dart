@@ -9,6 +9,7 @@ import 'package:gibical/app/pages/plus_section/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
+import '../../../common/app_route.dart';
 import '../../signup/widgets/custom_text_field_form_register_widget.dart';
 import 'custom_plan_text_filed.dart';
 
@@ -160,29 +161,57 @@ class _SecendFormState extends State<SecendForm> {
                           SizedBox(height: 4.h,),
                           Align(
                             alignment: Alignment.bottomCenter,
-                            child: Container(
-                              width: 100.w,
-                              height: 6.h,
-                              margin: EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                  color: "597AFF".toColor(),
-                                  borderRadius: BorderRadius.circular(5000)
-                              ),
-                              child: Obx(() {
-                                return MaterialButton(
-                                  shape: RoundedRectangleBorder(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  width: 100.w,
+                                  height: 6.h,
+                                  margin: EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                      color: "597AFF".toColor(),
                                       borderRadius: BorderRadius.circular(5000)
                                   ),
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () {
-                                    print('_SecendFormState.build = ${logic.videoOutPut}');
-                                        logic.sendMainRequest();
-                                  },
-                                  child: logic.isloading.value ? Lottie.asset(
-                                      "assets/json/Y8IBRQ38bK.json", height: 10.h) : Text(
-                                    "plus_35".tr, style: TextStyle(color: Colors.white),),
-                                );
-                              }),
+                                  child: Obx(() {
+                                    return MaterialButton(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(5000)
+                                      ),
+                                      padding: EdgeInsets.zero,
+                                      onPressed: () {
+                                        print('_SecendFormState.build = ${logic.videoOutPut}');
+                                            logic.sendMainRequest();
+                                      },
+                                      child: logic.isloading.value ? Lottie.asset(
+                                          "assets/json/Y8IBRQ38bK.json", height: 10.h) : Text(
+                                        "plus_35".tr, style: TextStyle(color: Colors.white),),
+                                    );
+                                  }),
+                                ),
+                                Container(
+                                  width: 100.w,
+                                  height: 6.h,
+                                  margin: EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: "597AFF".toColor()),
+                                      borderRadius: BorderRadius.circular(5000)
+                                  ),
+                                  child: Obx(() {
+                                    return MaterialButton(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(5000)
+                                      ),
+                                      padding: EdgeInsets.zero,
+                                      onPressed: () {
+                                        Get.offAllNamed(PageRoutes.WRAPPER);
+                                      },
+                                      child: logic.isloading.value ? Lottie.asset(
+                                          "assets/json/Y8IBRQ38bK.json", height: 10.h) : Text(
+                                        "Cancel".tr, style: TextStyle(color: Colors.white),),
+                                    );
+                                  }),
+                                ),
+                              ],
                             ),
                           ),
                           SizedBox(height: 30.h,)

@@ -123,7 +123,8 @@ class _CommentScreenState extends State<CommentScreen> {
               SliverList.builder(
                   itemCount: commentController.commentsData!['data'].length,
                   itemBuilder: (context , index){
-                final comment =
+                    print('_CommentScreenState.build = ${commentController.commentsData!}');
+                    final comment =
                 commentController.commentsData!['data'][index];
                 final bodyText = comment['body'].toString();
                 return Padding(

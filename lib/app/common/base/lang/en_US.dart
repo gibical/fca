@@ -1,7 +1,9 @@
 const Map<String, String> enUS = {
 
 
-  "login_1":"Insert your number and password to login",
+  "login_1":"Insert your username and password to login",
+  "login_1_1":"Insert your number ",
+  "login_1_2":"Insert your number and password to login",
   "login_2":"Insert cellphone..",
   "login_3":"Insert password..",
   "login_4":"Password",

@@ -127,7 +127,7 @@ class PackageWidget extends StatelessWidget {
                           height: 3.h,
                         ),
 
-                      ],),visible:!logic.isBillingStripeConnected,),
+                      ],),visible:logic.isSubscribedPlan,),
                       Visibility(child: Column(children: [
                         Text("Your Active Plan is ",style: TextStyle(
                             color: Colors.white,fontWeight: FontWeight.bold,fontSize: 19.sp
@@ -214,7 +214,7 @@ class PackageWidget extends StatelessWidget {
                             ,style: TextStyle(
                             color: Colors.white,fontSize: 7.5.sp
                         ),),
-                      ],),visible: logic.isBillingStripeConnected,),
+                      ],),visible:! logic.isSubscribedPlan,),
 
                     ],
                   ),

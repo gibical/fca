@@ -57,7 +57,7 @@ class BillingWidget extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
                                 child: Row(
                                   children: [
-                                    Text('wallet_1'.tr,
+                                    Text('debt'.tr,
                                       style: FontStyleApp.bodyMedium.copyWith(
                                           color: Colors.grey
                                       ),),
@@ -75,7 +75,7 @@ class BillingWidget extends StatelessWidget {
                                     SizedBox(
                                       width: 2.w,
                                     ),
-                                    Text("${Get.find<WrapperController>().walletBalance} €",style: TextStyle(
+                                    Text("${double.parse(Get.find<WrapperController>().walletBalance)/100} €",style: TextStyle(
                                         color: Colors.white,fontWeight: FontWeight.bold
                                     ),),
                         

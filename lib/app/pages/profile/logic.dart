@@ -64,7 +64,12 @@ class ProfileControllers extends GetxController implements RequestInterface {
   bool emptySubAudios = false;
   bool emptySubText = false;
 
+  String setupURL = "";
+  String dashboardURL = "";
+
+
   var isBillingStripeConnected = false;
+  var isSubscribedPlan = false;
   var isIncomeStripeConnected = false;
 
 
@@ -99,6 +104,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
     //getWalletBalance();
     getStripe();
     getPayout();
+    getPayoutConnect();
     getInvoice();
     getPlans();
     getSubscribedPlans();
@@ -534,15 +540,20 @@ class ProfileControllers extends GetxController implements RequestInterface {
     }
   }
   void pareJsonFromPayoutConnect(source) {
-
+    print('ProfileControllers.pareJsonFromPayoutConnect = ${source}');
     update();
-    var url = jsonDecode(source)['link'];
-
     try {
-      launchUrlString(url);
-    }  catch (e) {
+      setupURL = jsonDecode(source)['setup'];
+      dashboardURL = jsonDecode(source)['dashboard'];
+    } catch (e) {
       // TODO
     }
+
+    // try {
+    //   launchUrlString(url);
+    // }  catch (e) {
+    //   // TODO
+    // }
   }
 
   void parseJsonFromGateWay(source) async{
@@ -672,7 +683,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
       var url = jsonDecode(source)['url'];
       await launchUrlString(url);
       getStripe();
-    }  catch (e) {
+    }  catch (e) {//
       // TODO
     }
   }
@@ -684,6 +695,8 @@ class ProfileControllers extends GetxController implements RequestInterface {
 
   void pareJsonFromSubscribedPlans(source) {
     print('ProfileControllers.pareJsonFromSubscribedPlans = ${source}');
+    isSubscribedPlan = jsonDecode(source)['data']!=null;
+    update();
   }
 
 }
