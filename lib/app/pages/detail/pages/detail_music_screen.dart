@@ -328,7 +328,7 @@ class DetailMusicScreen extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: (){
-                                        Get.find<MediaSuitController>().setDataEditAudio(controller.musicDetails?['media']['name'] ?? '' , controller.musicDetails?['media']['name'] , controller.musicDetails!['file_id'].toString());
+                                        Get.find<MediaSuitController>().setDataEditAudio(controller.musicDetails?['media']['name']?? '' , controller.musicDetails?['file']['url'] , controller.musicDetails!['file_id'].toString());
                                         Get.toNamed(PageRoutes.MEDIASUIT);
                                       },
                                       child:  Icon(Icons.edit),

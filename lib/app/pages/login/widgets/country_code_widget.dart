@@ -1,6 +1,6 @@
 
 
-import 'package:country_code_picker_plus/country_code_picker_plus.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gibical/app/common/font_style.dart';
@@ -30,11 +30,11 @@ Widget CountryCodeWidget(context,LoginController controller){
             padding: EdgeInsets.zero,
             dialogBackgroundColor: AppColor.blueDarkColor,
 
-            mode: CountryCodePickerMode.dialog,
-            onChanged: (country) {
-              controller.code  =country;
-              print('CountryCodeWidget = ${country.dialCode}');
-            },
+            // mode: CountryCodePickerMode.dialog,
+            // onChanged: (country) {
+            //   controller.code  =country;
+            //   print('CountryCodeWidget = ${country.dialCode}');
+            // },
             initialSelection: 'DE',
             showFlag: true,
             showDropDownButton: true,barrierColor: Colors.black.withOpacity(0.5),

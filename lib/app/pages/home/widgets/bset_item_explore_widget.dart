@@ -344,7 +344,7 @@ class BestTextWidget extends GetView<HomeLogic> {
     return GestureDetector(
       onTap: () {
         String itemId = model['id'];
-        int fileId = model['file_id'];
+        String fileId = model['file_id'];
         Get.toNamed(PageRoutes.DETAILTEXT,
             arguments: {'id': itemId, 'file_id': fileId});
       },

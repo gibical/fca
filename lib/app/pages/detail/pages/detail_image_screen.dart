@@ -130,7 +130,7 @@ class DetailImageScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: (){
-                              Get.find<MediaSuitController>().setDataEditImage(imageController.imageDetails?['name'] ?? '' , imageController.imageDetails?['file']['url'] , imageController.imageDetails!['file_id'].toString());
+                              Get.find<MediaSuitController>().setDataEditImage(imageController.imageDetails?['media']['name'] ?? '' , imageController.imageDetails?['file']['url'] , imageController.imageDetails!['file_id'].toString());
                               Get.toNamed(PageRoutes.MEDIASUIT);
                             },
                             child:  Icon(Icons.edit),

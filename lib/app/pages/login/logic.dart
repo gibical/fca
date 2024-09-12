@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:country_code_picker_plus/country_code_picker_plus.dart';
+
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,7 @@ class LoginController extends GetxController implements RequestInterface {
 
   late ApiRequster apiRequster;
 
-  Country code = Country(dialCode: "+49");
+  Country code = Country( phoneCode: '', countryCode: '+33', e164Sc: 1, geographic:false, level: 1, name: '', example: '', displayName: '', displayNameNoCountryCode: '', e164Key: '');
   var timeLeft = 30.obs; // Observable variable
   Timer? _timer;
 
@@ -157,7 +158,7 @@ class LoginController extends GetxController implements RequestInterface {
   void _getPhoneReuqest()async {
 
     var body = {
-      "cellphone": code.dialCode+eTextEditingControllerPhone.text,
+      "cellphone": code.countryCode+eTextEditingControllerPhone.text,
       "password":eTextEditingControllerPassword.text
     };
      apiRequster.request("auth/sign-in", ApiRequster.MHETOD_POST, 1,body: body);
@@ -208,7 +209,7 @@ class LoginController extends GetxController implements RequestInterface {
 
   void _getOTPReuqest() {
     var body = {
-      "cellphone":(code.dialCode??"")+(eTextEditingControllerPhone.text),
+      "cellphone":(code.countryCode??"")+(eTextEditingControllerPhone.text),
     };
     print('LoginController._getOTPReuqest = ${body}');
     apiRequster.request("auth/otp/request", ApiRequster.MHETOD_POST, 2,body: body);
@@ -216,7 +217,7 @@ class LoginController extends GetxController implements RequestInterface {
   void getOTPSumbit() {
     isloading(true);
     var body = {
-      "cellphone":"${code.dialCode}${eTextEditingControllerPhone.text}",
+      "cellphone":"${code.countryCode}${eTextEditingControllerPhone.text}",
       "otp":eTextEditingControllerOTP.text,
     };
     apiRequster.request("auth/otp/submit", ApiRequster.MHETOD_POST, 1,body: body);

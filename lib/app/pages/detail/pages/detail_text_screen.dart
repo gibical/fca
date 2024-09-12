@@ -262,7 +262,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                               ),
                               GestureDetector(
                                 onTap: (){
-                                  Get.find<MediaSuitController>().setDataEditText(logic.textDetails?['name'] ?? '' , logic.textDetails?['name']  , logic.textDetails!['file_id'].toString());
+                                  Get.find<MediaSuitController>().setDataEditText(logic.textDetails?['media']['name'] ?? '' , logic.textDetails?['media']['name']  , logic.textDetails!['file_id'].toString());
                                   Get.toNamed(PageRoutes.MEDIASUIT);
                                 },
                                 child:  Icon(Icons.edit),
