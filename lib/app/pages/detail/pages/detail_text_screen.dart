@@ -147,8 +147,14 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
 
                                         Row(
                                           children: [
-                                            CircleAvatar(
-                                              radius: 3.w,
+                                            Container(
+
+                                              child: CircleAvatar(
+                                                backgroundColor: AppColor.blueDarkColor,
+                                                backgroundImage:
+                                                NetworkImage(logic.textDetails?['user']['image_url']),
+                                              ),
+                                              width: 5.w,
                                             ),
                                             SizedBox(
                                               width: 2.w,

@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -105,9 +106,12 @@ class HomeLogic extends GetxController implements  RequestInterface{
 
   void praseJsonFromChannels(source) {
     try {
-      channels = FromJsonGetChannels
-          .fromJson(jsonDecode(source))
-          .data ?? [];
+      if (Platform.isIOS) {
+        channels = (FromJsonGetChannels.fromJson(jsonDecode(source)).data ?? []).where((te)=>te.link.toString().contains("https://s1.gibical.app")).toList();
+      }else{
+        channels = FromJsonGetChannels.fromJson(jsonDecode(source)).data ?? [];
+
+      }
       print('HomeLogic.praseJsonFromChannels 1 =${channels}');
     }  catch (e) {
       // TODO

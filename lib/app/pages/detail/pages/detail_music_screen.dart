@@ -211,9 +211,15 @@ class DetailMusicScreen extends StatelessWidget {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              CircleAvatar(
-                                                radius: 3.w,
-                                              ),
+                                          Container(
+
+                                          child: CircleAvatar(
+                                          backgroundColor: AppColor.blueDarkColor,
+                                            backgroundImage:
+                                            NetworkImage(controller.musicDetails!['user']['image_url']),
+                                          ),
+                                          width: 5.w,
+                                        ),
                                               SizedBox(
                                                 width: 2.w,
                                               ),

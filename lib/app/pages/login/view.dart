@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -119,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: 3.h,
                     ),
-                    GoogleCustomRegisterButtonWidget(onTap: () {
+                  if(Platform.isAndroid)  GoogleCustomRegisterButtonWidget(onTap: () {
                       //  logic.requestLogin();
                       //signInWithGoogle();
                       _googleLogIn();

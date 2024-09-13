@@ -80,6 +80,7 @@ class DetailVideoScreen extends StatelessWidget {
         }),
 
         body: Obx(() {
+          log('DetailVideoScreen.build videoController.videoDetails? = ${videoController.videoDetails}');
           return videoController.isLoadingVideos.value ? Center(
               child: CircularProgressIndicator()) : Stack(
             children: [
@@ -117,6 +118,15 @@ class DetailVideoScreen extends StatelessWidget {
                           ),
                           Row(
                             children: [
+                              Container(
+
+                                child: CircleAvatar(
+                                  backgroundColor: AppColor.blueDarkColor,
+                                  backgroundImage:
+                                  NetworkImage(videoController.videoDetails?['user']['image_url']),
+                                ),
+                                width: 7.w,
+                              ),
                               CircleAvatar(
                                 radius: 3.w,
                               ),

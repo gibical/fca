@@ -24,7 +24,7 @@ class CardProfileInfoWidget extends StatelessWidget {
         children: [
         if(logic.isassetInit.value)  CardProfileInfoItem(title: '${logic.assetsModel.assets.toString()}' , subTitle: 'Assets'),
           if(logic.isassetInit.value)    CardProfileInfoItem(title: '${logic.assetsModel.salesNumber.toString()}', subTitle: 'Sales'),
-          if(logic.isassetInit.value)   CardProfileInfoItem(title: '${logic.assetsModel.salesVolume.toString()} €' , subTitle: 'Volume'),
+          if(logic.isassetInit.value)   CardProfileInfoItem(title: '${(double.parse(logic.assetsModel.salesVolume.toString())/100).toString()} €' , subTitle: 'Volume'),
 
 
 

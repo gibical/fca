@@ -105,7 +105,15 @@ class DetailImageScreen extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Image.asset("assets/images/avatar.jpeg",width: 4.w,),
+                              Container(
+
+                                child: CircleAvatar(
+                                  backgroundColor: AppColor.blueDarkColor,
+                                  backgroundImage:
+                                  NetworkImage(imageController.imageDetails?['user']['image_url']),
+                                ),
+                                width: 5.w,
+                              ),
                               SizedBox(
                                 width: 2.w,
                               ),
@@ -142,7 +150,7 @@ class DetailImageScreen extends StatelessWidget {
                           Wrap(
                             children: [
                               //
-                           CardMarkSinglePageWidget(label: 'details_7'.tr, type: "Somethi"),
+                          // CardMarkSinglePageWidget(label: 'details_7'.tr, type: "Somethi"),
                         //   CardMarkSinglePageWidget(label: 'Type', type: imageController.imageDetails!['file']['extension']),
                        //    CardMarkSinglePageWidget(label: 'Language', type: "en"),
 

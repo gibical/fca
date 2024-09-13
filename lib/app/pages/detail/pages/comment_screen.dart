@@ -146,8 +146,14 @@ class _CommentScreenState extends State<CommentScreen> {
                       children: [
                         Row(
                           children: [
-                            CircleAvatar(
-                              radius:3.w,
+                            Container(
+
+                              child: CircleAvatar(
+                                backgroundColor: AppColor.blueDarkColor,
+                                backgroundImage:
+                                NetworkImage(comment?['user']['image_url']),
+                              ),
+                              width: 7.w,
                             ),
                             SizedBox(
                               width: 2.w,
