@@ -161,7 +161,7 @@ class MediaSuitController extends GetxController {
   List<ActionEditorModel> textAction = [];
   List<ActionEditorModel> videoAction = [];
   List<ActionEditorModel> audioAction = [];
-
+  bool isResizing = false;
 
 
   //clear timeline

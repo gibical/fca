@@ -901,6 +901,9 @@ class _EditeBoxWidgetState extends State<EditeBoxWidget> {
                   _resizeTimer?.cancel();
                   _lastPanUpdateDx = details.localPosition.dx;
                   _currentResizingIndex = widget.index;
+                  setState(() {
+                    editorController.isResizing = true;
+                  });
                 },
                 onPanUpdate: (details) {
                   if (_currentResizingIndex == widget.index) {
@@ -949,6 +952,9 @@ class _EditeBoxWidgetState extends State<EditeBoxWidget> {
                   _resizeTimer?.cancel();
                   _resizeTimer = null;
                   _currentResizingIndex = -1;
+                  setState(() {
+                    editorController.isResizing = false;
+                  });
                 },
                 child: Stack(
                   children: [

@@ -621,3 +621,5 @@ class CustomTrackShape extends RectangularSliderTrackShape {
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }
+
+
