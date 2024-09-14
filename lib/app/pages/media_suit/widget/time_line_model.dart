@@ -853,13 +853,19 @@ class _EditeBoxWidgetState extends State<EditeBoxWidget> {
                                       });
                                     },
                                     child: Container(
-                                      width: 25,
-                                      height: 100,
-                                      color: Colors.white.withOpacity(0.3),
+                                      width: 30,
+                                      height: MediaQuery.of(context).size.height * 0.050,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.3),
+                                          border: Border.all(
+                                              color: Colors.white,
+                                              width: 1.7
+                                          )
+                                      ),
                                       child: Icon(
                                         Icons.arrow_back_ios_outlined,
                                         color: Colors.white,
-                                        size: 10,
+                                        size: 12,
                                       ),
                                     )),
                               ),
@@ -892,14 +898,21 @@ class _EditeBoxWidgetState extends State<EditeBoxWidget> {
                                       });
                                     },
                                     child: Container(
-                                      width: 25,
-                                      height: 100,
+                                      width: 30,
+                                      height: MediaQuery.of(context).size.height * 0.050,
 
-                                      color: Colors.white.withOpacity(0.3),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.3),
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 1.7
+                                        )
+                                      ),
+
                                       child: Icon(
                                         Icons.arrow_forward_ios_outlined,
                                         color: Colors.white,
-                                        size: 10,
+                                        size: 12,
                                       ),
                                     )),
                               ),

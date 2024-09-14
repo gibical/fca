@@ -135,6 +135,7 @@ class MediaSuitController extends GetxController {
       ActionEditorModel(nameItem: 'Video Trim', onTap: () {
         isTrimming =  true;
         update();
+
       }),
       ActionEditorModel(nameItem: 'Extract Audio', onTap: () {
         videoConvertToAudio();
@@ -190,6 +191,79 @@ class MediaSuitController extends GetxController {
 
 
 
+
+  //trim TimeLine Video and Audio
+
+  void confirmAudioTrim() async{
+    isloadingAssetConvert(true);
+    isWaitingAssetConvert(true);
+    var fileId = editAudioDataList[selectedAudioIndex.value!].assetId;
+    var model =  editAudioDataList[selectedAudioIndex.value!];
+
+
+    try {
+      final token = GetStorage().read("token");
+
+      String apiUrl =
+          '${Constant.HTTP_HOST}tasks/audio-trim';
+      var s = Dio();
+      s.interceptors.add(MediaVerseConvertInterceptor());
+
+      print('${fileId}');
+      var response = await s.post(apiUrl, options: Options(headers: {
+        'accept': 'application/json',
+        'X-App': '_Android',
+        'Accept-Language': 'en-US',
+        'Authorization': 'Bearer $token',
+      }),data: {
+        "file":fileId,
+        "start":model.startTrim.round(),
+        "length":model.endTrim.round(),
+      });
+
+      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+      if (response.statusCode == 200) {
+
+        final newSeconds = model.endTrim -  model.startTrim;
+        final newContainer = EditDataModel(editAudioDataList[selectedAudioIndex.value!].name, editAudioDataList[selectedAudioIndex.value!].urlMedia!, 0, editAudioDataList[selectedAudioIndex.value!].assetId.toString(), 3 , second:  newSeconds, );
+
+
+        editAudioDataList.add(newContainer);
+          model.second -= newSeconds;
+          model.endTrim = model.second;
+          model.startTrim = 0;
+          isTrimming = false;
+          selectedAudioIndex.value = -1;
+
+        Constant.showMessege("Request Succesful" );
+
+        print(response.data);
+        isloadingAssetConvert(false);
+
+      } else {
+        isloadingAssetConvert(false);
+
+      }
+    } catch (e) {
+      isloadingAssetConvert(false);
+
+      print('DetailController._fetchMediaData = $e');
+    } finally {
+
+    }
+  }
+  // void confirmTrim(EditDataModel model , Rx<int?> trimIndex , trimList) {
+    // final newSeconds = model.endTrim - model.startTrim;
+    // final newContainer = EditDataModel();
+    //
+    // trimList.add(newContainer);
+    //   model.second -= newSeconds;
+    //   model.endTrim = model.second;
+    //   model.startTrim = 0;
+    //   isTrimming = false;
+    // trimIndex.value = -1;
+
+  // }
 
   ///Convert asset TimeLine [selectedAudioIndex]
   void soundTranslate() async{
@@ -609,8 +683,8 @@ class MediaSuitController extends GetxController {
     selectedVideoIndex.value = editVideoDataList.length - 1;
   }
 
-  void setDataEditAudio(String name, String audioUrl, String assetId,{bool isloading =false}) {
-    editAudioDataList.add(EditDataModel(name, audioUrl, 0, assetId, 3 ,isloading: isloading));
+  void setDataEditAudio(String name, String audioUrl, String assetId,{bool isloading =false , double time = 5}) {
+    editAudioDataList.add(EditDataModel(name, audioUrl, 0, assetId, 3 ,isloading: isloading , second: time));
 
     selectedAudioIndex.value = editAudioDataList.length - 1;
   }
