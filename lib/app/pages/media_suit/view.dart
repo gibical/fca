@@ -52,7 +52,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
   @override
   void initState() {
     super.initState();
-
+    editorController.isTrimming =  false;
     scrollSynchronizer = ScrollSynchronizer();
 
     // Register all scroll controllers initially
@@ -61,6 +61,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
     scrollSynchronizer.registerScrollController(_listScrollControllerText);
     scrollSynchronizer.registerScrollController(_listScrollControllerAudio);
     scrollSynchronizer.registerScrollController(_listScrollControllerVideo);
+
 
     // Update scroll synchronizer based on the selected media type
     // updateScrollSynchronizer();
@@ -154,7 +155,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
       );
     }
 
-    return Scaffold(
+    return WillPopScope(child: Scaffold(
       backgroundColor: Color(0xff000033),
       body: GestureDetector(
         onTap: () {
@@ -189,7 +190,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                       Container(
                         color: Color(0xff000033),
                         child: Obx(
-                          () => Column(
+                              () => Column(
                             children: [
                               Obx(() {
                                 final selectedVideoIndex =
@@ -225,7 +226,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                       child: Image.network(
                                         editorController
                                             .editImageDataList[
-                                                selectedImageIndex]
+                                        selectedImageIndex]
                                             .urlMedia!,
                                         fit: BoxFit.cover,
                                       ));
@@ -237,7 +238,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                       child: AudioPlayerWidget(
                                         urlAudio: editorController
                                             .editAudioDataList[
-                                                selectedAudioIndex]
+                                        selectedAudioIndex]
                                             .urlMedia!,
                                       ));
                                 } else if (selectedTextIndex != null &&
@@ -257,54 +258,54 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                   //editorController.player.stop();
                                   return SizedBox(
                                       child: Text(
-                                    'Media has not been selected yet!',
-                                    style: TextStyle(
-                                        color: Colors.grey.withOpacity(0.3),
-                                        fontSize: 13),
-                                  ));
+                                        'Media has not been selected yet!',
+                                        style: TextStyle(
+                                            color: Colors.grey.withOpacity(0.3),
+                                            fontSize: 13),
+                                      ));
                                 }
                               }),
 
                               editorController.selectedVideoIndex.value != null
                                   ? SizedBox()
                                   : CustomRulerTimelineOtherAssetsWidget1(
-                                      minValue: minValue,
-                                      maxValue: maxValue,
-                                      value: value,
-                                      majorTick: 10,
-                                      // Adjust as per your preference
-                                      minorTick: 1,
-                                      // Set to 1 for closer ticks
-                                      labelValuePrecision: 0,
-                                      tickValuePrecision: 0,
+                                minValue: minValue,
+                                maxValue: maxValue,
+                                value: value,
+                                majorTick: 10,
+                                // Adjust as per your preference
+                                minorTick: 1,
+                                // Set to 1 for closer ticks
+                                labelValuePrecision: 0,
+                                tickValuePrecision: 0,
 
-                                      onChanged: (val) => setState(() {
-                                        value = val;
-                                        actualValue = val.roundToDouble();
-                                        print('Slider value: $value');
-                                        print('Actual value: $actualValue');
-                                      }),
-                                      activeColor: AppColor.primaryLightColor,
-                                      inactiveColor: AppColor.primaryLightColor
-                                          .withOpacity(0.2),
-                                      linearStep: true,
-                                      totalSeconds:
-                                          ((maxValue - minValue) / 1).toInt() +
-                                              1,
-                                      // Adjust to cover the entire range
-                                      scrollController: _rulerScrollController,
-                                      maxPaddingValue:
-                                          editorController.maxPaddingValue,
-                                      minPaddingValue:
-                                          editorController.minPaddingValue,
+                                onChanged: (val) => setState(() {
+                                  value = val;
+                                  actualValue = val.roundToDouble();
+                                  print('Slider value: $value');
+                                  print('Actual value: $actualValue');
+                                }),
+                                activeColor: AppColor.primaryLightColor,
+                                inactiveColor: AppColor.primaryLightColor
+                                    .withOpacity(0.2),
+                                linearStep: true,
+                                totalSeconds:
+                                ((maxValue - minValue) / 1).toInt() +
+                                    1,
+                                // Adjust to cover the entire range
+                                scrollController: _rulerScrollController,
+                                maxPaddingValue:
+                                editorController.maxPaddingValue,
+                                minPaddingValue:
+                                editorController.minPaddingValue,
 
-                                      //
-                                      // listScrollController: editorController.selectedTextIndex.value != null
-                                      //     ? _listScrollControllerText
-                                      //     : editorController.selectedImageIndex.value != null
-                                      //     ? _listScrollControllerImage
-                                      //     : _listScrollControllerAudio,
-                                    ),
+                                //
+                                // listScrollController: editorController.selectedTextIndex.value != null
+                                //     ? _listScrollControllerText
+                                //     : editorController.selectedImageIndex.value != null
+                                //     ? _listScrollControllerImage
+                                //     : _listScrollControllerAudio,
+                              ),
 
                               // Obx(
                               //       () =>
@@ -386,45 +387,45 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                               ReorderableTimelineList(
                                 controller: _listScrollControllerVideo,
                                 itemCount:
-                                    editorController.editVideoDataList.length,
+                                editorController.editVideoDataList.length,
                                 totalItemCount: totalItemCount,
                                 color: Colors.purple,
                                 dataList: editorController.editVideoDataList,
                                 selectedIndex:
-                                    editorController.selectedVideoIndex,
+                                editorController.selectedVideoIndex,
                               ),
                               CustomDividerTilmelineWidget(),
                               ReorderableTimelineList(
                                 controller: _listScrollControllerImage,
                                 itemCount:
-                                    editorController.editImageDataList.length,
+                                editorController.editImageDataList.length,
                                 totalItemCount: totalItemCount,
                                 color: Colors.orange,
                                 dataList: editorController.editImageDataList,
                                 selectedIndex:
-                                    editorController.selectedImageIndex,
+                                editorController.selectedImageIndex,
                               ),
                               CustomDividerTilmelineWidget(),
                               ReorderableTimelineList(
                                 controller: _listScrollControllerAudio,
                                 itemCount:
-                                    editorController.editAudioDataList.length,
+                                editorController.editAudioDataList.length,
                                 totalItemCount: totalItemCount,
                                 color: Colors.red,
                                 dataList: editorController.editAudioDataList,
                                 selectedIndex:
-                                    editorController.selectedAudioIndex,
+                                editorController.selectedAudioIndex,
                               ),
                               CustomDividerTilmelineWidget(),
                               ReorderableTimelineList(
                                 controller: _listScrollControllerText,
                                 itemCount:
-                                    editorController.editTextDataList.length,
+                                editorController.editTextDataList.length,
                                 totalItemCount: totalItemCount,
                                 color: Colors.green,
                                 dataList: editorController.editTextDataList,
                                 selectedIndex:
-                                    editorController.selectedTextIndex,
+                                editorController.selectedTextIndex,
                               ),
                               CustomDividerTilmelineWidget(),
                               SizedBox(
@@ -440,10 +441,10 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                       overlayColor: Colors.transparent,
                                       overlayShape: RoundSliderThumbShape(),
                                       rangeTrackShape:
-                                          RectangularRangeSliderTrackShape(),
+                                      RectangularRangeSliderTrackShape(),
                                       rangeThumbShape:
-                                          RoundRangeSliderThumbShape(
-                                              elevation: 0),
+                                      RoundRangeSliderThumbShape(
+                                          elevation: 0),
                                       thumbColor: Colors.transparent,
                                     ),
                                     child: RangeSlider(
@@ -456,7 +457,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                         setState(() {
                                           if (values.start > 25) {
                                             editorController.minPaddingValue =
-                                                25;
+                                            25;
                                           } else {
                                             editorController.minPaddingValue =
                                                 values.start;
@@ -468,7 +469,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                           if (editorController.maxPaddingValue <
                                               30) {
                                             editorController.maxPaddingValue =
-                                                30;
+                                            30;
                                           }
 
                                           print(values);
@@ -503,38 +504,38 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                   null) {
                                 currentActions = editorController.videoAction;
                               } else if (editorController
-                                      .selectedAudioIndex.value !=
+                                  .selectedAudioIndex.value !=
                                   null) {
                                 currentActions = editorController.audioAction;
                               } else if (editorController
-                                      .selectedTextIndex.value !=
+                                  .selectedTextIndex.value !=
                                   null) {
                                 currentActions = editorController.textAction;
                               }
 
                               return currentActions != null
                                   ? PopupMenuButton(
-                                      color: Colors.grey.withOpacity(0.8),
-                                      child: Icon(Icons.menu),
-                                      itemBuilder: (context) {
-                                        return List.generate(
-                                            currentActions!.length, (index) {
-                                          var model = currentActions![index];
-                                          return PopupMenuItem(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Center(
-                                                  child: Text(
-                                                      '${model.nameItem}')),
-                                            ),
-                                            onTap: () {
-                                              model.onTap();
-                                            },
-                                          );
-                                        });
+                                color: Colors.grey.withOpacity(0.8),
+                                child: Icon(Icons.menu),
+                                itemBuilder: (context) {
+                                  return List.generate(
+                                      currentActions!.length, (index) {
+                                    var model = currentActions![index];
+                                    return PopupMenuItem(
+                                      child: Padding(
+                                        padding:
+                                        const EdgeInsets.all(8.0),
+                                        child: Center(
+                                            child: Text(
+                                                '${model.nameItem}')),
+                                      ),
+                                      onTap: () {
+                                        model.onTap();
                                       },
-                                    )
+                                    );
+                                  });
+                                },
+                              )
                                   : SizedBox.shrink();
                             }),
                           ],
@@ -580,29 +581,29 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                 Positioned(
                   bottom: 11.5.h,
                   child: editorController.selectedVideoIndex.value != null ||
-                          editorController.selectedAudioIndex.value != null
+                      editorController.selectedAudioIndex.value != null
                       ? IconButton(
-                          onPressed: () {
-                            editorController.selectedTextIndex.value = null;
-                            editorController.selectedVideoIndex.value = null;
-                            editorController.selectedImageIndex.value = null;
-                            editorController.selectedAudioIndex.value = null;
-                            setState(() {});
-                          },
-                          icon: Icon(
-                            Icons.stop,
-                            size: 27,
-                          ))
+                      onPressed: () {
+                        editorController.selectedTextIndex.value = null;
+                        editorController.selectedVideoIndex.value = null;
+                        editorController.selectedImageIndex.value = null;
+                        editorController.selectedAudioIndex.value = null;
+                        setState(() {});
+                      },
+                      icon: Icon(
+                        Icons.stop,
+                        size: 27,
+                      ))
                       : IconButton(
-                          onPressed: () {
-                            if (editorController.editVideoDataList.isNotEmpty ||
-                                editorController.editAudioDataList.isNotEmpty) {
-                              editorController.selectFirstMediaSelected();
-                            } else {}
-                            setState(() {});
-                          },
-                          icon: BlinkingIcon(),
-                        ),
+                    onPressed: () {
+                      if (editorController.editVideoDataList.isNotEmpty ||
+                          editorController.editAudioDataList.isNotEmpty) {
+                        editorController.selectFirstMediaSelected();
+                      } else {}
+                      setState(() {});
+                    },
+                    icon: BlinkingIcon(),
+                  ),
                 ),
                 Positioned(
                     top: 5.h,
@@ -652,7 +653,9 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
           ],
         ),
       ),
-    );
+    ), onWillPop: ()async {
+      return false;
+    },);
   }
 
   Container CustomDividerTilmelineWidget() {
@@ -764,6 +767,7 @@ class _ReorderableTimelineListState extends State<ReorderableTimelineList> {
                     });
 
 
+                    Get.find<MediaSuitController>().isTrimming = false;
 
                   },
                   child: EditeBoxWidget(
