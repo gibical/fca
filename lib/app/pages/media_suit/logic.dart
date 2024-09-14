@@ -39,7 +39,8 @@ class EditDataModel {
   final String name;
    int? mediaClass;
    String? urlMedia;
-  double width = 80;
+  double second;
+  double get width => second * 30.0;
   double height = 0.050.h;
   double positionX = 0.0;
   double? defaultWidthVideo;
@@ -51,7 +52,8 @@ class EditDataModel {
   bool isloading = false;
 
   EditDataModel(this.name, this.urlMedia, this.defaultWidthVideo, this.assetId, this.mediaClass ,
-      {this.isloading=false});
+
+      {this.isloading=false , this.second = 3.0});
 
   Map<String, dynamic> toJson() {
     return {
@@ -71,10 +73,10 @@ class EditDataModel {
     positionX = newPositionX;
   }
 
-  void updateSize(double newWidth, double newHeight) {
-    width = newWidth;
-    height = newHeight;
-  }
+  // void updateSize(double newWidth, double newHeight) {
+  //   width = newWidth;
+  //   height = newHeight;
+  // }
 
 
 
@@ -141,7 +143,10 @@ class MediaSuitController extends GetxController {
         soundTranslate();
 
       }),
-      ActionEditorModel(nameItem: 'Audio Trim', onTap: () {}),
+      ActionEditorModel(nameItem: 'Audio Trim', onTap: () {
+        isTrimming = true;
+
+      }),
       ActionEditorModel(nameItem: 'Change Speech Audio', onTap: () {}),
     ];
   }
@@ -162,7 +167,7 @@ class MediaSuitController extends GetxController {
   List<ActionEditorModel> videoAction = [];
   List<ActionEditorModel> audioAction = [];
   bool isResizing = false;
-
+  bool isTrimming = false;
 
   //clear timeline
   void clearTimeline() {
@@ -588,7 +593,7 @@ class MediaSuitController extends GetxController {
     double widthVideoItem = videoTime * 16.0;
 
     editVideoDataList
-        .add(EditDataModel(name, videoUrl, widthVideoItem, assetId,4,isloading: isloading));
+        .add(EditDataModel(name, videoUrl, widthVideoItem, assetId,4,isloading: isloading , second: videoTime));
 
     selectedVideoIndex.value = editVideoDataList.length - 1;
   }

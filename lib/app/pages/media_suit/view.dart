@@ -745,6 +745,7 @@ class _ReorderableTimelineListState extends State<ReorderableTimelineList> {
           }
         },
 
+
         child: SizedBox(
           height: MediaQuery.of(context).size.height * 0.050,
           child: ReorderableListView.builder(
@@ -761,6 +762,9 @@ class _ReorderableTimelineListState extends State<ReorderableTimelineList> {
                     setState(() {
                       widget.selectedIndex.value = index;
                     });
+
+
+
                   },
                   child: EditeBoxWidget(
                     index: index,

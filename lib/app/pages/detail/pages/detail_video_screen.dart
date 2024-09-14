@@ -179,10 +179,11 @@ class DetailVideoScreen extends StatelessWidget {
                               ),
                               GestureDetector(
                                 onTap: (){
-                                  double videoLength = (videoController.videoDetails?['length'] ?? 0).toDouble();
+                                  double videoLength = (videoController.videoDetails?['media']['length'] ?? 0).toDouble();
 
                                   Get.find<MediaSuitController>().setDataEditVideo(videoController.videoDetails?['media']['name']?? '' ,videoController.videoDetails?['file']['url'] , videoLength , videoController.videoDetails!['file_id'].toString());
                                   Get.toNamed(PageRoutes.MEDIASUIT);
+
                                 },
                                 child:  Icon(Icons.edit),
                               ),
