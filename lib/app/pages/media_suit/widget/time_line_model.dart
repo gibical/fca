@@ -824,7 +824,7 @@ class _EditeBoxWidgetState extends State<EditeBoxWidget> {
                                 height: 100,
                                 color: Colors.black.withOpacity(0.6),
 
-                                width: MediaQuery.sizeOf(context).width,
+
                               ),
                               Positioned(
                                 left: 0,
