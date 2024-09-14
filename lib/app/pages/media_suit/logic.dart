@@ -252,6 +252,64 @@ class MediaSuitController extends GetxController {
 
     }
   }
+  void confirmVideoTrim() async{
+    isloadingAssetConvert(true);
+    isWaitingAssetConvert(true);
+    var fileId = editVideoDataList[selectedVideoIndex.value!].assetId;
+    var model =  editVideoDataList[selectedVideoIndex.value!];
+
+
+    try {
+      final token = GetStorage().read("token");
+
+      String apiUrl =
+          '${Constant.HTTP_HOST}tasks/audio-trim';
+      var s = Dio();
+      s.interceptors.add(MediaVerseConvertInterceptor());
+
+      print('${fileId}');
+      var response = await s.post(apiUrl, options: Options(headers: {
+        'accept': 'application/json',
+        'X-App': '_Android',
+        'Accept-Language': 'en-US',
+        'Authorization': 'Bearer $token',
+      }),data: {
+        "file":fileId,
+        "start":model.startTrim.round(),
+        "length":model.endTrim.round(),
+      });
+
+      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+      if (response.statusCode == 200) {
+
+        final newSeconds = model.endTrim -  model.startTrim;
+        final newContainer = EditDataModel(editVideoDataList[selectedVideoIndex.value!].name, editVideoDataList[selectedVideoIndex.value!].urlMedia!, 0, editVideoDataList[selectedVideoIndex.value!].assetId.toString(), 3 , second:  newSeconds, );
+
+
+        editVideoDataList.add(newContainer);
+          model.second -= newSeconds;
+          model.endTrim = model.second;
+          model.startTrim = 0;
+          isTrimming = false;
+        selectedVideoIndex.value = -1;
+
+        Constant.showMessege("Request Succesful" );
+
+        print(response.data);
+        isloadingAssetConvert(false);
+
+      } else {
+        isloadingAssetConvert(false);
+
+      }
+    } catch (e) {
+      isloadingAssetConvert(false);
+
+      print('DetailController._fetchMediaData = $e');
+    } finally {
+
+    }
+  }
   // void confirmTrim(EditDataModel model , Rx<int?> trimIndex , trimList) {
     // final newSeconds = model.endTrim - model.startTrim;
     // final newContainer = EditDataModel();
