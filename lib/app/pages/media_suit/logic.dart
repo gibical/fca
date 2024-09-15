@@ -910,101 +910,93 @@ class MediaSuitController extends GetxController {
   void exportOnline() async{
 
 
+
     print('====================Video==============================');
-      videoConfig();
+    var video =   videoConfig();
     print('==============================Text====================');
-    textConfig();
+    var  text =  textConfig();
     print('====================Image==============================');
-      imageConfig();
+    var image =   imageConfig();
     print('====================Audio==============================');
-   audioConfig();
+    var audi =  audioConfig();
 
-    // print('====================Video==============================');
-    // var video =   videoConfig();
-    // print('==============================Text====================');
-    // var  text =  textConfig();
-    // print('====================Image==============================');
-    // var image =   imageConfig();
-    // print('====================Audio==============================');
-    // var audi =  audioConfig();
+    isloadingSubmit(true);
 
-    // isloadingSubmit(true);
-    //
-    // var dio = Dio();
-    // var body ;
-    //
-    // var tacks =[];
-    // if(video.contains("null")==false){
-    //   tacks.add(
-    //     {
-    //       "type":"video",
-    //       "items":jsonDecode(video.replaceAll("asset_id", "id"))
-    //     }
-    //   );
-    // }
-    // if(audi.contains("null")==false){
-    //   tacks.add(
-    //       {
-    //         "type":"audio",
-    //         "items":jsonDecode(audi.replaceAll("asset_id", "id"))
-    //       }
-    //   );
-    // }
-    // if(image.contains("null")==false){
-    //   tacks.add(
-    //       {
-    //         "type":"image",
-    //         "items":jsonDecode(image.replaceAll("asset_id", "id"))
-    //       }
-    //   );    }
-    // if(text.contains("null")==false){
-    //   tacks.add(
-    //       {
-    //         "type":"text",
-    //         "items":jsonDecode(text.replaceAll("asset_id", "id"))
-    //       }
-    //   );    }
-    // body = {
-    //   'tracks':tacks
-    // };
-    //
-    //
-    // print('ShareAccountLogic.sendIDTokenToServer = ${jsonEncode(body)}');
-    // dio.interceptors.add(MediaVerseConvertInterceptor());
-    // dio.interceptors.add(CurlLoggerDioInterceptor());
-    //
-    // try {
-    //   var response = await dio.post(
-    //     '${Constant.HTTP_HOST}tasks/mix',
-    //     data:jsonEncode(body),
-    //     options: Options(
-    //       headers: {
-    //         'Authorization': 'Bearer ${GetStorage().read("token")}',
-    //         'X-App': '_Android',
-    //       },
-    //     ),
-    //
-    //   );
-    //
-    //   if (response.statusCode! >= 200||response.statusCode! < 300) {
-    //     print('==================================================================================================');
-    //     print('Time line Asset Create successfully = ${response.data}');
-    //     print('==================================================================================================');
-    //     clearTimeline();
-    //     Constant.showMessege("Time line Asset Create successfully Wait To Render...");
-    //
-    //
-    //   } else {
-    //     isloadingSubmit(false);
-    //
-    //     print('Failed to upload file: ${response.statusMessage}');
-    //   }
-    // } on DioError catch (e) {
-    //   isloadingSubmit(false);
-    //
-    //   print('DioError: ${e.response!.statusCode}');
-    // }
-    //
+    var dio = Dio();
+    var body ;
+
+    var tacks =[];
+    if(video.contains("null")==false){
+      tacks.add(
+        {
+          "type":"video",
+          "items":jsonDecode(video.replaceAll("asset_id", "id"))
+        }
+      );
+    }
+    if(audi.contains("null")==false){
+      tacks.add(
+          {
+            "type":"audio",
+            "items":jsonDecode(audi.replaceAll("asset_id", "id"))
+          }
+      );
+    }
+    if(image.contains("null")==false){
+      tacks.add(
+          {
+            "type":"image",
+            "items":jsonDecode(image.replaceAll("asset_id", "id"))
+          }
+      );    }
+    if(text.contains("null")==false){
+      tacks.add(
+          {
+            "type":"text",
+            "items":jsonDecode(text.replaceAll("asset_id", "id"))
+          }
+      );    }
+    body = {
+      'tracks':tacks
+    };
+
+
+    print('ShareAccountLogic.sendIDTokenToServer = ${jsonEncode(body)}');
+    dio.interceptors.add(MediaVerseConvertInterceptor());
+    dio.interceptors.add(CurlLoggerDioInterceptor());
+
+    try {
+      var response = await dio.post(
+        '${Constant.HTTP_HOST}tasks/mix',
+        data:jsonEncode(body),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${GetStorage().read("token")}',
+            'X-App': '_Android',
+          },
+        ),
+
+      );
+
+      if (response.statusCode! >= 200||response.statusCode! < 300) {
+        print('==================================================================================================');
+        print('Time line Asset Create successfully = ${response.data}');
+        print('==================================================================================================');
+        clearTimeline();
+        Constant.showMessege("Time line Asset Create successfully Wait To Render...");
+
+
+      } else {
+        isloadingSubmit(false);
+
+        print('Failed to upload file: ${response.statusMessage}');
+      }
+    } on DioError catch (e) {
+      isloadingSubmit(false);
+
+      print('DioError: ${e.response!.statusCode}');
+    }
+
 
   }
 
