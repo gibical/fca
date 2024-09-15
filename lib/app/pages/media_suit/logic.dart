@@ -696,7 +696,7 @@ class MediaSuitController extends GetxController {
       } else if (item.mediaClass == 3) {
         setDataEditAudio(item.name, item.urlMedia!, item.assetId!, isloading: item.isloading);
       } else if (item.mediaClass == 4) {
-        setDataEditVideo(item.name, item.urlMedia!, item.length.toDouble(), item.assetId!, isloading: item.isloading);
+        setDataEditVideo(item.name, item.urlMedia!, item.second, item.assetId!, isloading: item.isloading );
       }
     }
     tempSelectedItems.clear();
@@ -732,7 +732,7 @@ class MediaSuitController extends GetxController {
   }
 
   void setDataEditVideo(
-      String name, String videoUrl, double videoTime, String assetId,{bool isloading =false}) {
+      String name, String videoUrl, double videoTime, String assetId,{bool isloading =false }) {
     double widthVideoItem = videoTime * 16.0;
 
     editVideoDataList
@@ -741,7 +741,7 @@ class MediaSuitController extends GetxController {
     selectedVideoIndex.value = editVideoDataList.length - 1;
   }
 
-  void setDataEditAudio(String name, String audioUrl, String assetId,{bool isloading =false , double time = 5}) {
+  void setDataEditAudio(String name, String audioUrl, String assetId,{bool isloading =false , double time = 5 , }) {
     editAudioDataList.add(EditDataModel(name, audioUrl, 0, assetId, 3 ,isloading: isloading , second: time));
 
     selectedAudioIndex.value = editAudioDataList.length - 1;
