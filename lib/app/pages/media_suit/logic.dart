@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
@@ -39,7 +40,8 @@ class EditDataModel {
   final String name;
    int? mediaClass;
    String? urlMedia;
-  double width = 80;
+  double second;
+  double get width => second * 30.0;
   double height = 0.050.h;
   double positionX = 0.0;
   double? defaultWidthVideo;
@@ -49,9 +51,12 @@ class EditDataModel {
   int length = 0;
   String? assetId;
   bool isloading = false;
-
+  double startTrim = 0;
+  double endTrim;
+  double get trimWidth => (endTrim - startTrim) * 30.0;
   EditDataModel(this.name, this.urlMedia, this.defaultWidthVideo, this.assetId, this.mediaClass ,
-      {this.isloading=false});
+
+      {this.isloading=false , this.second = 3.0}): endTrim = second;
 
   Map<String, dynamic> toJson() {
     return {
@@ -71,37 +76,37 @@ class EditDataModel {
     positionX = newPositionX;
   }
 
-  void updateSize(double newWidth, double newHeight) {
-    width = newWidth;
-    height = newHeight;
-  }
+  // void updateSize(double newWidth, double newHeight) {
+  //   width = newWidth;
+  //   height = newHeight;
+  // }
 
 
 
 
-  void updateTimings(int pixelsPerSecond, int previousEnd) {
-    if (pixelsPerSecond == 0) {
-      return;
-    }
-
-    double durationInSeconds = width / pixelsPerSecond;
-
-
-    start = previousEnd + 1;
-
-
-    if (previousEnd == -1) {
-
-      end =  start + durationInSeconds.toInt() ;
-    } else {
-
-      end = previousEnd * 2;
-    }
-
-    length = end - start;
-
-    print('EditDataModel.updateTimings = ${previousEnd} - ${start} - ${end}');
-  }
+  // void updateTimings(int pixelsPerSecond, int previousEnd) {
+  //   if (pixelsPerSecond == 0) {
+  //     return;
+  //   }
+  //
+  //   double durationInSeconds = width / pixelsPerSecond;
+  //
+  //
+  //   start = previousEnd + 1;
+  //
+  //
+  //   if (previousEnd == -1) {
+  //
+  //     end =  start + durationInSeconds.toInt() ;
+  //   } else {
+  //
+  //     end = previousEnd * 2;
+  //   }
+  //
+  //   length = end - start;
+  //
+  //   print('EditDataModel.updateTimings = ${previousEnd} - ${start} - ${end}');
+  // }
 
 
 
@@ -127,9 +132,14 @@ class MediaSuitController extends GetxController {
 
     videoAction = [
       ActionEditorModel(nameItem: 'Video Mute', onTap: () {}),
-      ActionEditorModel(nameItem: 'Video Trim', onTap: () {}),
+      ActionEditorModel(nameItem: 'Video Trim', onTap: () {
+        isTrimming =  true;
+        update();
+
+      }),
       ActionEditorModel(nameItem: 'Extract Audio', onTap: () {
         videoConvertToAudio();
+
       }),
     ];
 
@@ -141,9 +151,15 @@ class MediaSuitController extends GetxController {
         soundTranslate();
 
       }),
-      ActionEditorModel(nameItem: 'Audio Trim', onTap: () {}),
+      ActionEditorModel(nameItem: 'Audio Trim', onTap: () {
+        isTrimming = true;
+        update();
+
+      }),
       ActionEditorModel(nameItem: 'Change Speech Audio', onTap: () {}),
     ];
+
+
   }
 
   var editTextDataList = <EditDataModel>[].obs;
@@ -161,8 +177,8 @@ class MediaSuitController extends GetxController {
   List<ActionEditorModel> textAction = [];
   List<ActionEditorModel> videoAction = [];
   List<ActionEditorModel> audioAction = [];
-
-
+  bool isResizing = false;
+  bool isTrimming = false;
 
   //clear timeline
   void clearTimeline() {
@@ -170,10 +186,142 @@ class MediaSuitController extends GetxController {
     editImageDataList.clear();
     editVideoDataList.clear();
     editAudioDataList.clear();
+    isTrimming = false;
   }
 
 
 
+
+  //trim TimeLine Video and Audio
+
+  void confirmAudioTrim() async{
+    isloadingAssetConvert(true);
+    isWaitingAssetConvert(true);
+    var fileId = editAudioDataList[selectedAudioIndex.value!].assetId;
+    var model =  editAudioDataList[selectedAudioIndex.value!];
+
+
+    try {
+      final token = GetStorage().read("token");
+
+      String apiUrl =
+          '${Constant.HTTP_HOST}tasks/audio-trim';
+      var s = Dio();
+      s.interceptors.add(MediaVerseConvertInterceptor());
+
+      print('${fileId}');
+      var response = await s.post(apiUrl, options: Options(headers: {
+        'accept': 'application/json',
+        'X-App': '_Android',
+        'Accept-Language': 'en-US',
+        'Authorization': 'Bearer $token',
+      }),data: {
+        "file":fileId,
+        "start":model.startTrim.round(),
+        "length":model.endTrim.round(),
+      });
+
+      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+      if (response.statusCode == 200) {
+
+        final newSeconds = model.endTrim -  model.startTrim;
+        final newContainer = EditDataModel(editAudioDataList[selectedAudioIndex.value!].name, editAudioDataList[selectedAudioIndex.value!].urlMedia!, 0, editAudioDataList[selectedAudioIndex.value!].assetId.toString(), 3 , second:  newSeconds, );
+
+
+        editAudioDataList.add(newContainer);
+          model.second -= newSeconds;
+          model.endTrim = model.second;
+          model.startTrim = 0;
+          isTrimming = false;
+          selectedAudioIndex.value = -1;
+
+        Constant.showMessege("Request Succesful" );
+
+        print(response.data);
+        isloadingAssetConvert(false);
+
+      } else {
+        isloadingAssetConvert(false);
+
+      }
+    } catch (e) {
+      isloadingAssetConvert(false);
+
+      print('DetailController._fetchMediaData = $e');
+    } finally {
+
+    }
+  }
+  void confirmVideoTrim() async{
+    isloadingAssetConvert(true);
+    isWaitingAssetConvert(true);
+    var fileId = editVideoDataList[selectedVideoIndex.value!].assetId;
+    var model =  editVideoDataList[selectedVideoIndex.value!];
+
+
+    try {
+      final token = GetStorage().read("token");
+
+      String apiUrl =
+          '${Constant.HTTP_HOST}tasks/audio-trim';
+      var s = Dio();
+      s.interceptors.add(MediaVerseConvertInterceptor());
+
+      print('${fileId}');
+      var response = await s.post(apiUrl, options: Options(headers: {
+        'accept': 'application/json',
+        'X-App': '_Android',
+        'Accept-Language': 'en-US',
+        'Authorization': 'Bearer $token',
+      }),data: {
+        "file":fileId,
+        "start":model.startTrim.round(),
+        "length":model.endTrim.round(),
+      });
+
+      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+      if (response.statusCode == 200) {
+
+        final newSeconds = model.endTrim -  model.startTrim;
+        final newContainer = EditDataModel(editVideoDataList[selectedVideoIndex.value!].name, editVideoDataList[selectedVideoIndex.value!].urlMedia!, 0, editVideoDataList[selectedVideoIndex.value!].assetId.toString(), 3 , second:  newSeconds, );
+
+
+        editVideoDataList.add(newContainer);
+          model.second -= newSeconds;
+          model.endTrim = model.second;
+          model.startTrim = 0;
+          isTrimming = false;
+        selectedVideoIndex.value = -1;
+
+        Constant.showMessege("Request Succesful" );
+
+        print(response.data);
+        isloadingAssetConvert(false);
+
+      } else {
+        isloadingAssetConvert(false);
+
+      }
+    } catch (e) {
+      isloadingAssetConvert(false);
+
+      print('DetailController._fetchMediaData = $e');
+    } finally {
+
+    }
+  }
+  // void confirmTrim(EditDataModel model , Rx<int?> trimIndex , trimList) {
+    // final newSeconds = model.endTrim - model.startTrim;
+    // final newContainer = EditDataModel();
+    //
+    // trimList.add(newContainer);
+    //   model.second -= newSeconds;
+    //   model.endTrim = model.second;
+    //   model.startTrim = 0;
+    //   isTrimming = false;
+    // trimIndex.value = -1;
+
+  // }
 
   ///Convert asset TimeLine [selectedAudioIndex]
   void soundTranslate() async{
@@ -588,13 +736,13 @@ class MediaSuitController extends GetxController {
     double widthVideoItem = videoTime * 16.0;
 
     editVideoDataList
-        .add(EditDataModel(name, videoUrl, widthVideoItem, assetId,4,isloading: isloading));
+        .add(EditDataModel(name, videoUrl, widthVideoItem, assetId,4,isloading: isloading , second: videoTime));
 
     selectedVideoIndex.value = editVideoDataList.length - 1;
   }
 
-  void setDataEditAudio(String name, String audioUrl, String assetId,{bool isloading =false}) {
-    editAudioDataList.add(EditDataModel(name, audioUrl, 0, assetId, 3 ,isloading: isloading));
+  void setDataEditAudio(String name, String audioUrl, String assetId,{bool isloading =false , double time = 5}) {
+    editAudioDataList.add(EditDataModel(name, audioUrl, 0, assetId, 3 ,isloading: isloading , second: time));
 
     selectedAudioIndex.value = editAudioDataList.length - 1;
   }
@@ -627,6 +775,7 @@ class MediaSuitController extends GetxController {
         var resultEnd = currentItemEnd / 16;
 
         currentItem.start = previousItemEnd+1;
+       // var endTime = currentItem.second.toInt();
         currentItem.end = resultEnd.toInt();
 
 
@@ -659,23 +808,24 @@ class MediaSuitController extends GetxController {
         var currentItem = editTextDataList[i];
 
 
-        currentItem.updateTimings((80 / 6).toInt(), previousEnd);
+        //currentItem.updateTimings((80 / 6).toInt(), previousEnd);
 
 
         jsonList.add({
           'start': currentItem.start,
-          'end': currentItem.end,
-          'length': currentItem.length,
+          'end': currentItem.second,
+          'length': currentItem.second,
           'id': currentItem.assetId,
 
         });
 
 
-        previousEnd = currentItem.end;
+        previousEnd = currentItem.second.toInt();
       }
 
       String jsonData = jsonEncode(jsonList);
 
+      print(jsonData);
       return jsonData;
     } else {
       print('empty List - TEXT');
@@ -698,22 +848,23 @@ class MediaSuitController extends GetxController {
         var currentItem = editImageDataList[i];
 
 
-        currentItem.updateTimings((80 / 6).toInt(), previousEnd);
+        // currentItem.updateTimings((80 / 6).toInt(), previousEnd);
 
 
         jsonList.add({
           'start': currentItem.start,
-          'end': currentItem.end,
-          'length': currentItem.length,
+          'end': currentItem.second,
+          'length': currentItem.second,
           'id': currentItem.assetId,
 
         });
 
 
-        previousEnd = currentItem.end;
+        previousEnd = currentItem.second.toInt();
       }
       String jsonData = jsonEncode(jsonList);
 
+      print(jsonData);
       return jsonData;
     } else {
       print('empty List - IMAGE');
@@ -730,22 +881,24 @@ class MediaSuitController extends GetxController {
         var currentItem = editAudioDataList[i];
 
 
-        currentItem.updateTimings((80 / 6).toInt(), previousEnd);
+        //currentItem.updateTimings((80 / 6).toInt(), previousEnd);
 
 
         jsonList.add({
           'start': currentItem.start,
-          'end': currentItem.end,
-          'length': currentItem.length,
+          'end': currentItem.second,
+          'length': currentItem.second,
           'id': currentItem.assetId,
 
         });
 
 
-        previousEnd = currentItem.end;
+        previousEnd = currentItem.second.toInt();
       }
 
       String jsonData = jsonEncode(jsonList);
+
+      print(jsonData);
       return jsonData;
     } else {
       print('empty List - AUDIO');
@@ -755,92 +908,103 @@ class MediaSuitController extends GetxController {
 
 
   void exportOnline() async{
+
+
     print('====================Video==============================');
-    var video =   videoConfig();
+      videoConfig();
     print('==============================Text====================');
-    var  text =  textConfig();
+    textConfig();
     print('====================Image==============================');
-    var image =   imageConfig();
+      imageConfig();
     print('====================Audio==============================');
-    var audi =  audioConfig();
+   audioConfig();
 
-    isloadingSubmit(true);
+    // print('====================Video==============================');
+    // var video =   videoConfig();
+    // print('==============================Text====================');
+    // var  text =  textConfig();
+    // print('====================Image==============================');
+    // var image =   imageConfig();
+    // print('====================Audio==============================');
+    // var audi =  audioConfig();
 
-    var dio = Dio();
-    var body ;
-
-    var tacks =[];
-    if(video.contains("null")==false){
-      tacks.add(
-        {
-          "type":"video",
-          "items":jsonDecode(video.replaceAll("asset_id", "id"))
-        }
-      );
-    }
-    if(audi.contains("null")==false){
-      tacks.add(
-          {
-            "type":"audio",
-            "items":jsonDecode(audi.replaceAll("asset_id", "id"))
-          }
-      );
-    }
-    if(image.contains("null")==false){
-      tacks.add(
-          {
-            "type":"image",
-            "items":jsonDecode(image.replaceAll("asset_id", "id"))
-          }
-      );    }
-    if(text.contains("null")==false){
-      tacks.add(
-          {
-            "type":"text",
-            "items":jsonDecode(text.replaceAll("asset_id", "id"))
-          }
-      );    }
-    body = {
-      'tracks':tacks
-    };
-
-
-    print('ShareAccountLogic.sendIDTokenToServer = ${jsonEncode(body)}');
-    dio.interceptors.add(MediaVerseConvertInterceptor());
-    dio.interceptors.add(CurlLoggerDioInterceptor());
-
-    try {
-      var response = await dio.post(
-        '${Constant.HTTP_HOST}tasks/mix',
-        data:jsonEncode(body),
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer ${GetStorage().read("token")}',
-            'X-App': '_Android',
-          },
-        ),
-
-      );
-
-      if (response.statusCode! >= 200||response.statusCode! < 300) {
-        print('==================================================================================================');
-        print('Time line Asset Create successfully = ${response.data}');
-        print('==================================================================================================');
-        clearTimeline();
-        Constant.showMessege("Time line Asset Create successfully Wait To Render...");
-
-
-      } else {
-        isloadingSubmit(false);
-
-        print('Failed to upload file: ${response.statusMessage}');
-      }
-    } on DioError catch (e) {
-      isloadingSubmit(false);
-
-      print('DioError: ${e.response!.statusCode}');
-    }
-
+    // isloadingSubmit(true);
+    //
+    // var dio = Dio();
+    // var body ;
+    //
+    // var tacks =[];
+    // if(video.contains("null")==false){
+    //   tacks.add(
+    //     {
+    //       "type":"video",
+    //       "items":jsonDecode(video.replaceAll("asset_id", "id"))
+    //     }
+    //   );
+    // }
+    // if(audi.contains("null")==false){
+    //   tacks.add(
+    //       {
+    //         "type":"audio",
+    //         "items":jsonDecode(audi.replaceAll("asset_id", "id"))
+    //       }
+    //   );
+    // }
+    // if(image.contains("null")==false){
+    //   tacks.add(
+    //       {
+    //         "type":"image",
+    //         "items":jsonDecode(image.replaceAll("asset_id", "id"))
+    //       }
+    //   );    }
+    // if(text.contains("null")==false){
+    //   tacks.add(
+    //       {
+    //         "type":"text",
+    //         "items":jsonDecode(text.replaceAll("asset_id", "id"))
+    //       }
+    //   );    }
+    // body = {
+    //   'tracks':tacks
+    // };
+    //
+    //
+    // print('ShareAccountLogic.sendIDTokenToServer = ${jsonEncode(body)}');
+    // dio.interceptors.add(MediaVerseConvertInterceptor());
+    // dio.interceptors.add(CurlLoggerDioInterceptor());
+    //
+    // try {
+    //   var response = await dio.post(
+    //     '${Constant.HTTP_HOST}tasks/mix',
+    //     data:jsonEncode(body),
+    //     options: Options(
+    //       headers: {
+    //         'Authorization': 'Bearer ${GetStorage().read("token")}',
+    //         'X-App': '_Android',
+    //       },
+    //     ),
+    //
+    //   );
+    //
+    //   if (response.statusCode! >= 200||response.statusCode! < 300) {
+    //     print('==================================================================================================');
+    //     print('Time line Asset Create successfully = ${response.data}');
+    //     print('==================================================================================================');
+    //     clearTimeline();
+    //     Constant.showMessege("Time line Asset Create successfully Wait To Render...");
+    //
+    //
+    //   } else {
+    //     isloadingSubmit(false);
+    //
+    //     print('Failed to upload file: ${response.statusMessage}');
+    //   }
+    // } on DioError catch (e) {
+    //   isloadingSubmit(false);
+    //
+    //   print('DioError: ${e.response!.statusCode}');
+    // }
+    //
 
   }
 
