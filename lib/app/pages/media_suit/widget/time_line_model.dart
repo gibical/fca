@@ -100,7 +100,7 @@ class _EditeBoxWidgetState extends State<EditeBoxWidget> {
               child: Stack(
                 children: [
                   Container(
-                    width: widget.model.width,
+                    width: widget.model.width +  editorController.maxPaddingValue -editorController.minPaddingValue,
                     color: widget.color,
                     alignment: Alignment.center,
                     child: AutoSizeText(

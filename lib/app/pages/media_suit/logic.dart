@@ -1004,7 +1004,7 @@ class MediaSuitController extends GetxController {
   //  debugger();
 
     var json =  jsonDecode(s);
-    String url_media = "${"https://"+json['storage']}.gibical.app/${json['path']}";
+    String url_media = "${"https://"+json['storage']}.mediaverse.app/${json['path']}";
     editAudioDataList.forEach((element) {
       if(element.isloading){
         element.assetId = json['asset_id'];

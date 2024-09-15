@@ -1,7 +1,9 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/pages/media_suit/logic.dart';
 
 class CustomRulerTimelineOtherAssetsWidget1 extends StatefulWidget {
   final double value;
@@ -186,7 +188,7 @@ class _CustomRulerTimelineOtherAssetsWidget1State
             child: Row(
               children: List.generate(widget.totalSeconds.toInt(), (index) {
                 return Container(
-                  width: 32.5,
+                  width: 32.5+  Get.find<MediaSuitController>().maxPaddingValue /Get.find<MediaSuitController>().minPaddingValue,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
