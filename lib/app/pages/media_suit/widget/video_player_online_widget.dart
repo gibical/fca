@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -193,8 +195,7 @@ class _VideoPlayerEditorState extends State<VideoPlayerEditor> {
               activeColor: AppColor.primaryLightColor,
               inactiveColor: AppColor.primaryLightColor.withOpacity(0.2),
               linearStep: true,
-              totalSeconds: controllerVideo.value.duration.inSeconds.toInt() +
-                  1,
+              totalSeconds: max(controllerVideo.value.duration.inSeconds.toInt(), 200),
               scrollController: widget.scrollController,
             ),
           )

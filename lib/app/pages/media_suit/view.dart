@@ -541,7 +541,9 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                           editorController.selectedVideoIndex.value = null;
                           editorController.selectedImageIndex.value = null;
                           editorController.selectedAudioIndex.value = null;
+                          editorController.isTrimming=false;
                           setState(() {});
+
                         },
                         child: Stack(
                           alignment: Alignment.center,
@@ -583,9 +585,8 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                     ],
                   ),
                 ),
-                editorController.selectedVideoIndex.value != null ||
-                        editorController.selectedAudioIndex.value != null &&
-                            editorController.isTrimming
+
+                            editorController.isTrimming == true
                     ? GetBuilder<MediaSuitController>(
                         builder: (controller) {
                           return Positioned(
@@ -593,7 +594,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                             child: IconButton(
                                 onPressed: () {
                                   if (editorController
-                                          .selectedAudioIndex.value! !=
+                                          .selectedAudioIndex.value !=
                                       -1) {
                                     // final model = editorController.editVideoDataList[editorController.selectedVideoIndex.value!];
                                     // print('Start Trim: ${model.startTrim.round()}');
@@ -603,7 +604,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                     print('No container is being trimmed');
                                   }
                                   if (editorController
-                                          .selectedVideoIndex.value! !=
+                                          .selectedVideoIndex.value !=
                                       -1) {
                                     // final model = editorController.editVideoDataList[editorController.selectedVideoIndex.value!];
                                     // print('Start Trim: ${model.startTrim.round()}');
