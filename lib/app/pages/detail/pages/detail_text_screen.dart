@@ -359,6 +359,8 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
             ],
           );
         })
+
+
     ), onWillPop: ()async{
       if(Get.arguments['idAssetMedia'] == "idAssetMedia"){
               Get.offAllNamed(PageRoutes.WRAPPER);
