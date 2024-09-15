@@ -291,7 +291,7 @@ class MediaSuitController extends GetxController {
           model.endTrim = model.second;
           model.startTrim = 0;
           isTrimming = false;
-        selectedVideoIndex.value = -1;
+      // selectedVideoIndex.value = -1;
 
         Constant.showMessege("Request Succesful" );
 
