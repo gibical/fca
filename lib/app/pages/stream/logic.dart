@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
+import 'package:gibical/gen/model/json/walletV2/FromJsonGetPrograms.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rtmp_broadcaster/camera.dart';
 import 'dart:io';
+
+import '../share_account/logic.dart';
 
 class StreamViewController extends GetxController {
   CameraController? controller;
@@ -14,6 +19,8 @@ class StreamViewController extends GetxController {
   bool isVisible = true;
   var isLoading = true.obs;
 
+  ProgramModel? programModel;
+  ShareAccountLogic shareAccountLogic = Get.put(ShareAccountLogic(),tag: "stream");
   int selectedCamera = 1;
 
   bool get isControllerInitialized => controller?.value.isInitialized ?? false;
@@ -22,6 +29,10 @@ class StreamViewController extends GetxController {
   bool get isRecordingPaused => controller?.value.isRecordingPaused ?? false;
   bool get isStreamingPaused => controller?.value.isStreamingPaused ?? false;
   bool get isTakingPicture => controller?.value.isTakingPicture ?? false;
+  Timer? _recordingTimer;
+  Duration _recordingDuration = Duration.zero;
+  var recordingTime = ''.obs;
+  var isRecordingTimeVisible = false.obs;
 
 
   @override
@@ -132,6 +143,13 @@ class StreamViewController extends GetxController {
       _showCameraException(e);
       return null;
     }
+    isRecordingTimeVisible(true);
+    _recordingDuration = Duration.zero;
+    _recordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      _recordingDuration += Duration(seconds: 1);
+      recordingTime.value = _formatDuration(_recordingDuration);
+      update();
+    });
     return url;
   }
 
@@ -145,6 +163,11 @@ class StreamViewController extends GetxController {
       _showCameraException(e);
       return null;
     }
+    _recordingTimer?.cancel();
+    _recordingDuration = Duration.zero;
+    recordingTime.value = '';
+    isRecordingTimeVisible(false);
+
   }
 
   Future<void> pauseVideoStreaming() async {
@@ -194,7 +217,13 @@ class StreamViewController extends GetxController {
     }
     onNewCameraSelected(cameras[selectedCamera]);
   }
-
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String hours = twoDigits(duration.inHours);
+    String minutes = twoDigits(duration.inMinutes.remainder(60));
+    String seconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$hours:$minutes:$seconds";
+  }
   void deleteProgram(String? id) {
 
   }

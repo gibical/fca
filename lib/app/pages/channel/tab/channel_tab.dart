@@ -44,7 +44,15 @@ class ProgramsTab extends StatelessWidget {
                 return CardChannelWidget(
                     title: (model.name??"").toString(), date: (model.createdAt??""),onTap: (){
 
-                      Get.bottomSheet(ProgramShowBottomSheet(model));
+                      try {
+                        if(Get.arguments[0]==true){
+                          Get.back(result: model);
+                        }
+                      }  catch (e) {
+                        // TODO
+                        Get.bottomSheet(ProgramShowBottomSheet(model));
+                      }
+
                 });
               })
         ],

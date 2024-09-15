@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gibical/app/common/app_extension.dart';
 import 'package:gibical/app/pages/stream/logic.dart';
+import 'package:gibical/gen/model/json/walletV2/FromJsonGetPrograms.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:video_player/video_player.dart';
@@ -11,139 +12,172 @@ import 'package:wakelock/wakelock.dart';
 import 'package:get/get.dart';
 import 'package:rtmp_broadcaster/camera.dart';
 
+import '../channel/view.dart';
+
 class CameraExampleHome extends StatelessWidget {
   final StreamViewController _streamController = Get.put(
       StreamViewController());
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GetBuilder<StreamViewController>(
+        init: _streamController,
+        builder: (logic) {
+      return Scaffold(
 
-      body: Obx(() {
+        body: Obx(() {
+          return _streamController.isLoading.value ? Center(
+            child: Lottie.asset("assets/json/Y8IBRQ38bK.json", height: 5.h),
+          ) : Container(
+            width: 100.w,
+            height: 100.h,
 
-        return _streamController.isLoading.value?Center(
-          child:Lottie.asset("assets/json/Y8IBRQ38bK.json", height: 5.h) ,
-        ): Container(
-          width: 100.w,
-          height: 100.h,
+            child: Stack(
+              children: <Widget>[
+                SizedBox.expand(
+                  child: _cameraPreviewWidget(),
+                ),
 
-          child: Stack(
-            children: <Widget>[
-              SizedBox.expand(
-                child:  _cameraPreviewWidget(),
-              ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                      height: 120,
+                      width: 100.w,
 
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                    height: 120,
-                    width: 100.w,
+                      child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Stack(
+                            children: [
+                              SizedBox.expand(child: Image.asset(
+                                "assets/images/plus_base.png",
+                                fit: BoxFit.fitWidth,)),
 
-                    child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Stack(
-                          children: [
-                            SizedBox.expand(child: Image.asset(
-                              "assets/images/plus_base.png",fit: BoxFit.fitWidth,)),
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: GestureDetector(
+                                  onTap: () {
 
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: GestureDetector(
-                                onTap: () {
+                                   if(_streamController.isRecordingTimeVisible.value){
+                                     _streamController.stopVideoStreaming();
+                                   }else{
+                                     _streamController.startVideoStreaming();
+                                   }
+                                  },
 
-                                },
+                                  onLongPressStart: (l) {
 
-                                onLongPressStart: (l){
+                                  },
+                                  onLongPressEnd: (h) {
 
-                                },
-                                onLongPressEnd: (h){
+                                  },
+                                  child: Container(
+                                      width: 55,
+                                      height: 55,
+                                      decoration: BoxDecoration(
+                                          color: "#030340".toColor(),
+                                          shape: BoxShape.circle
+                                      ),
+                                      margin: EdgeInsets.only(top: 15),
+                                      child: Center(child: SvgPicture.asset(
+                                          "assets/icons/record.svg"))),
+                                ),
+                              ),
 
-                                },
+                              Align(
+                                alignment: Alignment.bottomRight,
                                 child: Container(
-                                    width: 55,
+                                    width: 40.w,
                                     height: 55,
                                     decoration: BoxDecoration(
-                                        color: "#030340".toColor(),
                                         shape: BoxShape.circle
                                     ),
-                                    margin: EdgeInsets.only(top: 15),
-                                    child: Center(child: SvgPicture.asset(
-                                        "assets/icons/record.svg"))),
+                                    margin: EdgeInsets.only(
+                                        right: 0, bottom: 10),
+                                    child: MaterialButton(
+                                        onPressed: () {
+                                          if (!_streamController
+                                              .shareAccountLogic.isloading
+                                              .value) {
+                                            _goToChannelScreen();
+                                          }
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                6000)
+                                        ),
+
+
+                                        child: Obx(() {
+                                          return Center(child: _streamController
+                                              .shareAccountLogic.isloading.value
+                                              ? Lottie.asset(
+                                              "assets/json/Y8IBRQ38bK.json",
+                                              height: 3.h)
+                                              : Text(_streamController.programModel==null?"Insert Program Here":_streamController.programModel!.name.toString()));
+                                        }))),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Container(
-                                  height: 55,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle
-                                  ),
-                                  margin: EdgeInsets.only(
+                            ],
+                          ))),
 
-                                      left: 10, bottom: 10),
-                                  child: MaterialButton(
-                                      onPressed: () {
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: SafeArea(
+                    child: Container(
+                      width: 5.w,
+                      height: 5.w,
+                      margin: EdgeInsets.all(2.w),
+                      child: MaterialButton(
+                          padding: EdgeInsets.zero,
 
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              6000)
-                                      ),
-
-
-                                      child: Text("Select Stream Account"))),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Container(
-                                  width: 40.w,
-                                  height: 55,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle
-                                  ),
-                                  margin: EdgeInsets.only(
-                                      right: 0, bottom: 10),
-                                  child: MaterialButton(
-                                      onPressed: () {
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              6000)
-                                      ),
-
-
-                                      child: Center(child: Text("Insert Program Here")))),
-                            ),
-                          ],
-                        ))),
-
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: SafeArea(
-                  child: Container(
-                    width: 5.w,
-                    height: 5.w,
-                    margin: EdgeInsets.all(16),
-                    child: MaterialButton(
-                      padding: EdgeInsets.zero,
-                  
-                        onPressed: (){
-                          _streamController.onRefreshCamera();
-                        },
-                        child: SvgPicture.asset("assets/icons/sync.svg",color: Colors.white,)),
+                          onPressed: () {
+                            _streamController.onRefreshCamera();
+                          },
+                          child: SvgPicture.asset(
+                            "assets/icons/sync.svg", color: Colors.white,)),
+                    ),
                   ),
                 ),
-              )
-            ],
-          ),
-        );
-      }),
-    );
+                Obx(() {
+                  return Visibility(
+                    visible: _streamController.isRecordingTimeVisible.value,
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: SafeArea(
+                        child: Container(
+                          width: 20.w,
+                          height: 4.h,
+                          margin: EdgeInsets.only(
+                            top: 1.w,
+                            right: 14.w
+                          ),
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(400)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SvgPicture.asset("assets/images/record.svg"),
+                              Text(
+                                _streamController. recordingTime.value,
+                                style: TextStyle(color: Colors.white),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                })
+              ],
+            ),
+          );
+        }),
+      );
+    });
   }
 
   Widget _cameraPreviewWidget() {
-
     return CameraPreview(_streamController.controller!,);
   }
 
@@ -261,6 +295,18 @@ class CameraExampleHome extends StatelessWidget {
       case CameraLensDirection.external:
       default:
         return Icons.camera;
+    }
+  }
+
+  void _goToChannelScreen() async {
+    try {
+      ProgramModel programModel = await Get.to(
+          ChannelScreen(), arguments: [true]);
+      _streamController.programModel = programModel;
+      _streamController.url = programModel.streamURL;
+      _streamController.update();
+    } catch (e) {
+      // TODO
     }
   }
 }
