@@ -75,6 +75,7 @@ const Map<String, String> enUS = {
   "channel_29":"Add Channel",
   "channel_30":"Channel Management",
   "channel_31":"Media Suite",
+  "channel_31_1":"Stream",
   "channel_32":"Studio",
   "channel_33":"CG & Playout",
   "channel_34":"AI & Production",

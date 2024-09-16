@@ -21,7 +21,9 @@ class StreamViewController extends GetxController {
 
   ProgramModel? programModel;
   ShareAccountLogic shareAccountLogic = Get.put(ShareAccountLogic(),tag: "stream");
-  int selectedCamera = 1;
+  int selectedCamera;
+
+  StreamViewController(this.selectedCamera);
 
   bool get isControllerInitialized => controller?.value.isInitialized ?? false;
   bool get isStreaming => controller?.value.isStreamingVideoRtmp ?? false;
@@ -154,6 +156,14 @@ class StreamViewController extends GetxController {
   }
 
   Future<void> stopVideoStreaming() async {
+    try {
+      _recordingTimer?.cancel();
+      _recordingDuration = Duration.zero;
+      recordingTime.value = '';
+      isRecordingTimeVisible(false);
+    } on Exception catch (e) {
+      // TODO
+    }
     if (controller == null || !isControllerInitialized) return;
     if (!controller!.value.isStreamingVideoRtmp!) return;
 
@@ -163,10 +173,7 @@ class StreamViewController extends GetxController {
       _showCameraException(e);
       return null;
     }
-    _recordingTimer?.cancel();
-    _recordingDuration = Duration.zero;
-    recordingTime.value = '';
-    isRecordingTimeVisible(false);
+
 
   }
 
@@ -205,17 +212,23 @@ class StreamViewController extends GetxController {
   void onRefreshCamera() {
     isLoading(true);
     stopVideoRecording();
+    stopVideoStreaming();
+    try {
+    //  controller!.dispose();
+    }  catch (e) {
+      // TODO
+    }
     Future.delayed(Duration(seconds: 2));
-    initMethod();
-
-
     if(selectedCamera==1){
       selectedCamera=0;
     }else{
       selectedCamera=1;
 
     }
-    onNewCameraSelected(cameras[selectedCamera]);
+    initMethod();
+
+
+
   }
   String _formatDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
@@ -226,5 +239,14 @@ class StreamViewController extends GetxController {
   }
   void deleteProgram(String? id) {
 
+  }
+  int getUnselectedCamera(){
+    if(selectedCamera==0){
+      return 1;
+    }if(selectedCamera==1){
+      return 0;
+    }else{
+      return 0;
+    }
   }
 }

@@ -43,10 +43,15 @@ class _AllToolsScreenState extends State<AllToolsScreen> {
               //
               // }, icon: "assets/icons/all_tools_2.svg", name: "Control Room"),
               AllToolsButtonWidget(onPressed: (){
-               // Get.toNamed(PageRoutes.MEDIASUIT);
-                Get.to(()=>CameraExampleHome());
+               Get.toNamed(PageRoutes.MEDIASUIT);
+                //Get.to(()=>CameraExampleHome());
 
               }, icon: "assets/icons/all_tools_3.svg", name: "channel_31".tr),
+              AllToolsButtonWidget(onPressed: (){
+               // Get.toNamed(PageRoutes.MEDIASUIT);
+                Get.to(()=>CameraExampleHome(),arguments: [0]);
+
+              }, icon: "assets/icons/stream.svg", name: "channel_31_1".tr),
               // AllToolsButtonWidget(onPressed: (){},
               // icon: "assets/icons/all_tools_4.svg", name: "channel_32".tr,enable: false,),
               // AllToolsButtonWidget(onPressed: (){},

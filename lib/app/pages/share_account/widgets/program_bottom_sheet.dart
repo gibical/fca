@@ -109,7 +109,7 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
                             context: Get.context!,
                             titleText: 'Stream Destinations '.tr,
                             hintText: widget.shareAccountLogic.selectShareMode!=null
-                                ? widget.shareAccountLogic.selectShareModelName
+                                ? "Selected Destination: ${widget.shareAccountLogic.destintionList.length}"
                                 : 'Select Stream accounts'.tr,
                             //
                             needful: true),

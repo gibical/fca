@@ -254,7 +254,7 @@ class ProgramModel {
       map['events'] = _events?.map((v) => v.toJson()).toList();
     }
     if (_destinations != null) {
-      map['destinations'] = _destinations?.map((v) => v.toJson()).toList();
+      map['destinations'] = _destinations?.map((v) => v).toList();
     }
     return map;
   }

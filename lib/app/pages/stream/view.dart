@@ -14,9 +14,14 @@ import 'package:rtmp_broadcaster/camera.dart';
 
 import '../channel/view.dart';
 
-class CameraExampleHome extends StatelessWidget {
-  final StreamViewController _streamController = Get.put(
-      StreamViewController());
+class CameraExampleHome extends StatefulWidget {
+  @override
+  State<CameraExampleHome> createState() => _CameraExampleHomeState();
+}
+
+class _CameraExampleHomeState extends State<CameraExampleHome> {
+   StreamViewController _streamController = Get.put(
+      StreamViewController(0));
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +136,7 @@ class CameraExampleHome extends StatelessWidget {
                           padding: EdgeInsets.zero,
 
                           onPressed: () {
-                            _streamController.onRefreshCamera();
+                         logic.onRefreshCamera();
                           },
                           child: SvgPicture.asset(
                             "assets/icons/sync.svg", color: Colors.white,)),
