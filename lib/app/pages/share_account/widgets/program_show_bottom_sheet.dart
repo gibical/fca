@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,7 +42,6 @@ class _ProgramShowBottomSheetState extends State<ProgramShowBottomSheet> {
     return Container(
       width: 100.w,
 
-      height: 25.h,
       decoration: BoxDecoration(
           color: "3b3a5a".toColor(),
           border: Border(
@@ -56,114 +57,116 @@ class _ProgramShowBottomSheetState extends State<ProgramShowBottomSheet> {
             topRight: Radius.circular(15),
           )
       ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
 
-      IgnorePointer(
-              child: CustomTextFieldRegisterWidget(
-                  context: Get.context!,
-                  titleText: 'Name '.tr,
-                  hintText: 'Insert Your Program Here'.tr,
-                  textEditingController: TextEditingController(text: widget.model.name??""),
-                  needful: true),
-            ),
-     if(widget.model.destinations!=null&&widget.model.destinations!.length>0) IgnorePointer(
-              child: CustomTextFieldRegisterWidget(
-                  context: Get.context!,
-                  titleText: 'Stream Destinations '.tr,
-                  hintText: 'Insert Your Program Here'.tr,
-                  textEditingController: TextEditingController(text: widget.model.destinations![0]['name']??""),
-                  needful: true),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: IgnorePointer(
-                    child: CustomTextFieldRegisterWidget(
-                        context: Get.context!,
-                        titleText: 'URL '.tr,
-                        hintText: '${widget.model.streamURL}'.tr,
-                        textEditingController: TextEditingController(text: widget.model.streamURL),
-                        needful: true),
-                  ),
+            IgnorePointer(
+            child: CustomTextFieldRegisterWidget(
+                context: Get.context!,
+                titleText: 'Name '.tr,
+                hintText: 'Insert Your Program Here'.tr,
+                textEditingController: TextEditingController(text: widget.model.name??""),
+                needful: true),
+          ),
+           if(widget.model.destinations!=null&&widget.model.destinations!.length>0) Column(
+             children: widget.model.destinations!.asMap().entries.map((s){
+       return IgnorePointer(
+         child: CustomTextFieldRegisterWidget(
+             context: Get.context!,
+             titleText: 'Stream Destination ${s.key+1} '.tr,
+             hintText: 'Insert Your Program Here'.tr,
+             textEditingController: TextEditingController(text: widget.model.destinations![s.key]['name']??""),
+             needful: true),
+       );
+             }).toList(),
+           ),
+          Row(
+            children: [
+              Expanded(
+                child: IgnorePointer(
+                  child: CustomTextFieldRegisterWidget(
+                      context: Get.context!,
+                      titleText: 'URL '.tr,
+                      hintText: '${widget.model.streamURL}'.tr,
+                      textEditingController: TextEditingController(text: widget.model.streamURL),
+                      needful: true),
                 ),
-                IconButton(onPressed: (){
-                  Clipboard.setData(ClipboardData(text: widget.model.streamURL));
-                  Constant.showMessege("Data Set To Clipboard");
+              ),
+              IconButton(onPressed: (){
+                Clipboard.setData(ClipboardData(text: widget.model.streamURL));
+                Constant.showMessege("Data Set To Clipboard");
 
-                  Get.back();
-                }, icon: Icon(Icons.copy)),
-                IconButton(onPressed: (){
-                  Share.share(widget.model.streamURL,subject: "Stream Link");
+                Get.back();
+              }, icon: Icon(Icons.copy)),
+              IconButton(onPressed: (){
+                Share.share(widget.model.streamURL,subject: "Stream Link");
 
-                  Get.back();
-                }, icon: Icon(Icons.share)),
-              ],
-            ),
+                Get.back();
+              }, icon: Icon(Icons.share)),
+            ],
+          ),
 
-            Container(
-              width: 100.w,
-              height: 7.h,
-              margin: EdgeInsets.symmetric(horizontal: 25),
-              child: Row(
-                children: [
-                  Container(
-                    width: 30.w,
-                    height: 5.h,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: AppColor.primaryDarkColor,
-                        
-                      ),
+          Container(
+            width: 100.w,
+            height: 7.h,
+            margin: EdgeInsets.symmetric(horizontal: 25),
+            child: Row(
+              children: [
+                Container(
+                  width: 30.w,
+                  height: 5.h,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: AppColor.primaryDarkColor,
+
+                    ),
+                    borderRadius: BorderRadius.circular(7)
+                  ),
+                  child: MaterialButton(
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(7)
                     ),
-                    child: MaterialButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7)
-                      ),
-                      onPressed: (){
+                    onPressed: (){
 
-                        Get.back();
-                        Get.bottomSheet(ProgramBottomSheet(Get.find<ShareAccountLogic>(),isEditMode: true,model: widget.model,));
-                      },
-                      child: Center(
-                        child: Text("Edit",style: TextStyle(color: AppColor.primaryDarkColor),),
-                      ),
+                      Get.back();
+                      Get.bottomSheet(ProgramBottomSheet(Get.find<ShareAccountLogic>(),isEditMode: true,model: widget.model,));
+                    },
+                    child: Center(
+                      child: Text("Edit",style: TextStyle(color: AppColor.primaryDarkColor),),
                     ),
                   ),
-                  Spacer(),
-                  Container(
-                    width: 30.w,
-                    height: 5.h,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.red,
+                ),
+                Spacer(),
+                Container(
+                  width: 30.w,
+                  height: 5.h,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.red,
 
-                        ),
+                      ),
+                      borderRadius: BorderRadius.circular(7)
+                  ),
+                  child: MaterialButton(
+                    shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(7)
                     ),
-                    child: MaterialButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7)
-                      ),
-                      onPressed: (){
+                    onPressed: (){
 
-                        Get.find<ShareAccountLogic>().deleteProgram(widget.model.id);
-                      },
-                      child: Center(
-                        child: Text("Delete",style: TextStyle(color: Colors.red),),
-                      ),
+                      Get.find<ShareAccountLogic>().deleteProgram(widget.model.id);
+                    },
+                    child: Center(
+                      child: Text("Delete",style: TextStyle(color: Colors.red),),
                     ),
                   ),
+                ),
 
-                ],
-              ),
-            )
-        
-          ],
-        ),
+              ],
+            ),
+          )
+
+        ],
       ),
     );
   }

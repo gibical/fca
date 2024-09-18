@@ -291,7 +291,7 @@ class MediaSuitController extends GetxController {
           model.endTrim = model.second;
           model.startTrim = 0;
           isTrimming = false;
-        selectedVideoIndex.value = -1;
+      // selectedVideoIndex.value = -1;
 
         Constant.showMessege("Request Succesful" );
 
@@ -686,6 +686,7 @@ class MediaSuitController extends GetxController {
   //Multi Select
 
   var tempSelectedItems = <EditDataModel>[].obs;
+
   void confirmSelection() {
     for (var item in tempSelectedItems) {
       if (item.mediaClass == 1) {
@@ -695,12 +696,11 @@ class MediaSuitController extends GetxController {
       } else if (item.mediaClass == 3) {
         setDataEditAudio(item.name, item.urlMedia!, item.assetId!, isloading: item.isloading);
       } else if (item.mediaClass == 4) {
-        setDataEditVideo(item.name, item.urlMedia!, item.length.toDouble(), item.assetId!, isloading: item.isloading);
+        setDataEditVideo(item.name, item.urlMedia!, item.second, item.assetId!, isloading: item.isloading );
       }
     }
     tempSelectedItems.clear();
   }
-
   void addItemToTempList(String name, String url,widthVideoItem, String assetId, int mediaClass, {bool isloading = false}) {
     if (mediaClass == 1) {
       tempSelectedItems.add(EditDataModel(name, url, 0, assetId, 1 ,isloading: isloading));
@@ -709,7 +709,7 @@ class MediaSuitController extends GetxController {
     } else if (mediaClass == 3) {
       tempSelectedItems.add(EditDataModel(name, url, 0, assetId, 3 ,isloading: isloading));
     } else if (mediaClass == 4) {
-      tempSelectedItems.add(EditDataModel(name, url, widthVideoItem.toDouble(), assetId, 4, isloading: isloading));
+      tempSelectedItems.add(EditDataModel(name, url, widthVideoItem, assetId, 4, isloading: isloading));
 
     } else {
 
@@ -732,7 +732,7 @@ class MediaSuitController extends GetxController {
   }
 
   void setDataEditVideo(
-      String name, String videoUrl, double videoTime, String assetId,{bool isloading =false}) {
+      String name, String videoUrl, double videoTime, String assetId,{bool isloading =false }) {
     double widthVideoItem = videoTime * 16.0;
 
     editVideoDataList
@@ -741,7 +741,7 @@ class MediaSuitController extends GetxController {
     selectedVideoIndex.value = editVideoDataList.length - 1;
   }
 
-  void setDataEditAudio(String name, String audioUrl, String assetId,{bool isloading =false , double time = 5}) {
+  void setDataEditAudio(String name, String audioUrl, String assetId,{bool isloading =false , double time = 5 , }) {
     editAudioDataList.add(EditDataModel(name, audioUrl, 0, assetId, 3 ,isloading: isloading , second: time));
 
     selectedAudioIndex.value = editAudioDataList.length - 1;
@@ -910,101 +910,93 @@ class MediaSuitController extends GetxController {
   void exportOnline() async{
 
 
+
     print('====================Video==============================');
-      videoConfig();
+    var video =   videoConfig();
     print('==============================Text====================');
-    textConfig();
+    var  text =  textConfig();
     print('====================Image==============================');
-      imageConfig();
+    var image =   imageConfig();
     print('====================Audio==============================');
-   audioConfig();
+    var audi =  audioConfig();
 
-    // print('====================Video==============================');
-    // var video =   videoConfig();
-    // print('==============================Text====================');
-    // var  text =  textConfig();
-    // print('====================Image==============================');
-    // var image =   imageConfig();
-    // print('====================Audio==============================');
-    // var audi =  audioConfig();
+    isloadingSubmit(true);
 
-    // isloadingSubmit(true);
-    //
-    // var dio = Dio();
-    // var body ;
-    //
-    // var tacks =[];
-    // if(video.contains("null")==false){
-    //   tacks.add(
-    //     {
-    //       "type":"video",
-    //       "items":jsonDecode(video.replaceAll("asset_id", "id"))
-    //     }
-    //   );
-    // }
-    // if(audi.contains("null")==false){
-    //   tacks.add(
-    //       {
-    //         "type":"audio",
-    //         "items":jsonDecode(audi.replaceAll("asset_id", "id"))
-    //       }
-    //   );
-    // }
-    // if(image.contains("null")==false){
-    //   tacks.add(
-    //       {
-    //         "type":"image",
-    //         "items":jsonDecode(image.replaceAll("asset_id", "id"))
-    //       }
-    //   );    }
-    // if(text.contains("null")==false){
-    //   tacks.add(
-    //       {
-    //         "type":"text",
-    //         "items":jsonDecode(text.replaceAll("asset_id", "id"))
-    //       }
-    //   );    }
-    // body = {
-    //   'tracks':tacks
-    // };
-    //
-    //
-    // print('ShareAccountLogic.sendIDTokenToServer = ${jsonEncode(body)}');
-    // dio.interceptors.add(MediaVerseConvertInterceptor());
-    // dio.interceptors.add(CurlLoggerDioInterceptor());
-    //
-    // try {
-    //   var response = await dio.post(
-    //     '${Constant.HTTP_HOST}tasks/mix',
-    //     data:jsonEncode(body),
-    //     options: Options(
-    //       headers: {
-    //         'Authorization': 'Bearer ${GetStorage().read("token")}',
-    //         'X-App': '_Android',
-    //       },
-    //     ),
-    //
-    //   );
-    //
-    //   if (response.statusCode! >= 200||response.statusCode! < 300) {
-    //     print('==================================================================================================');
-    //     print('Time line Asset Create successfully = ${response.data}');
-    //     print('==================================================================================================');
-    //     clearTimeline();
-    //     Constant.showMessege("Time line Asset Create successfully Wait To Render...");
-    //
-    //
-    //   } else {
-    //     isloadingSubmit(false);
-    //
-    //     print('Failed to upload file: ${response.statusMessage}');
-    //   }
-    // } on DioError catch (e) {
-    //   isloadingSubmit(false);
-    //
-    //   print('DioError: ${e.response!.statusCode}');
-    // }
-    //
+    var dio = Dio();
+    var body ;
+
+    var tacks =[];
+    if(video.contains("null")==false){
+      tacks.add(
+        {
+          "type":"video",
+          "items":jsonDecode(video.replaceAll("asset_id", "id"))
+        }
+      );
+    }
+    if(audi.contains("null")==false){
+      tacks.add(
+          {
+            "type":"audio",
+            "items":jsonDecode(audi.replaceAll("asset_id", "id"))
+          }
+      );
+    }
+    if(image.contains("null")==false){
+      tacks.add(
+          {
+            "type":"image",
+            "items":jsonDecode(image.replaceAll("asset_id", "id"))
+          }
+      );    }
+    if(text.contains("null")==false){
+      tacks.add(
+          {
+            "type":"text",
+            "items":jsonDecode(text.replaceAll("asset_id", "id"))
+          }
+      );    }
+    body = {
+      'tracks':tacks
+    };
+
+
+    print('ShareAccountLogic.sendIDTokenToServer = ${jsonEncode(body)}');
+    dio.interceptors.add(MediaVerseConvertInterceptor());
+    dio.interceptors.add(CurlLoggerDioInterceptor());
+
+    try {
+      var response = await dio.post(
+        '${Constant.HTTP_HOST}tasks/mix',
+        data:jsonEncode(body),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${GetStorage().read("token")}',
+            'X-App': '_Android',
+          },
+        ),
+
+      );
+
+      if (response.statusCode! >= 200||response.statusCode! < 300) {
+        print('==================================================================================================');
+        print('Time line Asset Create successfully = ${response.data}');
+        print('==================================================================================================');
+        clearTimeline();
+        Constant.showMessege("Time line Asset Create successfully Wait To Render...");
+
+
+      } else {
+        isloadingSubmit(false);
+
+        print('Failed to upload file: ${response.statusMessage}');
+      }
+    } on DioError catch (e) {
+      isloadingSubmit(false);
+
+      print('DioError: ${e.response!.statusCode}');
+    }
+
 
   }
 
@@ -1012,7 +1004,7 @@ class MediaSuitController extends GetxController {
   //  debugger();
 
     var json =  jsonDecode(s);
-    String url_media = "${"https://"+json['storage']}.gibical.app/${json['path']}";
+    String url_media = "${"https://"+json['storage']}.mediaverse.app/${json['path']}";
     editAudioDataList.forEach((element) {
       if(element.isloading){
         element.assetId = json['asset_id'];

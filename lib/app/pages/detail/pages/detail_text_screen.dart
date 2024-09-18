@@ -353,12 +353,14 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                   ),
                 );
               }),
-              BackWidget(idAssetMedia: Get.arguments['idAssetMedia'] == "idAssetMedia",)
+              BackWidget()
 
 
             ],
           );
         })
+
+
     ), onWillPop: ()async{
       if(Get.arguments['idAssetMedia'] == "idAssetMedia"){
               Get.offAllNamed(PageRoutes.WRAPPER);

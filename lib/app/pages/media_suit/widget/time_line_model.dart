@@ -84,6 +84,7 @@ class _EditeBoxWidgetState extends State<EditeBoxWidget> {
                 : selectedTextIndex == widget.index;
     return GetBuilder<MediaSuitController>(builder: (c) {
       return AnimatedOpacity(
+
         opacity: isSelected ? 1.0 : 0.3,
         duration: Duration(milliseconds: Constant.animatiomDuration),
         child: Row(
@@ -99,7 +100,7 @@ class _EditeBoxWidgetState extends State<EditeBoxWidget> {
               child: Stack(
                 children: [
                   Container(
-                    width: widget.model.width,
+                    width: widget.model.width +  editorController.maxPaddingValue -editorController.minPaddingValue,
                     color: widget.color,
                     alignment: Alignment.center,
                     child: AutoSizeText(

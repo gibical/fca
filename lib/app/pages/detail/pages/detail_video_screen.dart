@@ -26,27 +26,25 @@ import '../widgets/custom_comment_single_pageWidget.dart';
 import '../widgets/report_botton_sheet.dart';
 import '../widgets/youtube_bottomsheet.dart';
 
-
 class DetailVideoScreen extends StatelessWidget {
   DetailVideoScreen({super.key});
+
   final videoController = Get.put(DetailController(4),
       tag: "${DateTime.now().microsecondsSinceEpoch}");
-
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()async{
-        if(Get.arguments['idAssetMedia'] == "idAssetMedia"){
+      onWillPop: () async {
+        if (Get.arguments['idAssetMedia'] == "idAssetMedia") {
           Get.offAllNamed(PageRoutes.WRAPPER);
-        }else{
+        } else {
           Get.back();
         }
 
         return false;
       },
       child: Scaffold(
-
         backgroundColor: AppColor.primaryDarkColor,
         bottomNavigationBar: Obx(() {
           if (videoController.isLoadingVideos.value) {
@@ -63,13 +61,16 @@ class DetailVideoScreen extends StatelessWidget {
               } else if ((plan == 2 || plan == 3)) {
                 return BuyCardWidget(
                     selectedItem: videoController.videoDetails,
-                    title: videoController.videoDetails!['asset']['license_type'] == 2
+                    title: videoController.videoDetails!['asset']
+                                ['license_type'] ==
+                            2
                         ? 'Ownership'
-                        : videoController.videoDetails!['asset']['license_type'] == 3
-                        ? 'Subscribe'
-                        : '',
-                    price: videoController.videoDetails!['asset']['price']
-                );
+                        : videoController.videoDetails!['asset']
+                                    ['license_type'] ==
+                                3
+                            ? 'Subscribe'
+                            : '',
+                    price: videoController.videoDetails!['asset']['price']);
               } else {
                 return SizedBox();
               }
@@ -78,195 +79,235 @@ class DetailVideoScreen extends StatelessWidget {
             }
           }
         }),
-
         body: Obx(() {
           log('DetailVideoScreen.build videoController.videoDetails? = ${videoController.videoDetails}');
-          return videoController.isLoadingVideos.value ? Center(
-              child: CircularProgressIndicator()) : Stack(
-            children: [
-              CustomScrollView(
-                slivers: [
-                  CustomAppBarVideoAndImageDetailWidget(
-                    selectedItem: videoController.videoDetails,
-                    isVideo: true,
-                    detailController: videoController,),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 6.5.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          Text('${videoController.videoDetails?['media']['name']}',
-                            style: FontStyleApp.titleMedium.copyWith(
-                                color: AppColor.whiteColor,
-                                fontWeight: FontWeight.w600
-                            ),),
-
-                          SizedBox(
-                            height: 1.h,
-                          ),
-                          Text('${videoController.videoDetails?['media']['description'] ?? ''}',
-                            style: FontStyleApp.bodyMedium.copyWith(
-                              color: AppColor.grayLightColor.withOpacity(0.8),
-                            ),),
-
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          Row(
-                            children: [
-                              Container(
-
-                                child: CircleAvatar(
-                                  backgroundColor: AppColor.blueDarkColor,
-                                  backgroundImage:
-                                  NetworkImage(videoController.videoDetails?['user']['image_url']),
+          return videoController.isLoadingVideos.value
+              ? Center(child: CircularProgressIndicator())
+              : Stack(
+                  children: [
+                    CustomScrollView(
+                      slivers: [
+                        CustomAppBarVideoAndImageDetailWidget(
+                          selectedItem: videoController.videoDetails,
+                          isVideo: true,
+                          detailController: videoController,
+                        ),
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 6.5.w),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 2.h,
                                 ),
-                                width: 7.w,
-                              ),
-                              CircleAvatar(
-                                radius: 3.w,
-                              ),
-                              SizedBox(
-                                width: 2.w,
-                              ),
-                              if(videoController.videoDetails?['asset'] !=
-                                  null)Text(videoController
-                                  .videoDetails?['asset']['user']['username'],
-                                style: FontStyleApp.bodySmall.copyWith(
-                                    color: AppColor.grayLightColor.withOpacity(
-                                        0.8),
-                                    fontSize: 13
-                                ),),
-                              Spacer(),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.bottomSheet(
-                                      ReportBottomSheet(videoController));
-                                },
-                                child: Text('details_6'.tr,
-                                  style: FontStyleApp.bodySmall.copyWith(
-                                      color: AppColor.grayLightColor.withOpacity(
-                                          0.8),
-                                      fontSize: 13
-                                  ),),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          if(!videoController.file_id.toString().contains("null"))      Row(
-                            children: [
+                                Text(
+                                  '${videoController.videoDetails?['media']['name']}',
+                                  style: FontStyleApp.titleMedium.copyWith(
+                                      color: AppColor.whiteColor,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                SizedBox(
+                                  height: 1.h,
+                                ),
+                                Text(
+                                  '${videoController.videoDetails?['media']['description'] ?? ''}',
+                                  style: FontStyleApp.bodyMedium.copyWith(
+                                    color: AppColor.grayLightColor
+                                        .withOpacity(0.8),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 2.h,
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      child: videoController
+                                                      .videoDetails?['user']
+                                                  ['image_url'] ==
+                                              null
+                                          ? CircleAvatar(
+                                              backgroundColor:
+                                                  AppColor.blueDarkColor,
+                                            )
+                                          : CircleAvatar(
+                                              backgroundColor:
+                                                  AppColor.blueDarkColor,
+                                              backgroundImage: NetworkImage(
+                                                  videoController
+                                                          .videoDetails?['user']
+                                                      ['image_url']),
+                                            ),
+                                      width: 7.w,
+                                    ),
+                                    CircleAvatar(
+                                      radius: 3.w,
+                                    ),
+                                    SizedBox(
+                                      width: 2.w,
+                                    ),
+                                    if (videoController
+                                            .videoDetails?['asset'] !=
+                                        null)
+                                      Text(
+                                        videoController.videoDetails?['asset']
+                                            ['user']['username'],
+                                        style: FontStyleApp.bodySmall.copyWith(
+                                            color: AppColor.grayLightColor
+                                                .withOpacity(0.8),
+                                            fontSize: 13),
+                                      ),
+                                    Spacer(),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.bottomSheet(
+                                            ReportBottomSheet(videoController));
+                                      },
+                                      child: Text(
+                                        'details_6'.tr,
+                                        style: FontStyleApp.bodySmall.copyWith(
+                                            color: AppColor.grayLightColor
+                                                .withOpacity(0.8),
+                                            fontSize: 13),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 2.h,
+                                ),
+                                if (!videoController.file_id
+                                    .toString()
+                                    .contains("null"))
+                                  Row(
+                                    children: [
+                                      InkWell(
+                                          onTap: () {
+                                            videoController
+                                                .videoConvertToAudio();
+                                          },
+                                          child: SvgPicture.asset(
+                                            "assets/icons/icon__single-convert-to-audio.svg",
+                                            width: 6.w,
+                                          )),
+                                      SizedBox(
+                                        width: 3.w,
+                                      ),
+                                      InkWell(
+                                          onTap: () {
+                                            videoController.sendShareYouTube();
+                                          },
+                                          child: SvgPicture.asset(
+                                            "assets/icons/icon__video-white.svg",
+                                            width: 6.w,
+                                          )),
+                                      SizedBox(
+                                        width: 3.w,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          double videoLength =
+                                              (videoController.videoDetails?[
+                                                          'media']['length'] ??
+                                                      0)
+                                                  .toDouble();
 
-                              InkWell(
+                                          Get.find<MediaSuitController>()
+                                              .setDataEditVideo(
+                                                  videoController.videoDetails?[
+                                                          'media']['name'] ??
+                                                      '',
+                                                  videoController
+                                                          .videoDetails?['file']
+                                                      ['url'],
+                                                  videoLength,
+                                                  videoController
+                                                      .videoDetails!['file_id']
+                                                      .toString());
+                                          Get.toNamed(PageRoutes.MEDIASUIT);
+                                        },
+                                        child: Icon(Icons.edit),
+                                      ),
+                                    ],
+                                  ),
+                                if (!videoController.file_id
+                                    .toString()
+                                    .contains("null"))
+                                  SizedBox(
+                                    height: 3.h,
+                                  ),
+                                Wrap(
+                                  children: [
+                                    //
+                                    if (videoController
+                                            .videoDetails?['genre'] !=
+                                        null)
+                                      CardMarkSinglePageWidget(
+                                          label: 'details_9'.tr,
+                                          type: (videoController
+                                                      .videoDetails?['genre']
+                                                      .length >
+                                                  5)
+                                              ? '${videoController.videoDetails?['genre'].substring(0, 5)}...'
+                                              : videoController
+                                                  .videoDetails?['genre']),
+                                    CardMarkSinglePageWidget(
+                                        label: 'details_8'.tr,
+                                        type: videoController.getTypeString(
+                                            videoController.videoDetails?[
+                                                    'media_type'] ??
+                                                1)),
+                                    CardMarkSinglePageWidget(
+                                        label: 'details_10'.tr,
+                                        type:
+                                            '${videoController.videoDetails?['media']['language']}'),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 4.h,
+                                ),
+                                GestureDetector(
                                   onTap: () {
-                                    videoController.videoConvertToAudio();
-
+                                    String itemId = videoController
+                                        .videoDetails?['asset_id'];
+                                    print(itemId);
+                                    Get.toNamed(PageRoutes.COMMENT, arguments: {
+                                      'id': itemId,
+                                      "logic": videoController
+                                    });
                                   },
-                                  child: SvgPicture.asset(
-                                    "assets/icons/icon__single-convert-to-audio.svg",
-                                    width: 6.w,
-                                  )),
-                              SizedBox(
-                                width: 3.w,
-                              ),
-
-                              InkWell(
-                                  onTap: () {
-                                    videoController.sendShareYouTube();
-                                  },
-                                  child: SvgPicture.asset(
-                                    "assets/icons/icon__video-white.svg",
-                                    width: 6.w,
-                                  )),
-
-                              SizedBox(
-                                width: 3.w,
-                              ),
-                              GestureDetector(
-                                onTap: (){
-                                  double videoLength = (videoController.videoDetails?['media']['length'] ?? 0).toDouble();
-
-                                  Get.find<MediaSuitController>().setDataEditVideo(videoController.videoDetails?['media']['name']?? '' ,videoController.videoDetails?['file']['url'] , videoLength , videoController.videoDetails!['file_id'].toString());
-                                  Get.toNamed(PageRoutes.MEDIASUIT);
-
-                                },
-                                child:  Icon(Icons.edit),
-                              ),
-                            ],
+                                  child: CustomCommentSinglePageWidget(),
+                                ),
+                                SizedBox(
+                                  height: 30.h,
+                                ),
+                              ],
+                            ),
                           ),
-                          if(!videoController.file_id.toString().contains("null"))                SizedBox(
-                            height: 3.h,
-                          ),
-
-                          Wrap(
-                            children: [
-                              //
-                              if(videoController.videoDetails?['genre'] !=
-                                  null) CardMarkSinglePageWidget(label: 'details_9'.tr,
-                                  type: (videoController.videoDetails?['genre']
-                                      .length > 5)
-                                      ? '${videoController.videoDetails?['genre']
-                                      .substring(0, 5)}...'
-                                      : videoController.videoDetails?['genre']),
-                              CardMarkSinglePageWidget(label: 'details_8'.tr,
-                                  type: videoController.getTypeString(
-                                      videoController.videoDetails?['media_type'] ??
-                                          1)),
-                              CardMarkSinglePageWidget(label: 'details_10'.tr,
-                                  type: '${videoController
-                                      .videoDetails?['media']['language']}'),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 4.h,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              String itemId = videoController
-                                  .videoDetails?['asset_id'];
-                              print(itemId);
-                              Get.toNamed(
-                                  PageRoutes.COMMENT, arguments: {'id': itemId,"logic":videoController});
-                            },
-                            child: CustomCommentSinglePageWidget(),
-                          ),
-                          SizedBox(
-                            height: 30.h,
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ),
-
-                ],
-              ),
-              Obx(() {
-                return Visibility(
-                  visible: videoController.isEditAvaiblae.isTrue,
-
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: DetailsBottomWidget(videoController, PostType.video),
-                  ),
+                    Obx(() {
+                      return Visibility(
+                        visible: videoController.isEditAvaiblae.isTrue,
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: DetailsBottomWidget(
+                              videoController, PostType.video),
+                        ),
+                      );
+                    }),
+                    BackWidget(
+                      idAssetMedia:
+                          Get.arguments['idAssetMedia'] == "idAssetMedia",
+                    )
+                  ],
                 );
-              }),
-              BackWidget(idAssetMedia: Get.arguments['idAssetMedia'] == "idAssetMedia",)
-
-            ],
-          );
         }),
-
-
       ),
     );
   }
-
-
 }
 
 class VideoDialog extends StatefulWidget {

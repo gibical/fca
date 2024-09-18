@@ -99,6 +99,9 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   List<DestinationModel> destinationModelList = [];
   late ApiRequster apiRequster;
 
+  List<DestinationModel> destintionList = [];
+
+
   @override
   void onReady() {
     // TODO: implement onReady
@@ -491,8 +494,16 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     update();
   }
   void setSelectedDestiniation(DestinationModel elementAt) {
-    selectedDestinationAccoount = elementAt;
-    update();
+   if(getactiveDestinationModel(elementAt)){
+     destintionList.remove(elementAt);
+   }else{
+     destintionList.add(elementAt);
+   }
+   update();
+  }
+
+  bool getactiveDestinationModel(DestinationModel model){
+    return destintionList.toList().firstWhereOrNull((test)=>test.id.toString().contains(model.id.toString()))!=null;
   }
 
   void onSelcetedDate(DateTime calenderDateTime) {
@@ -657,18 +668,69 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     update();
   }
 
-  void parseJsonFromCreateProgram(source) {
+  void parseJsonFromCreateProgram(source)async {
     var json =jsonDecode(source);
     print('ShareAccountLogic.parseJsonFromCreateProgram = ${json}');
     var id  = json['data']['id'];
-    onAddDestinationToProgram(id);
-  
+
+    int index = 0;
+    destintionList.forEach((s) async {
+      index = index+1;
+
+     await onAddDestinationToProgramRequest(id, s.id.toString(),index==destintionList.length);
+    });
+
+  }
+  Future<bool> onAddDestinationToProgramRequest( prgoramID,destinationID,bool isLast) async {
+    try {
+      print('ShareAccountLogic.onAddDestinationToProgramRequest 1 ');
+      final token = GetStorage().read("token");
+      String apiUrl = '${Constant.HTTP_HOST}programs/${prgoramID}/destinations/${destinationID}';
+
+      var dio = Dio();
+
+      dio.interceptors.add(MediaVerseConvertInterceptor());
+      dio.interceptors.add(CurlLoggerDioInterceptor());
+
+      var response = await dio.post(
+        apiUrl,
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            'X-App': '_Android',
+            'Accept-Language': 'en-US',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      print('ShareAccountLogic.onAddDestinationToProgramRequest 2 = ${response.statusCode} ');
+
+      if(isLast){
+        iscreateProgramloading(false);
+        Get.back();
+        isloading(true);
+        getExternalAccount();
+      }
+      if (response.statusCode == 200) {
+
+      return true;
+      } else {
+        return false;
+
+        print('Failed to purchase the asset.');
+      }
+    } catch (e) {
+      print('Error: $e');
+      return false;
+
+
+    }
   }
 
   void onAddDestinationToProgram(id) {
     
     
-    apiRequster.request("programs/${id}/destinations/${selectShareMode==SelectShareMode.stream?(selectedDestinationAccoount!.id):(selectedShareAccoount!.id)}", ApiRequster.MHETOD_POST, 501);
+    apiRequster.request("", ApiRequster.MHETOD_POST, 501);
   }
 
   void praseJsonFromAddDestination(source) {

@@ -263,9 +263,91 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
                                     ),
                                   ),
                                 ),
+
                               ],
                             )),
-                      )
+                      ),
+                      if(isSendedByCondactor)Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                            width: 100.w,
+                            height: 9.h,
+                            decoration: BoxDecoration(
+                                color: "3b3a5a".toColor(),
+                                border: Border(
+                                  left: BorderSide(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      width: 1),
+                                  bottom: BorderSide(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      width: 0.4),
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  topRight: Radius.circular(15),
+                                )),
+                            child: Stack(
+                              children: [
+                                Align(
+                                  child: Container(
+                                    width: 80.w,
+                                    height: 5.h,
+                                    child: DottedBorder(
+                                      borderType: BorderType.RRect,
+                                      color: "6f6e8e".toColor(),
+                                      radius: Radius.circular(12),
+                                      strokeWidth: 2,
+                                      child: ClipRRect(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12)),
+                                          child: MaterialButton(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(
+                                                    12)),
+                                            onPressed: () {
+                                             Get.back();
+                                            },
+                                            padding: EdgeInsets.zero,
+                                            child: Center(
+                                              child: Row(
+                                                mainAxisSize:
+                                                MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .center,
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment
+                                                    .center,
+                                                children: [
+                                                  Text(
+                                                    "Add to Destination".tr,
+                                                    style: TextStyle(fontSize: 13.sp,
+                                                        color: "6f6e8e"
+                                                            .toColor(),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 3.w,
+                                                  ),
+                                                  Icon(
+                                                    Icons
+                                                        .add_circle_outline,
+                                                    color:
+                                                    "6f6e8e".toColor(),
+                                                    size: 11.sp,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          )),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )),
+                      ),
+
                     ],
                   ),
                 ),
@@ -408,7 +490,9 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
                                 ),
                               ],
                             )),
-                      )
+                      ),
+
+
                     ],
                   ),
                 ),
@@ -608,6 +692,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
     );
   }
   Padding MassageItemWidgetDestination(DestinationModel elementAt) {
+    bool _isSelected = logic.getactiveDestinationModel(elementAt);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0.6.h),
       child: MaterialButton(
@@ -616,11 +701,12 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
             ? () {
 
 
+
           Get.find<ShareAccountLogic>().setSelectedDestiniation(elementAt);
           Get.find<ShareAccountLogic>().selectShareMode = SelectShareMode.stream;
           Get.find<ShareAccountLogic>().selectShareModelName = elementAt.name??"";
           Get.find<ShareAccountLogic>().selectShareModeid = elementAt.id??"";
-                Get.back();
+               //  Get.back();
               }
             : null,
         shape: RoundedRectangleBorder(
@@ -632,7 +718,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
           decoration: BoxDecoration(
               color: Color(0xff4E4E61).withOpacity(0.3),
               borderRadius: BorderRadius.circular(16.sp),
-              border: Border(
+              border:_isSelected?Border.all(color: Colors.white): Border(
                 left: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1),
                 bottom:
                     BorderSide(color: Colors.grey.withOpacity(0.3), width: 0.4),
@@ -640,50 +726,65 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
           child: Row(
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
-                    SizedBox(
-                      height: 1.5.h,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 6.w,
-                      ),
-                      child: Row(
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            '${elementAt.name}',
-                            style: FontStyleApp.bodyMedium
-                                .copyWith(color: Colors.white),
+                          SizedBox(
+                            height: 1.5.h,
                           ),
-                          Spacer(),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 6.w,
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  '${elementAt.name}',
+                                  style: FontStyleApp.bodyMedium
+                                      .copyWith(color: Colors.white),
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0.8.h,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 6.w),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Type: Youtube",
+                                  style: FontStyleApp.bodyMedium.copyWith(
+                                    color: Colors.grey.withOpacity(0.7),
+                                  ),
+                                ),
+                               
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 0.8.h,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 6.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Type: Youtube",
-                            style: FontStyleApp.bodyMedium.copyWith(
-                              color: Colors.grey.withOpacity(0.7),
-                            ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ( _isSelected)?Checkbox(value: true, onChanged: (s){}):Container(),
+                        Text(
+                          "Connected: on",//
+                          style: FontStyleApp.bodyMedium.copyWith(
+                            color: Colors.grey.withOpacity(0.7),
                           ),
-                          Text(
-                            "Connected: on",//
-                            style: FontStyleApp.bodyMedium.copyWith(
-                              color: Colors.grey.withOpacity(0.7),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
+                    SizedBox(width: 4.w,)
                   ],
                 ),
               ),
