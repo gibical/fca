@@ -1,11 +1,14 @@
 import 'dart:async';
-
 import 'package:get/get.dart';
-import 'package:gibical/gen/model/json/walletV2/FromJsonGetPrograms.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart';
+import 'package:gibical/app/common/app_config.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:rtmp_broadcaster/camera.dart';
+import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
+import '../../../gen/model/json/walletV2/FromJsonGetPrograms.dart';
+import '../channel/view.dart';
 import '../share_account/logic.dart';
 
 class StreamViewController extends GetxController {
@@ -20,8 +23,14 @@ class StreamViewController extends GetxController {
   var isLoading = true.obs;
 
   ProgramModel? programModel;
-  ShareAccountLogic shareAccountLogic = Get.put(ShareAccountLogic(),tag: "stream");
+  ShareAccountLogic shareAccountLogic = Get.put(ShareAccountLogic(), tag: "stream");
   int selectedCamera;
+
+  bool isScreenStreaming = false;
+  Timer? _screenRecordingTimer;
+  Duration _screenRecordingDuration = Duration.zero;
+  var screenRecordingTime = ''.obs;
+  var isScreenRecordingTimeVisible = false.obs;
 
   StreamViewController(this.selectedCamera);
 
@@ -36,10 +45,17 @@ class StreamViewController extends GetxController {
   var recordingTime = ''.obs;
   var isRecordingTimeVisible = false.obs;
 
-
   @override
   void onInit() {
     super.onInit();
+    const platform = MethodChannel('com.app.gibical/rtmp');
+
+    platform.setMethodCallHandler((call) async {
+      if (call.method == "stopTheStream") {
+
+        stopScreenStreaming();
+      }
+    });
     initMethod();
   }
 
@@ -49,10 +65,8 @@ class StreamViewController extends GetxController {
     } on CameraException catch (e) {
       logError(e.code, e.description ?? "No description found");
     }
-  await onNewCameraSelected(
-      cameras[selectedCamera]);
+    await onNewCameraSelected(cameras[selectedCamera]);
     isLoading(false);
-
   }
 
   Future<void> onNewCameraSelected(CameraDescription? cameraDescription) async {
@@ -131,7 +145,7 @@ class StreamViewController extends GetxController {
       await controller!.stopVideoRecording();
     } on CameraException catch (e) {
       _showCameraException(e);
-      return null;
+      return;
     }
   }
 
@@ -161,8 +175,8 @@ class StreamViewController extends GetxController {
       _recordingDuration = Duration.zero;
       recordingTime.value = '';
       isRecordingTimeVisible(false);
-    } on Exception catch (e) {
-      // TODO
+    } catch (e) {
+      // Handle exception
     }
     if (controller == null || !isControllerInitialized) return;
     if (!controller!.value.isStreamingVideoRtmp!) return;
@@ -171,10 +185,8 @@ class StreamViewController extends GetxController {
       await controller!.stopVideoStreaming();
     } on CameraException catch (e) {
       _showCameraException(e);
-      return null;
+      return;
     }
-
-
   }
 
   Future<void> pauseVideoStreaming() async {
@@ -199,6 +211,54 @@ class StreamViewController extends GetxController {
     }
   }
 
+  Future<void> startScreenStreaming() async {
+    if (programModel!=null) {
+      PermissionStatus microphoneStatus = await Permission.microphone.status;
+      if (!microphoneStatus.isGranted) {
+        microphoneStatus = await Permission.microphone.request();
+      }
+
+      if (microphoneStatus.isGranted) {
+        try {
+          final String result = await MethodChannel('com.app.gibical/rtmp').invokeMethod('startScreenShare', {
+            'rtmpUrl': programModel!.streamURL,
+          });
+          print(result);
+
+          isScreenStreaming = true;
+          isScreenRecordingTimeVisible(true);
+          _screenRecordingDuration = Duration.zero;
+          _screenRecordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+            _screenRecordingDuration += Duration(seconds: 1);
+            screenRecordingTime.value = _formatDuration(_screenRecordingDuration);
+            update();
+          });
+        } on PlatformException catch (e) {
+          print("Failed to start screen streaming: '${e.message}'.");
+        }
+      } else {
+        print('Microphone permission denied');
+      }
+    }else{
+      Constant.showMessege("You must Select Program First");
+    }
+  }
+
+  Future<void> stopScreenStreaming() async {
+    try {
+      final String result = await MethodChannel('com.app.gibical/rtmp').invokeMethod('stopScreenShare');
+      print(result);
+
+      isScreenStreaming = false;
+      _screenRecordingTimer?.cancel();
+      _screenRecordingDuration = Duration.zero;
+      screenRecordingTime.value = '';
+      isScreenRecordingTimeVisible(false);
+    } on PlatformException catch (e) {
+      print("Failed to stop screen streaming: '${e.message}'.");
+    }
+  }
+
   void logError(String code, String? message) {
     print('Error: $code\nError Message: $message');
   }
@@ -214,22 +274,19 @@ class StreamViewController extends GetxController {
     stopVideoRecording();
     stopVideoStreaming();
     try {
-    //  controller!.dispose();
-    }  catch (e) {
-      // TODO
+      controller?.dispose();
+    } catch (e) {
+      // Handle exception
     }
     Future.delayed(Duration(seconds: 2));
-    if(selectedCamera==1){
-      selectedCamera=0;
-    }else{
-      selectedCamera=1;
-
+    if (selectedCamera == 1) {
+      selectedCamera = 0;
+    } else {
+      selectedCamera = 1;
     }
     initMethod();
-
-
-
   }
+
   String _formatDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     String hours = twoDigits(duration.inHours);
@@ -237,16 +294,32 @@ class StreamViewController extends GetxController {
     String seconds = twoDigits(duration.inSeconds.remainder(60));
     return "$hours:$minutes:$seconds";
   }
-  void deleteProgram(String? id) {
 
+  void deleteProgram(String? id) {
+    // پیاده‌سازی تابع
   }
-  int getUnselectedCamera(){
-    if(selectedCamera==0){
+
+  int getUnselectedCamera() {
+    if (selectedCamera == 0) {
       return 1;
-    }if(selectedCamera==1){
+    } else if (selectedCamera == 1) {
       return 0;
-    }else{
+    } else {
       return 0;
     }
+  }
+
+  void goToChannelScreen() async {
+    ProgramModel programModel = await Get.to(ChannelScreen(), arguments: [true]);
+    this.programModel = programModel;
+    url = programModel.streamURL;
+    update();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    _screenRecordingTimer?.cancel();
+    _recordingTimer?.cancel();
   }
 }

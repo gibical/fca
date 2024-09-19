@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:gibical/app/common/app_route.dart';
@@ -10,6 +11,8 @@ import 'package:gibical/app/pages/media_suit/view.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
+import '../../common/utils/rtmp_stream_manger.dart';
+import '../stream/widget/camera_stream.dart';
 import '../stream/view.dart';
 
 class AllToolsScreen extends StatefulWidget {
@@ -49,8 +52,9 @@ class _AllToolsScreenState extends State<AllToolsScreen> {
               }, icon: "assets/icons/all_tools_3.svg", name: "channel_31".tr),
               AllToolsButtonWidget(onPressed: (){
                // Get.toNamed(PageRoutes.MEDIASUIT);
-                Get.to(()=>CameraExampleHome(),arguments: [0]);
-
+                Get.to(()=>StreamHomePage(),arguments: [0]);
+               //  RtmpStreamManager rtmp = RtmpStreamManager();
+               //  rtmp.startStreaming("rtmp://stream.gibical.app/01j807wghpfeqv44bscwqkchvb");
               }, icon: "assets/icons/stream.svg", name: "channel_31_1".tr),
               // AllToolsButtonWidget(onPressed: (){},
               // icon: "assets/icons/all_tools_4.svg", name: "channel_32".tr,enable: false,),
