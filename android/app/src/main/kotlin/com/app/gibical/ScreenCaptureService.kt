@@ -3,105 +3,108 @@ package com.app.gibical
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.media.projection.MediaProjection
-import android.media.projection.MediaProjectionManager
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
-import com.pedro.rtplibrary.rtmp.RtmpDisplay
-import net.ossrs.rtmp.ConnectCheckerRtmp
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.abolfazlirani.rtmp.utils.ConnectCheckerRtmp
+import com.abolfazlirani.rtplibrary.rtmp.RtmpDisplay
 
 class ScreenCaptureService : Service(), ConnectCheckerRtmp {
 
+    private val TAG = "ScreenCaptureService"
     private val CHANNEL_ID = "ScreenCaptureServiceChannel"
-    private var mediaProjection: MediaProjection? = null
-    private lateinit var mediaProjectionManager: MediaProjectionManager
     private lateinit var rtmpDisplay: RtmpDisplay
     private var rtmpUrl: String? = null
+
+    private var isCapturing = false
 
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
+        Log.d(TAG, "Service created and notification channel initialized.")
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.d(TAG, "onStartCommand called.")
+
+        if (isCapturing) {
+            Log.w(TAG, "Already capturing. Ignoring new start command.")
+            return START_NOT_STICKY
+        }
+
         val resultCode = intent?.getIntExtra("resultCode", Activity.RESULT_CANCELED) ?: Activity.RESULT_CANCELED
         val data = intent?.getParcelableExtra<Intent>("data")
         rtmpUrl = intent?.getStringExtra("rtmpUrl")
 
+        Log.d(TAG, "Received intent with resultCode: $resultCode, data: $data, rtmpUrl: $rtmpUrl")
+
         if (resultCode == Activity.RESULT_OK && data != null && rtmpUrl != null) {
             val notification = createNotification()
             startForeground(1, notification)
+            Log.d(TAG, "Foreground service started with notification.")
 
-            mediaProjectionManager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+            // Initialize RtmpDisplay
+            rtmpDisplay = RtmpDisplay(this, false, this)
+            rtmpDisplay.setIntentResult(resultCode, data)
+            Log.d(TAG, "RtmpDisplay initialized.")
 
-            // ایجاد mediaProjection پس از شروع سرویس Foreground
-            mediaProjection = mediaProjectionManager.getMediaProjection(resultCode, data)
+            try {
+                if (!rtmpDisplay.isStreaming) {
+                    val width = 1280
+                    val height = 720
+                    val fps = 30
+                    val bitrate = 2500 * 1024 // 2.5 Mbps
+                    val rotation = 0
+                    val dpi = resources.displayMetrics.densityDpi
 
-            // ثبت MediaProjection.Callback
-            mediaProjection?.registerCallback(object : MediaProjection.Callback() {
-                override fun onStop() {
-                    super.onStop()
-                    Log.d("ScreenCaptureService", "MediaProjection stopped")
-                    stopScreenCapture()
-                }
-            }, null)
-
-            if (mediaProjection != null) {
-                val width = 1280
-                val height = 720
-                val fps = 30
-                val bitrate = 2500 * 1024
-                val rotation = 0
-                val dpi = resources.displayMetrics.densityDpi
-
-                rtmpDisplay = RtmpDisplay(this, true, this)
-                rtmpDisplay.setIntentResult(resultCode, data)
-
-                try {
-                    if (!rtmpDisplay.isStreaming) {
-                        if (rtmpDisplay.prepareAudio() && rtmpDisplay.prepareVideo(
-                                width,
-                                height,
-                                fps,
-                                bitrate,
-                                rotation,
-                                dpi
-                            )
-                        ) {
-                            rtmpDisplay.startStream(rtmpUrl)
-                        } else {
-                            stopScreenCapture()
-                        }
+                    Log.d(TAG, "Preparing video with width=$width, height=$height, fps=$fps, bitrate=$bitrate, rotation=$rotation, dpi=$dpi")
+                    if (rtmpDisplay.prepareVideo(width, height, fps, bitrate, rotation, dpi)) {
+                        Log.d(TAG, "Video prepared successfully. Starting stream.")
+                        rtmpDisplay.startStream(rtmpUrl)
+                        Log.d(TAG, "Stream started to $rtmpUrl")
+                        isCapturing = true
+                    } else {
+                        Log.e(TAG, "prepareVideo failed.")
+                        stopScreenCapture()
                     }
-                } catch (e: Exception) {
-                    stopScreenCapture()
+                } else {
+                    Log.d(TAG, "Already streaming.")
                 }
-            } else {
+            } catch (e: Exception) {
+                Log.e(TAG, "Error starting stream: ${e.message}")
                 stopScreenCapture()
             }
         } else {
+            Log.e(TAG, "Invalid intent data or RTMP URL.")
             stopScreenCapture()
         }
 
-        return START_STICKY
+        return START_NOT_STICKY
     }
 
     private fun stopScreenCapture() {
+        Log.d(TAG, "Stopping screen capture.")
         if (::rtmpDisplay.isInitialized && rtmpDisplay.isStreaming) {
             rtmpDisplay.stopStream()
-            // در صورت نیاز، پیام به MainActivity ارسال کنید
+            sendBroadcastMessage("stopTheStream")
+            Log.d(TAG, "Stream stopped.")
         }
-        mediaProjection?.stop()
-        mediaProjection = null
+        isCapturing = false
+        Log.d(TAG, "MediaProjection stopped.")
+
         stopForeground(true)
         stopSelf()
+        Log.d(TAG, "Foreground service stopped.")
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d(TAG, "Service destroyed.")
         stopScreenCapture()
     }
 
@@ -114,10 +117,11 @@ class ScreenCaptureService : Service(), ConnectCheckerRtmp {
             val serviceChannel = NotificationChannel(
                 CHANNEL_ID,
                 "Screen Capture Service Channel",
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_LOW
             )
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(serviceChannel)
+            Log.d(TAG, "Notification channel created.")
         }
     }
 
@@ -128,10 +132,11 @@ class ScreenCaptureService : Service(), ConnectCheckerRtmp {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
+        Log.d(TAG, "Creating notification.")
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Screen Capture Service")
             .setContentText("Recording screen...")
-            .setSmallIcon(R.mipmap.launcher_icon)
+            .setSmallIcon(R.mipmap.launcher_icon) // استفاده از آیکون مناسب
             .setContentIntent(pendingIntent)
             .build()
     }
@@ -139,46 +144,59 @@ class ScreenCaptureService : Service(), ConnectCheckerRtmp {
     // پیاده‌سازی متدهای ConnectCheckerRtmp
 
     override fun onConnectionSuccessRtmp() {
+        Log.i(TAG, "Connection Success")
         runOnUiThread {
             Toast.makeText(this, "Connection Success", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onConnectionFailedRtmp(reason: String) {
+        Log.e(TAG, "Connection Failed: $reason")
         runOnUiThread {
             Toast.makeText(this, "Connection Failed: $reason", Toast.LENGTH_SHORT).show()
-            stopScreenCapture()
         }
+        stopScreenCapture()
+    }
+
+    override fun onConnectionStartedRtmp(rtmpUrl: String) {
+        Log.i(TAG, "Connection Started: $rtmpUrl")
     }
 
     override fun onDisconnectRtmp() {
+        Log.w(TAG, "Disconnected from RTMP")
         runOnUiThread {
             Toast.makeText(this, "Disconnected", Toast.LENGTH_SHORT).show()
-            stopScreenCapture()
         }
+        stopScreenCapture()
     }
 
     override fun onAuthErrorRtmp() {
+        Log.e(TAG, "Auth Error")
         runOnUiThread {
             Toast.makeText(this, "Auth Error", Toast.LENGTH_SHORT).show()
-            stopScreenCapture()
         }
+        stopScreenCapture()
     }
 
     override fun onAuthSuccessRtmp() {
+        Log.i(TAG, "Auth Success")
         runOnUiThread {
             Toast.makeText(this, "Auth Success", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onNewBitrateRtmp(bitrate: Long) {
-        runOnUiThread {
-            Log.d("onNewBitrateRtmp:", " New bitrate: $bitrate bps")
-        }
+        Log.d(TAG, "New bitrate: $bitrate bps")
     }
 
     private fun runOnUiThread(action: Runnable) {
-        val handler = android.os.Handler(mainLooper)
-        handler.post(action)
+        Handler(Looper.getMainLooper()).post(action)
+    }
+
+    private fun sendBroadcastMessage(action: String) {
+        val intent = Intent("com.app.gibical.SCREEN_CAPTURE_SERVICE")
+        intent.putExtra("action", action)
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+        Log.d(TAG, "Broadcast message sent: $action")
     }
 }

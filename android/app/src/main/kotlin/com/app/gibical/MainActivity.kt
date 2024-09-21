@@ -1,5 +1,6 @@
 package com.app.gibical
 
+import android.app.Activity
 import android.content.Intent
 import android.media.projection.MediaProjectionManager
 import android.os.Build
@@ -11,17 +12,16 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
 
-    private lateinit var mediaProjectionManager: MediaProjectionManager
     private val REQUEST_CODE_SCREEN_CAPTURE = 1000
+    private val RECORD_AUDIO_REQUEST_CODE = 123
     private var rtmpUrl: String? = null
     private val CHANNEL = "com.app.gibical/rtmp"
 
     private lateinit var methodChannel: MethodChannel
+    private lateinit var mediaProjectionManager: MediaProjectionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        mediaProjectionManager = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
 
         methodChannel =
             flutterEngine?.dartExecutor?.binaryMessenger?.let { MethodChannel(it, CHANNEL) }!!
@@ -45,6 +45,8 @@ class MainActivity : FlutterActivity() {
                 }
             }
         }
+
+        mediaProjectionManager = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
     }
 
     private fun startScreenCapture() {
@@ -55,7 +57,6 @@ class MainActivity : FlutterActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_SCREEN_CAPTURE && resultCode == RESULT_OK && data != null) {
-            // شروع سرویس Foreground و ارسال resultCode و data به سرویس
             val serviceIntent = Intent(this, ScreenCaptureService::class.java)
             serviceIntent.putExtra("resultCode", resultCode)
             serviceIntent.putExtra("data", data)

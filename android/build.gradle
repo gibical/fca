@@ -8,11 +8,7 @@ allprojects {
 
     }
 }
-configurations.all {
-    resolutionStrategy {
-        force 'com.github.pedroSG94.rtmp-rtsp-stream-client-java:encoder:1.9.6'
-    }
-}
+
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"

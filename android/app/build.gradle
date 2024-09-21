@@ -27,11 +27,7 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
-configurations.all {
-    resolutionStrategy {
-        force 'com.github.pedroSG94.rtmp-rtsp-stream-client-java:encoder:1.9.6'
-    }
-}
+
 android {
     namespace "com.app.gibical"
     compileSdk 34
@@ -108,8 +104,9 @@ dependencies {
     // See https://firebase.google.com/docs/android/setup#available-libraries
     // For example, add the dependencies for Firebase Authentication and Cloud Firestore
     implementation("com.google.firebase:firebase-auth")
-    implementation 'com.github.pedroSG94.rtmp-rtsp-stream-client-java:rtplibrary:1.9.6'
-
+    implementation 'com.github.abolfazlirani.rtmp-rtsp-stream-client-java:rtmp:v1.0.3'
+    implementation 'com.github.abolfazlirani.rtmp-rtsp-stream-client-java:rtplibrary:v1.0.3'
+    implementation "androidx.media:media:1.7.0"
 
 
 
