@@ -296,7 +296,6 @@ class StreamViewController extends GetxController {
   }
 
   void deleteProgram(String? id) {
-    // پیاده‌سازی تابع
   }
 
   int getUnselectedCamera() {

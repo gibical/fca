@@ -328,7 +328,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     _recordingDuration = Duration.zero;
     _recordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       _recordingDuration += Duration(seconds: 1);
-      update(); // به‌روزرسانی ویو برای نمایش زمان جدید
+      update();
     });
   }
 
