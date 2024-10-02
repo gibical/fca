@@ -1,5 +1,6 @@
 
 import 'dart:developer';
+import 'package:flu_wake_lock/flu_wake_lock.dart';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -25,7 +26,9 @@ void main()async{
   await GetStorage.init();
   var details = await FlutterLocalNotificationsPlugin()
       .getNotificationAppLaunchDetails();
+  FluWakeLock _fluWakeLock = FluWakeLock();
 
+  _fluWakeLock.enable();
   if (details!=null&&details.didNotificationLaunchApp) {
     print(details!.notificationResponse!.payload);
   }

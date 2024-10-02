@@ -3,13 +3,13 @@ FromJsonGetPrograms fromJsonGetProgramsFromJson(String str) => FromJsonGetProgra
 String fromJsonGetProgramsToJson(FromJsonGetPrograms data) => json.encode(data.toJson());
 class FromJsonGetPrograms {
   FromJsonGetPrograms({
-      List<ProgramModel>? data,
-      Links? links, 
-      Meta? meta,}){
+    List<ProgramModel>? data,
+    Links? links,
+    Meta? meta,}){
     _data = data;
     _links = links;
     _meta = meta;
-}
+  }
 
   FromJsonGetPrograms.fromJson(dynamic json) {
     if (json['data'] != null) {
@@ -49,14 +49,14 @@ Meta metaFromJson(String str) => Meta.fromJson(json.decode(str));
 String metaToJson(Meta data) => json.encode(data.toJson());
 class Meta {
   Meta({
-      num? currentPage, 
-      num? from, 
-      num? lastPage, 
-      List<Links>? links, 
-      String? path, 
-      num? perPage, 
-      num? to, 
-      num? total,}){
+    num? currentPage,
+    num? from,
+    num? lastPage,
+    List<Links>? links,
+    String? path,
+    num? perPage,
+    num? to,
+    num? total,}){
     _currentPage = currentPage;
     _from = from;
     _lastPage = lastPage;
@@ -65,7 +65,7 @@ class Meta {
     _perPage = perPage;
     _to = to;
     _total = total;
-}
+  }
 
   Meta.fromJson(dynamic json) {
     _currentPage = json['current_page'];
@@ -121,13 +121,13 @@ Links linksFromJson(String str) => Links.fromJson(json.decode(str));
 String linksToJson(Links data) => json.encode(data.toJson());
 class Links {
   Links({
-      dynamic url, 
-      String? label, 
-      bool? active,}){
+    dynamic url,
+    String? label,
+    bool? active,}){
     _url = url;
     _label = label;
     _active = active;
-}
+  }
 
   Links.fromJson(dynamic json) {
     _url = json['url'];
@@ -158,17 +158,17 @@ ProgramModel dataFromJson(String str) => ProgramModel.fromJson(json.decode(str))
 String dataToJson(ProgramModel data) => json.encode(data.toJson());
 class ProgramModel {
   ProgramModel({
-      String? id, 
-      String? name, 
-      String? userId, 
-      String? source, 
-      List<dynamic>? details, 
-      dynamic lastEvent, 
-      String? createdAt, 
-      String? updatedAt, 
-      dynamic deletedAt, 
-      List<dynamic>? events, 
-      List<dynamic>? destinations,}){
+    String? id,
+    String? name,
+    String? userId,
+    String? source,
+    List<dynamic>? details,
+    dynamic lastEvent,
+    String? createdAt,
+    String? updatedAt,
+    dynamic deletedAt,
+    List<dynamic>? events,
+    List<dynamic>? destinations,}){
     _id = id;
     _name = name;
     _userId = userId;
@@ -180,19 +180,14 @@ class ProgramModel {
     _deletedAt = deletedAt;
     _events = events;
     _destinations = destinations;
-}
+  }
 
   ProgramModel.fromJson(dynamic json) {
     _id = json['id'];
     _name = json['name'];
     _userId = json['user_id'];
     _source = json['source'];
-    // if (json['details'] != null) {
-    //   _details = [];
-    //   json['details'].forEach((v) {
-    //     _details?.add(v);
-    //   });
-    // }
+    _details = json['details'];
     _lastEvent = json['last_event'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
@@ -216,7 +211,7 @@ class ProgramModel {
   String? _name;
   String? _userId;
   String? _source;
-  List<dynamic>? _details;
+  dynamic _details;
   dynamic _lastEvent;
   String? _createdAt;
   String? _updatedAt;
@@ -229,7 +224,7 @@ class ProgramModel {
   String? get name => _name;
   String? get userId => _userId;
   String? get source => _source;
-  List<dynamic>? get details => _details;
+  dynamic get details => _details;
   dynamic get lastEvent => _lastEvent;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;

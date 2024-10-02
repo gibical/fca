@@ -31,10 +31,10 @@ Widget CountryCodeWidget(context,LoginController controller){
             dialogBackgroundColor: AppColor.blueDarkColor,
 
             // mode: CountryCodePickerMode.dialog,
-            // onChanged: (country) {
-            //   controller.code  =country;
-            //   print('CountryCodeWidget = ${country.dialCode}');
-            // },
+            onChanged: (country) {
+              controller.code  =country;
+              print('CountryCodeWidget = ${country.dialCode}');
+            },
             initialSelection: 'DE',
             showFlag: true,
             showDropDownButton: true,barrierColor: Colors.black.withOpacity(0.5),

@@ -156,14 +156,14 @@ class DetailController extends GetxController {
         'Authorization': 'Bearer $token',
       }));
 
-     log('DetailController._fetchMediaData11111 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['media_type']}');
+      log('DetailController._fetchMediaData11111 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['media_type']}');
       if (response.statusCode == 200) {
         details?.value = RxMap<String, dynamic>.from(response.data['data']);
         detailss = RxMap<String, dynamic>.from(response.data['data']);
         asset_id= response.data['data']['asset_id'].toString();
         file_id =response.data['data']['file_id'].toString();
         if(index==3){
-        fileIdMusic =response.data['data']['file_id'].toString();
+          fileIdMusic =response.data['data']['file_id'].toString();
 
         }
         print('DetailController._fetchMediaData file_id = 1  = ${file_id}= ${!file_id.toString().contains("null")}');
@@ -248,10 +248,10 @@ class DetailController extends GetxController {
     player.seek(seekPosition);
   }
 
-  
-  
-  
-  
+
+
+
+
 //==================================== get comment Detail page =======================================//
   var isLoadingComment = true.obs;
   RxMap<String, dynamic>? commentsData = RxMap<String, dynamic>();
@@ -378,8 +378,8 @@ class DetailController extends GetxController {
   //=========================================== Sound Convert ===========================================//
   void soundTranslate() async{
 
-  //  String language =await _runCustomSelectBottomSheet(Constant.languages, "Select Language");
-   // String loclae = Constant.languageMap[language]??"";
+    //  String language =await _runCustomSelectBottomSheet(Constant.languages, "Select Language");
+    // String loclae = Constant.languageMap[language]??"";
     try {
       final token = GetStorage().read("token");
 
@@ -406,12 +406,12 @@ class DetailController extends GetxController {
         print(response.data);
       } else {
         // Handle errors
-       // Constant.showMessege("Request Denied : ${response.data['status']}");
+        // Constant.showMessege("Request Denied : ${response.data['status']}");
 
       }
     } catch (e) {
       // Handle errors
-   //   Constant.showMessege("Request Denied : ${e.toString()}");
+      //   Constant.showMessege("Request Denied : ${e.toString()}");
 
       print('DetailController._fetchMediaData = $e');
     } finally {
@@ -447,12 +447,12 @@ class DetailController extends GetxController {
         print(response.data);
       } else {
         // Handle errors
-       // Constant.showMessege("Request Denied : ${response.data['status']}");
+        // Constant.showMessege("Request Denied : ${response.data['status']}");
 
       }
     } catch (e) {
       // Handle errors
-     // Constant.showMessege("Request Denied : ${e.toString()}");
+      // Constant.showMessege("Request Denied : ${e.toString()}");
 
       print('DetailController._fetchMediaData = $e');
     } finally {
@@ -589,12 +589,12 @@ class DetailController extends GetxController {
 
       } else {
         // Handle errors
-       // Constant.showMessege("Request Denied : ${response.data['status']}");
+        // Constant.showMessege("Request Denied : ${response.data['status']}");
 
       }
     } catch ( e) {
       // Handle errors
-     // Constant.showMessege("Request Denied : ${e.toString()}");
+      // Constant.showMessege("Request Denied : ${e.toString()}");
 
       print('DetailController._fetchMediaData = $e');
     } finally {
@@ -674,12 +674,12 @@ class DetailController extends GetxController {
         print(response.data);
       } else {
         // Handle errors
-     //   Constant.showMessege("Request Denied : ${response.data['status']}");
+        //   Constant.showMessege("Request Denied : ${response.data['status']}");
 
       }
     } catch ( e) {
       // Handle errors
-     // Constant.showMessege("Request Denied : ${e.toString()}");
+      // Constant.showMessege("Request Denied : ${e.toString()}");
 
       print('DetailController._fetchMediaData = $e');
     } finally {
@@ -687,56 +687,56 @@ class DetailController extends GetxController {
     }
   }
   void textToText() async{
- var s =   await Get.bottomSheet(TextToTextWidget(this),isScrollControlled: true,backgroundColor: "000033".toColor());
+    var s =   await Get.bottomSheet(TextToTextWidget(this),isScrollControlled: true,backgroundColor: "000033".toColor());
 
- if(s!=null&&s){
+    if(s!=null&&s){
 
-   try {
-     final token = GetStorage().read("token");
+      try {
+        final token = GetStorage().read("token");
 
-     String apiUrl =
-         '${Constant.HTTP_HOST}tasks/text-text';
-     var s = Dio();
-     s.interceptors.add(MediaVerseConvertInterceptor());
-     print('DetailController.textToText = ${
-         {
-           "file": file_id,
-           "prefix": prefixEditingController.text
-         }
-     } - ${apiUrl}');
+        String apiUrl =
+            '${Constant.HTTP_HOST}tasks/text-text';
+        var s = Dio();
+        s.interceptors.add(MediaVerseConvertInterceptor());
+        print('DetailController.textToText = ${
+            {
+              "file": file_id,
+              "prefix": prefixEditingController.text
+            }
+        } - ${apiUrl}');
 
-     var response = await s. post(apiUrl, options: Options(headers: {
-       'accept': 'application/json',
-       'X-App': '_Android',
-       'Accept-Language': 'en-US',
-       'Authorization': 'Bearer $token',
-     },),data: {
-       "file": file_id,
-       "prefix": prefixEditingController.text
-     },);
+        var response = await s. post(apiUrl, options: Options(headers: {
+          'accept': 'application/json',
+          'X-App': '_Android',
+          'Accept-Language': 'en-US',
+          'Authorization': 'Bearer $token',
+        },),data: {
+          "file": file_id,
+          "prefix": prefixEditingController.text
+        },);
 
         print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
-     if (response.statusCode == 200) {
+        if (response.statusCode == 200) {
 
 
-       Constant.showMessege("Request Succesful  ");
+          Constant.showMessege("Request Succesful  ");
 
-       print(response.data);
-     } else {
-       // Handle errors
-       //   Constant.showMessege("Request Denied : ${response.data['status']}");
+          print(response.data);
+        } else {
+          // Handle errors
+          //   Constant.showMessege("Request Denied : ${response.data['status']}");
 
-     }
-   } catch ( e) {
-     // Handle errors
-     // Constant.showMessege("Request Denied : ${e.toString()}");
+        }
+      } catch ( e) {
+        // Handle errors
+        // Constant.showMessege("Request Denied : ${e.toString()}");
 
-     print('DetailController._fetchMediaData = $e');
-   } finally {
+        print('DetailController._fetchMediaData = $e');
+      } finally {
 
-   }
- }
- prefixEditingController.clear();
+      }
+    }
+    prefixEditingController.clear();
   }
   //=========================================== Text Convert ===========================================//
 
@@ -746,7 +746,7 @@ class DetailController extends GetxController {
 
 
   Future<String> _runCustomSelectBottomSheet(List<String> models, String title)async {
-  var sxz =  await Get.bottomSheet(Container(
+    var sxz =  await Get.bottomSheet(Container(
       width: 100.w,
       height: 50.h,
       padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
@@ -766,7 +766,7 @@ class DetailController extends GetxController {
             return InkWell(
               onTap: (){
                 try {
-                 return Get.back(result: models.elementAt(p));
+                  return Get.back(result: models.elementAt(p));
 
                 }  catch (e) {
                   // TODO
@@ -798,7 +798,7 @@ class DetailController extends GetxController {
         ],
       ),
     ));
-   return sxz.toString();
+    return sxz.toString();
   }
 
 
@@ -824,9 +824,9 @@ class DetailController extends GetxController {
         'Accept-Language': 'en-US',
         'Authorization': 'Bearer $token',
       },),data: {
-      "type": 1,
-      "asset_id": asset_id,
-      "description": reportEditingController.text
+        "type": 1,
+        "asset_id": asset_id,
+        "description": reportEditingController.text
       });
 
       reportEditingController.clear();
@@ -853,9 +853,9 @@ class DetailController extends GetxController {
 
   void sendToEditProfile(PostType type)async {
 
-   await Get.toNamed(PageRoutes.EDITPROFILE,arguments: [this,type]);
+    await Get.toNamed(PageRoutes.EDITPROFILE,arguments: [this,type]);
 
-   initFunction();
+    initFunction();
   }
 
   Future<void> fetchChannels(
@@ -881,6 +881,8 @@ class DetailController extends GetxController {
       } else {
         // Handle errors
       }
+      log('DetailController._fetchMediaData11111 = ${externalAccountlist.length}');
+
     } catch (e) {
       isLoadingChannel(false);
 
@@ -898,14 +900,14 @@ class DetailController extends GetxController {
   void onSendYouTubeRequest(bool youtubeMode)async {
     Map<String,dynamic> body = {
       "file": file_id,
-      "account": externalAccountlist.where((element) => element.type.toString().contains("1")).elementAt(enableChannel).id.toString(),
+      "account": externalAccountlist.elementAt(enableChannel).id.toString(),
 
     };
     print('DetailController.onSendYouTubeRequest = ${formatDateTime( isSeletedNow?DateTime.now():dateTime)}');
     if(!isSeletedNow){
       body["times"]= [
-    formatDateTime( isSeletedNow?DateTime.now():dateTime)
-    ];
+        formatDateTime( isSeletedNow?DateTime.now():dateTime)
+      ];
 
     }
 
@@ -923,8 +925,8 @@ class DetailController extends GetxController {
           '${Constant.HTTP_HOST}$url';
       print('DetailController._fetchMediaData = ${apiUrl}');
       var s = Dio();
-     // s.interceptors.add(MediaVerseConvertInterceptor());
-     s.interceptors.add(CurlLoggerDioInterceptor());
+      // s.interceptors.add(MediaVerseConvertInterceptor());
+      s.interceptors.add(CurlLoggerDioInterceptor());
 
       var header =  {
         'accept': 'application/json',
@@ -936,7 +938,7 @@ class DetailController extends GetxController {
 
       log('DetailController._fetchMediaData11111 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['media_type']}');
       if (response.statusCode! >= 200&&response.statusCode! <300) {
-       // externalAccountlist = FromJsonGetExternalAccount.fromJson(response.data??[]).data??[];
+        // externalAccountlist = FromJsonGetExternalAccount.fromJson(response.data??[]).data??[];
 
         Get.back();
         Constant.showMessege("${youtubeMode?"Send To YouTube":"Archive to Drive"} Sucssefuly");

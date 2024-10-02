@@ -8,43 +8,42 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import org.checkerframework.checker.nullness.qual.NonNull
 
 class MainActivity : FlutterActivity() {
 
     private val REQUEST_CODE_SCREEN_CAPTURE = 1000
     private val RECORD_AUDIO_REQUEST_CODE = 123
     private var rtmpUrl: String? = null
-    private val CHANNEL = "com.app.gibical/rtmp"
+    private val CHANNEL = "com.mediaverse.mediaverse/rtmp"
 
     private lateinit var methodChannel: MethodChannel
     private lateinit var mediaProjectionManager: MediaProjectionManager
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        methodChannel =
-            flutterEngine?.dartExecutor?.binaryMessenger?.let { MethodChannel(it, CHANNEL) }!!
-        methodChannel.setMethodCallHandler { call, result ->
-            when (call.method) {
-                "startScreenShare" -> {
-                    rtmpUrl = call.argument<String>("rtmpUrl")
-                    if (rtmpUrl != null) {
-                        startScreenCapture()
-                        result.success("Screen sharing started")
-                    } else {
-                        result.error("INVALID_ARGUMENT", "RTMP URL is required", null)
-                    }
+    override fun configureFlutterEngine( flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
+            // This method is invoked on the main thread.
+                call, result ->
+            if (call.method == "startScreenShare") {
+                rtmpUrl = call.argument<String>("rtmpUrl")
+                if (rtmpUrl != null) {
+                    startScreenCapture()
+                    result.success("Screen sharing started")
+                } else {
+                    result.error("INVALID_ARGUMENT", "RTMP URL is required", null)
                 }
-                "stopScreenShare" -> {
-                    stopScreenCapture()
-                    result.success("Screen sharing stopped")
-                }
-                else -> {
-                    result.notImplemented()
-                }
+            }else if (call.method == "stopScreenShare") {
+                stopScreenCapture()
+                result.success("Screen sharing stopped")
+            } else {
+                result.notImplemented()
             }
         }
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         mediaProjectionManager = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
     }

@@ -136,7 +136,7 @@ class ScreenCaptureService : Service(), ConnectCheckerRtmp {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Screen Capture Service")
             .setContentText("Recording screen...")
-            .setSmallIcon(R.mipmap.launcher_icon) // استفاده از آیکون مناسب
+            .setSmallIcon(R.mipmap.launcher_icon)
             .setContentIntent(pendingIntent)
             .build()
     }

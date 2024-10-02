@@ -176,13 +176,13 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       case 5:
         parseJsonFromShareCustomAccounts(source);
         break;
-     case 500:
+      case 500:
         parseJsonFromCreateProgram(source);
         break;
-     case 501:
+      case 501:
         praseJsonFromAddDestination(source);
         break;
-       case 503:
+      case 503:
         praseJsonFromDeleteProgram(source);
         break;
     }
@@ -266,10 +266,11 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
 
     print('ShareAccountLogic.sendIDTokenToServer = ${body}');
     dio.interceptors.add(MediaVerseConvertInterceptor());
+    dio.interceptors.add(CurlLoggerDioInterceptor());
 
     try {
       var response = await dio.post(
-        '${Constant.HTTP_HOST}destinations',
+        '${Constant.HTTP_HOST}${(i==1)?"external-accounts":"destinations"}',
         data: body,
         options: Options(
           headers: {
@@ -459,7 +460,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
 
   void parseJsonFromMainList(source) {
     log('ShareAccountLogic.parseJsonFromMainList = ${source}');
-   // debugger();
+    // debugger();
     list = FromJsonGetPrograms
         .fromJson(jsonDecode(source))
         .data ?? [];
@@ -494,12 +495,12 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     update();
   }
   void setSelectedDestiniation(DestinationModel elementAt) {
-   if(getactiveDestinationModel(elementAt)){
-     destintionList.remove(elementAt);
-   }else{
-     destintionList.add(elementAt);
-   }
-   update();
+    if(getactiveDestinationModel(elementAt)){
+      destintionList.remove(elementAt);
+    }else{
+      destintionList.add(elementAt);
+    }
+    update();
   }
 
   bool getactiveDestinationModel(DestinationModel model){
@@ -677,9 +678,15 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     destintionList.forEach((s) async {
       index = index+1;
 
-     await onAddDestinationToProgramRequest(id, s.id.toString(),index==destintionList.length);
+      await onAddDestinationToProgramRequest(id, s.id.toString(),index==destintionList.length);
     });
 
+    if(destintionList.isEmpty){
+      iscreateProgramloading(false);
+      Get.back();
+      isloading(true);
+      getExternalAccount();
+    }
   }
   Future<bool> onAddDestinationToProgramRequest( prgoramID,destinationID,bool isLast) async {
     try {
@@ -713,7 +720,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       }
       if (response.statusCode == 200) {
 
-      return true;
+        return true;
       } else {
         return false;
 
@@ -728,8 +735,8 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   void onAddDestinationToProgram(id) {
-    
-    
+
+
     apiRequster.request("", ApiRequster.MHETOD_POST, 501);
   }
 
@@ -745,9 +752,9 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     apiRequster.request("programs/${id}", ApiRequster.MHETOD_DELETE, 503);
     Get.back();
     isloading(true);
-  Future.delayed(Duration(seconds: 1)).then((s){
-    getExternalAccount();
-  });
+    Future.delayed(Duration(seconds: 1)).then((s){
+      getExternalAccount();
+    });
   }
 
   void praseJsonFromDeleteProgram(source) {

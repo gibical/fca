@@ -38,8 +38,8 @@ import '../../common/utils/dio_inperactor.dart';
 
 class EditDataModel {
   final String name;
-   int? mediaClass;
-   String? urlMedia;
+  int? mediaClass;
+  String? urlMedia;
   double second;
   double get width => second * 30.0;
   double height = 0.050.h;
@@ -76,37 +76,37 @@ class EditDataModel {
     positionX = newPositionX;
   }
 
-  // void updateSize(double newWidth, double newHeight) {
-  //   width = newWidth;
-  //   height = newHeight;
-  // }
+// void updateSize(double newWidth, double newHeight) {
+//   width = newWidth;
+//   height = newHeight;
+// }
 
 
 
 
-  // void updateTimings(int pixelsPerSecond, int previousEnd) {
-  //   if (pixelsPerSecond == 0) {
-  //     return;
-  //   }
-  //
-  //   double durationInSeconds = width / pixelsPerSecond;
-  //
-  //
-  //   start = previousEnd + 1;
-  //
-  //
-  //   if (previousEnd == -1) {
-  //
-  //     end =  start + durationInSeconds.toInt() ;
-  //   } else {
-  //
-  //     end = previousEnd * 2;
-  //   }
-  //
-  //   length = end - start;
-  //
-  //   print('EditDataModel.updateTimings = ${previousEnd} - ${start} - ${end}');
-  // }
+// void updateTimings(int pixelsPerSecond, int previousEnd) {
+//   if (pixelsPerSecond == 0) {
+//     return;
+//   }
+//
+//   double durationInSeconds = width / pixelsPerSecond;
+//
+//
+//   start = previousEnd + 1;
+//
+//
+//   if (previousEnd == -1) {
+//
+//     end =  start + durationInSeconds.toInt() ;
+//   } else {
+//
+//     end = previousEnd * 2;
+//   }
+//
+//   length = end - start;
+//
+//   print('EditDataModel.updateTimings = ${previousEnd} - ${start} - ${end}');
+// }
 
 
 
@@ -229,11 +229,11 @@ class MediaSuitController extends GetxController {
 
 
         editAudioDataList.add(newContainer);
-          model.second -= newSeconds;
-          model.endTrim = model.second;
-          model.startTrim = 0;
-          isTrimming = false;
-          selectedAudioIndex.value = -1;
+        model.second -= newSeconds;
+        model.endTrim = model.second;
+        model.startTrim = 0;
+        isTrimming = false;
+        selectedAudioIndex.value = -1;
 
         Constant.showMessege("Request Succesful" );
 
@@ -287,11 +287,11 @@ class MediaSuitController extends GetxController {
 
 
         editVideoDataList.add(newContainer);
-          model.second -= newSeconds;
-          model.endTrim = model.second;
-          model.startTrim = 0;
-          isTrimming = false;
-      // selectedVideoIndex.value = -1;
+        model.second -= newSeconds;
+        model.endTrim = model.second;
+        model.startTrim = 0;
+        isTrimming = false;
+        // selectedVideoIndex.value = -1;
 
         Constant.showMessege("Request Succesful" );
 
@@ -311,15 +311,15 @@ class MediaSuitController extends GetxController {
     }
   }
   // void confirmTrim(EditDataModel model , Rx<int?> trimIndex , trimList) {
-    // final newSeconds = model.endTrim - model.startTrim;
-    // final newContainer = EditDataModel();
-    //
-    // trimList.add(newContainer);
-    //   model.second -= newSeconds;
-    //   model.endTrim = model.second;
-    //   model.startTrim = 0;
-    //   isTrimming = false;
-    // trimIndex.value = -1;
+  // final newSeconds = model.endTrim - model.startTrim;
+  // final newContainer = EditDataModel();
+  //
+  // trimList.add(newContainer);
+  //   model.second -= newSeconds;
+  //   model.endTrim = model.second;
+  //   model.startTrim = 0;
+  //   isTrimming = false;
+  // trimIndex.value = -1;
 
   // }
 
@@ -763,7 +763,8 @@ class MediaSuitController extends GetxController {
     }
   }
 
- String videoConfig() {
+
+  String videoConfig() {
     if (editVideoDataList.isNotEmpty) {
       List<Map<String, dynamic>> jsonList = [];
       int previousItemEnd = 0;
@@ -775,7 +776,7 @@ class MediaSuitController extends GetxController {
         var resultEnd = currentItemEnd / 16;
 
         currentItem.start = previousItemEnd+1;
-       // var endTime = currentItem.second.toInt();
+        // var endTime = currentItem.second.toInt();
         currentItem.end = resultEnd.toInt();
 
 
@@ -802,29 +803,24 @@ class MediaSuitController extends GetxController {
   String textConfig() {
     if (editTextDataList.isNotEmpty) {
       List<Map<String, dynamic>> jsonList = [];
-      int previousEnd = -1;
+      int previousEnd = 0;
 
       for (int i = 0; i < editTextDataList.length; i++) {
         var currentItem = editTextDataList[i];
-
-
-        //currentItem.updateTimings((80 / 6).toInt(), previousEnd);
-
+        currentItem.start = previousEnd + 1; // Ensure the start is properly updated
+        currentItem.end = currentItem.start + currentItem.second.toInt(); // Calculate the end time based on the item's length
 
         jsonList.add({
           'start': currentItem.start,
-          'end': currentItem.second,
-          'length': currentItem.second,
+          'end': currentItem.end,
+          'length': currentItem.end - currentItem.start,
           'id': currentItem.assetId,
-
         });
 
-
-        previousEnd = currentItem.second.toInt();
+        previousEnd = currentItem.end; // Update previousEnd for the next item
       }
 
       String jsonData = jsonEncode(jsonList);
-
       print(jsonData);
       return jsonData;
     } else {
@@ -833,37 +829,27 @@ class MediaSuitController extends GetxController {
     }
   }
 
-
-
-
-
-
-
   String imageConfig() {
     if (editImageDataList.isNotEmpty) {
       List<Map<String, dynamic>> jsonList = [];
-      int previousEnd = -1;
+      int previousEnd = 0;
 
       for (int i = 0; i < editImageDataList.length; i++) {
         var currentItem = editImageDataList[i];
-
-
-        // currentItem.updateTimings((80 / 6).toInt(), previousEnd);
-
+        currentItem.start = previousEnd + 1;
+        currentItem.end = currentItem.start + currentItem.second.toInt();
 
         jsonList.add({
           'start': currentItem.start,
-          'end': currentItem.second,
-          'length': currentItem.second,
+          'end': currentItem.end,
+          'length': currentItem.end - currentItem.start,
           'id': currentItem.assetId,
-
         });
 
-
-        previousEnd = currentItem.second.toInt();
+        previousEnd = currentItem.end;
       }
-      String jsonData = jsonEncode(jsonList);
 
+      String jsonData = jsonEncode(jsonList);
       print(jsonData);
       return jsonData;
     } else {
@@ -875,29 +861,24 @@ class MediaSuitController extends GetxController {
   String audioConfig() {
     if (editAudioDataList.isNotEmpty) {
       List<Map<String, dynamic>> jsonList = [];
-      int previousEnd = -1;
+      int previousEnd = 0;
 
       for (int i = 0; i < editAudioDataList.length; i++) {
         var currentItem = editAudioDataList[i];
-
-
-        //currentItem.updateTimings((80 / 6).toInt(), previousEnd);
-
+        currentItem.start = previousEnd + 1;
+        currentItem.end = currentItem.start + currentItem.second.toInt();
 
         jsonList.add({
           'start': currentItem.start,
-          'end': currentItem.second,
-          'length': currentItem.second,
+          'end': currentItem.end,
+          'length': currentItem.end - currentItem.start,
           'id': currentItem.assetId,
-
         });
 
-
-        previousEnd = currentItem.second.toInt();
+        previousEnd = currentItem.end;
       }
 
       String jsonData = jsonEncode(jsonList);
-
       print(jsonData);
       return jsonData;
     } else {
@@ -905,6 +886,7 @@ class MediaSuitController extends GetxController {
       return "null";
     }
   }
+
 
 
   void exportOnline() async{
@@ -928,10 +910,10 @@ class MediaSuitController extends GetxController {
     var tacks =[];
     if(video.contains("null")==false){
       tacks.add(
-        {
-          "type":"video",
-          "items":jsonDecode(video.replaceAll("asset_id", "id"))
-        }
+          {
+            "type":"video",
+            "items":jsonDecode(video.replaceAll("asset_id", "id"))
+          }
       );
     }
     if(audi.contains("null")==false){
@@ -1000,8 +982,11 @@ class MediaSuitController extends GetxController {
 
   }
 
+
+
+
   void setAssetLoadingValue(String s) {
-  //  debugger();
+    //  debugger();
 
     var json =  jsonDecode(s);
     String url_media = "${"https://"+json['storage']}.mediaverse.app/${json['path']}";
@@ -1027,13 +1012,13 @@ class MediaSuitController extends GetxController {
         element.isloading=false;
       }
     });
-   editTextDataList.forEach((element) {
-        if(element.isloading){
-          element.assetId = json['asset_id'];
-          element.urlMedia =url_media;
-          element.isloading=false;
-        }
-      });
+    editTextDataList.forEach((element) {
+      if(element.isloading){
+        element.assetId = json['asset_id'];
+        element.urlMedia =url_media;
+        element.isloading=false;
+      }
+    });
 
 
     update();
