@@ -21,8 +21,33 @@ class CameraExampleHome extends StatefulWidget {
   State<CameraExampleHome> createState() => _CameraExampleHomeState();
 }
 
-class _CameraExampleHomeState extends State<CameraExampleHome> {
-  StreamViewController _streamController = Get.find<WrapperController>().streamViewController;
+class _CameraExampleHomeState extends State<CameraExampleHome>
+    with TickerProviderStateMixin {
+
+  @override
+  void initState() {
+    super.initState();
+
+    try {
+      _streamController.animationController!.dispose();
+      _streamController.animationController = null;
+    } catch (e) {
+      // TODO
+    }
+    _streamController.animationController = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _streamController.animationController!.dispose();
+    _streamController.stopVideoStreaming();
+
+    super.dispose();
+  }
+
+  StreamViewController _streamController = Get
+      .find<WrapperController>()
+      .streamViewController;
 
   @override
   Widget build(BuildContext context) {
@@ -64,11 +89,13 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
                                     alignment: Alignment.topCenter,
                                     child: GestureDetector(
                                       onTap: () {
-
-                                        if(_streamController.isRecordingTimeVisible.value){
-                                          _streamController.stopVideoStreaming();
-                                        }else{
-                                          _streamController.startVideoStreaming();
+                                        if (_streamController
+                                            .isRecordingTimeVisible.value) {
+                                          _streamController
+                                              .stopVideoStreaming();
+                                        } else {
+                                          _streamController
+                                              .startVideoStreaming();
                                         }
                                       },
 
@@ -86,8 +113,14 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
                                               shape: BoxShape.circle
                                           ),
                                           margin: EdgeInsets.only(top: 15),
-                                          child: Center(child: SvgPicture.asset(
-                                              "assets/icons/record.svg"))),
+                                          child: Obx(() {
+                                            return SvgPicture.asset(//
+                                              (!logic
+                                                  .isRecordingTimeVisible
+                                                  .value)
+                                                  ? "assets/icons/record-button.svg"
+                                                  : "assets/icons/record.svg",fit: BoxFit.fill,);
+                                          })),
                                     ),
                                   ),
 
@@ -106,22 +139,31 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
                                               if (!_streamController
                                                   .shareAccountLogic.isloading
                                                   .value) {
-                                               _streamController. goToChannelScreen();
+                                                _streamController
+                                                    .goToChannelScreen();
                                               }
                                             },
                                             shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(
+                                                borderRadius: BorderRadius
+                                                    .circular(
                                                     6000)
                                             ),
 
 
                                             child: Obx(() {
-                                              return Center(child: _streamController
-                                                  .shareAccountLogic.isloading.value
-                                                  ? Lottie.asset(
-                                                  "assets/json/Y8IBRQ38bK.json",
-                                                  height: 3.h)
-                                                  : Text(_streamController.programModel==null?"Insert Program Here":_streamController.programModel!.name.toString()));
+                                              return Center(
+                                                  child: _streamController
+                                                      .shareAccountLogic
+                                                      .isloading.value
+                                                      ? Lottie.asset(
+                                                      "assets/json/Y8IBRQ38bK.json",
+                                                      height: 3.h)
+                                                      : Text(_streamController
+                                                      .programModel == null
+                                                      ? "Insert Program Here"
+                                                      : _streamController
+                                                      .programModel!.name
+                                                      .toString()));
                                             }))),
                                   ),
                                 ],
@@ -163,11 +205,12 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
                                   color: Colors.black,
                                   borderRadius: BorderRadius.circular(400)),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceEvenly,
                                 children: [
                                   SvgPicture.asset("assets/images/record.svg"),
                                   Text(
-                                    _streamController. recordingTime.value,
+                                    _streamController.recordingTime.value,
                                     style: TextStyle(color: Colors.white),
                                   )
                                 ],
@@ -176,7 +219,13 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
                           ),
                         ),
                       );
-                    })
+                    }),
+                    Lottie.asset("assets/json/countdown.json",
+                      controller: _streamController.animationController,
+                      onLoaded: (composition) {
+                        _streamController.animationController!
+                          ..duration = composition.duration;
+                      },)
                   ],
                 ),
               );
@@ -306,11 +355,5 @@ class _CameraExampleHomeState extends State<CameraExampleHome> {
     }
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _streamController.stopVideoStreaming();
-  }
 
 }
