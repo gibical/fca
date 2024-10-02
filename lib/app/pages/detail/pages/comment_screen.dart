@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mediaverse/app/pages/detail/logic.dart';
+import 'package:gibical/app/pages/detail/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -12,7 +12,7 @@ class CommentScreen extends StatefulWidget {
 }
 
 class _CommentScreenState extends State<CommentScreen> {
-  final DetailController commentController = Get.find();
+  final DetailController commentController = Get.arguments['logic'];
 
   @override
   void initState() {
@@ -36,7 +36,9 @@ class _CommentScreenState extends State<CommentScreen> {
                 padding:  EdgeInsets.symmetric(horizontal: 1.w , vertical: 2.h),
                 child: Row(
                   children: [
-                    Text('Comments' , style: GoogleFonts.inter(
+                    Text('details_1'.tr , style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                       color: Colors.white,
 
                     ),
@@ -46,7 +48,9 @@ class _CommentScreenState extends State<CommentScreen> {
                       onTap: (){
                         Get.back();
                       },
-                      child: Text('Cancel' , style: GoogleFonts.inter(
+                      child: Text('details_2'.tr , style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                         color: Colors.grey,
 
                       ),),
@@ -77,7 +81,7 @@ class _CommentScreenState extends State<CommentScreen> {
                         decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.black54,
-                            hintText: 'Add a comment...',
+                            hintText: 'details_3'.tr,
                             contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide.none
@@ -102,12 +106,12 @@ class _CommentScreenState extends State<CommentScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('No comments available'),
+                Text('details_4'.tr),
                 ElevatedButton(
                   onPressed: () {
                     commentController.fetchMediaComments();
                   },
-                  child: Text('Refresh'),
+                  child: Text('details_5'.tr),
                 ),
               ],
             ),
@@ -119,7 +123,8 @@ class _CommentScreenState extends State<CommentScreen> {
               SliverList.builder(
                   itemCount: commentController.commentsData!['data'].length,
                   itemBuilder: (context , index){
-                final comment =
+                    print('_CommentScreenState.build = ${commentController.commentsData!}');
+                    final comment =
                 commentController.commentsData!['data'][index];
                 final bodyText = comment['body'].toString();
                 return Padding(
@@ -141,13 +146,21 @@ class _CommentScreenState extends State<CommentScreen> {
                       children: [
                         Row(
                           children: [
-                            CircleAvatar(
-                              radius:3.w,
+                            Container(
+
+                              child: CircleAvatar(
+                                backgroundColor: AppColor.blueDarkColor,
+                                backgroundImage:
+                                NetworkImage(comment?['user']['image_url']),
+                              ),
+                              width: 7.w,
                             ),
                             SizedBox(
                               width: 2.w,
                             ),
-                            Text(comment?['user']['username'] , style: GoogleFonts.inter(
+                           if(comment?['user']!=null) Text(comment?['user']['username'] , style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
 
                             ),
                             ),

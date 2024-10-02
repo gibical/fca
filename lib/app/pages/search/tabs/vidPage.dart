@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
-import 'package:mediaverse/app/pages/search/logic.dart';
+import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/common/app_icon.dart';
+import 'package:gibical/app/pages/search/logic.dart';
 import 'package:sizer/sizer.dart';
 
 class VidPage extends StatelessWidget {

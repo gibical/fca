@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
+import 'package:gibical/app/common/app_extension.dart';
 
 double withSize = 0;
 double hightSize = 0;
 TextStyle fontStyle(double fontSize, fontWeight) {
   return TextStyle(
-    fontFamily: 'vazir',
+    fontFamily: 'Ravi',
     fontSize: fontSize,
     fontWeight: fontWeight,
   );
@@ -47,10 +47,10 @@ class AppTheme {
   static ThemeData get lightMode => ThemeData(
         useMaterial3: true,
        // brightness: Brightness.light,
-        scaffoldBackgroundColor: AppColor.whiteColor,
+        scaffoldBackgroundColor: AppColor.whiteColor,fontFamily: "Ravi",
         colorScheme: ColorScheme(
           primary: AppColor.primaryDarkColor,
-          brightness: Brightness.light,
+          brightness: Brightness.dark,
           background: AppColor.grayLightColor,
           onBackground: AppColor.primaryDarkColor,
           onPrimary: AppColor.whiteColor,
@@ -59,6 +59,7 @@ class AppTheme {
           secondary: Colors.white.withOpacity(0.88),
           error: Colors.red,
           onError: Colors.red,
+
           onSecondary: Colors.black,
         ),
         textTheme: TextTheme(
@@ -74,15 +75,25 @@ class AppTheme {
 
   static ThemeData get darkMode => ThemeData(
         useMaterial3: true,
+       brightness: Brightness.dark,fontFamily: "Ravi",
+
        /// brightness: Brightness.dark,
         colorScheme: ColorScheme(
+
           primary: AppColor.primaryLightColor,
           brightness: Brightness.dark,
           background: AppColor.primaryDarkColor,
-          onBackground: AppColor.whiteColor,
-          onPrimary: AppColor.whiteColor,
-          surface: AppColor.grayLightColor,
+          onBackground: AppColor.primaryDarkColor,
+          onPrimary: AppColor.primaryDarkColor,
+
+
+
+          surface: AppColor.blueDarkColor,
           onSurface: AppColor.whiteColor,
+
+
+
+
           secondary: Color(0xff0E0E12).withOpacity(0.5),
           error: Colors.red,
           onError: Colors.red,
@@ -100,6 +111,8 @@ class AppTheme {
       );
 
   ThemeMode getCurrentTheme() {
+    return ThemeMode.dark;
+
     print('AppTheme.getCurrentTheme = ${box.read("themeisDark") != null}');
     if (box.read("themeisDark") != null) {
       bool themeisDark = box.read("themeisDark") ?? false;

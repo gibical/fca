@@ -69,7 +69,7 @@ class MostImageWidget extends GetView<HomeLogic> {
               children: [
                 Container(
                     margin:EdgeInsets.symmetric(vertical: 5),
-                    child: Text(elementAt['name'],style: TextStyle(fontSize: 12.sp,
+                    child: Text(elementAt['media']['name'],style: TextStyle(fontSize: 12.sp,
                       color: Color(0xFF666680),
 
                     ),maxLines: 1,overflow: TextOverflow.ellipsis,)),

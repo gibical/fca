@@ -1,13 +1,16 @@
 import 'dart:ui';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediaverse/app/pages/profile/logic.dart';
-import 'package:mediaverse/app/pages/profile/tab/ownser_tab_screen.dart';
-import 'package:mediaverse/app/pages/profile/tab/subs_tab_screen.dart';
-import 'package:mediaverse/app/pages/profile/widgets/card_profile_info.dart';
+import 'package:gibical/app/pages/profile/logic.dart';
+import 'package:gibical/app/pages/profile/tab/ownser_tab_screen.dart';
+import 'package:gibical/app/pages/profile/tab/subs_tab_screen.dart';
+import 'package:gibical/app/pages/profile/widgets/card_profile_info.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 
@@ -20,6 +23,7 @@ import '../channel/widgets/custom_calendar_widget.dart';
 import '../home/logic.dart';
 import '../home/tabs/all/view.dart';
 import '../home/tabs/image/view.dart';
+import '../media_suit/logic.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({super.key});
@@ -44,6 +48,8 @@ class _ProfileScreenState extends State<ProfileScreen>
         _selectedTabIndex = _tabController.index;
       });
     });
+    FirebaseAnalytics.instance.logEvent(name: "Entered The Profile ");
+
   }
 
   @override
@@ -102,12 +108,54 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   shape: BoxShape.circle,
                                   color: AppColor.blueDarkColor,
                                 ),
-                                child: CircleAvatar(
-                                  backgroundColor: AppColor.blueDarkColor,
-                                  backgroundImage:
-                                      AssetImage('assets/images/profile.png'),
+                                child: Stack(
+                                  children: [
+                                    SizedBox.expand(
+                                      child: CircleAvatar(
+                                        backgroundColor: AppColor.blueDarkColor,
+                                        backgroundImage:
+                                           NetworkImage(logic.model.imageUrl??""),
+                                      ),
+                                      
+                                    ),
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Container(
+                                        height: 40,
+                                        width: 85,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.5),
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(200),
+                                            bottomRight: Radius.circular(200)
+                                          )
+                                        ),
+                                        child: MaterialButton(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                  bottomLeft: Radius.circular(200),
+                                                  bottomRight: Radius.circular(200)
+                                              )
+                                          ),
+                                          onPressed: (){
+                                            logic.checkAndRequestPermission();
+                                          },
+                                          child: Center(
+                                            child: Transform.scale(
+                                              scale: .5,
+                                              child: Container(
+
+                                                  child: Image.asset("assets/images/upload.png")),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
+                              SizedBox(width:
+                              3.w),
                               Expanded(
                                 child: Row(
                                   mainAxisAlignment:
@@ -173,52 +221,88 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ],
                 ),
               ),
-              body: DefaultTabController(
-                length: 2,
-                child: Column(
-                  children: [
-                    Container(
-                      width: 100.w,
-                      decoration: BoxDecoration(
-                        color: AppColor.blueDarkColor,
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(60.sp),
-                          bottomLeft: Radius.circular(60.sp),
+              body: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  DefaultTabController(
+                    length: 2,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 100.w,
+                          decoration: BoxDecoration(
+                            color: AppColor.blueDarkColor,
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(60.sp),
+                              bottomLeft: Radius.circular(60.sp),
+                            ),
+                          ),
+                          height: 60,
+                          child: TabBar(
+                            tabAlignment: TabAlignment.center,
+                            physics: const BouncingScrollPhysics(),
+                            isScrollable: true,
+                            controller: _tabController,
+                            labelPadding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            overlayColor: MaterialStateProperty.all(Colors.transparent),
+                            enableFeedback: false,
+                            indicatorWeight: 2,
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            indicatorColor: AppColor.primaryLightColor,
+                            unselectedLabelColor: Colors.grey,
+                            labelColor: AppColor.whiteColor,
+                            dividerColor: Colors.transparent,
+                            tabs: [
+                              _buildTab(context, 0, 'prof_1'.tr),
+                              _buildTab(context, 1, 'prof_2'.tr),
+                            ],
+                          ),
                         ),
-                      ),
-                      height: 60,
-                      child: TabBar(
-                        tabAlignment: TabAlignment.center,
-                        physics: const BouncingScrollPhysics(),
-                        isScrollable: true,
-                        controller: _tabController,
-                        labelPadding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        overlayColor: MaterialStateProperty.all(Colors.transparent),
-                        enableFeedback: false,
-                        indicatorWeight: 2,
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        indicatorColor: AppColor.primaryLightColor,
-                        unselectedLabelColor: Colors.grey,
-                        labelColor: AppColor.whiteColor,
-                        dividerColor: Colors.transparent,
-                        tabs: [
-                          _buildTab(context, 0, 'Subscribe'),
-                          _buildTab(context, 1, 'Ownership'),
-                        ],
-                      ),
+
+                        Expanded(
+                          child: TabBarView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            controller: _tabController,
+                            children: [
+                              SubscrTabScreen(),
+                              OwnerTabScreen(),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: TabBarView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        controller: _tabController,
-                        children: [
-                          SubscrTabScreen(),
-                          OwnerTabScreen(),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  Get.arguments == 'edit_screen' ?  Obx((){
+                    if(     Get.arguments == 'edit_screen' &&   Get.find<MediaSuitController>().tempSelectedItems.value.length != 0){
+                      return GestureDetector(
+                        onTap: (){
+
+                          Get.find<MediaSuitController>().confirmSelection();
+
+
+                          Get.back();
+                        },
+                        child: Container(
+                          color: AppColor.blueDarkColor,
+
+                          height: 70,
+
+                          child: Center(
+                            child: Text('Back to editor - Item selected: ${Get.find<MediaSuitController>().tempSelectedItems.value.length}' , style: TextStyle(
+                              color: AppColor.primaryLightColor,
+                              fontSize: 15
+                            ),),
+                          ),
+                        ),
+                      );
+                    }else{
+                      return SizedBox();
+                    }
+
+
+                  }):SizedBox(),
+
+                ],
               ),
             );
     });

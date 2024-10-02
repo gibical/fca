@@ -50,21 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAewiZmrw5esWfaS5p83qOxMS84uA6xaPY',
-    appId: '1:56751096814:android:c26a5a1296539fbe3704ff',
-    messagingSenderId: '56751096814',
-    projectId: 'argon-depot-370512',
-    storageBucket: 'argon-depot-370512.appspot.com',
+    apiKey: 'AIzaSyBbaylcDHBWHqcgkQPpTBAOyBcVdpwsgZk',
+    appId: '1:204876365682:android:85084857a40e99a63c67eb',
+    messagingSenderId: '204876365682',
+    projectId: 'global-harmony-419616',
+    storageBucket: 'global-harmony-419616.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBc1ct8mFzq1bW7g2-dyGgWP0LKAsNG6EY',
-    appId: '1:56751096814:ios:3ff7c7aa68f0add23704ff',
-    messagingSenderId: '56751096814',
-    projectId: 'argon-depot-370512',
-    storageBucket: 'argon-depot-370512.appspot.com',
-    androidClientId: '56751096814-9h8hm3kf665l2v0fusq69l8gl81s2nr0.apps.googleusercontent.com',
-    iosClientId: '56751096814-3tfkjmp1oubdli5ei5ueaqo5d9hnmnle.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCO2pr3YO3HFSePLrqBdx_EqbZPm_Bms2o',
+    appId: '1:204876365682:ios:65d97bf6890a61a83c67eb',
+    messagingSenderId: '204876365682',
+    projectId: 'global-harmony-419616',
+    storageBucket: 'global-harmony-419616.appspot.com',
     iosBundleId: 'com.emahdi1297.mediaverse',
   );
+
 }

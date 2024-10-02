@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/pages/detail/logic.dart';
+import 'package:gibical/app/pages/detail/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -67,7 +67,7 @@ Widget BuyCardWidget({required   price ,required title , required  selectedItem 
 
 
                 },
-                child: Text('Buy' , style: TextStyle(
+                child: Text('details_11'.tr , style: TextStyle(
                     color: AppColor.whiteColor,
                     fontSize: 17,
                     fontWeight: FontWeight.w500

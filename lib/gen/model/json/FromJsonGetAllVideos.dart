@@ -221,7 +221,7 @@ class VideoModel {
     print('VideoModel.fromJson 3 ');
     _name = json['name'];
     print('VideoModel.fromJson 4 ');
-   // _type = json['type'];
+   // _type = json['media_type'];
     print('VideoModel.fromJson 5 ');
     _description = json['description'];
     print('VideoModel.fromJson 6 ');
@@ -358,7 +358,7 @@ VideoModel copyWith({  num? id,
     map['id'] = _id;
     map['asset_id'] = _assetId;
     map['name'] = _name;
-    map['type'] = _type;
+    map['media_type'] = _type;
     map['description'] = _description;
     map['language'] = _language;
     map['genre'] = _genre;
@@ -442,8 +442,8 @@ class Asset {
     _userId = json['user_id'];
     _fileId = json['file_id'];
     _parentId = json['parent_id'];
-    _type = json['type'];
-    _plan = json['plan'];
+    _type = json['media_type'];
+    _plan = json['license_type'];
     _status = json['status'];
     _price = json['price'];
     _subscriptionPeriod = json['subscription_period'];
@@ -562,8 +562,8 @@ Asset copyWith({  num? id,
     map['user_id'] = _userId;
     map['file_id'] = _fileId;
     map['parent_id'] = _parentId;
-    map['type'] = _type;
-    map['plan'] = _plan;
+    map['media_type'] = _type;
+    map['license_type'] = _plan;
     map['status'] = _status;
     map['price'] = _price;
     map['subscription_period'] = _subscriptionPeriod;

@@ -3,22 +3,26 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:mediaverse/app/pages/plus_section/logic.dart';
-import 'package:mediaverse/app/pages/plus_section/widget/first_form.dart';
+import 'package:gibical/app/pages/plus_section/logic.dart';
+import 'package:gibical/app/pages/plus_section/widget/first_form.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../common/app_color.dart';
 import '../../common/app_config.dart';
+import '../../common/utils/dio_inperactor.dart';
 
 class LiveController extends GetxController{
   RxMap<String, dynamic>? liveDetails = RxMap<String, dynamic>();
   RxBool isLoadingLive = false.obs;
+  RxBool isRecordingLive = false.obs;
 
 
   @override
@@ -79,11 +83,11 @@ class LiveController extends GetxController{
   int getTimeRecord(int idx) {
     switch (idx) {
       case 0:
-        return 60;
-      case 1:
         return 120;
-      case 2:
+      case 1:
         return 180;
+      case 2:
+        return 300;
       default:
         return 0;
     }
@@ -92,13 +96,21 @@ class LiveController extends GetxController{
   var isLoadingRecord = false.obs;
   var isSuccessRecord = false.obs;
 
-  void postTimeRecord(int channelId) async {
+  void postTimeRecord(var channelId) async {
+
+    Get.back();
     try {
-      isLoadingRecord.value = true;
 
       final token = GetStorage().read("token");
-      String apiUrl = 'https://api.mediaverse.land/v2/jobs/channel-record';
-      var response = await Dio().post(
+      String apiUrl = 'https://api.gibical.app/v2/tasks/channel-record';
+      var dio = Dio();
+
+
+      //  debugger();
+      dio.interceptors.add(MediaVerseConvertInterceptor());
+      dio.interceptors.add(CurlLoggerDioInterceptor());
+
+      var response = await dio.post(
         apiUrl,
         data: {
           "channel": channelId,
@@ -115,6 +127,8 @@ class LiveController extends GetxController{
       );
       print("statusCode: ${response.statusCode}");
       if (response.statusCode == 200) {
+        isLoadingRecord.value = true;
+
         print(response.data);
         isSuccessRecord.value = true;
         Get.snackbar('Success', "Recording..." ,
@@ -130,16 +144,22 @@ class LiveController extends GetxController{
             icon: Icon(Icons.info)
         );
       }
-    } catch (e) {
+    } on DioError  catch(e) {
       print("$e");
       isSuccessRecord.value = false;
-
-      Get.snackbar('Error', "Try again!" ,
-          backgroundColor: Colors.yellow,
-          icon: Icon(Icons.info)
-      );
+      var messege = e.response!.data['message'];
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text(messege,
+        style: TextStyle(color: AppColor.primaryDarkColor),)));
+      //
+      // Get.snackbar('Error', "Try again!" ,
+      //     backgroundColor: Colors.yellow,
+      //     icon: Icon(Icons.info)
+      // );
     } finally {
-      isLoadingRecord.value = false;
+      Future.delayed(Duration(seconds:getTimeRecord(selectedIndex) )).then((value) {
+        isLoadingRecord.value = false;
+      });
+    //  isLoadingRecord.value = false;
     }
   }
 
@@ -176,7 +196,7 @@ class LiveController extends GetxController{
     logic.imageFile = savedImage!;
     logic.imageOutPut = savedImage.path;
 
-    Get.to(FirstForm(logic), arguments: [logic]);
+    Get.to(FirstForm(logic), arguments: [logic,true],);
   }
 
   Future<File?> saveImage(Uint8List bytes) async {

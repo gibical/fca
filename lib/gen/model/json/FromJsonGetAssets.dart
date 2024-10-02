@@ -22,8 +22,8 @@ class AssetsModel {
     _images = json['images'];
     _audios = json['audios'];
     _videos = json['videos'];
-    _salesNumber = json['sales_number'];
-    _salesVolume = json['sales_volume'];
+    _salesNumber = int.parse(json['sales_number'].toString());
+    _salesVolume = int.parse(json['sales_volume'].toString());
   }
   num? _assets;
   num? _texts;

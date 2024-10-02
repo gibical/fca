@@ -5,12 +5,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mediaverse/app/pages/media_suit/logic.dart';
+import 'package:gibical/app/pages/media_suit/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
 import '../../../common/app_icon.dart';
 import '../../../common/app_route.dart';
+import '../../share_account/logic.dart';
 
 class GridPostViewForDetails extends StatefulWidget {
 
@@ -25,6 +26,27 @@ class GridPostViewForDetails extends StatefulWidget {
 }
 
 class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
+
+  bool isSelected = false;
+  void toggleSelection() {
+    setState(() {
+      isSelected = !isSelected;
+    });
+
+    if (isSelected) {
+      Get.find<MediaSuitController>().addItemToTempList(
+        widget.model['media']['name'].toString(),
+        widget.model['file']['url'],
+        widget.model['length'],
+        widget.model['file_id'].toString(),
+        widget.model['media_type'],
+      );
+    } else {
+      Get.find<MediaSuitController>().removeItemFromTempList(
+        widget.model['file_id'].toString(),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
@@ -36,22 +58,8 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap:Get.arguments == 'edit_screen' ? (){
-
-
-          if(widget. model['class']==1){
-
-            Get.find<MediaSuitController>().setDataEditText(widget.model['name'].toString());
-          }else if(widget. model['class']==2){
-
-               Get.find<MediaSuitController>().setDataEditImage(widget.model['name'].toString());
-          }else if(widget. model['class']==3){
-
-            Get.find<MediaSuitController>().setDataEditAudio(widget.model['name'].toString());
-          }else{
-            Get.find<MediaSuitController>().setDataEditVideo(widget.model['name'].toString()  , widget.model['file']['url']);
-          }
-
+        onTap:Get.arguments == 'edit_screen' ? toggleSelection:Get.arguments == 'onTapChannelManagement' ? (){
+          Get.find<ShareAccountLogic>().setModelShareData(widget.model['media']['name'].toString() ,widget.model['file_id']);
 
           Get.back();
 
@@ -75,31 +83,35 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
                 SizedBox.expand(
                   child: Image.asset("assets/images/text_bg.png",fit: BoxFit.fill,),
                 ),
-                if(widget. model['class'] == 1)  SizedBox.expand(
+                if(widget. model['media_type'] == 1)  SizedBox.expand(
                   child: Container(
                       padding: EdgeInsets.all(5.w),
                       child: Column(
                         children: [
-                       if(widget. model['class'] == 1)   Align(
+                       if(widget. model['media_type'] == 1)   Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                             widget. model['name'],
+                             widget. model['media']['name'],
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.inter(
+                              style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                                 color: Color(0xFFCCCCFF),
                                 fontSize: 10.sp,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
                           ),
-                          if(widget. model['class']==1)    Align(
+                          if(widget. model['media_type']==1)    Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               widget.    model['description']??" ",
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.inter(
+                              style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                                 color: Color(0xFF666680),
                                 fontSize: 10.sp,
                                 fontWeight: FontWeight.w400,
@@ -115,7 +127,9 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
                                 widget.   model['user_id'].toString(),
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.inter(
+                                style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                                   color: Color(0xFF666680),
                                   fontSize: 8.sp,
                                   fontWeight: FontWeight.w400,
@@ -126,7 +140,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
                         ],
                       )),
                 ),
-                if(widget. model['class'] != 1)  SizedBox.expand(
+                if(widget. model['media_type'] != 1)  SizedBox.expand(
                   child:   Container(
                     height: 27.h,
                     width: double.infinity,
@@ -144,7 +158,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
                         Positioned(
                             bottom: 10,
                             left: 20,
-                            child: Text(widget.model['name'])),
+                            child: Text(widget.model['media']['name'])),
                       ],
                     ),
                     decoration:
@@ -163,6 +177,21 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
                     ),
                   ),
                 ),
+
+                if (isSelected)
+                  SizedBox.expand(
+                    child: Container(color: Colors.black.withOpacity(0.5),),
+                  ),
+                if (isSelected)
+                  Positioned(
+                    top: 5,
+                    right: 5,
+                    child: Icon(
+                      Icons.check_circle,
+                      color: AppColor.primaryLightColor,
+                      size: 20.sp,
+                    ),
+                  ),
               ],
             )
         ),
@@ -171,7 +200,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
   }
 
   String _getIcon() {
-    switch(widget.model['type']){
+    switch(widget.model['media_type']){
       case 1:
         return AppIcon.textIcon;
       case 2:
@@ -186,7 +215,7 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
 
   _getBackground() {
     //tum_video
-    switch(widget.model['type']){
+    switch(widget.model['media_type']){
       case 1:
         return "tum_sound";
       case 2:
@@ -201,8 +230,8 @@ class _GridPostViewForDetailsState extends State<GridPostViewForDetails> {
 
   void _getRouteAndPushIt(model) {
     String route = "";
-    print('_GridPostViewState._getRouteAndPushIt 3  = ${widget.model} -  ${widget.model['type']} - ${model}');
-    switch(widget.model['class']){
+    print('_GridPostViewState._getRouteAndPushIt 3  = ${widget.model} -  ${widget.model['media_type']} - ${model}');
+    switch(widget.model['media_type']){
       case 1:
         route = PageRoutes.DETAILTEXT;
         break;

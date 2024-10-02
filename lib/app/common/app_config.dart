@@ -7,11 +7,22 @@ import 'package:sizer/sizer.dart';
 import 'app_color.dart';
 
 class Constant {
+ static Map<dynamic, String> reverseMap(Map<String, dynamic> originalMap) {
+    Map<dynamic, String> reversedMap = {};
 
+    originalMap.forEach((key, value) {
+      reversedMap[value] = key;
+    });
+
+    return reversedMap;
+  }
   static showMessege(String mseeges){
     ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text(mseeges,
-      style: TextStyle(color: AppColor.primaryDarkColor),)));
+      style: TextStyle(color: AppColor.primaryDarkColor,),),margin: EdgeInsets.only(bottom: 0.h),  behavior: SnackBarBehavior.floating,
+    ));
   }
+  static get h => MediaQuery.of(Get.context!).size.height;
+  static get animatiomDuration => 100;
 
   static List<String> languages = [
     "Afrikaans",
@@ -373,7 +384,9 @@ class Constant {
   ];
 
   static bool isTabletMode = SizerUtil.deviceType == DeviceType.tablet;
-  static String HTTP_HOST ="https://api.mediaverse.land/v2/";
+  //static String HTTP_HOST ="https://api.${kDebugMode?("mediaverse.land"):("gibical.app")}/v2/";
+  static String HTTP_HOST ="https://api.${("gibical.app")}/v2/";
+  static bool GIBICALAPP =false;
   static getPlanByDropDown(var s) {
     switch (s) {
       case "Free":
@@ -385,6 +398,7 @@ class Constant {
     }
   }
   static getDropDownByPlan(var s) {
+
     switch (s) {
       case "1":
         return "Free";

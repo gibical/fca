@@ -2,13 +2,17 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/RequestInterface.dart';
-import 'package:mediaverse/app/common/app_api.dart';
-import 'package:mediaverse/app/pages/profile/logic.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetBestVideos.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetChannels.dart';
+import 'package:gibical/app/common/RequestInterface.dart';
+import 'package:gibical/app/common/app_api.dart';
+import 'package:gibical/app/common/utils/firebase_controller.dart';
+import 'package:gibical/app/pages/profile/logic.dart';
+import 'package:gibical/gen/model/json/FromJsonGetBestVideos.dart';
+import 'package:gibical/gen/model/json/FromJsonGetChannels.dart';
 
 import '../../../gen/model/json/FromJsonGetBestModelVideows.dart';
 
@@ -41,6 +45,24 @@ class HomeLogic extends GetxController implements  RequestInterface{
     // TODO: implement onReady
     super.onReady();
     apiRequster  = ApiRequster(this,develperModel: true);
+
+    try {
+      print('HomeLogic.onReady 1');
+       FirebaseAnalytics.instance.logEvent(
+        name: "share_image",
+        parameters: {
+          "image_name": "name",
+          "full_text": "text",
+        },
+      );
+      FirebaseAnalytics.instance.logEvent(name: "Entered The Setting ");
+    }  catch (e) {
+      // TODO
+      print('HomeLogic.onReady catch');
+    }finally{
+      print('HomeLogic.onReady finally');
+
+    }
 
     getMainReueqst();
   }
@@ -84,11 +106,17 @@ class HomeLogic extends GetxController implements  RequestInterface{
 
   void praseJsonFromChannels(source) {
     try {
-      channels = FromJsonGetChannels
-          .fromJson(jsonDecode(source))
-          .data ?? [];
+      if (Platform.isIOS) {
+        channels = (FromJsonGetChannels.fromJson(jsonDecode(source)).data ?? []).where((te)=>te.link.toString().contains("https://s1.gibical.app")).toList();
+      }else{
+        channels = FromJsonGetChannels.fromJson(jsonDecode(source)).data ?? [];
+
+      }
+      print('HomeLogic.praseJsonFromChannels 1 =${channels}');
     }  catch (e) {
       // TODO
+      print('HomeLogic.praseJsonFromChannels 2');
+
     }
 
     _getBestVideos();
@@ -128,6 +156,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
 
   void parseJsonFromBestText(source) {
+  //  log('HomeLogic.parseJsonFromBestText = ${source}');
     mostText = FromJsonGetBestText.fromJson(jsonDecode(source)).data??[];
     _getMostSongs();
   }

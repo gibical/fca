@@ -1,20 +1,24 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:country_code_picker/country_code_picker.dart';
+
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:mediaverse/app/common/RequestInterface.dart';
-import 'package:mediaverse/app/common/app_api.dart';
-import 'package:mediaverse/app/common/app_config.dart';
-import 'package:mediaverse/app/common/app_route.dart';
-import 'package:mediaverse/gen/model/enums/login_enum.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetLogin.dart';
+import 'package:gibical/app/common/RequestInterface.dart';
+import 'package:gibical/app/common/app_api.dart';
+import 'package:gibical/app/common/app_config.dart';
+import 'package:gibical/app/common/app_route.dart';
+import 'package:gibical/gen/model/enums/login_enum.dart';
+import 'package:gibical/gen/model/json/FromJsonGetLogin.dart';
 import 'package:meta/meta.dart';
 
+import '../../../gen/model/json/FromJsonGetLoginV2.dart';
 import '../../common/app_color.dart';
 
 class LoginController extends GetxController implements RequestInterface {
@@ -81,10 +85,10 @@ class LoginController extends GetxController implements RequestInterface {
     switch(loginEnum){
 
       case LoginEnum.phone:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
 
         if(eTextEditingControllerPhone.text.isEmpty||eTextEditingControllerPassword.text.isEmpty){
-       Constant.showMessege("Please fill out the form");
+          Constant.showMessege("Please fill out the form");
           isloading(false);
 
           break;
@@ -94,7 +98,7 @@ class LoginController extends GetxController implements RequestInterface {
         _getPhoneReuqest();
         break;
       case LoginEnum.username:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
 
         if(eTextEditingControllerUsername.text.isEmpty||eTextEditingControllerPassword.text.isEmpty){
           Constant.showMessege("Please fill out the form");
@@ -126,7 +130,7 @@ class LoginController extends GetxController implements RequestInterface {
     try{
       var messege = jsonDecode(bodyError)['message'];
       ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(content: Text(messege,
-      style: TextStyle(color: AppColor.primaryDarkColor),)));
+        style: TextStyle(color: AppColor.primaryDarkColor),)));
 
     }catch(e){
 
@@ -154,11 +158,12 @@ class LoginController extends GetxController implements RequestInterface {
   void _getPhoneReuqest()async {
 
     var body = {
-      "cellphone":eTextEditingControllerPhone.text,
+      "cellphone": code.dialCode!+eTextEditingControllerPhone.text,
       "password":eTextEditingControllerPassword.text
     };
-     apiRequster.request("auth/sign-in", ApiRequster.MHETOD_POST, 1,body: body);
-   //  apiRequster.request("https://api64.ipify.org?format=json", ApiRequster.MHETOD_GET, 1, daynamicUrl: true);
+    apiRequster.request("auth/sign-in", ApiRequster.MHETOD_POST, 1,body: body);
+    print('LoginController._getPhoneReuqest = ${body}');
+    //  apiRequster.request("https://api64.ipify.org?format=json", ApiRequster.MHETOD_GET, 1, daynamicUrl: true);
   }
 
   void _getUseranmeReuqest() {
@@ -196,7 +201,7 @@ class LoginController extends GetxController implements RequestInterface {
 
     box.write("islogin", true);
 
-    FromJsonGetLogin getLogin = FromJsonGetLogin.fromJson(jsonDecode(source));
+    FromJsonGetLoginV2 getLogin = FromJsonGetLoginV2.fromJson(jsonDecode(source));
     box.write("token", getLogin.token??"");
     box.write("userid", getLogin.user!.id.toString());
     Get.offAllNamed(PageRoutes.WRAPPER);
@@ -206,6 +211,7 @@ class LoginController extends GetxController implements RequestInterface {
     var body = {
       "cellphone":(code.dialCode??"")+(eTextEditingControllerPhone.text),
     };
+    print('LoginController._getOTPReuqest = ${body}');
     apiRequster.request("auth/otp/request", ApiRequster.MHETOD_POST, 2,body: body);
   }
   void getOTPSumbit() {
@@ -215,6 +221,13 @@ class LoginController extends GetxController implements RequestInterface {
       "otp":eTextEditingControllerOTP.text,
     };
     apiRequster.request("auth/otp/submit", ApiRequster.MHETOD_POST, 1,body: body);
+  }
+
+  void sendIDTokenToServer(String s) {
+    apiRequster.request("auth/google", ApiRequster.MHETOD_POST, 1,body: {
+      "access_token":s
+    });
+
   }
 
 

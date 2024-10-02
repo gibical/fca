@@ -33,8 +33,8 @@ class TransactionModel {
       num? id, 
       num? amount, 
       num? newBalance, 
-      String? description, 
-      num? relationType, 
+      String? description,
+    String? relationType,
       num? relationId, 
       num? userId, 
       String? createdAt, 
@@ -65,7 +65,7 @@ class TransactionModel {
   num? _amount;
   num? _newBalance;
   String? _description;
-  num? _relationType;
+  String? _relationType;
   num? _relationId;
   num? _userId;
   String? _createdAt;
@@ -74,7 +74,7 @@ TransactionModel copyWith({  num? id,
   num? amount,
   num? newBalance,
   String? description,
-  num? relationType,
+  String? relationType,
   num? relationId,
   num? userId,
   String? createdAt,
@@ -93,7 +93,7 @@ TransactionModel copyWith({  num? id,
   num? get amount => _amount;
   num? get newBalance => _newBalance;
   String? get description => _description;
-  num? get relationType => _relationType;
+  String? get relationType => _relationType;
   num? get relationId => _relationId;
   num? get userId => _userId;
   String? get createdAt => _createdAt;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mediaverse/app/common/app_color.dart';
+import 'package:gibical/app/common/app_color.dart';
 import 'package:sizer/sizer.dart';
 
 class ImageWidget extends StatelessWidget {

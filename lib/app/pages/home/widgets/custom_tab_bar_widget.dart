@@ -7,14 +7,14 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/home/logic.dart';
-import 'package:mediaverse/app/pages/home/tabs/all/view.dart';
-import 'package:mediaverse/app/pages/home/tabs/image/view.dart';
-import 'package:mediaverse/app/pages/home/tabs/text/view.dart';
-import 'package:mediaverse/app/pages/home/tabs/video/view.dart';
-import 'package:mediaverse/app/pages/home/widgets/custom_grid_view_widget.dart';
+import 'package:gibical/app/common/app_icon.dart';
+import 'package:gibical/app/common/font_style.dart';
+import 'package:gibical/app/pages/home/logic.dart';
+import 'package:gibical/app/pages/home/tabs/all/view.dart';
+import 'package:gibical/app/pages/home/tabs/image/view.dart';
+import 'package:gibical/app/pages/home/tabs/text/view.dart';
+import 'package:gibical/app/pages/home/tabs/video/view.dart';
+import 'package:gibical/app/pages/home/widgets/custom_grid_view_widget.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -173,7 +173,7 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          isLabel ? Text('All') : SvgPicture.asset(
+          isLabel ? Text('home_10'.tr) : SvgPicture.asset(
             height: 2.h,
             icon,
             color: tabIndex == _selectedTabIndex

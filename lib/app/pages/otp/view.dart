@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/login/logic.dart';
-import 'package:mediaverse/app/pages/login/widgets/country_code_widget.dart';
-import 'package:mediaverse/app/pages/otp/widgets/code_otp_widget.dart';
+import 'package:gibical/app/common/font_style.dart';
+import 'package:gibical/app/pages/login/logic.dart';
+import 'package:gibical/app/pages/login/widgets/country_code_widget.dart';
+import 'package:gibical/app/pages/otp/widgets/code_otp_widget.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
@@ -35,12 +35,12 @@ class OTPScreen extends StatelessWidget {
             SizedBox(
               height: 7.h,
             ),
-            Text('We send the code to ${logic.code.dialCode}${logic.eTextEditingControllerPhone.text}'),
+            Text('${"otp_4_1".tr} ${logic.code.dialCode}${logic.eTextEditingControllerPhone.text}'),
             SizedBox(
               height: 3.h,
             ),
             CustomTextFieldLogin(prefix: CodeOTPWidget(context),
-              hintText: 'Insert your OTP code',
+              hintText: 'otp_4'.tr,
               context: context,
 
               editingController: logic.eTextEditingControllerOTP,),
@@ -65,13 +65,13 @@ class OTPScreen extends StatelessWidget {
                     child: Obx(() {
                       if (logic.timeLeft.value > 0) {
                         return Text(
-                            "OTP expires in: ${logic.timeLeft.value} seconds",
+                            "${"otp_5".tr} ${logic.timeLeft.value} seconds",
                             style: textTheme.bodyMedium?.copyWith(
                                 color: AppColor.primaryLightColor
                             ));
                       } else {
                         return Text(
-                            "Send again", style: textTheme.bodyMedium?.copyWith(
+                            "otp_6".tr, style: textTheme.bodyMedium?.copyWith(
                             color: AppColor.primaryLightColor
                         ));
                       }
@@ -82,7 +82,7 @@ class OTPScreen extends StatelessWidget {
                     onTap: () {
                       Get.back();
                     },
-                    child: Text('Wrong number?',
+                    child: Text('otp_7'.tr,
                         style: textTheme.bodyMedium
                     ),
                   )

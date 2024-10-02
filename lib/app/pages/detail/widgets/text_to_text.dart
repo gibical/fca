@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
-import 'package:mediaverse/app/pages/detail/logic.dart';
+import 'package:gibical/app/common/app_extension.dart';
+import 'package:gibical/app/pages/detail/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -32,14 +32,14 @@ class TextToTextWidget extends StatelessWidget {
                 MainAxisAlignment
                     .spaceBetween,
                 children: [
-                  const Text("Text To Text Convert"),
+                   Text("details_18".tr),
                   TextButton(
                     onPressed: () {
                       Navigator.pop(
                           context);
                     },
-                    child: const Text(
-                      "Cancel",
+                    child:  Text(
+                      "details_2".tr,
                       style: TextStyle(
                         color:
                         Colors.white54,
@@ -66,8 +66,8 @@ class TextToTextWidget extends StatelessWidget {
                   SizedBox(
                     width: 3.w,
                   ),
-                  const Text(
-                    "Prefix",
+                   Text(
+                    "details_19".tr,
                     style: TextStyle(
                         color:
                         Colors.white54),
@@ -94,7 +94,7 @@ class TextToTextWidget extends StatelessWidget {
                               .none,
                         ),
                         hintText:
-                        "Insert Prefix...",
+                        "details_20".tr,
                         hintStyle:
                         TextStyle(
                           color: Colors
@@ -132,7 +132,7 @@ class TextToTextWidget extends StatelessWidget {
 
                 },
                 color: "5979fe".toColor(),
-                child: const Text("Start Converting"),
+                child:  Text("details_21".tr),
               ),
             )
           ],
@@ -143,7 +143,7 @@ class TextToTextWidget extends StatelessWidget {
   void showDialogPicker(BuildContext context,DetailController controller){
   var  selectedDate = showDatePicker(
       context: context,
-      helpText: 'Your Date of Birth',
+      helpText: 'details_22'.tr,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2050),

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/RequestInterface.dart';
-import 'package:mediaverse/app/common/app_api.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetWallet.dart';
+import 'package:gibical/app/common/RequestInterface.dart';
+import 'package:gibical/app/common/app_api.dart';
+import 'package:gibical/gen/model/json/FromJsonGetWallet.dart';
 import 'package:meta/meta.dart';
 
 class WalletController extends GetxController implements RequestInterface{
@@ -62,4 +62,56 @@ class WalletController extends GetxController implements RequestInterface{
 
   }
 
+
+
+
+
+
+  ///New Version of API
+
+
+
+  void bill(){
+
+    apiRequster.request("bills", ApiRequster.MHETOD_GET, 1);
+  }
+
+  void invoices(){
+
+    apiRequster.request("invoices", ApiRequster.MHETOD_GET, 2);
+  }
+
+
+  void invoicesLink(invoideID){
+
+    apiRequster.request("invoices/${invoideID}/link", ApiRequster.MHETOD_GET, 3);
+  }
+
+
+  void stripeSubscription(){
+
+    apiRequster.request("stripe/subscription", ApiRequster.MHETOD_GET, 4);
+  }
+
+  void stripeSubscriptionLink(){
+
+    apiRequster.request("stripe/subscription/link", ApiRequster.MHETOD_GET, 4);
+  }
+  void stripPeyout(){
+
+    apiRequster.request("stripe/payout", ApiRequster.MHETOD_GET, 5);
+  }
+  void stripPeyoutLink(){
+
+    apiRequster.request("stripe/payout", ApiRequster.MHETOD_GET, 5);
+  }
+
+
+
+
+
 }
+
+
+
+

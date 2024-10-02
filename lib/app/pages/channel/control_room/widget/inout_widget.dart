@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
+import 'package:get/get.dart';
+import 'package:gibical/app/common/app_extension.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 
@@ -29,7 +30,7 @@ class InputWidget extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text("Input 1",style: TextStyle(
+                              Text("channel_1".tr,style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                           
@@ -45,7 +46,7 @@ class InputWidget extends StatelessWidget {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    "ON AIR",
+                                    "channel_2".tr,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w300
                                     ),

@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
+import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/common/app_icon.dart';
 import 'package:sizer/sizer.dart';
 
 
@@ -35,7 +35,9 @@ class _UploadScreenState extends State<UploadScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: Text('Information' , style:  GoogleFonts.inter(
+        title: Text('Information' , style:  Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
           color: Colors.white,
           fontSize: 14.sp,
           fontWeight: FontWeight.w400,
@@ -50,7 +52,9 @@ class _UploadScreenState extends State<UploadScreen> {
               SizedBox(
                 height: 3.h,
               ),
-              Text('Title' , style: GoogleFonts.inter(
+              Text('Title' , style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                 color: Colors.white,
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w400,
@@ -95,7 +99,9 @@ class _UploadScreenState extends State<UploadScreen> {
               SizedBox(
                 height: 2.5.h,
               ),
-              Text('Add cover' , style: GoogleFonts.inter(
+              Text('Add cover' , style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                 color: Colors.white,
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w400,
@@ -103,7 +109,9 @@ class _UploadScreenState extends State<UploadScreen> {
               SizedBox(
                 height: 0.5.h,
               ),
-              Text('Minimum 300px width minimum 300px ' , style: GoogleFonts.inter(
+              Text('Minimum 300px width minimum 300px ' , style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                 color: Colors.white,
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w400,
@@ -136,7 +144,9 @@ class _UploadScreenState extends State<UploadScreen> {
                         SizedBox(
                           height: 1.h,
                         ),
-                        Text('your cover...' , style: GoogleFonts.inter(
+                        Text('your cover...' , style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                           color: Colors.grey.withOpacity(0.2),
                           fontSize: 11.sp,
                           fontWeight: FontWeight.w400,
@@ -159,7 +169,9 @@ class _UploadScreenState extends State<UploadScreen> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 1.5.w),
-                child: Text('Language' , style: GoogleFonts.inter(
+                child: Text('Language' , style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                   color: Colors.white,
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w400,
@@ -178,7 +190,9 @@ class _UploadScreenState extends State<UploadScreen> {
             child: DropdownButton<String>(
           
               //elevation: 5,
-              style: GoogleFonts.inter(
+              style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                 color: Colors.white,
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w400,
@@ -195,7 +209,9 @@ class _UploadScreenState extends State<UploadScreen> {
               }).toList(),
               hint: Text(
                 "Please choose a langauage",
-                style:  GoogleFonts.inter(
+                style:  Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                   color: Colors.white,
                   fontSize: 10.sp,
                   fontWeight: FontWeight.w400,
@@ -213,7 +229,9 @@ class _UploadScreenState extends State<UploadScreen> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 1.5.w),
-                child: Text('Write a caption' , style: GoogleFonts.inter(
+                child: Text('Write a caption' , style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                   color: Colors.white,
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w400,
@@ -305,7 +323,9 @@ class _UploadScreenState extends State<UploadScreen> {
           SizedBox(
             height: 1.h,
           ),
-          Text(title , style: GoogleFonts.inter(
+          Text(title , style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
             color: Colors.white,
             fontSize: 10.sp,
             fontWeight: FontWeight.w400,

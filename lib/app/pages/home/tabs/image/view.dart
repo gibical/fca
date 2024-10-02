@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediaverse/app/pages/home/logic.dart';
-import 'package:mediaverse/app/pages/home/tabs/image/most_image_widget.dart';
+import 'package:gibical/app/pages/home/logic.dart';
+import 'package:gibical/app/pages/home/tabs/image/most_image_widget.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../common/app_color.dart';
@@ -60,7 +60,7 @@ class ImageTabScreen extends StatelessWidget {
                   TitleExplore(theme: theme,
                       textTheme: textTheme,
                       icon: "assets/icons/sound_icons.svg",
-                      title: 'Best in month'),
+                      title: 'home_7'.tr),
                   SizedBox(height: 1.5.h),
                   SizedBox(
                     height: 30.h,
@@ -71,7 +71,7 @@ class ImageTabScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return  GestureDetector(
                               onTap: (){
-                                int itemId = list[index]['id'];
+                                String itemId = list[index]['id'];
                                 Get.toNamed(PageRoutes.DETAILIMAGE, arguments: {'id': itemId});
                               },
                               child: MostImageWidget(
@@ -83,7 +83,7 @@ class ImageTabScreen extends StatelessWidget {
                   TitleExplore(theme: theme,
                       textTheme: textTheme,
                       icon: "assets/icons/sound_icons.svg",
-                      title: 'Recently'),
+                      title: 'home_8'.tr),
 
                   SizedBox(height: 4.h,),
 

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_color.dart';
+import 'package:gibical/app/common/app_color.dart';
 
-import 'package:mediaverse/app/widgets/logo_app_widget.dart';
+import 'package:gibical/app/widgets/logo_app_widget.dart';
 
 import 'logic.dart';
 

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetLogins.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetSessions.dart';
+import 'package:gibical/gen/model/json/FromJsonGetLogins.dart';
+import 'package:gibical/gen/model/json/FromJsonGetSessions.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
@@ -37,7 +37,7 @@ class LoginsPage extends StatelessWidget {
             Get.back();
           },
               icon: SvgPicture.asset(AppIcon.backIcon)),
-          title: Text('Log ins', style: FontStyleApp.titleMedium.copyWith(
+          title: Text('logins_1'.tr, style: FontStyleApp.titleMedium.copyWith(
               color: AppColor.whiteColor
           ),),
         ),

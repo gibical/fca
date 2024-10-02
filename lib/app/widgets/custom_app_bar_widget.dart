@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
-import 'package:mediaverse/app/common/app_route.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/home/logic.dart';
-import 'package:mediaverse/app/pages/search/view.dart';
+import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/common/app_icon.dart';
+import 'package:gibical/app/common/app_route.dart';
+import 'package:gibical/app/common/font_style.dart';
+import 'package:gibical/app/pages/home/logic.dart';
+import 'package:gibical/app/pages/search/view.dart';
 import 'package:sizer/sizer.dart';
 
 PreferredSizeWidget CustomAppBarWidget(context) {

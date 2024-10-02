@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mediaverse/app/common/RequestInterface.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetLogins.dart';
+import 'package:gibical/app/common/RequestInterface.dart';
+import 'package:gibical/gen/model/json/FromJsonGetLogins.dart';
 
 import '../../../gen/model/json/FromJsonGetSessions.dart';
 import '../../common/app_api.dart';

@@ -1,33 +1,34 @@
 import 'package:get/get.dart';
-import 'package:mediaverse/app/pages/change_password/view.dart';
-import 'package:mediaverse/app/pages/channel/all_tools.dart';
-import 'package:mediaverse/app/pages/detail/logic.dart';
-import 'package:mediaverse/app/pages/detail/pages/detail_text_screen.dart';
-import 'package:mediaverse/app/pages/detail/state.dart';
-import 'package:mediaverse/app/pages/detail/view.dart';
-import 'package:mediaverse/app/pages/edit_profile/view.dart';
-import 'package:mediaverse/app/pages/home/state.dart';
-import 'package:mediaverse/app/pages/home/view.dart';
-import 'package:mediaverse/app/pages/intro/view.dart';
-import 'package:mediaverse/app/pages/live/state.dart';
-import 'package:mediaverse/app/pages/live/view.dart';
-import 'package:mediaverse/app/pages/login/view.dart';
-import 'package:mediaverse/app/pages/massage/view.dart';
-import 'package:mediaverse/app/pages/media_suit/state.dart';
-import 'package:mediaverse/app/pages/media_suit/view.dart';
-import 'package:mediaverse/app/pages/otp/view.dart';
-import 'package:mediaverse/app/pages/plus_section/view.dart';
-import 'package:mediaverse/app/pages/profile/view.dart';
-import 'package:mediaverse/app/pages/search/state.dart';
-import 'package:mediaverse/app/pages/search/view.dart';
-import 'package:mediaverse/app/pages/setting/view.dart';
-import 'package:mediaverse/app/pages/signup/view.dart';
-import 'package:mediaverse/app/pages/splash/state.dart';
-import 'package:mediaverse/app/pages/upload/view.dart';
-import 'package:mediaverse/app/pages/video_editor/state.dart';
-import 'package:mediaverse/app/pages/video_editor/view.dart';
-import 'package:mediaverse/app/pages/wrapper/state.dart';
-import 'package:mediaverse/app/pages/wrapper/view.dart';
+import 'package:gibical/app/pages/change_password/view.dart';
+import 'package:gibical/app/pages/channel/all_tools.dart';
+import 'package:gibical/app/pages/detail/logic.dart';
+import 'package:gibical/app/pages/detail/pages/detail_text_screen.dart';
+import 'package:gibical/app/pages/detail/state.dart';
+import 'package:gibical/app/pages/detail/view.dart';
+import 'package:gibical/app/pages/edit_profile/view.dart';
+import 'package:gibical/app/pages/home/state.dart';
+import 'package:gibical/app/pages/home/view.dart';
+import 'package:gibical/app/pages/intro/view.dart';
+import 'package:gibical/app/pages/live/state.dart';
+import 'package:gibical/app/pages/live/view.dart';
+import 'package:gibical/app/pages/login/view.dart';
+import 'package:gibical/app/pages/massage/view.dart';
+import 'package:gibical/app/pages/media_suit/state.dart';
+import 'package:gibical/app/pages/media_suit/view.dart';
+import 'package:gibical/app/pages/otp/view.dart';
+import 'package:gibical/app/pages/plus_section/view.dart';
+import 'package:gibical/app/pages/profile/view.dart';
+import 'package:gibical/app/pages/search/state.dart';
+import 'package:gibical/app/pages/search/view.dart';
+import 'package:gibical/app/pages/setting/view.dart';
+import 'package:gibical/app/pages/share_account/view.dart';
+import 'package:gibical/app/pages/signup/view.dart';
+import 'package:gibical/app/pages/splash/state.dart';
+import 'package:gibical/app/pages/upload/view.dart';
+import 'package:gibical/app/pages/video_editor/state.dart';
+import 'package:gibical/app/pages/video_editor/view.dart';
+import 'package:gibical/app/pages/wrapper/state.dart';
+import 'package:gibical/app/pages/wrapper/view.dart';
 
 import '../pages/detail/pages/comment_screen.dart';
 import '../pages/detail/pages/detail_image_screen.dart';
@@ -64,6 +65,7 @@ class PageRoutes {
   static const EDITPROFILE = '/EditProfile';
   static const CHANGEPASSWORD = '/ChangePassword';
   static const MEDIASUIT = '/MediaSuite';
+  static const SHAREACCOUNT = '/ShareAccount';
 
 
   static List<GetPage> routes = [
@@ -222,8 +224,15 @@ class PageRoutes {
     ),
     GetPage(
       name: PageRoutes.MEDIASUIT,
-      page: () => MediaSuitScreen(),
+        transition: Transition.rightToLeft,
+
+        page: () => MediaSuitScreen(),
       bindings:       [  MediaSuitState() , DetailState()]
+    ),
+    GetPage(
+      name: PageRoutes.SHAREACCOUNT,
+      page: () => ShareAccountPage(),
+
     ),
 
   ];

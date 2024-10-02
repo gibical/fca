@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/massage/logic.dart';
-import 'package:mediaverse/app/pages/massage/single_view.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetMesseges.dart';
+import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/common/app_icon.dart';
+import 'package:gibical/app/common/font_style.dart';
+import 'package:gibical/app/pages/massage/logic.dart';
+import 'package:gibical/app/pages/massage/single_view.dart';
+import 'package:gibical/gen/model/json/FromJsonGetMesseges.dart';
 import 'package:sizer/sizer.dart';
 
 
@@ -26,7 +26,8 @@ class MassageScreen extends StatelessWidget {
             child:  Lottie.asset("assets/json/Y8IBRQ38bK.json",height: 10.h),
           ),
         ),
-      ): Scaffold(
+      ):
+      Scaffold(
         backgroundColor: AppColor.blueDarkColor,
         appBar: AppBar(
           toolbarHeight: 80,
@@ -36,13 +37,13 @@ class MassageScreen extends StatelessWidget {
             Get.back();
           },
               icon: SvgPicture.asset(AppIcon.backIcon)),
-          title: Text('Massage', style: FontStyleApp.titleMedium.copyWith(
+          title: Text('messege_2'.tr, style: FontStyleApp.titleMedium.copyWith(
               color: AppColor.whiteColor
           ),),
         ),
         body: logic.list.isEmpty?  Container(
             padding: EdgeInsets.zero,
-            child: Center(child: Text("No item to show"))):CustomScrollView(
+            child: Center(child: Text("messege_3".tr))):CustomScrollView(
           slivers: [
 
             SliverList.builder(

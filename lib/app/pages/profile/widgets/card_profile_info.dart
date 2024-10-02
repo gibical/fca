@@ -4,9 +4,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/profile/logic.dart';
+import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/common/font_style.dart';
+import 'package:gibical/app/pages/profile/logic.dart';
 import 'package:sizer/sizer.dart';
 
 
@@ -24,7 +24,7 @@ class CardProfileInfoWidget extends StatelessWidget {
         children: [
         if(logic.isassetInit.value)  CardProfileInfoItem(title: '${logic.assetsModel.assets.toString()}' , subTitle: 'Assets'),
           if(logic.isassetInit.value)    CardProfileInfoItem(title: '${logic.assetsModel.salesNumber.toString()}', subTitle: 'Sales'),
-          if(logic.isassetInit.value)   CardProfileInfoItem(title: '${logic.assetsModel.salesVolume.toString()}' , subTitle: 'Volume'),
+          if(logic.isassetInit.value)   CardProfileInfoItem(title: '${(double.parse(logic.assetsModel.salesVolume.toString())/100).toString()} €' , subTitle: 'Volume'),
 
 
 

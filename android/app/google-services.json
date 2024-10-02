@@ -1,48 +1,48 @@
 {
   "project_info": {
-    "project_number": "56751096814",
-    "project_id": "argon-depot-370512",
-    "storage_bucket": "argon-depot-370512.appspot.com"
+    "project_number": "204876365682",
+    "project_id": "global-harmony-419616",
+    "storage_bucket": "global-harmony-419616.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:56751096814:android:c26a5a1296539fbe3704ff",
+        "mobilesdk_app_id": "1:204876365682:android:cffeee9fedc4ab0e3c67eb",
         "android_client_info": {
-          "package_name": "com.emahdi1297.mediaverse"
+          "package_name": "com.app.gibicalapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "56751096814-cajpjrghrpphfo87o6jaqdu7hqegnhu4.apps.googleusercontent.com",
+          "client_id": "204876365682-qdbusj60clt2am9ddjqfffe3hmqn5uib.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.emahdi1297.mediaverse",
-            "certificate_hash": "4dc590de4417e31f6fb4a0cb5549aa3e46c4e907"
+            "package_name": "com.app.gibicalapp",
+            "certificate_hash": "6bf26a0705b5f3efd7fb60351b58734bf7b09292"
           }
         },
         {
-          "client_id": "56751096814-96rr2tjp257q4pm1po8751tbk62jgth4.apps.googleusercontent.com",
+          "client_id": "204876365682-4jtc3cgsjcdlmc8fjc67chefgtj2sq9g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAewiZmrw5esWfaS5p83qOxMS84uA6xaPY"
+          "current_key": "AIzaSyBbaylcDHBWHqcgkQPpTBAOyBcVdpwsgZk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "56751096814-96rr2tjp257q4pm1po8751tbk62jgth4.apps.googleusercontent.com",
+              "client_id": "204876365682-4jtc3cgsjcdlmc8fjc67chefgtj2sq9g.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "56751096814-3tfkjmp1oubdli5ei5ueaqo5d9hnmnle.apps.googleusercontent.com",
+              "client_id": "204876365682-p51l3rll6ieui2c0bj9aeloir9ajr58f.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.emahdi1297.mediaverse"
+                "bundle_id": "com.app.gibicalapp"
               }
             }
           ]

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
+import 'package:gibical/app/common/app_extension.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
@@ -43,7 +43,7 @@ class ChangePasswordPage extends StatelessWidget {
                         },
                             icon: Icon(Icons.arrow_back, color: "666680"
                                 .toColor(),)),
-                        Text("Account", style: TextStyle(color: Colors.white),),
+                        Text("changePass_1".tr, style: TextStyle(color: Colors.white),),
                         Container(
                           width: 16.w,
                         )
@@ -56,15 +56,15 @@ class ChangePasswordPage extends StatelessWidget {
                       context: context,
                       textEditingController: logic.passwordController,
 
-                      titleText: 'Password',showCursor: true,
-                      hintText: 'Insert password',
+                      titleText: 'changePass_2'.tr,showCursor: true,
+                      hintText: 'changePass_3'.tr,
                       needful: false),
                   CustomTextFieldRegisterWidget(
                       context: context,
                       textEditingController: logic.repeatPasswordController,
 
-                      titleText: 'Repeat Password',showCursor: true,
-                      hintText: 'Insert password',
+                      titleText: 'changePass_4'.tr,showCursor: true,
+                      hintText: 'changePass_5'.tr,
                       needful: false),
 
                   Obx(() {
@@ -74,12 +74,12 @@ class ChangePasswordPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(height: 6.h,),
-                          Text('We send the code to Phone'),
+                          Text('changePass_6'.tr),
                           SizedBox(
                             height: 3.h,
                           ),
                           CustomTextFieldLogin(prefix: CodeOTPWidget(context),
-                            hintText: 'Insert your OTP code',
+                            hintText: 'changePass_7'.tr,
                             context: context,
 
                             editingController: logic.eTextEditingControllerOTP,

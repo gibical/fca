@@ -4,7 +4,7 @@ import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
+import 'package:gibical/app/common/app_extension.dart';
 import 'package:sizer/sizer.dart';
 
 import 'logic.dart';
@@ -102,6 +102,7 @@ class _PlusSectionPageState extends State<PlusSectionPage> {
                                         shape: BoxShape.circle
                                     ),
                                     margin: EdgeInsets.only(
+
                                         left: 35, bottom: 10),
                                     child: MaterialButton(
                                         onPressed: () {

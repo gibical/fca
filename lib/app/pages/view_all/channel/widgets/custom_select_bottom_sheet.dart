@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
+import 'package:gibical/app/common/app_extension.dart';
 import 'package:sizer/sizer.dart';
 
 void runCustomSelectBottomSheet(Map<String, String> languageMap, TextEditingController? textEditingController, String title, Function(String) filterCallback) {

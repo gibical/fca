@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/search/logic.dart';
+import 'package:gibical/app/common/font_style.dart';
+import 'package:gibical/app/pages/search/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -33,7 +33,7 @@ class AdvanceSearchWidget extends GetView<SearchLogic> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Advance search' , style: FontStyleApp.bodyMedium.copyWith(
+                    Text('search_1'.tr , style: FontStyleApp.bodyMedium.copyWith(
                       color: AppColor.primaryDarkColor.withOpacity(0.2)
                     )),
                     SvgPicture.asset(controller.isAdvancedSearchVisible ? AppIcon.downIcon : AppIcon.upIcon)
@@ -54,9 +54,9 @@ class AdvanceSearchWidget extends GetView<SearchLogic> {
                 child: AnimationTextFieldWidget(
                   child: Column(
                     children: [
-                      CustomFieldAdvance('search in tags', 'Tag: '),
+                      CustomFieldAdvance('search_2'.tr, 'search_3'.tr),
                       SizedBox(height: 1.h),
-                      CustomFieldAdvance('search in plans', 'Plan:'),
+                      CustomFieldAdvance('search_4'.tr, 'search_5'.tr),
                       SizedBox(
                         height: 1.h,
                       ),

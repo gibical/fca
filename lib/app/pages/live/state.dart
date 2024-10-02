@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:mediaverse/app/pages/live/logic.dart';
+import 'package:gibical/app/pages/live/logic.dart';
 
 
 

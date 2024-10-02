@@ -10,7 +10,7 @@ import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:mediaverse/app/pages/live/widgets/custom_video_live_widget2.dart';
+import 'package:gibical/app/pages/live/widgets/custom_video_live_widget2.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 import 'package:video_player/video_player.dart';
@@ -97,6 +97,7 @@ class _VideoLiveWidgetState extends State<VideoLiveWidget> {
       },
       child: Column(
         children: [
+          SizedBox(height: 8.h,),
           Stack(
             children: [
               Screenshot(
@@ -114,7 +115,10 @@ class _VideoLiveWidgetState extends State<VideoLiveWidget> {
       ),
     ): Padding(
       padding:  EdgeInsets.symmetric(vertical: 5.h),
-      child: CircularProgressIndicator(),
+      child: Center(child: Container(
+          width: 10.w,
+          height: 10.w,
+          child: CircularProgressIndicator())),
     );
   }
 }

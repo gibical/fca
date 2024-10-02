@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
-import 'package:mediaverse/app/pages/view_all/channel/logic.dart';
-import 'package:mediaverse/app/pages/view_all/widgets/loading_more_widhey.dart';
+import 'package:gibical/app/common/app_extension.dart';
+import 'package:gibical/app/pages/view_all/channel/logic.dart';
+import 'package:gibical/app/pages/view_all/widgets/loading_more_widhey.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -72,7 +72,7 @@ class _BestVideoScreenPageState extends State<BestVideoScreenPage> {
                                       SvgPicture.asset(
                                         AppIcon.videoIcon, color: Colors.white,),
                                       SizedBox(width: 3.w,),
-                                      Text("Best Videos",
+                                      Text("viewall_4".tr,
                                         style: TextStyle(color: Colors.white),),
                                     ],
                                   ),
@@ -88,7 +88,7 @@ class _BestVideoScreenPageState extends State<BestVideoScreenPage> {
                          var index = e.key;
                          return GestureDetector(
                            onTap: () {
-                             int itemId = logic.videos.elementAt(index)['id'];
+                             String itemId = logic.videos.elementAt(index)['id'];
                              print(itemId);
                              Get.toNamed(PageRoutes.DETAILVIDEO, arguments: {'id': itemId});
                            },

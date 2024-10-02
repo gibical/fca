@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:dio/dio.dart' as gt;
 
 import 'package:get_storage/get_storage.dart';
-import 'package:mediaverse/app/common/utils/dio_inperactor.dart';
+import 'package:gibical/app/common/utils/dio_inperactor.dart';
 import 'dart:io' as IO;
 import 'RequestInterface.dart';
 import 'app_config.dart';
@@ -91,6 +92,7 @@ class ApiRequster {
 
     gt.Dio dio = gt.Dio(gt.BaseOptions(headers: headers,));
     dio.interceptors.add(MediaVerseInterceptor(_requestInterface,reqCode));
+    dio.interceptors.add(CurlLoggerDioInterceptor());
     if (!kIsWeb) {
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (IO.HttpClient client) {

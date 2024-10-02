@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
-import 'package:mediaverse/app/pages/detail/logic.dart';
+import 'package:gibical/app/common/app_extension.dart';
+import 'package:gibical/app/pages/detail/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -41,14 +41,14 @@ class ReportBottomSheet extends StatelessWidget {
                 MainAxisAlignment
                     .spaceBetween,
                 children: [
-                  const Text("Report Post"),
+                   Text("details_14".tr),
                   TextButton(
                     onPressed: () {
                       Navigator.pop(
                           context);
                     },
-                    child: const Text(
-                      "Cancel",
+                    child:  Text(
+                      "details_2".tr,
                       style: TextStyle(
                         color:
                         Colors.white54,
@@ -75,8 +75,8 @@ class ReportBottomSheet extends StatelessWidget {
                   SizedBox(
                     width: 3.w,
                   ),
-                  const Text(
-                    "Report",
+                   Text(
+                    "details_6".tr,
                     style: TextStyle(
                         color:
                         Colors.white54),
@@ -103,7 +103,7 @@ class ReportBottomSheet extends StatelessWidget {
                               .none,
                         ),
                         hintText:
-                        "Insert Your Report...",
+                        "details_15".tr,
                         hintStyle:
                         TextStyle(
                           color: Colors
@@ -143,7 +143,7 @@ class ReportBottomSheet extends StatelessWidget {
 
                 },
                 color: "5979fe".toColor(),
-                child: const Text("Report"),
+                child:  Text("details_6".tr),
               ),
             )
           ],

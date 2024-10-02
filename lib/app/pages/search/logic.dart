@@ -3,9 +3,9 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_config.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetAllAsstes.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetBestVideos.dart';
+import 'package:gibical/app/common/app_config.dart';
+import 'package:gibical/gen/model/json/FromJsonGetAllAsstes.dart';
+import 'package:gibical/gen/model/json/FromJsonGetBestVideos.dart';
 
 class SearchLogic extends GetxController {
   bool isAdvancedSearchVisible = false;

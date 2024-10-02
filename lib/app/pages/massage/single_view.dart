@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/massage/logic.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetMesseges.dart';
+import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/common/app_icon.dart';
+import 'package:gibical/app/common/font_style.dart';
+import 'package:gibical/app/pages/massage/logic.dart';
+import 'package:gibical/gen/model/json/FromJsonGetMesseges.dart';
 import 'package:sizer/sizer.dart';
 
 
@@ -42,7 +42,7 @@ class _SingleMassageScreenState extends State<SingleMassageScreen> {
             Get.back();
           },
               icon: SvgPicture.asset(AppIcon.backIcon)),
-          title: Text('Massage Details', style: FontStyleApp.titleMedium.copyWith(
+          title: Text('messege_1'.tr, style: FontStyleApp.titleMedium.copyWith(
               color: AppColor.whiteColor
           ),),
         ),

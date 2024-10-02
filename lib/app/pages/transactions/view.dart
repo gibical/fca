@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:gibical/gen/model/json/walletV2/FromJsomGetBills.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetTransactions.dart';
+import 'package:gibical/gen/model/json/FromJsonGetTransactions.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
@@ -72,7 +73,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
             Get.back();
           },
               icon: SvgPicture.asset(AppIcon.backIcon)),
-          title: Text('Transaction History', style: FontStyleApp.titleMedium.copyWith(
+          title: Text('transaction_1'.tr, style: FontStyleApp.titleMedium.copyWith(
               color: AppColor.whiteColor
           ),),
         ),
@@ -89,7 +90,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
     });
   }
 
-    Padding MassageItemWidget(TransactionModel elementAt) {
+    Padding MassageItemWidget(BilingModel elementAt) {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0.6.h),
         child: Container(
@@ -115,7 +116,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                 padding: EdgeInsets.symmetric(horizontal: 6.w,),
                 child: Row(
                   children: [
-                    Text(' ${relationTypeDescriptions[elementAt.relationType]}', style: FontStyleApp.bodyMedium.copyWith(
+                    Text(' ${elementAt.relationType}', style: FontStyleApp.bodyMedium.copyWith(
                         color: Colors.white
                     ),),
 
@@ -128,7 +129,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 6.w),
                 child: Text(
-                  elementAt.updatedAt??"",
+                  elementAt.createdAt??"",
                   style: FontStyleApp.bodyMedium.copyWith(
                     color: Colors.grey.withOpacity(0.7),
                   ),),

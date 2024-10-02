@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mediaverse/app/common/app_color.dart';
+import 'package:gibical/app/common/app_color.dart';
 
 
 

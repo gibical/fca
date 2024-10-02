@@ -2,11 +2,11 @@
 import 'package:get/get.dart';
 
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/common/app_route.dart';
-import 'package:mediaverse/app/pages/channel/all_tools.dart';
-import 'package:mediaverse/app/pages/plus_section/view.dart';
-import 'package:mediaverse/app/pages/wallet/view.dart';
+import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/common/app_route.dart';
+import 'package:gibical/app/pages/channel/all_tools.dart';
+import 'package:gibical/app/pages/plus_section/view.dart';
+import 'package:gibical/app/pages/wallet/view.dart';
 
 import '../../widgets/bottomnavwidget.dart';
 import '../channel/view.dart';

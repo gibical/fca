@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/channel/logic.dart';
-import 'package:mediaverse/app/pages/channel/tab/calendar_tab.dart';
-import 'package:mediaverse/app/pages/channel/tab/channel_tab.dart';
-import 'package:mediaverse/app/pages/channel/widgets/custom_calendar_widget.dart';
+import 'package:gibical/app/common/app_icon.dart';
+import 'package:gibical/app/common/font_style.dart';
+import 'package:gibical/app/pages/channel/tab/calendar_tab.dart';
+import 'package:gibical/app/pages/channel/tab/channel_tab.dart';
+import 'package:gibical/app/pages/channel/widgets/custom_calendar_widget.dart';
 
 import '../../common/app_color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_route.dart';
+import '../share_account/logic.dart';
 
 class ChannelScreen extends StatefulWidget {
   const ChannelScreen({super.key});
@@ -26,7 +26,7 @@ class _ChannelScreenState extends State<ChannelScreen>
   late TabController _tabController;
   int _selectedTabIndex = 0;
 
-  final ChanelLogic _logic = Get.put(ChanelLogic());
+  final ShareAccountLogic _logic = Get.put(ShareAccountLogic());
 
   @override
   void initState() {
@@ -46,49 +46,52 @@ class _ChannelScreenState extends State<ChannelScreen>
         backgroundColor: Colors.black.withOpacity(0.4),
         toolbarHeight: 120,
         centerTitle: true,
-        title: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 22.0, bottom: 20),
-              child: Text(
-                'Channel Management',
-                style: FontStyleApp.titleMedium.copyWith(color: Colors.white),
+        title: Container(
+          margin: EdgeInsets.only(right: 10.w),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 22.0, bottom: 20),
+                child: Text(
+                  'channel_30'.tr,
+                  style: FontStyleApp.titleMedium.copyWith(color: Colors.white),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: GestureDetector(
-                onTap: () {
-                  // Handle the onTap event
-                },
-                child: Container(
-                  height: 6.h,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: AppColor.grayLightColor.withOpacity(0.1)),
-                    color: Color(0xff0E0E12).withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 18),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Search',
-                          style: FontStyleApp.bodyLarge
-                              .copyWith(color: Color(0xff666680)),
-                        ),
-                        SvgPicture.asset(AppIcon.searchIcon,
-                            color: Color(0xff666680)),
-                      ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 1),
+                child: GestureDetector(
+                  onTap: () {
+                    // Handle the onTap event
+                  },
+                  child: Container(
+                    height: 6.h,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: AppColor.grayLightColor.withOpacity(0.1)),
+                      color: Color(0xff0E0E12).withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'channel_35'.tr,
+                            style: FontStyleApp.bodyLarge
+                                .copyWith(color: Color(0xff666680)),
+                          ),
+                          SvgPicture.asset(AppIcon.searchIcon,
+                              color: Color(0xff666680)),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       body: DefaultTabController(
@@ -96,6 +99,7 @@ class _ChannelScreenState extends State<ChannelScreen>
         child: Column(
           children: [
             Container(
+              width: 100.w,
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.4),
                 borderRadius: BorderRadius.only(
@@ -119,8 +123,8 @@ class _ChannelScreenState extends State<ChannelScreen>
                 labelColor: AppColor.primaryLightColor,
                 dividerColor: Colors.transparent,
                 tabs: [
-                  _buildTab(context, 0, 'Channels'),
-                  _buildTab(context, 1, 'Conductor'),
+                  _buildTab(context, 0, 'Programs'.tr),
+                  _buildTab(context, 1, 'Conductor'.tr),
                 ],
               ),
             ),
@@ -129,7 +133,7 @@ class _ChannelScreenState extends State<ChannelScreen>
                 physics: const NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: [
-                  ChannelTab(),
+                  ProgramsTab(),
                   CustomCalendarWidget(),
                 ],
               ),

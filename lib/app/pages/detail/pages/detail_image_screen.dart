@@ -2,28 +2,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/common/app_config.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/detail/widgets/buy_card_widget.dart';
-import 'package:mediaverse/app/pages/detail/widgets/card_mark_singlepage_widget.dart';
-import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
-import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
+import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/common/app_config.dart';
+import 'package:gibical/app/common/app_extension.dart';
+import 'package:gibical/app/common/font_style.dart';
+import 'package:gibical/app/pages/detail/widgets/back_widget.dart';
+import 'package:gibical/app/pages/detail/widgets/buy_card_widget.dart';
+import 'package:gibical/app/pages/detail/widgets/card_mark_singlepage_widget.dart';
+import 'package:gibical/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
+import 'package:gibical/gen/model/enums/post_type_enum.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_route.dart';
 import '../../media_suit/logic.dart';
 import '../logic.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
+import '../widgets/details_bottom_widget.dart';
 import '../widgets/report_botton_sheet.dart';
+import '../widgets/youtube_bottomsheet.dart';
 
 class DetailImageScreen extends StatelessWidget {
-  const DetailImageScreen({super.key});
+   DetailImageScreen({super.key});
+   var imageController = Get.put(DetailController(2),tag: "${DateTime.now().microsecondsSinceEpoch}");
 
   @override
   Widget build(BuildContext context) {
-    final imageController = Get.put(DetailController(),tag: "${DateTime.now().microsecondsSinceEpoch}");
 
     return WillPopScope(
         onWillPop: ()async{
@@ -33,29 +36,30 @@ class DetailImageScreen extends StatelessWidget {
             Get.back();
           }
 
+
           return false;
         },
       child: Scaffold(
 
         backgroundColor: AppColor.primaryDarkColor,
         bottomNavigationBar: Obx(() {
-            if (imageController.isLoadingMusic.value) {
+            if (imageController.isLoadingImages.value) {
               return Center(child: CircularProgressIndicator());
             } else {
               if (imageController.imageDetails != null &&
                   imageController.imageDetails!.containsKey('asset') &&
                   imageController.imageDetails!['asset'] != null &&
-                  imageController.imageDetails!['asset'].containsKey('plan')) {
-                int plan = imageController.imageDetails!['asset']['plan'];
+                  imageController.imageDetails!['asset'].containsKey('license_type')) {
+                int plan = imageController.imageDetails!['asset']['license_type'];
                 print(plan);
                 if (plan == 1) {
                   return SizedBox();
                 } else if (plan == 2 || plan == 3) {
                   return BuyCardWidget(
                       selectedItem: imageController.imageDetails,
-                      title: imageController.imageDetails!['asset']['plan'] == 2
+                      title: imageController.imageDetails!['asset']['license_type'] == 2
                           ? 'Ownership'
-                          : imageController.imageDetails!['asset']['plan'] == 3
+                          : imageController.imageDetails!['asset']['license_type'] == 3
                           ? 'Subscribe'
                           : '',
                       price: imageController.imageDetails!['asset']['price']
@@ -84,7 +88,7 @@ class DetailImageScreen extends StatelessWidget {
                           SizedBox(
                             height: 2.h,
                           ),
-                   Text('${imageController.imageDetails?['name']}', style: FontStyleApp.titleMedium.copyWith(
+                   Text('${imageController.imageDetails?['media']['name']}', style: FontStyleApp.titleMedium.copyWith(
                                 color: AppColor.whiteColor,
                                 fontWeight: FontWeight.w600
                             ),),
@@ -92,16 +96,24 @@ class DetailImageScreen extends StatelessWidget {
                           SizedBox(
                             height: 1.h,
                           ),
-                          // Text('${selectedItem['description']}' , style: FontStyleApp.bodyMedium.copyWith(
-                          //   color: AppColor.grayLightColor.withOpacity(0.8),
-                          // ),),
+                          Text('${imageController.imageDetails?['media']['description']}' , style: FontStyleApp.bodyMedium.copyWith(
+                            color: AppColor.grayLightColor.withOpacity(0.8),
+                          ),),
 
                           SizedBox(
                             height: 2.h,
                           ),
                           Row(
                             children: [
-                              Image.asset("assets/images/avatar.jpeg",width: 4.w,),
+                              Container(
+
+                                child: CircleAvatar(
+                                  backgroundColor: AppColor.blueDarkColor,
+                                  backgroundImage:
+                                  NetworkImage(imageController.imageDetails?['user']['image_url']),
+                                ),
+                                width: 5.w,
+                              ),
                               SizedBox(
                                 width: 2.w,
                               ),
@@ -114,7 +126,7 @@ class DetailImageScreen extends StatelessWidget {
                                 onTap: (){
                                   Get.bottomSheet(ReportBottomSheet(imageController));
                                 },
-                                child: Text('Report' , style: FontStyleApp.bodySmall.copyWith(
+                                child: Text('details_6'.tr , style: FontStyleApp.bodySmall.copyWith(
                                     color: AppColor.grayLightColor.withOpacity(0.8),
                                     fontSize: 13
                                 ),),
@@ -126,7 +138,7 @@ class DetailImageScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: (){
-                              Get.find<MediaSuitController>().setDataEditImage(imageController.imageDetails?['name'] ?? '');
+                              Get.find<MediaSuitController>().setDataEditImage(imageController.imageDetails?['media']['name'] ?? '' , imageController.imageDetails?['file']['url'] , imageController.imageDetails!['file_id'].toString());
                               Get.toNamed(PageRoutes.MEDIASUIT);
                             },
                             child:  Icon(Icons.edit),
@@ -138,7 +150,7 @@ class DetailImageScreen extends StatelessWidget {
                           Wrap(
                             children: [
                               //
-                           CardMarkSinglePageWidget(label: 'Suffix', type: "Somethi"),
+                          // CardMarkSinglePageWidget(label: 'details_7'.tr, type: "Somethi"),
                         //   CardMarkSinglePageWidget(label: 'Type', type: imageController.imageDetails!['file']['extension']),
                        //    CardMarkSinglePageWidget(label: 'Language', type: "en"),
 
@@ -149,7 +161,7 @@ class DetailImageScreen extends StatelessWidget {
                           //
                           //
                           //     CardMarkSinglePageWidget(label: 'Suffix' , type: '${selectedItem['suffix']}'),
-                        if(imageController.imageDetails?['asset']!=null)  CardMarkSinglePageWidget(label: 'Type' , type: imageController.getTypeString(imageController.imageDetails?['type'])),
+                        if(imageController.imageDetails?['asset']!=null)  CardMarkSinglePageWidget(label: 'details_8'.tr , type: imageController.getTypeString(imageController.imageDetails?['media_type'])),
                           //     CardMarkSinglePageWidget(label: 'Lanuage' , type: '${selectedItem['language']}'),
                           //   ],
                           // ),
@@ -158,9 +170,9 @@ class DetailImageScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: (){
-                              int itemId = imageController.imageDetails?['asset_id'];
+                              String itemId = imageController.imageDetails?['asset_id'];
                               print(itemId);
-                              Get.toNamed(PageRoutes.COMMENT, arguments: {'id': itemId});
+                              Get.toNamed(PageRoutes.COMMENT, arguments: {'id': itemId,"logic":imageController});
                             },
                             child: CustomCommentSinglePageWidget(),
                           ),
@@ -180,110 +192,12 @@ class DetailImageScreen extends StatelessWidget {
 
                   child: Align(
                     alignment: Alignment.bottomCenter,
-                    child: Container(
-                      width: 100.w,
-                      height: 22.h,
-                      decoration: BoxDecoration(
-                          color: "191b47".toColor(),
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(15.sp),
-                            topLeft: Radius.circular(15.sp),
-                          ),
-                          border: Border(
-                              top: BorderSide(
-                                  color: Colors.white.withOpacity(0.3),
-                                  width: 0.6),
-                              left: BorderSide(
-                                  color: Colors.white.withOpacity(0.3),
-                                  width: 0.8),
-
-                              right: BorderSide(
-                                  color: Colors.white.withOpacity(0.3),
-                                  width: 0.1)
-                          )
-                      ),
-
-                      padding: EdgeInsets.all(16),
-                      child: Column(
-
-                        children: [
-                          Container(
-                            width: 100.w,
-                            height: 7.h,
-                            decoration: BoxDecoration(
-                                color: Color(0xff4E4E61).withOpacity(0.5),
-                                borderRadius: BorderRadius.circular(10.sp),
-                                border: Border(
-                                    top: BorderSide(
-                                        color: Colors.white.withOpacity(0.3),
-                                        width: 0.6),
-                                    left: BorderSide(
-                                        color: Colors.white.withOpacity(0.3),
-                                        width: 0.8),
-
-                                    right: BorderSide(
-                                        color: Colors.white.withOpacity(0.3),
-                                        width: 0.1)
-                                )
-                            ),
-                            padding: EdgeInsets.symmetric(horizontal: 3.w),
-                            child: Row(
-                              children: [
-                                Expanded(child: Text(
-                                    '${Constant.getDropDownByPlan(imageController.imageDetails!['plan'].toString())}')),
-                              if(!imageController.imageDetails!['plan'].toString().contains("1"))  Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text("${(imageController.imageDetails!['price']/100).toString()} €"),
-                                    SizedBox(width: 3.w,),
-                                    SvgPicture.asset("assets/images/download.svg"),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 3.h,),
-                          Container(
-                              width: 100.w,
-                              height: 6.h,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff4E4E61).withOpacity(0.5),
-                                  borderRadius: BorderRadius.circular(100.sp),
-                                  border: Border(
-                                      top: BorderSide(
-                                          color: Colors.white.withOpacity(0.3),
-                                          width: 0.6),
-                                      left: BorderSide(
-                                          color: Colors.white.withOpacity(0.3),
-                                          width: 0.8),
-
-                                      right: BorderSide(
-                                          color: Colors.white.withOpacity(0.3),
-                                          width: 0.1)
-                                  )
-                              ),
-
-                              child: MaterialButton(
-                                padding: EdgeInsets.zero,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(1000)
-                                ),
-                                onPressed: () {
-                                  imageController.sendToEditProfile(PostType.image);
-                                },
-                                child: Center(
-                                  child: Text("Edit information",
-                                    style: TextStyle(color: "83839C".toColor()),),
-                                ),
-                              )
-                          ),
-
-                        ],
-                      ),
-                    ),
+                    child: DetailsBottomWidget(imageController, PostType.image),
                   ),
                 );
-              })
+              }),
+
+              BackWidget(idAssetMedia: Get.arguments['idAssetMedia'] == "idAssetMedia",)
 
             ],
           );

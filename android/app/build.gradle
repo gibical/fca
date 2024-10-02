@@ -29,8 +29,8 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.emahdi1297.mediaverse"
-    compileSdkVersion flutter.compileSdkVersion
+    namespace "com.app.gibical"
+    compileSdk 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -38,17 +38,26 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    packagingOptions {
+        exclude 'project.clj'
+    }
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.emahdi1297.mediaverse"
+        applicationId "com.app.gibicalapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        compileSdkVersion = 34
-        minSdkVersion = 24 // 21 minimum
+        minSdkVersion 24
+        targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
-
 
     signingConfigs {
         release {
@@ -74,12 +83,31 @@ android {
             }
         }
     }
+    buildToolsVersion '30.0.3'
 }
 
 flutter {
     source '../..'
 }
+
 dependencies {
-    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
+
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+
+    // Add the dependency for the Firebase SDK for Google Analytics
     implementation("com.google.firebase:firebase-analytics")
+
+    // TODO: Add the dependencies for any other Firebase products you want to use
+    // See https://firebase.google.com/docs/android/setup#available-libraries
+    // For example, add the dependencies for Firebase Authentication and Cloud Firestore
+    implementation("com.google.firebase:firebase-auth")
+    implementation 'com.github.abolfazlirani.rtmp-rtsp-stream-client-java:rtmp:v1.0.3'
+    implementation 'com.github.abolfazlirani.rtmp-rtsp-stream-client-java:rtplibrary:v1.0.3'
+    implementation "androidx.media:media:1.7.0"
+
+
+
 }

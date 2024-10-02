@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.emahdi1297" "\0"
-            VALUE "FileDescription", "mediaverse" "\0"
+            VALUE "CompanyName", "com.app" "\0"
+            VALUE "FileDescription", "gibical" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "mediaverse" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.emahdi1297. All rights reserved." "\0"
-            VALUE "OriginalFilename", "mediaverse.exe" "\0"
-            VALUE "ProductName", "mediaverse" "\0"
+            VALUE "InternalName", "gibical" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 com.app. All rights reserved." "\0"
+            VALUE "OriginalFilename", "gibical.exe" "\0"
+            VALUE "ProductName", "gibical" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

@@ -30,11 +30,11 @@ FromJsonGetSessions copyWith({  List<SessionsModel>? data,
 
 class SessionsModel {
   SessionsModel({
-      num? id, 
+    String? id,
       String? token, 
       String? app, 
-      List<dynamic>? scopes, 
-      num? userId, 
+      List<dynamic>? scopes,
+    String? userId,
       String? createdAt, 
       String? updatedAt,}){
     _id = id;
@@ -60,18 +60,18 @@ class SessionsModel {
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
   }
-  num? _id;
+  String? _id;
   String? _token;
   String? _app;
   List<dynamic>? _scopes;
-  num? _userId;
+  String? _userId;
   String? _createdAt;
   String? _updatedAt;
-SessionsModel copyWith({  num? id,
+SessionsModel copyWith({  String? id,
   String? token,
   String? app,
   List<dynamic>? scopes,
-  num? userId,
+  String? userId,
   String? createdAt,
   String? updatedAt,
 }) => SessionsModel(  id: id ?? _id,
@@ -82,11 +82,11 @@ SessionsModel copyWith({  num? id,
   createdAt: createdAt ?? _createdAt,
   updatedAt: updatedAt ?? _updatedAt,
 );
-  num? get id => _id;
+  String? get id => _id;
   String? get token => _token;
   String? get app => _app;
   List<dynamic>? get scopes => _scopes;
-  num? get userId => _userId;
+  String? get userId => _userId;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
 

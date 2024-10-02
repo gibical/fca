@@ -38,10 +38,12 @@ class TxtWidget extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            model['name'],
+                            model['media']['name'],
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.inter(
+                            style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                               color: const Color(0xFFCCCCFF),
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w400,
@@ -54,7 +56,9 @@ class TxtWidget extends StatelessWidget {
                             model['description'] ?? " ",
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.inter(
+                            style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                               color: const Color(0xFF666680),
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w400,
@@ -75,7 +79,9 @@ class TxtWidget extends StatelessWidget {
                               model['asset']['user']['username'] ?? " ",
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.inter(
+                              style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                                 color: const Color(0xFF666680),
                                 fontSize: 8.sp,
                                 fontWeight: FontWeight.w400,

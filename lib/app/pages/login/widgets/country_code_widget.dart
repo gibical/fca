@@ -1,9 +1,10 @@
 
 
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/login/logic.dart';
+import 'package:gibical/app/common/font_style.dart';
+import 'package:gibical/app/pages/login/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -13,46 +14,39 @@ Widget CountryCodeWidget(context,LoginController controller){
 
 
   final textTheme = Theme.of(context).textTheme;
-  return Stack(
-    alignment: Alignment.center,
+  return Row(
+    mainAxisSize: MainAxisSize.min,
+ //   alignment: Alignment.center,
     children: [
-      IgnorePointer(
-        ignoring: false,
-        child: CountryCodePicker(
-               flagWidth: 25,
-          onChanged: (CountryCode d){
-            print('CountryCodeWidget = ${d.dialCode}');
-            controller.code  =d;
+      SizedBox(width: 3.w,),
+      GestureDetector(
+        onTap: (){
 
-          },
-          initialSelection: 'FR',
-          textStyle: textTheme.bodyMedium!.copyWith(
-            color: Colors.white,
-          ),
+        },
+        child: IgnorePointer(
+          ignoring: false,
+          child: CountryCodePicker(
 
-        
-          dialogBackgroundColor: Colors.pink,
-          barrierColor: Colors.transparent,
-          dialogSize: Size(500, 500),
-          boxDecoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(15.sp)
+            padding: EdgeInsets.zero,
+            dialogBackgroundColor: AppColor.blueDarkColor,
+
+            // mode: CountryCodePickerMode.dialog,
+            onChanged: (country) {
+              controller.code  =country;
+              print('CountryCodeWidget = ${country.dialCode}');
+            },
+            initialSelection: 'DE',
+            showFlag: true,
+            showDropDownButton: true,barrierColor: Colors.black.withOpacity(0.5),
           ),
-          showCountryOnly: false,
-          showOnlyCountryWhenClosed: false,
-          // optional. aligns the flag and the Text left
-          alignLeft: false,
         ),
       ),
-      Positioned(
-
-        right: 8,
-        child: Container(
-          height: 28,
-          width: 1.5,
-          color: AppColor.whiteColor.withOpacity(0.2),
-        ),
-      )
+      Container(
+        height: 28,
+        width: 1.5,
+        color: AppColor.whiteColor.withOpacity(0.2),
+      ),
+      SizedBox(width: 5,)
     ],
   );
 }

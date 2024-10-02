@@ -1,11 +1,11 @@
 {
-    "name": "mediaverse",
-    "short_name": "mediaverse",
+    "name": "gibical",
+    "short_name": "gibical",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "a gibical project for streaming",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

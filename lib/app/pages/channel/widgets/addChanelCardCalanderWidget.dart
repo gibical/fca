@@ -2,12 +2,13 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_instance/get_instance.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/channel/logic.dart';
-import 'package:mediaverse/app/pages/login/widgets/custom_text_field.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetAllAsstes.dart';
+import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/common/font_style.dart';
+import 'package:gibical/app/pages/login/widgets/custom_text_field.dart';
+import 'package:gibical/gen/model/json/FromJsonGetAllAsstes.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../share_account/logic.dart';
 
 class AddChannelCalanderCardWidget extends StatefulWidget {
   const AddChannelCalanderCardWidget({super.key});
@@ -18,7 +19,7 @@ class AddChannelCalanderCardWidget extends StatefulWidget {
 }
 
 class _AddChannelCardWidgetState extends State<AddChannelCalanderCardWidget> {
-  final _logic = Get.find<ChanelLogic>();
+  final _logic = Get.find<ShareAccountLogic>();
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +49,13 @@ class _AddChannelCardWidgetState extends State<AddChannelCalanderCardWidget> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text("Add upcoming"),
+                           Text("channel_21".tr),
                           TextButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: const Text(
-                              "Cancel",
+                            child:  Text(
+                              "channel_22".tr,
                               style: TextStyle(
                                 color: Colors.white54,
                               ),
@@ -79,7 +80,7 @@ class _AddChannelCardWidgetState extends State<AddChannelCalanderCardWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Select content',
+                              'channel_23'.tr,
                               style: FontStyleApp.bodyMedium.copyWith(
                                 color:
                                     AppColor.grayLightColor.withOpacity(0.5),
@@ -107,8 +108,8 @@ class _AddChannelCardWidgetState extends State<AddChannelCalanderCardWidget> {
                           SizedBox(
                             width: 1.w,
                           ),
-                          const Text(
-                            "channel",
+                           Text(
+                            "channel_24".tr,
                             style: TextStyle(color: Colors.white54),
                           ),
                           SizedBox(
@@ -122,12 +123,12 @@ class _AddChannelCardWidgetState extends State<AddChannelCalanderCardWidget> {
                           Expanded(
                               child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 2.w),
-                            child: const Row(
+                            child:  Row(
                               mainAxisAlignment:
                                   MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Choose",
+                                  "channel_25".tr,
                                   style: TextStyle(color: Colors.white54),
                                 ),
                                 Icon(
@@ -158,8 +159,8 @@ class _AddChannelCardWidgetState extends State<AddChannelCalanderCardWidget> {
                             SizedBox(
                               width: 1.w,
                             ),
-                            const Text(
-                              "Action",
+                             Text(
+                              "channel_26".tr,
                               style: TextStyle(color: Colors.white54),
                             ),
                             SizedBox(
@@ -174,12 +175,12 @@ class _AddChannelCardWidgetState extends State<AddChannelCalanderCardWidget> {
                               child: Padding(
                                 padding:
                                     EdgeInsets.symmetric(horizontal: 2.w),
-                                child: const Row(
+                                child:  Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "Choose",
+                                      "channel_25".tr,
                                       style: TextStyle(color: Colors.white54),
                                     ),
                                     Icon(
@@ -206,7 +207,7 @@ class _AddChannelCardWidgetState extends State<AddChannelCalanderCardWidget> {
                           decoration: InputDecoration(
                             fillColor: AppColor.whiteColor.withOpacity(0.2),
                             filled: true,
-                            hintText: "Description",
+                            hintText: "channel_27".tr,
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(10),
@@ -228,7 +229,7 @@ class _AddChannelCardWidgetState extends State<AddChannelCalanderCardWidget> {
                             borderRadius: BorderRadius.circular(100)),
                         onPressed: () {},
                         color: Colors.black54,
-                        child: const Text("Add"),
+                        child:  Text("channel_28".tr),
                       ),
                     )
                   ],
@@ -241,7 +242,7 @@ class _AddChannelCardWidgetState extends State<AddChannelCalanderCardWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Add Channel',
+              'channel_29'.tr,
               style: FontStyleApp.bodyMedium.copyWith(
                 color: AppColor.grayLightColor.withOpacity(0.5),
               ),

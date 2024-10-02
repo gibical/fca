@@ -1,11 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
-import 'package:mediaverse/app/pages/home/logic.dart';
-import 'package:mediaverse/app/pages/view_all/videos/best_video_screen.dart';
-import 'package:mediaverse/app/pages/home/widgets/bset_item_explore_widget.dart';
+import 'package:gibical/app/common/app_icon.dart';
+import 'package:gibical/app/pages/home/logic.dart';
+import 'package:gibical/app/pages/view_all/videos/best_video_screen.dart';
+import 'package:gibical/app/pages/home/widgets/bset_item_explore_widget.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../common/app_color.dart';
@@ -41,7 +43,7 @@ class AllTabScreen extends StatelessWidget {
                     viewAllTap: (){
                       Get.toNamed(PageRoutes.ViewAllChannel);
                     },
-                    theme: theme, textTheme: textTheme, icon: AppIcon.videoIcon, title: 'Live Channels'),
+                    theme: theme, textTheme: textTheme, icon: AppIcon.videoIcon, title: 'home_1'.tr),
                 SizedBox(height: 1.5.h),
                 SizedBox(
                   height: 21.h,
@@ -65,52 +67,66 @@ class AllTabScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 1.5.h),
 
-                TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.videoIcon, title: 'Best videos',                    isViewAll: true,
+                Visibility(
+                  visible: logic.bestVideos.isNotEmpty,
+                  child: Column(
+                    children: [
+                      TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.videoIcon, title: 'home_2'.tr,                    isViewAll: true,
 
-                  viewAllTap: (){
+                        viewAllTap: (){
 
-                  Get.to(BestVideoScreenPage());
-                },),
-                SizedBox(height: 1.5.h),
-                SizedBox(
-                  height: 30.h,
-                  child: ListView.builder(
-                      itemCount: logic.bestVideos.length,
-                      scrollDirection: Axis.horizontal,
-                      reverse: true,
-                      itemBuilder: (context, index) {
-                        return BestItemExploreWidget(logic.bestVideos.elementAt(index));
-                      }),
+                        Get.to(BestVideoScreenPage());
+                      },),
+                      SizedBox(height: 1.5.h),
+                      SizedBox(
+                        height: 30.h,
+                        child: ListView.builder(
+                            itemCount: logic.bestVideos.length,
+                            scrollDirection: Axis.horizontal,
+                            reverse: true,
+                            itemBuilder: (context, index) {
+                              return BestItemExploreWidget(logic.bestVideos.elementAt(index));
+                            }),
+                      ),
+                      SizedBox(height: 3.h),
+                    ],
+                  ),
                 ),
-                SizedBox(height: 3.h),
-                TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.imageIcon, title: 'Most viewed',
+              if(logic.mostImages.length>3)   TitleExplore(theme: theme, textTheme: textTheme, icon: AppIcon.imageIcon, title: 'home_3'.tr,
                 isViewAll: true,viewAllTap: (){
                     Get.to(ViewAllGrdiScreen(),arguments: [3]);
                   },),
                 SizedBox(height: 12.5),
                if(logic.mostImages.length>0) CustomGridImageWidget(logic.mostImages),
                 SizedBox(height: 3.h),
-                TitleExplore(theme: theme, textTheme: textTheme,
-                    icon: "assets/icons/text_icon.svg", title: 'Top Text' , isViewAll: true,viewAllTap: (){
-                    Get.to(ViewAllGrdiScreen(),arguments: [5]);
-                  },),
-                SizedBox(height: 1.5.h),
-                SizedBox(
-                  height: 40.w,
-                  child: ListView.builder(
-                      itemCount: logic.mostText.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return  GestureDetector(
-                            onTap: (){
-                              int itemId = logic.mostText[index]['id'];
-                              Get.toNamed(PageRoutes.DETAILTEXT, arguments: {'id': itemId});
-                            },
-                            child: BestTextWidget(model: logic.mostText.elementAt(index)));
-                      }),
+                Visibility(
+                  visible: logic.mostText.isNotEmpty,
+                  child: Column(
+                    children: [
+                      TitleExplore(theme: theme, textTheme: textTheme,
+                          icon: "assets/icons/text_icon.svg", title: 'home_4'.tr , isViewAll: true,viewAllTap: (){
+                          Get.to(ViewAllGrdiScreen(),arguments: [5]);
+                        },),
+                      SizedBox(height: 1.5.h),
+                      SizedBox(
+                        height: 40.w,
+                        child: ListView.builder(
+                            itemCount: logic.mostText.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return  GestureDetector(
+                                  onTap: (){
+                                    String itemId = logic.mostText[index]['id'];
+                                    Get.toNamed(PageRoutes.DETAILTEXT, arguments: {'id': itemId});
+                                  },
+                                  child: BestTextWidget(model: logic.mostText.elementAt(index)));
+                            }),
+                      ),
+                      SizedBox(height: 6.h),
+                    ],
+                  ),
                 ),
-                SizedBox(height: 6.h),
-                TitleExplore(theme: theme, textTheme: textTheme, icon: "assets/icons/sound_icon.svg", title: 'Top Song' , isViewAll: true,viewAllTap: (){
+                TitleExplore(theme: theme, textTheme: textTheme, icon: "assets/icons/sound_icon.svg", title: 'home_5'.tr , isViewAll: true,viewAllTap: (){
                   Get.to(ViewAllGrdiScreen(),arguments: [4]);
                 },),
                 SizedBox(height: 1.5.h),
@@ -123,7 +139,7 @@ class AllTabScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                             onTap: (){
-                              int itemId = logic.mostSongs[index]['id'];
+                              String itemId = logic.mostSongs[index]['id'];
                               Get.toNamed(PageRoutes.DETAILMUSIC, arguments: {'id': itemId});
                             },
                             child: BestItemSongsWidget(logic.mostSongs.elementAt(index)));
@@ -167,7 +183,9 @@ class TitleExplore extends StatelessWidget {
           SizedBox(width: 1.5.w),
           Text(
             title,
-            style: GoogleFonts.inter(
+            style: Theme
+                .of(context)
+                .textTheme.bodySmall?.copyWith(
                 fontSize: 13.5.sp
             ),
           ),
@@ -175,8 +193,10 @@ class TitleExplore extends StatelessWidget {
           isViewAll ?? false ?  GestureDetector(
             onTap: viewAllTap,
             child: Text(
-              'View all',
-              style: GoogleFonts.inter(
+              'home_6'.tr,
+              style: Theme
+                  .of(context)
+                  .textTheme.bodySmall?.copyWith(
                   fontSize: 11.sp,
                   color: AppColor.primaryLightColor
               ),

@@ -133,7 +133,7 @@ class Videos {
     _assetId = json['asset_id'];
     _name = json['name'];
     _description = json['description'];
-    _type = json['type'];
+    _type = json['media_type'];
     _summary = json['summary'];
     _language = json['language'];
     _genre = json['genre'];
@@ -228,7 +228,7 @@ Videos copyWith({  num? id,
     map['asset_id'] = _assetId;
     map['name'] = _name;
     map['description'] = _description;
-    map['type'] = _type;
+    map['media_type'] = _type;
     map['summary'] = _summary;
     map['language'] = _language;
     map['genre'] = _genre;
@@ -270,7 +270,7 @@ class Audios {
     _assetId = json['asset_id'];
     _name = json['name'];
     _description = json['description'];
-    _type = json['type'];
+    _type = json['media_type'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
   }
@@ -310,7 +310,7 @@ Audios copyWith({  num? id,
     map['asset_id'] = _assetId;
     map['name'] = _name;
     map['description'] = _description;
-    map['type'] = _type;
+    map['media_type'] = _type;
     map['created_at'] = _createdAt;
     map['updated_at'] = _updatedAt;
     return map;

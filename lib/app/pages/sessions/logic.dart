@@ -1,17 +1,19 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/RequestInterface.dart';
-import 'package:mediaverse/app/common/app_api.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetSessions.dart';
+import 'package:gibical/app/common/RequestInterface.dart';
+import 'package:gibical/app/common/app_api.dart';
+import 'package:gibical/gen/model/json/FromJsonGetSessions.dart';
 
+import '../../../gen/model/json/walletV2/FromJsonGetSesseinsModel.dart';
 import 'state.dart';
 
 class SessionsLogic extends GetxController implements RequestInterface {
   final SessionsState state = SessionsState();
   
   var isloading = true.obs;
-  List<SessionsModel> list = [];
+  List<SessionsModels> list = [];
   late ApiRequster apiRequster;
   @override
   void onReady() {
@@ -38,7 +40,7 @@ class SessionsLogic extends GetxController implements RequestInterface {
   @override
   void onSucces(source, int reqCdoe) {
     // TODO: implement onSucces
-    list = FromJsonGetSessions.fromJson(jsonDecode(source)).data??[];
+    list = fromJsonGetSesseinsModelFromJson(source).data??[];
     isloading(false);
   }
 }

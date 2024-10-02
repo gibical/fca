@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -26,7 +27,7 @@ Container CustomCommentSinglePageWidget() {
         children: [
           Row(
             children: [
-              Text('Comments' , style: FontStyleApp.bodyLarge.copyWith(
+              Text('details_12'.tr , style: FontStyleApp.bodyLarge.copyWith(
                   color: AppColor.whiteColor,
                   fontWeight: FontWeight.w600
               ),
@@ -53,7 +54,7 @@ Container CustomCommentSinglePageWidget() {
                         alignment: Alignment.centerLeft,
                         child: Padding(
                           padding:  EdgeInsets.symmetric(horizontal: 2.w),
-                          child: Text('Add a comment...'),
+                          child: Text('details_13'.tr),
                         )),
                     decoration: BoxDecoration(
                         color: AppColor.blueDarkColor.withOpacity(0.9),

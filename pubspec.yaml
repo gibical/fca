@@ -1,4 +1,4 @@
-name: mediaverse
+name: gibical
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 0.0.9+9
 
 environment:
   sdk: '>=3.1.0 <4.0.0'
@@ -60,7 +60,7 @@ dependencies:
   path_provider: any
   file_picker: any
   flutter_launcher_icons: ^0.13.1
-  google_sign_in: ^6.1.6
+  google_sign_in: any
   image_gallery_saver: ^2.0.3
   screenshot: ^2.1.0
   widget_zoom: ^0.0.3
@@ -73,12 +73,25 @@ dependencies:
   ffmpeg_kit_flutter_min: ^5.1.0
   video_editor: ^3.0.0
   fraction: ^4.1.4
-  chewie: ^1.8.1
+  chewie: any
   loadmore: ^2.1.0
   easy_refresh: ^3.3.4
+  flutter_local_notifications: ^17.1.0
+  permission_handler: any
+  intl: ^0.19.0
+  cached_network_image: ^3.3.1
+  curl_logger_dio_interceptor: ^1.0.0
+  sign_button: ^2.0.6
+  device_info_plus: ^9.1.2
+  firebase_auth: ^4.20.0
+  country_picker: ^2.0.26
+  rtmp_broadcaster: 2.2.6
+  auto_size_text: ^3.0.0
+  wakelock: ^0.4.0
+  share_plus: ^10.0.0
+  flu_wake_lock: ^0.0.2
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -90,8 +103,9 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/mainLogo.png"
+  image_path: "assets/images/splash_ic.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
+  remove_alpha_ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -110,7 +124,25 @@ flutter:
     - assets/images/
     - assets/json/
   #   - images/a_dot_ham.jpeg
-
+  fonts:
+    - family: Ravi
+      fonts:
+        - asset: assets/fonts/Ravi-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Ravi-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Ravi-ExtraBlack.ttf
+          weight: 800
+        - asset: assets/fonts/Ravi-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Ravi-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Ravi-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Ravi-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Ravi-Thin.ttf
+          weight: 100
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

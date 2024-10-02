@@ -32,7 +32,6 @@ class VideoLiveWidget2 extends StatefulWidget {
 class _VideoLiveWidget2State extends State<VideoLiveWidget2> {
   late VideoPlayerController _controller;
 
-  LiveController liveController = Get.find<LiveController>();
   late bool _isPlaying;
   double _sliderValue = 0.0;
 
@@ -79,13 +78,13 @@ class _VideoLiveWidget2State extends State<VideoLiveWidget2> {
           },
           child: Stack(
             children: [
-              Screenshot(
-                controller: liveController.screenshotController,
-                child: AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                ),
-              ),
+              // Screenshot(
+              //   controller: liveController.screenshotController,
+              //   child: AspectRatio(
+              //     aspectRatio: _controller.value.aspectRatio,
+              //     child: VideoPlayer(_controller),
+              //   ),
+              // ),
               Positioned(
                 top: 4.h,
                 left: 3.w,

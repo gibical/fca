@@ -48,7 +48,7 @@ class _AllToolsButtonWidgetState extends State<AllToolsButtonWidget> {
                         child: Image.asset("assets/images/all_tools_icon_bg.png"),
                       ),
                       Align(
-                        child: SvgPicture.asset(widget.icon),
+                        child: SvgPicture.asset(widget.icon,color: Colors.white,),
                       )
                     ],
                   ),

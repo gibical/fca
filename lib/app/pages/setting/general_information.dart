@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:gibical/app/pages/profile/view.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
-import 'package:mediaverse/app/common/app_route.dart';
-import 'package:mediaverse/app/pages/profile/logic.dart';
+import 'package:gibical/app/common/app_extension.dart';
+import 'package:gibical/app/common/app_icon.dart';
+import 'package:gibical/app/common/app_route.dart';
+import 'package:gibical/app/pages/profile/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
 import '../../common/font_style.dart';
 import '../home/logic.dart';
+import '../plus_section/widget/custom_plan_text_filed.dart';
 import '../signup/widgets/custom_text_field_form_register_widget.dart';
 
 class GeneralInformationPage extends StatefulWidget {
@@ -67,7 +69,7 @@ class _GeneralInformationPageState extends State<GeneralInformationPage> {
                         },
                             icon: Icon(Icons.arrow_back, color: "666680"
                                 .toColor(),)),
-                        Text("Account", style: TextStyle(color: Colors.white),),
+                        Text("setting_1".tr, style: TextStyle(color: Colors.white),),
                         Container(
                           width: 16.w,
                         )
@@ -80,26 +82,37 @@ class _GeneralInformationPageState extends State<GeneralInformationPage> {
                       context: context,
                       textEditingController: firstName,
 
-                      titleText: 'First Name',
-                      hintText: 'Insert your First name',
+                      titleText: 'setting_7'.tr,
+                      hintText: 'setting_8'.tr,
                       needful: false),
                   CustomTextFieldRegisterWidget(
                       context: context,
                       textEditingController: lastName,
 
-                      titleText: 'Last Name',
-                      hintText: 'Insert your Last name',
+                      titleText: 'setting_9'.tr,
+                      hintText: 'setting_10'.tr,
                       needful: false),
                   CustomTextFieldRegisterWidget(
                       context: context,
                       textEditingController: email,
 
-                      titleText: 'Email',
-                      hintText: 'Insert your Email',
+                      titleText: 'setting_11'.tr,
+                      hintText: 'setting_12'.tr,
                       needful: false),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(24, 0, 24, 0),
+                    child: CustomTDropDownPlusWidget(
+                        models: logic.countreisString,
+                        context: context,
+                        textEditingController: logic.languageController,
 
+                        titleText: 'Countries'.tr,
+                        hintText: 'Countries'.tr,
+                        needful: false),
+                  )
                 ],
               ),
+
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
@@ -125,7 +138,7 @@ class _GeneralInformationPageState extends State<GeneralInformationPage> {
                       },
                       child: logic.isloadingEdit.value ? Lottie.asset(
                           "assets/json/Y8IBRQ38bK.json", height: 10.h) : Text(
-                        "Save", style: TextStyle(color: Colors.white),),
+                        "setting_13".tr, style: TextStyle(color: Colors.white),),
                     );
                   }),
                 ),
@@ -135,5 +148,16 @@ class _GeneralInformationPageState extends State<GeneralInformationPage> {
         ),
       ),
     );
+  }
+}
+
+
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

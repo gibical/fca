@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
-import 'package:mediaverse/app/pages/search/widgets/advance_search_widget.dart';
+import 'package:get/get.dart';
+import 'package:gibical/app/common/app_icon.dart';
+import 'package:gibical/app/pages/search/widgets/advance_search_widget.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -64,10 +65,10 @@ class _CustomTabBarSearchWidgetState extends State<CustomTabBarSearchWidget>
             labelColor: AppColor.primaryLightColor,
             dividerColor: Colors.transparent,
             tabs: [
-              _buildTab(context, 'Image', AppIcon.imageIcon, 0),
-              _buildTab(context, 'Video', AppIcon.videoIcon, 1),
-              _buildTab(context, 'Sound', AppIcon.soundIcon, 2),
-              _buildTab(context, 'Text', AppIcon.textIcon, 3),
+              _buildTab(context, 'search_6'.tr, AppIcon.imageIcon, 0),
+              _buildTab(context, 'search_7'.tr, AppIcon.videoIcon, 1),
+              _buildTab(context, 'search_8'.tr, AppIcon.soundIcon, 2),
+              _buildTab(context, 'search_9'.tr, AppIcon.textIcon, 3),
             ],
           ),
         ),
@@ -80,25 +81,25 @@ class _CustomTabBarSearchWidgetState extends State<CustomTabBarSearchWidget>
 
               
               Scaffold(
-                body: Center(child: Text('Result Search' , style: TextStyle(
+                body: Center(child: Text('search_10'.tr , style: TextStyle(
                   color: AppColor.primaryDarkColor,
                   fontSize: 20
                 ),)),
               ),
               Scaffold(
-                body: Center(child: Text('Result Search' , style: TextStyle(
+                body: Center(child: Text('search_10'.tr , style: TextStyle(
                     color: AppColor.primaryDarkColor,
                     fontSize: 20
                 ),)),
               ),
               Scaffold(
-                body: Center(child: Text('Result Search' , style: TextStyle(
+                body: Center(child: Text('search_10'.tr , style: TextStyle(
                     color: AppColor.primaryDarkColor,
                     fontSize: 20
                 ),)),
               ),
               Scaffold(
-                body: Center(child: Text('Result Search' , style: TextStyle(
+                body: Center(child: Text('search_10'.tr , style: TextStyle(
                     color: AppColor.primaryDarkColor,
                     fontSize: 20
                 ),)),

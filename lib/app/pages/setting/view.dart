@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
-import 'package:mediaverse/app/common/app_route.dart';
-import 'package:mediaverse/app/pages/profile/logic.dart';
-import 'package:mediaverse/app/pages/wrapper/logic.dart';
+import 'package:gibical/app/common/app_icon.dart';
+import 'package:gibical/app/common/app_route.dart';
+import 'package:gibical/app/pages/profile/logic.dart';
+import 'package:gibical/app/pages/wrapper/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
@@ -57,9 +57,13 @@ class SettingScreen extends StatelessWidget {
                     ) ,
                     child: Padding(
                       padding: const EdgeInsets.all(7),
-                      child: CircleAvatar(
-                        backgroundColor:AppColor.blueDarkColor,
-                        backgroundImage: AssetImage('assets/images/profile.png'),
+                      child:  SizedBox.expand(
+                        child: CircleAvatar(
+                          backgroundColor: AppColor.blueDarkColor,
+                          backgroundImage:
+                          NetworkImage(logic.model.imageUrl??""),
+                        ),
+
                       ),
                     ),
                   ),
@@ -107,12 +111,12 @@ class SettingScreen extends StatelessWidget {
                        Get.to(AccountPage());
                       },
                         icon: AppIcon.account1Icon,
-                        title: 'Account',
+                        title: 'setting_1'.tr,
                         subTitle: '${logic.model.username??""} ',
                         iconSize: 21,
                     ),
                     ItemSettingScreenWidget(icon: AppIcon.emailIcon,
-                      title: 'Massage',
+                      title: 'setting_15'.tr,
                       onTap: (){
                         Get.toNamed(PageRoutes.MASSAGE);
                       },
@@ -124,7 +128,7 @@ class SettingScreen extends StatelessWidget {
                       onTap: (){
                         Get.offAllNamed(PageRoutes.WRAPPER,arguments: [2]);
                       },
-                      icon: AppIcon.wallet1Icon, title: 'Wallet', subTitle: Get.find<WrapperController>().walletBalance , iconSize: 18,),
+                      icon: AppIcon.wallet1Icon, title: 'setting_16'.tr, subTitle: "${Get.find<WrapperController>().walletBalance } €", iconSize: 18,),
 
 
                   ],
@@ -144,25 +148,26 @@ class SettingScreen extends StatelessWidget {
             Padding(
               padding:  EdgeInsets.symmetric(horizontal: 7.5.w),
               child: Opacity(
-                opacity: 0.3,
+                opacity: 0.99,
                 child: Container(
                   width: double.infinity,
                   child: Column(
                     children: [
+                      // ItemSettingScreenWidget(
+                      //   onTap: (){
+                      //     print('Analytics');
+                      //   },
+                      //   icon: AppIcon.AnalyticsIcon, title: 'Analytics', subTitle: '' , iconSize: 19,
+                      // enable: false,),
                       ItemSettingScreenWidget(
                         onTap: (){
-                          print('Analytics');
-                        },
-                        icon: AppIcon.AnalyticsIcon, title: 'Analytics', subTitle: '' , iconSize: 19,
-                      enable: false,),
-                      ItemSettingScreenWidget(
-                        onTap: (){
-                          print('Share');
+
+                          Get.toNamed(PageRoutes.SHAREACCOUNT);
                         },
                         icon: AppIcon.shareIcon,
-                        title: 'Share account',
+                        title: 'setting_17'.tr,
                         subTitle: '',
-                        iconSize: 19,enable: false,
+                        iconSize: 19,
                       ),
 
                     ],
@@ -201,7 +206,7 @@ class ItemSettingScreenWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return this.enable? InkWell(
+    return this.enable? GestureDetector(
 
       onTap: onTap,
       child: SizedBox(

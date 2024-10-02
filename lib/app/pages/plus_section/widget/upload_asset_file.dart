@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
-import 'package:mediaverse/app/pages/plus_section/logic.dart';
+import 'package:gibical/app/common/app_extension.dart';
+import 'package:gibical/app/pages/plus_section/logic.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
 class UploadAssetPage extends StatefulWidget {
@@ -41,10 +42,14 @@ class _UploadAssetPageState extends State<UploadAssetPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("Asset is uploading \n Please wait", style: TextStyle(
+                        Text("plus_36".tr, style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),),
 
                         SizedBox(height: 4.h,),
+                        Lottie.asset("assets/json/upload.json",),
+
+                        SizedBox(height: 4.h,),
+
                         Align(
                           alignment: Alignment.centerLeft,
                           child: AnimatedContainer(

@@ -9,7 +9,7 @@ class WalletModel {
 }
 
   WalletModel.fromJson(dynamic json) {
-    _type = json['type'];
+    _type = json['media_type'];
     _balance = json['balance'];
     _updatedAt = json['updated_at'];
   }
@@ -29,7 +29,7 @@ WalletModel copyWith({  String? type,
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['type'] = _type;
+    map['media_type'] = _type;
     map['balance'] = _balance;
     map['updated_at'] = _updatedAt;
     return map;

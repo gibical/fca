@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/pages/home/tabs/all/view.dart';
-import 'package:mediaverse/app/pages/home/tabs/image/view.dart';
-import 'package:mediaverse/app/pages/home/tabs/sound/view.dart';
-import 'package:mediaverse/app/pages/home/tabs/text/view.dart';
-import 'package:mediaverse/app/pages/home/tabs/video/view.dart';
-import 'package:mediaverse/app/pages/home/widgets/custom_tab_bar_widget.dart';
-import 'package:mediaverse/app/pages/profile/widgets/GridMainWidget.dart';
-import 'package:mediaverse/app/pages/search/logic.dart';
-import 'package:mediaverse/app/pages/search/tabs/imageWidget.dart';
-import 'package:mediaverse/app/pages/search/tabs/soundWidget.dart';
-import 'package:mediaverse/app/pages/search/tabs/txt.dart';
-import 'package:mediaverse/app/pages/search/tabs/vidPage.dart';
-import 'package:mediaverse/app/pages/search/widgets/custom_tab_bar_search.dart';
-import 'package:mediaverse/app/widgets/custom_app_bar_widget.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetAllAsstes.dart';
+import 'package:gibical/app/pages/home/tabs/all/view.dart';
+import 'package:gibical/app/pages/home/tabs/image/view.dart';
+import 'package:gibical/app/pages/home/tabs/sound/view.dart';
+import 'package:gibical/app/pages/home/tabs/text/view.dart';
+import 'package:gibical/app/pages/home/tabs/video/view.dart';
+import 'package:gibical/app/pages/home/widgets/custom_tab_bar_widget.dart';
+import 'package:gibical/app/pages/profile/widgets/GridMainWidget.dart';
+import 'package:gibical/app/pages/search/logic.dart';
+import 'package:gibical/app/pages/search/tabs/imageWidget.dart';
+import 'package:gibical/app/pages/search/tabs/soundWidget.dart';
+import 'package:gibical/app/pages/search/tabs/txt.dart';
+import 'package:gibical/app/pages/search/tabs/vidPage.dart';
+import 'package:gibical/app/pages/search/widgets/custom_tab_bar_search.dart';
+import 'package:gibical/app/widgets/custom_app_bar_widget.dart';
+import 'package:gibical/gen/model/json/FromJsonGetAllAsstes.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
@@ -85,7 +85,7 @@ class _SearchScreenState extends State<SearchScreen>
                           ),
                           fillColor: Colors.black45,
                           filled: true,
-                          hintText: 'Search in all media',
+                          hintText: 'search_11'.tr,
                           hintStyle: TextStyle(
                             color: Colors.grey,
                           ),
@@ -146,13 +146,13 @@ class _SearchScreenState extends State<SearchScreen>
                           itemBuilder: (context) {
                             return [
                               PopupMenuItem(
-                                child: const Text("Plan"),
+                                child:  Text("search_13".tr),
                                 onTap: () {
                                   _logic.isTag.value = false;
                                 },
                               ),
                               PopupMenuItem(
-                                child: const Text("Tag"),
+                                child:  Text("search_12".tr),
                                 onTap: () {
                                   _logic.isTag.value = true;
                                 },
@@ -162,7 +162,7 @@ class _SearchScreenState extends State<SearchScreen>
                           child: Row(
                             children: [
                               const Icon(Icons.arrow_drop_down),
-                              Text(_logic.isTag.value ? "Tag :" : "Plan :"),
+                              Text(_logic.isTag.value ? "${"search_12".tr} :" : "${"search_13".tr} :"),
                             ],
                           ),
                         ),
@@ -180,7 +180,8 @@ class _SearchScreenState extends State<SearchScreen>
                               fillColor: Colors.black45,
                               filled: true,
                               hintText:
-                                  'Search in ${_logic.isTag.value ? "Tag" : "Plan"}',
+                                  '${"search_14".tr} ${_logic.isTag.value ? "search_12".tr
+                                      : "search_13".tr}',
                               hintStyle: TextStyle(
                                 color: Colors.grey,
                               ),
@@ -481,7 +482,7 @@ class _SearchScreenState extends State<SearchScreen>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           isLabel
-              ? const Text('All')
+              ?  Text('search_15'.tr)
               : SvgPicture.asset(
                   height: 2.h,
                   icon,

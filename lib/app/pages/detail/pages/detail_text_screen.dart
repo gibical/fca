@@ -2,23 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/detail/widgets/buy_card_widget.dart';
-import 'package:mediaverse/app/pages/detail/widgets/card_mark_singlepage_widget.dart';
-import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
-import 'package:mediaverse/app/pages/media_suit/logic.dart';
+import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/common/app_extension.dart';
+import 'package:gibical/app/common/app_icon.dart';
+import 'package:gibical/app/common/font_style.dart';
+import 'package:gibical/app/common/font_style.dart';
+import 'package:gibical/app/pages/detail/widgets/buy_card_widget.dart';
+import 'package:gibical/app/pages/detail/widgets/card_mark_singlepage_widget.dart';
+import 'package:gibical/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
+import 'package:gibical/app/pages/detail/widgets/text_file_widget.dart';
+import 'package:gibical/app/pages/media_suit/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../gen/model/enums/post_type_enum.dart';
 import '../../../common/app_config.dart';
 import '../../../common/app_route.dart';
 import '../logic.dart';
+import '../widgets/back_widget.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
+import '../widgets/details_bottom_widget.dart';
 import '../widgets/report_botton_sheet.dart';
+import '../widgets/youtube_bottomsheet.dart';
 
 class DetailTextScreen extends StatefulWidget {
   DetailTextScreen({super.key});
@@ -29,8 +33,8 @@ class DetailTextScreen extends StatefulWidget {
 
 class _DetailTextScreenState extends State<DetailTextScreen> {
   bool isExpanded = false;
-
-    final logic = Get.find<DetailController>();
+  final logic = Get.put(DetailController(1),
+      tag: "${DateTime.now().microsecondsSinceEpoch}");
 
 
   @override
@@ -45,16 +49,16 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                 logic.textDetails!.containsKey('asset') &&
                 logic.textDetails!['asset'] != null &&
                 logic.textDetails!['asset'].containsKey('plan')) {
-              int plan = logic.textDetails!['asset']['plan'];
+              int plan = logic.textDetails!['asset']['license_type'];
               print(plan);
               if (plan == 1) {
                 return SizedBox();
               } else if (plan == 2 || plan == 3) {
                 return BuyCardWidget(
                     selectedItem:logic.textDetails ,
-                    title: logic.textDetails!['asset']['plan'] == 2
+                    title: logic.textDetails!['asset']['license_type'] == 2
                         ? 'Ownership'
-                        : logic.textDetails!['asset']['plan'] == 3
+                        : logic.textDetails!['asset']['license_type'] == 3
                         ? 'Subscribe'
                         : '',
                     price: logic.textDetails!['asset']['price']
@@ -132,7 +136,9 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                         if(logic.textDetails?['name']!=null)   Expanded(
                                           child: Text(
                                             '${logic.textDetails?['name']}',
-                                            style: GoogleFonts.inter(
+                                            style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                                               color: Colors.white,
                                               fontSize: logic.textDetails?['name'].length > 15 ? 17 : 21,
                                             ),
@@ -141,8 +147,14 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
 
                                         Row(
                                           children: [
-                                            CircleAvatar(
-                                              radius: 3.w,
+                                            Container(
+
+                                              child: CircleAvatar(
+                                                backgroundColor: AppColor.blueDarkColor,
+                                                backgroundImage:
+                                                NetworkImage(logic.textDetails?['user']['image_url']),
+                                              ),
+                                              width: 5.w,
                                             ),
                                             SizedBox(
                                               width: 2.w,
@@ -163,7 +175,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                                 Get.bottomSheet(ReportBottomSheet(logic));
                                               },
                                               child: Text(
-                                                'report',
+                                                'details_6'.tr,
                                                 style: FontStyleApp.bodySmall
                                                     .copyWith(
                                                     color: AppColor.grayLightColor
@@ -193,35 +205,12 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                           SizedBox(
                             height: 2.4.h,
                           ),
-                          GestureDetector(
-                            onTap: (){
-                              setState(() {
-                                isExpanded = !isExpanded;
-                              });
-                            },
-                            child: Text(
-                              logic.textDetails?['description'] == null
-                                  ? ''
-                                  : isExpanded
-                                  ? logic.textDetails!['description']
-                                  : (logic.textDetails?['description'].length > 80
-                                  ? logic.textDetails!['description']
-                                  .substring(0, 80) +
-                                  '...more'
-                                  : logic.textDetails?['description']),
-                              style: GoogleFonts.inter(
-                                color: Colors.white.withOpacity(0.7),
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          Row(
+                          if(!logic.file_id.toString().contains("null"))      Row(
                             children: [
                               InkWell(
                                   onTap: () {
+                                    print(
+                                        '_DetailTextScreenState.build');
                                     logic.textToText();
                                   },
                                   child: SvgPicture.asset(
@@ -246,7 +235,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                               ),
                               InkWell(
                                   onTap: () {
-                                    logic.textConvertToAudio();
+                                    logic.textToAudio();
                                   },
                                   child: SvgPicture.asset(
                                     "assets/icons/icon__single-convert-to-audio.svg",
@@ -279,20 +268,53 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                               ),
                               GestureDetector(
                                 onTap: (){
-                                  Get.find<MediaSuitController>().setDataEditText(logic.textDetails?['name'] ?? '');
+                                  Get.find<MediaSuitController>().setDataEditText(logic.textDetails?['media']['name'] ?? '' , logic.textDetails?['media']['name']  , logic.textDetails!['file_id'].toString());
                                   Get.toNamed(PageRoutes.MEDIASUIT);
                                 },
                                 child:  Icon(Icons.edit),
                               )
                             ],
                           ),
-                          SizedBox(
+                          if(!logic.file_id.toString().contains("null"))      SizedBox(
                             height: 3.h,
                           ),
+                          DownloadDisplayText(url: logic.textDetails?['file']['url'], style: TextStyle()),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+
+                          GestureDetector(
+                            onTap: (){
+                              setState(() {
+                                isExpanded = !isExpanded;
+                              });
+                            },
+                            child: Text(
+                              logic.textDetails?['description'] == null
+                                  ? ''
+                                  : isExpanded
+                                  ? logic.textDetails!['description']
+                                  : (logic.textDetails?['description'].length > 80
+                                  ? logic.textDetails!['description']
+                                  .substring(0, 80) +
+                                  '...more'
+                                  : logic.textDetails?['description']),
+                              style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
+                                color: Colors.white.withOpacity(0.7),
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+
                           Wrap(
                             children: [
                               CardMarkSinglePageWidget(label: 'Suffix' , type: (logic.textDetails?['suffix'] ?? 'null') ),
-                              CardMarkSinglePageWidget(label: 'Type' , type: logic.getTypeString(logic.textDetails?['type']??1)),
+                              CardMarkSinglePageWidget(label: 'Type' , type: logic.getTypeString(logic.textDetails?['media_type']??1)),
                             ],
                           ),
                           SizedBox(
@@ -306,9 +328,9 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                           ),
                           GestureDetector(
                             onTap: (){
-                              int itemId = logic.textDetails?['asset_id'];
+                              String itemId = logic.textDetails?['asset_id'];
                               print(itemId);
-                              Get.toNamed(PageRoutes.COMMENT, arguments: {'id': itemId});
+                              Get.toNamed(PageRoutes.COMMENT, arguments: {'id': itemId,"logic":logic});
                             },
                             child: CustomCommentSinglePageWidget(),
                           ),
@@ -327,114 +349,18 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
 
                   child: Align(
                     alignment: Alignment.bottomCenter,
-                    child: Container(
-                      width: 100.w,
-                      height: 22.h,
-                      decoration: BoxDecoration(
-                          color: "191b47".toColor(),
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(15.sp),
-                            topLeft: Radius.circular(15.sp),
-                          ),
-                          border: Border(
-                              top: BorderSide(
-                                  color: Colors.white.withOpacity(0.3),
-                                  width: 0.6),
-                              left: BorderSide(
-                                  color: Colors.white.withOpacity(0.3),
-                                  width: 0.8),
-
-                              right: BorderSide(
-                                  color: Colors.white.withOpacity(0.3),
-                                  width: 0.1)
-                          )
-                      ),
-
-                      padding: EdgeInsets.all(16),
-                      child: Column(
-
-                        children: [
-                          Container(
-                            width: 100.w,
-                            height: 7.h,
-                            decoration: BoxDecoration(
-                                color: Color(0xff4E4E61).withOpacity(0.5),
-                                borderRadius: BorderRadius.circular(10.sp),
-                                border: Border(
-                                    top: BorderSide(
-                                        color: Colors.white.withOpacity(0.3),
-                                        width: 0.6),
-                                    left: BorderSide(
-                                        color: Colors.white.withOpacity(0.3),
-                                        width: 0.8),
-
-                                    right: BorderSide(
-                                        color: Colors.white.withOpacity(0.3),
-                                        width: 0.1)
-                                )
-                            ),
-                            padding: EdgeInsets.symmetric(horizontal: 3.w),
-                            child: Row(
-                              children: [
-                                Expanded(child: Text(
-                                    '${Constant.getDropDownByPlan(logic.textDetails!['plan'].toString())}')),
-                                if(!logic.textDetails!['plan'].toString().contains("1"))  Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text("${(logic.textDetails!['price']/100).toString()} €"),
-                                    SizedBox(width: 3.w,),
-                                    SvgPicture.asset("assets/images/download.svg"),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 3.h,),
-                          Container(
-                              width: 100.w,
-                              height: 6.h,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff4E4E61).withOpacity(0.5),
-                                  borderRadius: BorderRadius.circular(100.sp),
-                                  border: Border(
-                                      top: BorderSide(
-                                          color: Colors.white.withOpacity(0.3),
-                                          width: 0.6),
-                                      left: BorderSide(
-                                          color: Colors.white.withOpacity(0.3),
-                                          width: 0.8),
-
-                                      right: BorderSide(
-                                          color: Colors.white.withOpacity(0.3),
-                                          width: 0.1)
-                                  )
-                              ),
-
-                              child: MaterialButton(
-                                padding: EdgeInsets.zero,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(1000)
-                                ),
-                                onPressed: () {
-                                  logic.sendToEditProfile(PostType.text);
-                                },
-                                child: Center(
-                                  child: Text("Edit informatiocn",
-                                    style: TextStyle(color: "83839C".toColor()),),
-                                ),
-                              )
-                          ),
-
-                        ],
-                      ),
-                    ),
+                    child: DetailsBottomWidget(logic, PostType.text),
                   ),
                 );
-              })
+              }),
+              BackWidget()
+
 
             ],
           );
         })
+
+
     ), onWillPop: ()async{
       if(Get.arguments['idAssetMedia'] == "idAssetMedia"){
               Get.offAllNamed(PageRoutes.WRAPPER);

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/pages/channel/control_room/widget/inout_widget.dart';
-import 'package:mediaverse/app/pages/channel/control_room/widget/output_widget.dart';
+import 'package:gibical/app/pages/channel/control_room/widget/inout_widget.dart';
+import 'package:gibical/app/pages/channel/control_room/widget/output_widget.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -61,6 +61,7 @@ ControlRoomLogic logic = Get.put(ControlRoomLogic());
         child: Column(
           children: [
             Container(
+              width: 100.w,
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.4),
                 borderRadius: BorderRadius.only(

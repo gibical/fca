@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
-import 'package:mediaverse/app/common/font_style.dart';
+import 'package:gibical/app/common/app_extension.dart';
+import 'package:gibical/app/common/font_style.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -11,6 +11,7 @@ Widget CustomTextFieldPlusWidget(
     {required String hintText,
     required String titleText,
     required bool needful,
+     Widget? suffix,
     bool isLarge = false,
       bool? isFocus,
       Function()? onTap,
@@ -31,12 +32,14 @@ Widget CustomTextFieldPlusWidget(
         controller: textEditingController ?? TextEditingController(),
         showCursor: true,
 
+
         onTap: isFocus == true ?onTap:(){
 
         },
         style: textTheme.bodyMedium?.copyWith(color: AppColor.whiteColor),
         decoration: InputDecoration(
           hintText: hintText,
+          suffix:suffix??null,
 
           hintStyle: textTheme.bodyMedium?.copyWith(
             color: AppColor.whiteColor.withOpacity(0.2),

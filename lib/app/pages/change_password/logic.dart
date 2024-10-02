@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/RequestInterface.dart';
-import 'package:mediaverse/app/common/app_api.dart';
-import 'package:mediaverse/app/common/app_config.dart';
+import 'package:gibical/app/common/RequestInterface.dart';
+import 'package:gibical/app/common/app_api.dart';
+import 'package:gibical/app/common/app_config.dart';
 
 import '../../common/app_color.dart';
 import 'state.dart';
@@ -24,7 +24,7 @@ class ChangePasswordLogic extends GetxController implements  RequestInterface{
   var isShowCode  =false.obs;
   @override
   void onReady() {
-    apiRequster = ApiRequster(this,develperModel: true);
+    apiRequster = ApiRequster(this,develperModel: false);
     // TODO: implement onReady
     super.onReady();
   }

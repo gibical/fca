@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
-import 'package:mediaverse/app/pages/profile/tab/ownser_tab_screen.dart';
-import 'package:mediaverse/app/pages/view_all/channel/logic.dart';
-import 'package:mediaverse/app/pages/view_all/widgets/loading_more_widhey.dart';
+import 'package:gibical/app/common/app_extension.dart';
+import 'package:gibical/app/pages/profile/tab/ownser_tab_screen.dart';
+import 'package:gibical/app/pages/view_all/channel/logic.dart';
+import 'package:gibical/app/pages/view_all/widgets/loading_more_widhey.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
@@ -73,7 +73,7 @@ class _ViewAllGrdiScreenState extends State<ViewAllGrdiScreen> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
 
-                                    Text("View All",
+                                    Text("viewall_5".tr,
                                       style: TextStyle(color: Colors.white),),
                                   ],
                                 ),

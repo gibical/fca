@@ -14,16 +14,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mediaverse/app/common/RequestInterface.dart';
-import 'package:mediaverse/app/common/app_api.dart';
-import 'package:mediaverse/app/common/app_config.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
-import 'package:mediaverse/app/common/app_route.dart';
-import 'package:mediaverse/app/common/utils/dio_inperactor.dart';
-import 'package:mediaverse/app/pages/plus_section/widget/custom_plan_text_filed.dart';
-import 'package:mediaverse/app/pages/plus_section/widget/first_form.dart';
-import 'package:mediaverse/app/pages/plus_section/widget/secned_form.dart';
-import 'package:mediaverse/app/pages/plus_section/widget/upload_asset_file.dart';
+import 'package:gibical/app/common/RequestInterface.dart';
+import 'package:gibical/app/common/app_api.dart';
+import 'package:gibical/app/common/app_config.dart';
+import 'package:gibical/app/common/app_extension.dart';
+import 'package:gibical/app/common/app_route.dart';
+import 'package:gibical/app/common/utils/dio_inperactor.dart';
+import 'package:gibical/app/pages/plus_section/widget/custom_plan_text_filed.dart';
+import 'package:gibical/app/pages/plus_section/widget/first_form.dart';
+import 'package:gibical/app/pages/plus_section/widget/secned_form.dart';
+import 'package:gibical/app/pages/plus_section/widget/upload_asset_file.dart';
+import 'package:gibical/gen/model/json/FromJsonGetCountriesModel.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -51,13 +52,12 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   String videoOutPut = "";
   String soundOutPut = "";
   String textOutPut = "";
-
+  List<CountriesModel> countreisModel =[];
+  List<String> countreisString =[];
   double uploadedCount = 0.0;
 
-  // برای کنترل نمایش ویجت زمان ضبط
   var isRecordingTimeVisible = false.obs;
 
-// برای نگهداری زمان ضبط شده به صورت رشته
   var recordingTime = ''.obs;
 
   Future<void> startVideoRecording() async {
@@ -146,6 +146,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   String? path;
   String? musicFile;
   bool isRecording = false;
+  bool _isCountryLoaded = false;
   bool isRecordingCompleted = false;
   bool isLoading = true;
   late Directory appDirectory;
@@ -158,8 +159,8 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster = ApiRequster(this, develperModel: true);
-
+    apiRequster = ApiRequster(this, develperModel: false);
+    getAllCountries();
     planController.addListener(() {
       update();
     });
@@ -327,7 +328,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     _recordingDuration = Duration.zero;
     _recordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       _recordingDuration += Duration(seconds: 1);
-      update(); // به‌روزرسانی ویو برای نمایش زمان جدید
+      update();
     });
   }
 
@@ -567,12 +568,14 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   String _resultPrice = '';
   void _multiplyBy100() {
     if (priceController.text.isNotEmpty) {
-      int? number = int.parse(priceController.text);
+      double? number = double.parse(priceController.text);
       if (number != null) {
 
-          _resultPrice = (number * 100).toString();
+          _resultPrice = ((number.toInt()) * 100).toString();
 
-      }}}
+      }}
+
+  }
   sendMainRequest() {
     isloading(true);
     _multiplyBy100();
@@ -580,7 +583,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     var body = {
       "name": titleController.text,
       "user": box.read("userid"),
-      "plan": _getPlanByDropDown(),
+      "license_type": _getPlanByDropDown(),
       "subscription_period": getSubscrptioonPeriod(),
       "description": captionController.text,
       "lat": 0,
@@ -588,8 +591,8 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       "type": 1,
       "genre": genreController.text,
       "length": "10",
-      "language": Constant.languageMap[languageController.text],
-      "country": Constant.languageMap[languageController.text],
+      //"language": Constant.languageMap[languageController.text],
+      "country":countreisModel.firstWhere((element) => element.title.toString().contains(languageController.text)).iso??"",
       "forkability_status":
           editibaleController.text.contains("Yes") ? "1" : "2",
       "commenting_status": 1,
@@ -692,7 +695,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
           filename: 'uploadfile'),
       'asset': assetid.toString(),
     });
-   print('PlusSectionLogic.uploadFileWithDio = ${imageOutPut} - ${formData}');
+   print('PlusSectionLogic.uploadFileWithDio = ${imageOutPut} - ${formData.fields}');
 
    dio.interceptors.add(MediaVerseConvertInterceptor());
 
@@ -724,6 +727,46 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
         Get.toNamed(_getRouteByMedia(), arguments: {'id': postUploadedId , 'idAssetMedia':'idAssetMedia'});
 
 
+      } else {
+        print('Failed to upload file: ${response.statusMessage}');
+      }
+    } on DioError catch (e) {
+      print('DioError: ${e.message}');
+    }
+  }
+  Future<void> getAllCountries() async {
+    var dio = Dio();
+
+
+  //  debugger();
+   dio.interceptors.add(MediaVerseConvertInterceptor());
+
+    print('PlusSectionLogic.getAllCountries = ${Constant.HTTP_HOST}Languages');
+    try {
+      var response = await dio.get(
+        '${Constant.HTTP_HOST}countries',
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${GetStorage().read("token")}',
+            'Content-Type': 'multipart/form-data',
+            'X-App': '_Android',
+          },
+        ),
+
+      );
+
+   //   debugger();
+      if (response.statusCode! >= 200||response.statusCode! < 300) {
+
+
+
+        (response.data['data'] as List<dynamic>).forEach((element) {
+          countreisModel.add(CountriesModel.fromJson(element));
+        });
+        (countreisModel).forEach((element) {
+          countreisString.add(element.title??"");
+        });
+        print('PlusSectionLogic.getAllCountries = ${countreisModel.length}');
       } else {
         print('Failed to upload file: ${response.statusMessage}');
       }
@@ -799,6 +842,19 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       default:
         return "24";
 
+    }
+  }
+
+  getVisibilaty() {
+    print('PlusSectionLogic.getVisibilaty = ${
+        mediaMode
+    }');
+    if(
+    mediaMode==MediaMode.text
+    ){
+      return false;
+    }else{
+      return true;
     }
   }
 }

@@ -2,7 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mediaverse/app/common/app_config.dart';
+import 'package:gibical/app/common/app_config.dart';
 
 import '../../../../gen/model/json/FromJsonGetAllVideos.dart';
 

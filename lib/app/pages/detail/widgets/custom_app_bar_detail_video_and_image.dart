@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/pages/detail/logic.dart';
-import 'package:mediaverse/app/pages/detail/widgets/image_full_screen_dialog.dart';
+import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/pages/detail/logic.dart';
+import 'package:gibical/app/pages/detail/widgets/image_full_screen_dialog.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 import 'package:video_player/video_player.dart';
@@ -30,7 +30,7 @@ class CustomAppBarVideoAndImageDetailWidget extends StatelessWidget {
     ImageProvider? imageProvider;
 
     try {
-      imageProvider = NetworkImage(detailController.imageDetails?['file']?['url']);
+      imageProvider = NetworkImage(detailController.imageDetails?['file']?['url']);//
       imageURL = detailController.imageDetails?['file']?['url'];
     } catch (e) {
 
@@ -199,15 +199,20 @@ class _VideoDialogState extends State<VideoDialog> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow),
+                  icon: SvgPicture.asset(
+                    "assets/icons/icon__screenshot.svg",
+                    width: 6.w,
+                  ),
                   color: Colors.white,
                   onPressed: () {
-                    setState(() {
-                      _isPlaying ? _controller.pause() : _controller.play();
-                      _isPlaying = !_isPlaying;
-                    });
+
+                    widget.controller.secondsTimeVideoToImage = _controller.value.position.inSeconds;
+                    widget.controller.videoConvertToImage();
+                    print( widget.controller.secondsTimeVideoToImage);
                   },
                 ),
+
+
               ],
             ),
           ),

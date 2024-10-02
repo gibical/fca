@@ -6,9 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/pages/video_editor/widgets/crop_page.dart';
-import 'package:mediaverse/app/pages/video_editor/widgets/export_service.dart';
+import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/pages/video_editor/widgets/crop_page.dart';
+import 'package:gibical/app/pages/video_editor/widgets/export_service.dart';
 
 import 'package:video_editor/video_editor.dart';
 
@@ -419,7 +419,9 @@ class _VideoEditorState extends State<VideoEditor> {
                         final double pos = _controller.trimPosition * duration;
 
                         return   Text(
-                            formatter(Duration(seconds: pos.toInt() , ),),style: GoogleFonts.inter(
+                            formatter(Duration(seconds: pos.toInt() , ),),style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                           color: AppColor.primaryLightColor,
                           fontSize: 16,
                           fontWeight: FontWeight.w600

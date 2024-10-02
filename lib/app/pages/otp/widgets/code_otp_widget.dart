@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mediaverse/app/common/font_style.dart';
+import 'package:get/utils.dart';
+import 'package:gibical/app/common/font_style.dart';
 
 import '../../../common/app_color.dart';
 
@@ -16,7 +17,7 @@ Widget CodeOTPWidget(context){
         children: [
           Padding(
             padding: const EdgeInsets.only(right: 25 , left: 10),
-            child: Text('Code' , style: textTheme.bodyMedium?.copyWith(
+            child: Text('otp_1'.tr , style: textTheme.bodyMedium?.copyWith(
               color: Color(0xff4E4E61).withOpacity(0.5)
             )
             ),

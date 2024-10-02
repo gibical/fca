@@ -1,6 +1,8 @@
+import 'dart:developer';
+
 class ProfileModel {
   ProfileModel({
-      num? id, 
+    String? id,
       String? firstName, 
       String? lastName, 
       String? username, 
@@ -43,16 +45,18 @@ class ProfileModel {
 }
 
   ProfileModel.fromJson(dynamic jsons) {
+    log('ProfileModel.fromJson = ${jsons}');
     var json = jsons['data'];
     _id = json['id'];
     _firstName = json['first_name'];
     _lastName = json['last_name'];
     _username = json['username'];
     _cellphone = json['cellphone'];
+    _iso = json['address']['country_iso'];
     _cellphoneVerifiedAt = json['cellphone_verified_at'];
     _email = json['email'];
     _emailVerifiedAt = json['email_verified_at'];
-    _imageId = json['image_id'];
+    _imageId = json['image_url'];
     _status = json['status'];
     _source = json['source'];
     _referrerId = json['referrer_id'];
@@ -67,10 +71,10 @@ class ProfileModel {
       });
     }
     _address = json['address'];
-    _operator = json['operator'] != null ? Operator.fromJson(json['operator']) : null;
+   // _operator = json['operator'] != null ? Operator.fromJson(json['operator']) : null;
     _image = json['image'];
   }
-  num? _id;
+  String? _id;
   String? _firstName;
   String? _lastName;
   String? _username;
@@ -83,6 +87,7 @@ class ProfileModel {
   num? _source;
   dynamic _referrerId;
   String? _createdAt;
+  String? _iso;
   String? _updatedAt;
   String? _imageUrl;
   dynamic _referrer;
@@ -90,7 +95,7 @@ class ProfileModel {
   dynamic _address;
   Operator? _operator;
   dynamic _image;
-ProfileModel copyWith({  num? id,
+ProfileModel copyWith({  String? id,
   String? firstName,
   String? lastName,
   String? username,
@@ -131,11 +136,12 @@ ProfileModel copyWith({  num? id,
   operator: operator ?? _operator,
   image: image ?? _image,
 );
-  num? get id => _id;
+  String? get id => _id;
   String? get firstName => _firstName;
   String? get lastName => _lastName;
   String? get username => _username;
   String? get cellphone => _cellphone;
+  String? get iso => _iso;
   String? get cellphoneVerifiedAt => _cellphoneVerifiedAt;
   String? get email => _email;
   dynamic get emailVerifiedAt => _emailVerifiedAt;

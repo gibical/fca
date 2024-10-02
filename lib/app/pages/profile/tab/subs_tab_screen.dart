@@ -7,10 +7,10 @@ import 'package:focus_detector/focus_detector.dart';
 import 'ownser_tab_screen.dart' as own;
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediaverse/app/pages/home/logic.dart';
-import 'package:mediaverse/app/pages/home/widgets/custom_tab_bar_widget.dart';
-import 'package:mediaverse/app/pages/profile/logic.dart';
-import 'package:mediaverse/gen/model/json/FromJsonGetAllAsstes.dart';
+import 'package:gibical/app/pages/home/logic.dart';
+import 'package:gibical/app/pages/home/widgets/custom_tab_bar_widget.dart';
+import 'package:gibical/app/pages/profile/logic.dart';
+import 'package:gibical/gen/model/json/FromJsonGetAllAsstes.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/app_route.dart';
+import 'package:gibical/app/common/app_route.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../common/app_color.dart';
 import '../../widgets/logo_app_widget.dart';
@@ -30,9 +31,9 @@ class IntroPage extends StatelessWidget {
 
                 children: [
                   SizedBox(
-                    height: 10.h,
+                    height: 35.h,
                   ),
-                  LogoAppWidget(),
+                  Image.asset("assets/images/splash_ic2.png", height: 25.h,),
                   Spacer(),
                   CustomRegisterButtonWidgetBlue(onTap: () {
                     Get.offNamed(PageRoutes.LOGIN);
@@ -62,12 +63,21 @@ class IntroPage extends StatelessWidget {
                         SizedBox(
                           width: 1.w,
                         ),
-                        Text(
-                          'intro_2'.tr,
-                          style: Theme
-                              .of(context)
-                              .textTheme.bodySmall!
-                              .copyWith(color: AppColor.primaryLightColor),
+                        GestureDetector(
+                          onTap: (){
+                            try {
+                              launchUrlString("https://gibical.app/en/terms");
+                            }  catch (e) {
+                              // TODO
+                            }
+                          },
+                          child: Text(
+                            'intro_2'.tr,
+                            style: Theme
+                                .of(context)
+                                .textTheme.bodySmall!
+                                .copyWith(color: AppColor.primaryLightColor),
+                          ),
                         ),
                         SizedBox(height: 4.h,)
                       ],

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mediaverse/app/common/app_color.dart';
-import 'package:mediaverse/app/common/app_extension.dart';
-import 'package:mediaverse/app/common/app_icon.dart';
-import 'package:mediaverse/app/pages/plus_section/widget/custom_plan_text_filed.dart';
-import 'package:mediaverse/app/pages/view_all/channel/widgets/custom_select_bottom_sheet.dart';
-import 'package:mediaverse/app/pages/view_all/channel/widgets/selectItemFiltrWidgt.dart';
+import 'package:gibical/app/common/app_color.dart';
+import 'package:gibical/app/common/app_extension.dart';
+import 'package:gibical/app/common/app_icon.dart';
+import 'package:gibical/app/pages/plus_section/widget/custom_plan_text_filed.dart';
+import 'package:gibical/app/pages/view_all/channel/widgets/custom_select_bottom_sheet.dart';
+import 'package:gibical/app/pages/view_all/channel/widgets/selectItemFiltrWidgt.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_route.dart';
@@ -136,7 +136,7 @@ TextEditingController textEditingController = TextEditingController();
                                     });
 
                                   },
-                                  title: 'Language'
+                                  title: 'viewall_1'.tr
                                 ),
                                 SizedBox(height: 2.h),
                                 selectFilterItem(
@@ -152,7 +152,7 @@ TextEditingController textEditingController = TextEditingController();
                                         controller.filterChannels(selectedCountry);
                                       });
                                     },
-                                    title: 'Country'
+                                    title: 'viewall_2'.tr
                                 ),
 
                               ],
@@ -173,8 +173,10 @@ TextEditingController textEditingController = TextEditingController();
                       SvgPicture.asset(AppIcon.liveIcon),
                       SizedBox(width: 2.w),
                       Text(
-                        'Live Channel',
-                        style: GoogleFonts.inter(fontSize: 15.sp),
+                        'viewall_3'.tr,
+                        style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(fontSize: 15.sp),
                       ),
                     ],
                   ),
@@ -225,12 +227,16 @@ TextEditingController textEditingController = TextEditingController();
                                 children: [
                                   Text(
                                     channelModel['title'] ?? '...',
-                                    style: GoogleFonts.inter(fontSize: 13.sp),
+                                    style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(fontSize: 13.sp),
                                   ),
                                   Spacer(),
                                   Text(
                                     channelModel['country'] ?? '...',
-                                    style: GoogleFonts.inter(
+                                    style: Theme
+                                  .of(context)
+                                  .textTheme.bodySmall?.copyWith(
                                       fontSize: 10.sp,
                                       color: AppColor.whiteColor.withOpacity(0.7),
                                     ),

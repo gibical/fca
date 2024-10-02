@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:mediaverse/app/common/RequestInterface.dart';
-import 'package:mediaverse/app/common/app_config.dart';
-import 'package:mediaverse/app/common/app_route.dart';
+import 'package:gibical/app/common/RequestInterface.dart';
+import 'package:gibical/app/common/app_config.dart';
+import 'package:gibical/app/common/app_route.dart';
 
 class MediaVerseInterceptor extends Interceptor{
   RequestInterface requestInterface;
