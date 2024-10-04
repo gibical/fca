@@ -14,7 +14,7 @@ import 'package:gibical/app/pages/channel/view.dart';
 import 'package:gibical/app/pages/wrapper/logic.dart';
 import 'package:gibical/app/pages/wrapper/state.dart';
 import 'package:sizer/sizer.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'app/common/app_color.dart';
 import 'app/common/app_route.dart';
@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     getDeviceInformation();
-    Wakelock.enable();
+    WakelockPlus.enable();
     MyApp.analytics.logEvent(name: "entredapp");
   }
 

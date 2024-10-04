@@ -8,7 +8,6 @@ import 'package:gibical/gen/model/json/walletV2/FromJsonGetPrograms.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:video_player/video_player.dart';
-import 'package:wakelock/wakelock.dart';
 import 'package:get/get.dart';
 import 'package:rtmp_broadcaster/camera.dart';
 

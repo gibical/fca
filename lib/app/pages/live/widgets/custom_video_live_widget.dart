@@ -9,7 +9,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:gibical/app/pages/live/widgets/custom_video_live_widget2.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';

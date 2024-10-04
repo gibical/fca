@@ -8,7 +8,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:gibical/app/pages/plus_section/logic.dart';
 import 'package:gibical/app/pages/plus_section/widget/first_form.dart';
 import 'package:path_provider/path_provider.dart';

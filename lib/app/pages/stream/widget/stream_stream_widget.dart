@@ -11,7 +11,6 @@ import '../../../common/app_icon.dart';
 import '../../../common/font_style.dart';
 import '../../signup/widgets/custom_text_field_form_register_widget.dart';
 import '../logic.dart';
-import 'package:wakelock/wakelock.dart';
 
 class ScreenStreamWidget extends StatefulWidget {
   const ScreenStreamWidget({super.key});
