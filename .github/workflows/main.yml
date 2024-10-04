@@ -19,6 +19,21 @@ jobs:
           flutter-version: 3.22.0
 
 
+      # Setup Android SDK
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          api-level: 34
+          target: default
+          arch: x86_64
+          ndk: true
+      # Install Android build-tools including zipalign
+      - name: Install Android build-tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y android-sdk build-essential
+          sdkmanager "build-tools;30.0.3"
+
       # Clean Flutter cache
       - name: Clean Flutter cache
         run: flutter pub cache clean
