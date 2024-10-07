@@ -17,7 +17,7 @@ class MainActivity : FlutterActivity() {
     private val REQUEST_CODE_SCREEN_CAPTURE = 1000
     private val RECORD_AUDIO_REQUEST_CODE = 123
     private var rtmpUrl: String? = null
-    private val CHANNEL = "com.mediaverse.mediaverse/rtmp"
+    private val CHANNEL = "com.app.gibical/rtmp"
 
     private lateinit var methodChannel: MethodChannel
     private lateinit var mediaProjectionManager: MediaProjectionManager

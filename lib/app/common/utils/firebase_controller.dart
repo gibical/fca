@@ -26,7 +26,7 @@ class FirebaseController extends GetxController implements RequestInterface {
 
   late FirebaseMessaging _firebaseMessaging;
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin();
 
   var box = GetStorage();
   late ApiRequster apiRequster;
@@ -93,7 +93,7 @@ class FirebaseController extends GetxController implements RequestInterface {
 
   void initializeLocalNotifications() {
     var initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettingsIOS = DarwinInitializationSettings();
     var initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
@@ -101,10 +101,11 @@ class FirebaseController extends GetxController implements RequestInterface {
     );
     _flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveBackgroundNotificationResponse:
-            FirebaseController.onDidReceiveBackgroundNotificationResponse,
+        FirebaseController.onDidReceiveBackgroundNotificationResponse,
         onDidReceiveNotificationResponse: (s) {
-      sendToAssetPage(s.payload ?? "");
-    });
+          //  debugger();
+          sendToAssetPage(s.payload ?? "");
+        });
   }
 
   void listenToFCMMessages() {
@@ -133,7 +134,7 @@ class FirebaseController extends GetxController implements RequestInterface {
   }
 
   void showNotification(RemoteMessage message) {
-     //debugger();
+    //debugger();
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'MediaVerse_0',
       'MediaVerse',
@@ -166,12 +167,13 @@ class FirebaseController extends GetxController implements RequestInterface {
 
   static void  sendToAssetPage(String s) {
     print('FirebaseController.sendToAssetPage = ${s}');
-    // debugger();
     try {
       var json = jsonDecode(s);
-      print('FirebaseController.sendToAssetPage 2  = ${json}');
+      var json2 = json['result'].toString();
+
       String route = PageRoutes.DETAILIMAGE;
-      switch (json['class'].toString()) {
+
+      switch (jsonDecode(json['result'])['media_type'].toString()) {
         case "1":
           route = PageRoutes.DETAILTEXT;
         case "2":
@@ -181,7 +183,7 @@ class FirebaseController extends GetxController implements RequestInterface {
         case "4":
           route = PageRoutes.DETAILVIDEO;
       }
-      var id = json['id'];
+      var id = jsonDecode(json['result'])['id'].toString();
       Get.toNamed(route, arguments: {'id': id}, preventDuplicates: false);
     } catch (e) {
       // TODO
