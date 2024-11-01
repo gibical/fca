@@ -1,0 +1,46 @@
+app:
+  android:
+    flavorDimensions: "flavor-type"
+
+flavors:
+  mediaverse:
+    app:
+      name: "MediaVerse App"
+
+    android:
+      applicationId: "land.mediaverse.app"
+      firebase:
+        config: ".firebase/mediaverse/google-services-mediaverse.json"
+    ios:
+      bundleId: "land.mediaverse.app"
+    macos:
+      bundleId: "land.mediaverse.app"
+
+  gibical:
+    app:
+      name: "Gibical App"
+
+    android:
+      applicationId: "com.app.gibicalapp"
+      firebase:
+        config: ".firebase/gibical/google-services.json"
+    ios:
+      bundleId: "com.app.gibicalapp"
+    macos:
+      bundleId: "com.app.gibicalapp"
+
+
+  ravi:
+    app:
+      name: "Ravi App"
+
+    android:
+      applicationId: "ir.app.ravi"
+      firebase:
+        config: ".firebase/mediaverse/google-services-mediaverse.json"
+    ios:
+      bundleId: "ir.app.ravi"
+    macos:
+      bundleId: "ir.app.ravi"
+
+ide: idea
