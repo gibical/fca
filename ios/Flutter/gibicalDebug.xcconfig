@@ -1,0 +1,7 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
+#include "Generated.xcconfig"
+
+FLUTTER_TARGET=lib/main_gibical.dart
+ASSET_PREFIX=gibical
+BUNDLE_NAME=Gibical App
+BUNDLE_DISPLAY_NAME=Gibical App

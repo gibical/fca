@@ -1,0 +1,7 @@
+#include "../../Flutter/gibicalDebug.xcconfig"
+#include "Warnings.xcconfig"
+
+FLUTTER_TARGET=lib/main_gibical.dart
+ASSET_PREFIX=gibical
+BUNDLE_NAME=Gibical App
+BUNDLE_DISPLAY_NAME=Gibical App

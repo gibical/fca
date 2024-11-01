@@ -9,12 +9,17 @@ flavors:
 
     android:
       applicationId: "land.mediaverse.app"
+      icon: "icons/mediaverse/launcher_icon.png"
       firebase:
-        config: ".firebase/mediaverse/google-services-mediaverse.json"
+        config: "firebase/mediaverse/google-services-mediaverse.json"
     ios:
       bundleId: "land.mediaverse.app"
+      icon: "icons/mediaverse/launcher_icon.png"
+
     macos:
       bundleId: "land.mediaverse.app"
+      icon: "icons/mediaverse/launcher_icon.png"
+
 
   gibical:
     app:
@@ -22,10 +27,13 @@ flavors:
 
     android:
       applicationId: "com.app.gibicalapp"
+      icon: "icons/gibical/launcher_icon.png"
       firebase:
-        config: ".firebase/gibical/google-services.json"
+        config: "firebase/gibical/google-services.json"
     ios:
       bundleId: "com.app.gibicalapp"
+      icon: "icons/gibical/launcher_icon.png"
+
     macos:
       bundleId: "com.app.gibicalapp"
 
@@ -36,11 +44,16 @@ flavors:
 
     android:
       applicationId: "ir.app.ravi"
+      icon: "icons/ravi/launcher_icon.png"
       firebase:
-        config: ".firebase/mediaverse/google-services-mediaverse.json"
+        config: "firebase/mediaverse/google-services-mediaverse.json"
     ios:
       bundleId: "ir.app.ravi"
+      icon: "icons/ravi/launcher_icon.png"
+
     macos:
       bundleId: "ir.app.ravi"
+      icon: "icons/ravi/launcher_icon.png"
+
 
 ide: idea

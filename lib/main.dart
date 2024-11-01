@@ -15,7 +15,7 @@ FutureOr<void> main() async {
   if (details!=null&&details.didNotificationLaunchApp) {
     print(details!.notificationResponse!.payload);
   }
-  await FirebaseController().init();
+  //await FirebaseController().init();
   runApp(Sizer(builder: (context, orientation, deviceType) {
     return const App();
   }));}

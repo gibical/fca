@@ -1,0 +1,7 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
+#include "Generated.xcconfig"
+
+FLUTTER_TARGET=lib/main_mediaverse.dart
+ASSET_PREFIX=mediaverse
+BUNDLE_NAME=MediaVerse App
+BUNDLE_DISPLAY_NAME=MediaVerse App

@@ -1,0 +1,7 @@
+#include "../../Flutter/raviDebug.xcconfig"
+#include "Warnings.xcconfig"
+
+FLUTTER_TARGET=lib/main_ravi.dart
+ASSET_PREFIX=ravi
+BUNDLE_NAME=Ravi App
+BUNDLE_DISPLAY_NAME=Ravi App
