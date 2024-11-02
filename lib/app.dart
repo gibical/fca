@@ -22,6 +22,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
+    print('_AppState.build = ${AppColor.primaryLightColor}');
     return GetMaterialApp(
       title:F.title,
       getPages: PageRoutes.routes,
@@ -30,7 +31,7 @@ class _AppState extends State<App> {
       translations: LocalizationService(),
       debugShowCheckedModeBanner: false,
 
-      locale: LocalizationService().getCurrentLocale(),
+      locale:F.appFlavor==Flavor.ravi?LocalizationService.fallBackLocale2: LocalizationService.fallBackLocale,
       fallbackLocale:LocalizationService.fallBackLocale,
       themeMode: AppTheme().getCurrentTheme(),
       theme: AppTheme.darkMode,

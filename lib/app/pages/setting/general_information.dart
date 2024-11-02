@@ -120,7 +120,7 @@ class _GeneralInformationPageState extends State<GeneralInformationPage> {
                   height: 6.h,
                   margin: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                      color: "597AFF".toColor(),
+                      color: AppColor.primaryLightColor,
                       borderRadius: BorderRadius.circular(5000)
                   ),
                   child: Obx(() {
@@ -137,7 +137,7 @@ class _GeneralInformationPageState extends State<GeneralInformationPage> {
                         );
                       },
                       child: logic.isloadingEdit.value ? Lottie.asset(
-                          "assets/json/Y8IBRQ38bK.json", height: 10.h) : Text(
+                          "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h) : Text(
                         "setting_13".tr, style: TextStyle(color: Colors.white),),
                     );
                   }),

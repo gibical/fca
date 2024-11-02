@@ -6,6 +6,7 @@ export 'package:mediaverse/flavors.dart';
 
 double withSize = 0;
 double hightSize = 0;
+
 TextStyle fontStyle(double fontSize, fontWeight) {
   return TextStyle(
     fontFamily: 'Ravi',
@@ -13,6 +14,7 @@ TextStyle fontStyle(double fontSize, fontWeight) {
     fontWeight: fontWeight,
   );
 }
+
 class AppTheme {
   var box = GetStorage();
 
@@ -44,11 +46,11 @@ class AppTheme {
   //
   // );
 
-
   static ThemeData get lightMode => ThemeData(
         useMaterial3: true,
-       // brightness: Brightness.light,
-        scaffoldBackgroundColor: AppColor.whiteColor,fontFamily: "Ravi",
+        // brightness: Brightness.light,
+        scaffoldBackgroundColor: AppColor.whiteColor,
+        fontFamily: "Ravi",
         colorScheme: ColorScheme(
           primary: AppColor.primaryDarkColor,
           brightness: Brightness.dark,
@@ -60,7 +62,6 @@ class AppTheme {
           secondary: Colors.white.withOpacity(0.88),
           error: Colors.red,
           onError: Colors.red,
-
           onSecondary: Colors.black,
         ),
         textTheme: TextTheme(
@@ -76,25 +77,18 @@ class AppTheme {
 
   static ThemeData get darkMode => ThemeData(
         useMaterial3: true,
-       brightness: Brightness.dark,fontFamily: "Ravi",
+        brightness: Brightness.dark,
+        fontFamily: "Ravi",
 
-       /// brightness: Brightness.dark,
+        /// brightness: Brightness.dark,
         colorScheme: ColorScheme(
-
           primary: AppColor.primaryLightColor,
           brightness: Brightness.dark,
           background: AppColor.primaryDarkColor,
           onBackground: AppColor.primaryDarkColor,
           onPrimary: AppColor.primaryDarkColor,
-
-
-
           surface: AppColor.blueDarkColor,
           onSurface: AppColor.whiteColor,
-
-
-
-
           secondary: Color(0xff0E0E12).withOpacity(0.5),
           error: Colors.red,
           onError: Colors.red,
@@ -132,10 +126,44 @@ class AppTheme {
 }
 
 class AppColor {
-  static Color grayLightColor = const Color(0xffF5F7F9);
-  static Color blueDarkColor = const  Color(0xff010224);
-  static Color whiteColor = const Color(0xffffffff);
-  static Color primaryLightColor = const Color(0xff5A7AFA);
-  static Color primaryDarkColor = const Color(0xff000033);
-  static Color errorColor = const Color(0xffE01818);
+  static late Color grayLightColor;
+  static late Color blueDarkColor;
+  static late Color whiteColor;
+  static late Color primaryLightColor;
+  static late Color primaryDarkColor;
+  static late Color errorColor;
+
+  static void init() {
+    switch (F.appFlavor) {
+      case Flavor.gibical:
+        grayLightColor = const Color(0xffF5F7F9);
+        blueDarkColor = const Color(0xff010224);
+        whiteColor = const Color(0xffffffff);
+        primaryLightColor = const Color(0xff5A7AFA);
+        primaryDarkColor = const Color(0xff000033);
+        errorColor = const Color(0xffE01818);
+        break;
+
+      case Flavor.ravi:
+        grayLightColor = const Color(0xffF5F7F9);
+        blueDarkColor = const Color(0xff00332f);
+        whiteColor = const Color(0xffffffff);
+        primaryLightColor = const Color(0xff13a89e);
+        primaryDarkColor = const Color(0xff00332f);
+        errorColor = const Color(0xffE01818);
+        break;
+
+      case Flavor.mediaverse:
+      default:
+        grayLightColor = const Color(0xffF5F7F9);
+        blueDarkColor = const Color(0xff010224);
+        whiteColor = const Color(0xffffffff);
+        primaryLightColor = const Color(0xff5A7AFA);
+        primaryDarkColor = const Color(0xff000033);
+        errorColor = const Color(0xffE01818);
+        break;
+    }
+
+    whiteColor = const Color(0xffffffff); // ثابت برای همه طعم‌ها
+  }
 }

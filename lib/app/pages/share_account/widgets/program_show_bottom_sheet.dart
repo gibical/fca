@@ -43,7 +43,7 @@ class _ProgramShowBottomSheetState extends State<ProgramShowBottomSheet> {
       width: 100.w,
 
       decoration: BoxDecoration(
-          color: "3b3a5a".toColor(),
+          color: AppColor.primaryLightColor,
           border: Border(
             left: BorderSide(
                 color: Colors.grey.withOpacity(0.3),

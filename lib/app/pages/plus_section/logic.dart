@@ -474,7 +474,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
                                               waveColor: Colors.white,
                                               extendWaveform: true,
                                               showMiddleLine: true,
-                                              middleLineColor: "597AFF".toColor(),
+                                              middleLineColor: AppColor.primaryLightColor,
                                               scaleFactor: 300),
                                           decoration: BoxDecoration(
                                             borderRadius:

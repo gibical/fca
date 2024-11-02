@@ -92,7 +92,7 @@ class ImageTabScreen extends StatelessWidget {
                     if (isloadingImage) {
                       return Container(
                         child: Lottie.asset(
-                            "assets/json/Y8IBRQ38bK.json", height: 10.h),
+                            "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h),
                       );
                     }
                     return Column(

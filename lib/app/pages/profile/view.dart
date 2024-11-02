@@ -67,7 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               body: Container(
                 child: Center(
                   child:
-                      Lottie.asset("assets/json/Y8IBRQ38bK.json", height: 10.h),
+                      Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h),
                 ),
               ),
             )

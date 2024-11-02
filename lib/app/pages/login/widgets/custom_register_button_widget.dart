@@ -15,7 +15,7 @@ Widget CustomRegisterButtonWidget({required String title  , required Function() 
       width: double.infinity,
       child: ElevatedButton(
         onPressed: onTap,
-        child:isloading?Lottie.asset("assets/json/Y8IBRQ38bK.json"): Text(
+        child:isloading?Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json"): Text(
           title,
           style: FontStyleApp.bodyLarge.copyWith(
             color: AppColor.whiteColor,
@@ -41,7 +41,7 @@ Widget CustomRegisterButtonWidgetBlue({required String title  , required Functio
       width: double.infinity,
       child: ElevatedButton(
         onPressed: onTap,
-        child:isloading?Lottie.asset("assets/json/Y8IBRQ38bK.json"): Text(
+        child:isloading?Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json"): Text(
           title,
           style: FontStyleApp.bodyLarge.copyWith(
             color: AppColor.whiteColor,
@@ -52,7 +52,7 @@ Widget CustomRegisterButtonWidgetBlue({required String title  , required Functio
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.sp)
             ),
-            backgroundColor: color != null ? color : "597AFF".toColor()
+            backgroundColor: color != null ? color : AppColor.primaryLightColor
 
         ),
       ),
@@ -67,7 +67,7 @@ Widget GoogleCustomRegisterButtonWidget({required String title  , required Funct
       width: double.infinity,
       child: ElevatedButton(
         onPressed: onTap,
-        child:isloading?Lottie.asset("assets/json/Y8IBRQ38bK.json"): Row(
+        child:isloading?Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json"): Row(
           mainAxisAlignment: MainAxisAlignment.center,
 
           children: [

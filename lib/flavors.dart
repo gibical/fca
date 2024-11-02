@@ -33,5 +33,17 @@ class F {
         return 'mediaverse';
     }
   }
+  static String get apiurl {
+    switch (appFlavor) {
+      case Flavor.mediaverse:
+        return 'https://api.mediaverse.land/v2/';
+      case Flavor.gibical:
+        return "https://api.${("gibical.app")}/v2/";
+      case Flavor.ravi:
+        return 'https://api.mediaverse.land/v2/';
+      default:
+        return 'https://api.mediaverse.land/v2/';
+    }
+  }
 
 }

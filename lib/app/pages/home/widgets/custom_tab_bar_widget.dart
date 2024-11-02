@@ -156,7 +156,7 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
                     color: Colors.black.withOpacity(0.5),
                     child: Center(
                       child: Lottie.asset(
-                          "assets/json/Y8IBRQ38bK.json", height: 18.h),
+                          "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 18.h),
                     ),
                   ),
                 );

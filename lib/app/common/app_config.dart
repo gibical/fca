@@ -384,7 +384,7 @@ class Constant {
   ];
 
   static bool isTabletMode = SizerUtil.deviceType == DeviceType.tablet;
-  static String HTTP_HOST ="https://api.mediaverse.land/v2/";
+  static String HTTP_HOST =F.apiurl;
   static bool mediaverseAPP =false;
   static getPlanByDropDown(var s) {
     switch (s) {

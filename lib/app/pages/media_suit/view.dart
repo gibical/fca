@@ -546,7 +546,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
             //         child: Stack(
             //           children: [
             //             Align(
-            //               child: Lottie.asset("assets/json/Y8IBRQ38bK.json",
+            //               child: Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json",
             //                   height: 10.h),
             //             )
             //           ],
@@ -564,7 +564,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                     child: Stack(
                       children: [
                         Align(
-                          child: Lottie.asset("assets/json/Y8IBRQ38bK.json",
+                          child: Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json",
                               height: 10.h),
                         )
                       ],

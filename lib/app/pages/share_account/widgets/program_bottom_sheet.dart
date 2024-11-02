@@ -61,7 +61,7 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
 
       height: 40.h,
       decoration: BoxDecoration(
-          color: "3b3a5a".toColor(),
+          color: AppColor.primaryLightColor,
           border: Border(
             left: BorderSide(
                 color: Colors.grey.withOpacity(0.3),
@@ -233,7 +233,7 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
                 child: Obx(() {
                   return Center(child: widget.shareAccountLogic.iscreateProgramloading.value
                       ? Lottie.asset(
-                      "assets/json/Y8IBRQ38bK.json", height: 3.h)
+                      "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 3.h)
                       : Text("Create Program"));
                 }),
               ),

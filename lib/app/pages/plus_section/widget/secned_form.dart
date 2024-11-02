@@ -169,7 +169,7 @@ class _SecendFormState extends State<SecendForm> {
                                   height: 6.h,
                                   margin: EdgeInsets.all(16),
                                   decoration: BoxDecoration(
-                                      color: "597AFF".toColor(),
+                                      color: AppColor.primaryLightColor,
                                       borderRadius: BorderRadius.circular(5000)
                                   ),
                                   child: Obx(() {
@@ -183,7 +183,7 @@ class _SecendFormState extends State<SecendForm> {
                                             logic.sendMainRequest();
                                       },
                                       child: logic.isloading.value ? Lottie.asset(
-                                          "assets/json/Y8IBRQ38bK.json", height: 10.h) : Text(
+                                          "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h) : Text(
                                         "plus_35".tr, style: TextStyle(color: Colors.white),),
                                     );
                                   }),
@@ -193,7 +193,7 @@ class _SecendFormState extends State<SecendForm> {
                                   height: 6.h,
                                   margin: EdgeInsets.all(16),
                                   decoration: BoxDecoration(
-                                      border: Border.all(color: "597AFF".toColor()),
+                                      border: Border.all(color: AppColor.primaryLightColor),
                                       borderRadius: BorderRadius.circular(5000)
                                   ),
                                   child: Obx(() {
@@ -206,7 +206,7 @@ class _SecendFormState extends State<SecendForm> {
                                         Get.offAllNamed(PageRoutes.WRAPPER);
                                       },
                                       child: logic.isloading.value ? Lottie.asset(
-                                          "assets/json/Y8IBRQ38bK.json", height: 10.h) : Text(
+                                          "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h) : Text(
                                         "Cancel".tr, style: TextStyle(color: Colors.white),),
                                     );
                                   }),

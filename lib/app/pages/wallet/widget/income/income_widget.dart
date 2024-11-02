@@ -37,7 +37,7 @@ class IncomeWidget extends StatelessWidget {
               body: Container(
 
                 child: Center(
-                  child: Lottie.asset("assets/json/Y8IBRQ38bK.json", height: 10.h),
+                  child: Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h),
                 ),
               ),
             ) : Scaffold(
@@ -52,7 +52,7 @@ class IncomeWidget extends StatelessWidget {
                           height: 3.h,
                         ),
                         Text("Your Are Successfuly Connected To Stripe",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 14.sp),),
-                        Container(child: Lottie.asset("assets/json/success2.json",repeat:
+                        Container(child: Lottie.asset("assets/${F.assetTitle}/json/success2.json",repeat:
                         false
                         ),height: 15.h,),
                         SizedBox(
@@ -131,7 +131,7 @@ class IncomeWidget extends StatelessWidget {
                         Container(
                             width: 60.w,
                             height: 25.h,
-                            child: Lottie.asset("assets/json/empty.json")
+                            child: Lottie.asset("assets/${F.assetTitle}/json/empty.json")
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 8.h),

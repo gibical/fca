@@ -232,7 +232,7 @@ class _YoutubeShareBottomSheetState extends State<YoutubeShareBottomSheet> {
                                   .withOpacity(0.75) : Colors.transparent,
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(
-                                color: "597AFF".toColor(),
+                                color: AppColor.primaryLightColor,
 
                               )
                           ),
@@ -269,7 +269,7 @@ class _YoutubeShareBottomSheetState extends State<YoutubeShareBottomSheet> {
                                   .withOpacity(0.75) : Colors.transparent,
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(
-                                color: "597AFF".toColor(),
+                                color: AppColor.primaryLightColor,
 
                               )
                           ),
@@ -380,7 +380,7 @@ class _YoutubeShareBottomSheetState extends State<YoutubeShareBottomSheet> {
                                 : "details_36".tr)),
                         logic.isLoadingChannel.value
                             ? Lottie.asset(
-                            "assets/json/Y8IBRQ38bK.json", height: 4.h)
+                            "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 4.h)
                             : Container()
                       ],
                     );

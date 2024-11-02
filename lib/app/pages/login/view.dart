@@ -121,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: 3.h,
                     ),
-                  if(Platform.isAndroid)  GoogleCustomRegisterButtonWidget(onTap: () {
+                  if(Platform.isAndroid&&F.appFlavor!=Flavor.ravi)  GoogleCustomRegisterButtonWidget(onTap: () {
                       //  logic.requestLogin();
                       //signInWithGoogle();
                       _googleLogIn();

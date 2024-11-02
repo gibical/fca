@@ -36,7 +36,7 @@ class BillingWidget extends StatelessWidget {
               body: Container(
 
                 child: Center(
-                  child: Lottie.asset("assets/json/Y8IBRQ38bK.json", height: 10.h),
+                  child: Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h),
                 ),
               ),
             ) : Scaffold(
@@ -181,7 +181,7 @@ class BillingWidget extends StatelessWidget {
                         Container(
                           width: 60.w,
                           height: 25.h,
-                          child: Lottie.asset("assets/json/empty.json")
+                          child: Lottie.asset("assets/${F.assetTitle}/json/empty.json")
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 8.h),

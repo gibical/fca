@@ -7,6 +7,7 @@ import 'package:mediaverse/app/common/app_config.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../common/app_color.dart';
 import '../../../common/app_route.dart';
 
 class DeleteAccountWidget extends StatefulWidget {
@@ -39,7 +40,7 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> implements Re
       ),
       height: 25.h,
       decoration: BoxDecoration(
-          color: "3b3a5a".toColor(),
+          color: AppColor.primaryLightColor,
           border: Border(
             left: BorderSide(
                 color: Colors.grey.withOpacity(0.3),

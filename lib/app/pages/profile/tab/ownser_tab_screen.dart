@@ -136,7 +136,7 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
               //       color: Colors.black.withOpacity(0.5),
               //       child: Center(
               //         child: Lottie.asset(
-              //             "assets/json/Y8IBRQ38bK.json", height: 18.h),
+              //             "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 18.h),
               //       ),
               //     ),
               //   );
@@ -247,7 +247,7 @@ class _CustomTabScreenState extends State<CustomTabScreen>
   Widget build(BuildContext context) {
     if (isloading.value) {
       return Container(
-        child: Lottie.asset("assets/json/Y8IBRQ38bK.json", height: 5.h),
+        child: Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 5.h),
       );
     }
     if (mainList.isEmpty)

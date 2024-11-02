@@ -45,7 +45,7 @@ class _ProgramsTabState extends State<ProgramsTab> {
 
             child: Center(
               child: Lottie.asset(
-                  "assets/json/Y8IBRQ38bK.json", height: 10.h),
+                  "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h),
             ),
           ),
         );

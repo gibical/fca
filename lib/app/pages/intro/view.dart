@@ -32,7 +32,10 @@ class IntroPage extends StatelessWidget {
                   SizedBox(
                     height: 10.h,
                   ),
-                  LogoAppWidget(),
+                  if(F.appFlavor!=Flavor.gibical)LogoAppWidget(),//
+                  Spacer(),
+                  if(F.appFlavor==Flavor.gibical)Image.asset("assets/${F.assetTitle}/images/splashlogoo.png",
+                    height: 25.h,),//
                   Spacer(),
                   CustomRegisterButtonWidgetBlue(onTap: () {
                     Get.offNamed(PageRoutes.LOGIN);

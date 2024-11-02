@@ -382,7 +382,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                                 child: Center(
                                   child:logic.isloading.value ? Lottie.asset(
-                                      "assets/json/Y8IBRQ38bK.json", height: 10.h) : Text("editprof_42".tr,
+                                      "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h) : Text("editprof_42".tr,
                                     style: TextStyle(color: Colors.white),),
                                 ),
                               )

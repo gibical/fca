@@ -5,6 +5,8 @@ import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../common/app_color.dart';
+
 class InputWidget extends StatelessWidget {
   const InputWidget({super.key});
 
@@ -41,7 +43,7 @@ class InputWidget extends StatelessWidget {
                                 width: 15.w,
                                 height: 4.h,
                                 decoration: BoxDecoration(
-                                  color: "597AFF".toColor(),
+                                  color: AppColor.primaryLightColor,
                                   borderRadius: BorderRadius.circular(5)
                                 ),
                                 child: Center(
@@ -107,7 +109,7 @@ class InputWidget extends StatelessWidget {
                                 width: 15.w,
                                 height: 4.h,
                                 decoration: BoxDecoration(
-                                  color: "597AFF".toColor(),
+                                  color: AppColor.primaryLightColor,
                                   borderRadius: BorderRadius.circular(5)
                                 ),
                                 child: Center(
@@ -173,7 +175,7 @@ class InputWidget extends StatelessWidget {
                                 width: 15.w,
                                 height: 4.h,
                                 decoration: BoxDecoration(
-                                  color: "597AFF".toColor(),
+                                  color: AppColor.primaryLightColor,
                                   borderRadius: BorderRadius.circular(5)
                                 ),
                                 child: Center(
@@ -239,7 +241,7 @@ class InputWidget extends StatelessWidget {
                                 width: 15.w,
                                 height: 4.h,
                                 decoration: BoxDecoration(
-                                  color: "597AFF".toColor(),
+                                  color: AppColor.primaryLightColor,
                                   borderRadius: BorderRadius.circular(5)
                                 ),
                                 child: Center(
@@ -305,7 +307,7 @@ class InputWidget extends StatelessWidget {
                                 width: 15.w,
                                 height: 4.h,
                                 decoration: BoxDecoration(
-                                  color: "597AFF".toColor(),
+                                  color: AppColor.primaryLightColor,
                                   borderRadius: BorderRadius.circular(5)
                                 ),
                                 child: Center(

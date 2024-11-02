@@ -94,7 +94,7 @@ class SoundTabScreen extends StatelessWidget {
                           var isloadingImage = list.length==0;
                           if(isloadingImage){
                             return Container(
-                              child: Lottie.asset("assets/json/Y8IBRQ38bK.json",height: 10.h),
+                              child: Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json",height: 10.h),
                             );
                           }
                           return Container(

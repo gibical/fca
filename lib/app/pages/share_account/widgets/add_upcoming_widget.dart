@@ -34,7 +34,7 @@ class _AddUpComingClassWidgetState extends State<AddUpComingClassWidget> {
 
             height: 60.h,
             decoration: BoxDecoration(
-                color: "3b3a5a".toColor(),
+                color: AppColor.primaryLightColor,
                 border: Border(
                   left: BorderSide(
                       color: Colors.grey.withOpacity(0.3),
@@ -492,7 +492,7 @@ class _AddUpComingClassWidgetState extends State<AddUpComingClassWidget> {
                       child: Obx(() {
                         return Center(child: logic.isLoadingSendMain.value
                             ? Lottie.asset(
-                            "assets/json/Y8IBRQ38bK.json", height: 3.h)
+                            "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 3.h)
                             : Text("share_13".tr));
                       }),
                     ),

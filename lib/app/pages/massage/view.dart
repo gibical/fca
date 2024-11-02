@@ -23,7 +23,7 @@ class MassageScreen extends StatelessWidget {
         body: Container(
 
           child: Center(
-            child:  Lottie.asset("assets/json/Y8IBRQ38bK.json",height: 10.h),
+            child:  Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json",height: 10.h),
           ),
         ),
       ):

@@ -318,7 +318,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       ),
       height: 25.h,
       decoration: BoxDecoration(
-          color: "3b3a5a".toColor(),
+          color: AppColor.primaryLightColor,
           border: Border(
             left: BorderSide(
                 color: Colors.grey.withOpacity(0.3),
@@ -375,7 +375,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
 
       height: 45.h,
       decoration: BoxDecoration(
-          color: "3b3a5a".toColor(),
+          color: AppColor.primaryLightColor,
           border: Border(
             left: BorderSide(
                 color: Colors.grey.withOpacity(0.3),
@@ -429,7 +429,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
                   },
                   child: Obx(() {
                     return iscreateShareAccountloading.value?Lottie.asset(
-                        "assets/json/Y8IBRQ38bK.json", height: 5.h): Text(
+                        "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 5.h): Text(
                         "share_26".tr,//
                         style: FontStyleApp.bodyLarge.copyWith(
                           color: AppColor.whiteColor,

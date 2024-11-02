@@ -46,7 +46,7 @@ class _UploadAssetPageState extends State<UploadAssetPage> {
                             color: Colors.white, fontWeight: FontWeight.bold),),
 
                         SizedBox(height: 4.h,),
-                        Lottie.asset("assets/json/upload.json",),
+                        Lottie.asset("assets/${F.assetTitle}/json/upload.json",),
 
                         SizedBox(height: 4.h,),
 

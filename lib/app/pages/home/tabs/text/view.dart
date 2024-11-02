@@ -84,7 +84,7 @@ class TextTabScreen extends StatelessWidget {
                       if (isloadingText) {
                         return SliverToBoxAdapter(
                           child: Container(
-                            child: Lottie.asset("assets/json/Y8IBRQ38bK.json",
+                            child: Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json",
                                 height: 10.h),
                           ),
                         );

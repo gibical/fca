@@ -12,6 +12,7 @@ import 'lang/fa_IR.dart';
 class LocalizationService extends Translations {
   //static final locale = Locale('en', 'US');
   static const fallBackLocale = Locale('en', 'US');
+  static const fallBackLocale2 = Locale('fa', 'IR');
   // static final fallBackLocale = Locale('fa', 'IR');
 
   static final langs = ['English', 'Farsi'];
@@ -44,6 +45,18 @@ class LocalizationService extends Translations {
       defaultLocale = a;
     } else {
       defaultLocale = fallBackLocale;
+    }
+    return defaultLocale;
+  }
+  Locale? getCurrentLocale2() {
+    final box = GetStorage();
+    Locale? defaultLocale;
+
+    if (box.read('lng') != null) {
+      final Locale? a = getLocaleFromLanguage(box.read('lng'));
+      defaultLocale = a;
+    } else {
+      defaultLocale = fallBackLocale2;
     }
     return defaultLocale;
   }

@@ -60,7 +60,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
 
             body: Obx(() {
               return _streamController.isLoading.value ? Center(
-                child: Lottie.asset("assets/json/Y8IBRQ38bK.json", height: 5.h),
+                child: Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 5.h),
               ) : Container(
                 width: 100.w,
                 height: 100.h,
@@ -156,7 +156,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
                                                       .shareAccountLogic
                                                       .isloading.value
                                                       ? Lottie.asset(
-                                                      "assets/json/Y8IBRQ38bK.json",
+                                                      "assets/${F.assetTitle}/json/Y8IBRQ38bK.json",
                                                       height: 3.h)
                                                       : Text(_streamController
                                                       .programModel == null
@@ -220,7 +220,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
                         ),
                       );
                     }),
-                    Lottie.asset("assets/json/countdown.json",
+                    Lottie.asset("assets/${F.assetTitle}/json/countdown.json",
                       controller: _streamController.animationController,
                       onLoaded: (composition) {
                         _streamController.animationController!

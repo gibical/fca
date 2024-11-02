@@ -134,7 +134,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
           backgroundColor: AppColor.blueDarkColor,
           body: Container(
             child: Center(
-              child: Lottie.asset("assets/json/Y8IBRQ38bK.json", height: 10.h),
+              child: Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h),
             ),
           ),
         );
@@ -190,11 +190,11 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
                             width: 100.w,
                             height: 9.h,
                             decoration: BoxDecoration(
-                                color: "3b3a5a".toColor(),
+                                color: AppColor.primaryLightColor,
                                 border: Border(
                                   left: BorderSide(
                                       color: Colors.grey.withOpacity(0.3),
-                                      width: 1),
+                                      width: 1),//
                                   bottom: BorderSide(
                                       color: Colors.grey.withOpacity(0.3),
                                       width: 0.4),
@@ -273,7 +273,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
                             width: 100.w,
                             height: 9.h,
                             decoration: BoxDecoration(
-                                color: "3b3a5a".toColor(),
+                                color: AppColor.primaryLightColor,
                                 border: Border(
                                   left: BorderSide(
                                       color: Colors.grey.withOpacity(0.3),
@@ -364,7 +364,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
           backgroundColor: AppColor.blueDarkColor,
           body: Container(
             child: Center(
-              child: Lottie.asset("assets/json/Y8IBRQ38bK.json", height: 10.h),
+              child: Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h),
             ),
           ),
         );
@@ -415,7 +415,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
                             width: 100.w,
                             height: 9.h,
                             decoration: BoxDecoration(
-                                color: "3b3a5a".toColor(),
+                                color: AppColor.primaryLightColor,
                                 border: Border(
                                   left: BorderSide(
                                       color: Colors.grey.withOpacity(0.3),

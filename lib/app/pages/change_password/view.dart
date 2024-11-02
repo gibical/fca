@@ -98,7 +98,7 @@ class ChangePasswordPage extends StatelessWidget {
                   height: 6.h,
                   margin: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                      color: "597AFF".toColor(),
+                      color: AppColor.primaryLightColor,
                       borderRadius: BorderRadius.circular(5000)
                   ),
                   child: Obx(() {
@@ -111,7 +111,7 @@ class ChangePasswordPage extends StatelessWidget {
                         logic.changePassword();
                       },
                       child: logic.isloading.value ? Lottie.asset(
-                          "assets/json/Y8IBRQ38bK.json", height: 10.h) : Text(
+                          "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h) : Text(
                         "Save", style: TextStyle(color: Colors.white),),
                     );
                   }),
