@@ -21,6 +21,18 @@ class F {
         return 'title';
     }
   }
+  static String get packageName {
+    switch (appFlavor) {
+      case Flavor.mediaverse:
+        return 'land.mediaverse.app';
+      case Flavor.gibical:
+        return 'com.app.gibicalapp';
+      case Flavor.ravi:
+        return 'ir.app.ravi';
+      default:
+        return 'land.mediaverse.app';
+    }
+  }
   static String get assetTitle {
     switch (appFlavor) {
       case Flavor.mediaverse:

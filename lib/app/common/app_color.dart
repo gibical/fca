@@ -108,13 +108,7 @@ class AppTheme {
   ThemeMode getCurrentTheme() {
     return ThemeMode.dark;
 
-    print('AppTheme.getCurrentTheme = ${box.read("themeisDark") != null}');
-    if (box.read("themeisDark") != null) {
-      bool themeisDark = box.read("themeisDark") ?? false;
-      return themeisDark ? ThemeMode.dark : ThemeMode.light;
-    } else {
-      return ThemeMode.system;
-    }
+
   }
 
   static changeTheme(ThemeMode mode) {

@@ -451,7 +451,6 @@ class GetRtlWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Directionality(textDirection: TextDirection.rtl, child: child);
-    return child;
   }
 }
 
@@ -463,6 +462,5 @@ class GetLTRWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Directionality(textDirection: TextDirection.ltr, child: child);
-    return child;
   }
 }

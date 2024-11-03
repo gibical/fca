@@ -1,4 +1,4 @@
-package com.app.gibicalapp
+package land.app.mediaverse
 
 import android.app.*
 import android.content.Context

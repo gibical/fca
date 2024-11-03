@@ -10,9 +10,9 @@ import 'flavors.dart';
 import 'pages/my_home_page.dart';
 
 class App extends StatefulWidget {
-  // static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-  // static FirebaseAnalyticsObserver observer =
-  // FirebaseAnalyticsObserver(analytics: analytics);
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+  FirebaseAnalyticsObserver(analytics: analytics);
   const App({Key? key}) : super(key: key);
 
   @override
@@ -38,19 +38,10 @@ class _AppState extends State<App> {
       darkTheme:  AppTheme.darkMode,
 
 
-      // navigatorObservers: <NavigatorObserver>[App.observer],
+       navigatorObservers: <NavigatorObserver>[App.observer],
 
     );
-    return MaterialApp(
-      title: F.title,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: _flavorBanner(
-        child: MyHomePage(),
-        show: kDebugMode,
-      ),
-    );
+
   }
 
   Widget _flavorBanner({

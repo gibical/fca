@@ -8,6 +8,7 @@ import 'package:rtmp_broadcaster/camera.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
+import '../../../flavors.dart';
 import '../../../gen/model/json/walletV2/FromJsonGetPrograms.dart';
 import '../channel/view.dart';
 import '../share_account/logic.dart';
@@ -220,7 +221,8 @@ class StreamViewController extends GetxController {
 
       if (microphoneStatus.isGranted) {
         try {
-          final String result = await MethodChannel('com.mediaverse.mediaverse/rtmp').invokeMethod('startScreenShare', {
+          print('StreamViewController.startScreenStreaming = ${'${F.packageName}/rtmp'}');
+          final String result = await MethodChannel('${F.packageName}/rtmp').invokeMethod('startScreenShare', {
             'rtmpUrl': programModel!.streamURL,
           });
           print(result);

@@ -61,14 +61,7 @@ class _FirstFormState extends State<FirstForm> {
     return WillPopScope(
       onWillPop: ()async{
         return true;
-        try {
-          if(Get.arguments[1]==true){
 
-          }
-        }  catch (e) {
-          // TODO
-        }
-        return false;
       },
       child: Scaffold(
         backgroundColor: AppColor.blueDarkColor,

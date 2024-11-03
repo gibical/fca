@@ -12,7 +12,28 @@
           "package_name": "land.mediaverse.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "772733695599-4b5nv0p2ek9qpgq09et330eq6cnpljrq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "land.mediaverse.app",
+            "certificate_hash": "6bf26a0705b5f3efd7fb60351b58734bf7b09292"
+          }
+        },
+        {
+          "client_id": "772733695599-5tm4ueubttok8i2dm8r1ve6eh9dtophk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "land.mediaverse.app",
+            "certificate_hash": "9c2fd43d0e8b87766a6b19ad33494baa332d5226"
+          }
+        },
+        {
+          "client_id": "772733695599-srfv0ln4hltv6giel7h0ahhkhbdqs5si.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDg7cN6iKLoPzEXEbdAf-Oi6kEnY7qt-XY"
@@ -20,7 +41,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772733695599-srfv0ln4hltv6giel7h0ahhkhbdqs5si.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -724,7 +724,6 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       } else {
         return false;
 
-        print('Failed to purchase the asset.');
       }
     } catch (e) {
       print('Error: $e');

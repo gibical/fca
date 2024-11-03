@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/services.dart';
 
+import '../../../flavors.dart';
+
 class RtmpStreamManager {
-  static const _platform = MethodChannel('com.app.mediaverse/rtmp');
+  static  final _platform = MethodChannel('${F.packageName}/rtmp');
 
   Future<void> startStreaming(String rtmpUrl) async {
     // Step 1: Request camera and microphone permissions
