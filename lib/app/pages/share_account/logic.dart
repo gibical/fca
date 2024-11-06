@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 //import 'package:dio/dio.dart' as d;
 import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/pages/share_account/widgets/program_bottom_sheet.dart';
+import 'package:mediaverse/app/pages/share_account/widgets/share_account_bottom_sheet.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetProfile.dart';
 import 'package:mediaverse/gen/model/json/walletV2/FromJsonGetPrograms.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -91,6 +92,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   ExternalModel? selectedShareAccoount;
   DestinationModel? selectedDestinationAccoount;
   var isloading = true.obs;
+  var isloadingTwitterApp = false.obs;
   var iscreateShareAccountloading = false.obs;
   var iscreateProgramloading = false.obs;
   var isBottomSheetloading = false.obs;
@@ -312,61 +314,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   void showAccountType() {
-    Get.bottomSheet(Container(
-      width: 100.w,
-      padding: EdgeInsets.all(4.w
-      ),
-      height: 25.h,
-      decoration: BoxDecoration(
-          color: AppColor.primaryLightColor,
-          border: Border(
-            left: BorderSide(
-                color: Colors.grey.withOpacity(0.3),
-                width: 1),
-            bottom: BorderSide(
-                color: Colors.grey.withOpacity(0.3),
-                width: 0.4),
-          ),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
-          )
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("share_16".tr, style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold
-          ),),
-          SizedBox(height: 3.h,),
-          Container(
-            width: 100.w,
-            height: 6.h,
-            decoration: BoxDecoration(
-                color: "2f2f3b".toColor(),
-                borderRadius: BorderRadius.circular(10)
-            ),
-            child: MaterialButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)
-
-              ),
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                signInWithGoogle();
-              },
-              child: Center(
-                child: Text("share_17".tr, style: TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold
-                ),),
-              ),
-            ),
-          ),
-          SizedBox(height: 1.5.h,),
-
-        ],
-      ),
-    ));
+    Get.bottomSheet(ShareAccountBottomSheet(this));
   }
 
   void showRTSPform() {
@@ -759,6 +707,46 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   void praseJsonFromDeleteProgram(source) {
 
 
+  }
+
+  void getTwitterAuth() async{
+    isloadingTwitterApp(true);
+
+    try {
+      print('ShareAccountLogic.onAddDestinationToProgramRequest 1 ');
+      final token = GetStorage().read("token");
+      String apiUrl = '${Constant.HTTP_HOST}authorization/twitter';
+
+      var dio = Dio();
+
+      dio.interceptors.add(MediaVerseConvertInterceptor());
+      dio.interceptors.add(CurlLoggerDioInterceptor());
+
+      var response = await dio.get(
+        apiUrl,
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            'X-App': '_Android',
+            'Accept-Language': 'en-US',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+
+      isloadingTwitterApp(false);
+
+      if (response.statusCode == 200) {
+
+      } else {
+
+      }
+    } catch (e) {
+      print('Error: $e');
+      isloadingTwitterApp(false);
+
+
+    }
   }
 }
 

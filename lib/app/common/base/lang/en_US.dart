@@ -318,6 +318,7 @@ const Map<String, String> enUS = {
   "share_15":"title",
   "share_16":"Select account type",
   "share_17":"Google account",
+  "share_17_1":"Twitter",
   "share_18":"Stream account",
   "share_19":"Add stream account",
   "share_20":"Insert your Name",
