@@ -124,6 +124,7 @@ class EditProfileLogic extends GetxController implements RequestInterface {
   startPageFunction(details)async{
     isloading1(true);
 
+    //debugger();
     update();
     countreisModel.clear();
     countreisString.clear();
@@ -155,6 +156,7 @@ class EditProfileLogic extends GetxController implements RequestInterface {
       }
       imdbYeaerController.text = details['production_year'].toString();
     }
+
 
     update();
   }

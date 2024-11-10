@@ -196,20 +196,17 @@ class _SecendFormState extends State<SecendForm> {
                                       border: Border.all(color: AppColor.primaryLightColor),
                                       borderRadius: BorderRadius.circular(5000)
                                   ),
-                                  child: Obx(() {
-                                    return MaterialButton(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(5000)
-                                      ),
-                                      padding: EdgeInsets.zero,
-                                      onPressed: () {
-                                        Get.offAllNamed(PageRoutes.WRAPPER);
-                                      },
-                                      child: logic.isloading.value ? Lottie.asset(
-                                          "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h) : Text(
-                                        "Cancel".tr, style: TextStyle(color: Colors.white),),
-                                    );
-                                  }),
+                                  child: MaterialButton(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5000)
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      Get.offAllNamed(PageRoutes.WRAPPER);
+                                    },
+                                    child: Text(
+                                      "Cancel".tr, style: TextStyle(color: Colors.white),),
+                                  ),
                                 ),
                               ],
                             ),

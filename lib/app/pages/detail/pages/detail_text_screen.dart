@@ -356,7 +356,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                   ),
                 );
               }),
-              BackWidget()
+              BackWidget(idAssetMedia: Get.arguments['idAssetMedia'] == "idAssetMedia",)
 
 
             ],

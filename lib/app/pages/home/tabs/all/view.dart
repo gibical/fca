@@ -78,15 +78,18 @@ class AllTabScreen extends StatelessWidget {
                         Get.to(BestVideoScreenPage());
                       },),
                       SizedBox(height: 1.5.h),
-                      SizedBox(
-                        height: 30.h,
-                        child: ListView.builder(
-                            itemCount: logic.bestVideos.length,
-                            scrollDirection: Axis.horizontal,
-                            reverse: true,
-                            itemBuilder: (context, index) {
-                              return BestItemExploreWidget(logic.bestVideos.elementAt(index));
-                            }),
+                      Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: SizedBox(
+                          height: 30.h,
+                          child: ListView.builder(
+                              itemCount: logic.bestVideos.length,
+                              scrollDirection: Axis.horizontal,
+                              reverse: false,
+                              itemBuilder: (context, index) {
+                                return BestItemExploreWidget(logic.bestVideos.elementAt(index));
+                              }),
+                        ),
                       ),
                       SizedBox(height: 3.h),
                     ],
