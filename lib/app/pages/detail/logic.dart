@@ -145,6 +145,8 @@ class DetailController extends GetxController {
 
       String type, RxMap<String, dynamic>? details, RxBool isLoading) async {
     try {
+      debugger();
+
       final token = GetStorage().read("token");
       String apiUrl =
           '${Constant.HTTP_HOST}$type/${Get.arguments['id']}';

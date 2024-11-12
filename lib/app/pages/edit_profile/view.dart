@@ -26,35 +26,33 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
+
   @override
   Widget build(BuildContext context) {
-    final logic = Get.put(EditProfileLogic(detailController,detailController.id));
+    final logic = Get.put(
+        EditProfileLogic(detailController, detailController.id));
     final state = logic.state;
     dynamic details;
-    switch(Get.arguments[1] as PostType){
-
-
+    switch (Get.arguments[1] as PostType) {
       case PostType.image:
-        // TODO: Handle this case.
-        details =detailController.imageDetails;
+      // TODO: Handle this case.
+        details = detailController.imageDetails;
 
       case PostType.video:
-        // TODO: Handle this case.
-        details =detailController.videoDetails;
+      // TODO: Handle this case.
+        details = detailController.videoDetails;
 
       case PostType.audio:
-        // TODO: Handle this case.
-        details =detailController.musicDetails;
+      // TODO: Handle this case.
+        details = detailController.musicDetails;
 
       case PostType.text:
-        // TODO: Handle this case.
-        details =detailController.textDetails;
-
+      // TODO: Handle this case.
+        details = detailController.textDetails;
     }
 
-    logic.startPageFunction(details);
+    logic.startPageFunction(details, PostType.text);
     return Scaffold(
       backgroundColor: AppColor.primaryDarkColor,
       body: GetBuilder<EditProfileLogic>(
@@ -88,14 +86,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 margin: EdgeInsets.all(16),
                                 child: MaterialButton(
                                     padding: EdgeInsets.all(8),
-                                    onPressed: (){
-
+                                    onPressed: () {
                                       Get.back();
                                     },
                                     shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5000)
+                                        borderRadius: BorderRadius.circular(
+                                            5000)
                                     ),
-                                    child: Icon(Icons.arrow_back,color: Colors.white,)),
+                                    child: Icon(
+                                      Icons.arrow_back, color: Colors.white,)),
 
                               ),
                               Text("editprof_1".tr, style: TextStyle(
@@ -117,12 +116,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     "editprof_2".tr,
                                     style:
                                     TextStyle(
-                                        color: "747491".toColor(), fontSize: 11.sp),
+                                        color: "747491".toColor(),
+                                        fontSize: 11.sp),
                                   ),
                                   Container(
                                     height: 28,
                                     width: 1.5,
-                                    margin: EdgeInsets.symmetric(horizontal: 3.w),
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 3.w),
                                     color: AppColor.whiteColor.withOpacity(0.2),
                                   ),
                                 ],
@@ -131,7 +132,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               editingController: logic.assetsEditingController,
                               context: context),
                           SizedBox(height: 4.h,),
-                          if((Get.arguments[1] as PostType)!=PostType.text)CustomTextFieldLogin(
+                          if((Get.arguments[1] as PostType) !=
+                              PostType.text)CustomTextFieldLogin(
                               isFalsePadding: true,
                               prefix: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -143,12 +145,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     "editprof_3".tr,
                                     style:
                                     TextStyle(
-                                        color: "747491".toColor(), fontSize: 8.sp),
+                                        color: "747491".toColor(),
+                                        fontSize: 8.sp),
                                   ),
                                   Container(
                                     height: 28,
                                     width: 1.5,
-                                    margin: EdgeInsets.symmetric(horizontal: 3.w),
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 3.w),
                                     color: AppColor.whiteColor.withOpacity(0.2),
                                   ),
                                 ],
@@ -157,16 +161,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               editingController: logic
                                   .assetsDescreptionEditingController,
                               context: context),
-                          if((Get.arguments[1] as PostType)==PostType.text) CustomTextFieldPlusWidget(
+                          if((Get.arguments[1] as PostType) ==
+                              PostType.text) CustomTextFieldPlusWidget(
                               context: context,
-                              textEditingController:  logic
+                              textEditingController: logic
                                   .assetsDescreptionEditingController,
                               titleText: 'editprof_4'.tr,
-                              hintText: 'editprof_5'.tr,isLarge: true,
+                              hintText: 'editprof_5'.tr,
+                              isLarge: true,
                               needful: false,
                               isFocus: true,
-                              onTap: (){
-                              }
+                              onTap: () {}
 
 
                           ),
@@ -199,26 +204,33 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               hintText: 'editprof_12'.tr,
                               needful: false,
                               models: [
-                                "editprof_13".tr,  "editprof_14".tr, "editprof_15".tr
+                                "editprof_13".tr,
+                                "editprof_14".tr,
+                                "editprof_15".tr
                               ]),
                           if(logic.planController.text.contains(
-                              "Ownership") || logic.planController.text.contains(
+                              "Ownership") || logic.planController.text
+                              .contains(
                               "Subscription")) SizedBox(height: 4.h,),
 
                           if(logic.planController.text.contains(
-                              "Ownership") || logic.planController.text.contains(
+                              "Ownership") || logic.planController.text
+                              .contains(
                               "Subscription")) Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("editprof_16".tr, style: TextStyle(color: Colors.white,
-                                  fontWeight: FontWeight.bold),),
+                              Text("editprof_16".tr,
+                                style: TextStyle(color: Colors.white,
+                                    fontWeight: FontWeight.bold),),
                               CustomTextFieldPlusWidget(
-                                  context: context,suffix:  Container(
+                                  context: context,
+                                  suffix: Container(
 
 
-                                child: Text("€",style: TextStyle(color: Colors.white,fontSize: 13.sp),),
-                              ),
+                                    child: Text("€", style: TextStyle(
+                                        color: Colors.white, fontSize: 13.sp),),
+                                  ),
                                   textEditingController: logic.priceController,
 
 
@@ -256,7 +268,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ],
                           ),
                           SizedBox(height: 4.h,),
-                          if(logic.type == PostType.video) Text("editprof_27".tr,
+                          if(logic.type == PostType.video) Text("editprof_27"
+                              .tr,
                             style: TextStyle(color: Colors.white,
                                 fontWeight: FontWeight.bold),),
                           if(logic.type ==
@@ -277,24 +290,28 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 "editprof_35".tr,
                                 "editprof_36".tr,
                               ]),
-                          if(logic.type == PostType.video) SizedBox(height: 3.h,),
+                          if(logic.type == PostType.video) SizedBox(height: 3
+                              .h,),
                           if(logic.type == PostType.video)Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("editprof_37".tr, style: TextStyle(color: Colors.white,
-                                  fontWeight: FontWeight.bold),),
+                              Text("editprof_37".tr,
+                                style: TextStyle(color: Colors.white,
+                                    fontWeight: FontWeight.bold),),
                               CustomTDropDownPlusWidget(
                                   models: Constant.languages,
                                   context: context,
-                                  textEditingController: logic.languageController,
+                                  textEditingController: logic
+                                      .languageController,
 
                                   titleText: 'editprof_38'.tr,
                                   hintText: 'editprof_39'.tr,
                                   needful: false),
                             ],
                           ),
-                          if(logic.type == PostType.video)  SizedBox(height: 3.h,),
+                          if(logic.type == PostType.video) SizedBox(height: 3
+                              .h,),
                           if(logic.type == PostType.video) CustomTextFieldLogin(
                               isFalsePadding: true,
                               prefix: Row(
@@ -307,12 +324,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     "editprof_40".tr,
                                     style:
                                     TextStyle(
-                                        color: "747491".toColor(), fontSize: 11.sp),
+                                        color: "747491".toColor(),
+                                        fontSize: 11.sp),
                                   ),
                                   Container(
                                     height: 28,
                                     width: 1.5,
-                                    margin: EdgeInsets.symmetric(horizontal: 3.w),
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 3.w),
                                     color: AppColor.whiteColor.withOpacity(0.2),
                                   ),
                                 ],
@@ -332,12 +351,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     "editprof_41".tr,
                                     style:
                                     TextStyle(
-                                        color: "747491".toColor(), fontSize: 11.sp),
+                                        color: "747491".toColor(),
+                                        fontSize: 11.sp),
                                   ),
                                   Container(
                                     height: 28,
                                     width: 1.5,
-                                    margin: EdgeInsets.symmetric(horizontal: 3.w),
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 3.w),
                                     color: AppColor.whiteColor.withOpacity(0.2),
                                   ),
                                 ],
@@ -375,16 +396,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     borderRadius: BorderRadius.circular(1000)
                                 ),
                                 onPressed: () {
-
                                   logic.sendMainRequest();
-
                                 },
 
-                                child: Center(
-                                  child:logic.isloading.value ? Lottie.asset(
-                                      "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h) : Text("editprof_42".tr,
-                                    style: TextStyle(color: Colors.white),),
-                                ),
+                                child: Obx(() {
+                                  return Center(
+                                    child: logic.isloading.value ? Lottie.asset(
+                                        "assets/${F
+                                            .assetTitle}/json/Y8IBRQ38bK.json",
+                                        height: 10.h) : Text("editprof_42".tr,
+                                      style: TextStyle(color: Colors.white),),
+                                  );
+                                }),
                               )
                           ),
 
@@ -415,12 +438,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     borderRadius: BorderRadius.circular(1000)
                                 ),
                                 onPressed: () {
-
                                   Get.back();
                                 },
                                 child: Center(
                                   child: Text("editprof_43".tr,
-                                    style: TextStyle(color: "83839C".toColor()),),
+                                    style: TextStyle(
+                                        color: "83839C".toColor()),),
                                 ),
                               )
                           ),
@@ -433,7 +456,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ],
               ),
             );
-      }),
+          }),
     );
   }
 }

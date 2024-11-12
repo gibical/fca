@@ -281,7 +281,9 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                           if(!logic.file_id.toString().contains("null"))      SizedBox(
                             height: 3.h,
                           ),
-                          DownloadDisplayText(url: logic.textDetails?['file']['url'], style: TextStyle()),
+                          Container(
+                              key: ValueKey("text-${DateTime.now().millisecondsSinceEpoch}"),//
+                              child: DownloadDisplayText(url: logic.textDetails?['file']['url'], style: TextStyle())),
                           SizedBox(
                             height: 2.h,
                           ),

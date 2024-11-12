@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
+import 'package:dio/dio.dart' as d;
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +11,8 @@ import 'package:mediaverse/app/common/RequestInterface.dart';
 import 'package:mediaverse/app/common/app_api.dart';
 import 'package:mediaverse/app/common/app_config.dart';
 import 'package:mediaverse/app/pages/detail/logic.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 import '../../../gen/model/enums/post_type_enum.dart';
 import '../../../gen/model/json/FromJsonGetCountriesModel.dart';
@@ -31,12 +36,15 @@ class EditProfileLogic extends GetxController implements RequestInterface {
   TextEditingController imdbYeaerController = TextEditingController();
   var isloading = false.obs;
   var isloading1 = true.obs;
+  var isloading2 = true.obs;
 
   late ApiRequster apiRequster;
   DetailController detailController;
   EditProfileLogic(this.detailController,this.id);
   PostType type = Get.arguments[1];
   String id ;
+  String assetid ="";
+  dynamic details ;
 
   Future<void> getAllCountries() async {
     var dio = Dio();
@@ -66,7 +74,6 @@ class EditProfileLogic extends GetxController implements RequestInterface {
         (countreisModel).forEach((element) {
           countreisString.add(element.title??"");
         });
-        isloading1(false);
         update();
         print('PlusSectionLogic.getAllCountries = ${countreisModel.length}');
       } else {
@@ -121,17 +128,24 @@ class EditProfileLogic extends GetxController implements RequestInterface {
 
     return subscriptionPlan;
   }
-  startPageFunction(details)async{
+  startPageFunction(details, PostType type)async{
     isloading1(true);
-
     //debugger();
+    this.details=details;
+    bool _isText = (details['media_type']).toString().contains("1");
+    if (_isText) {
+      String downloadedtext = await downloadFile(details['file']['url']);
+      assetsDescreptionEditingController.text =downloadedtext;
+
+    }
     update();
     countreisModel.clear();
     countreisString.clear();
     await getAllCountries();
     apiRequster = ApiRequster(this,develperModel: false);
     assetsEditingController.text = details['media']['name'];
-    assetsDescreptionEditingController.text = details['media']['description']??"";
+    assetid = details['asset_id'];
+    if (!_isText)assetsDescreptionEditingController.text = details['media']['description']??"";
     subscrptionController.text =getSubscriptionPlan( int.tryParse(details['subscription_period'].toString())??24);
     priceController.text = (details['price']/100).toString();
     isEditEditingController.text = details['forkability_status'].toString().contains("1")?"Yes":"No";
@@ -156,19 +170,84 @@ class EditProfileLogic extends GetxController implements RequestInterface {
       }
       imdbYeaerController.text = details['production_year'].toString();
     }
+    isloading1(false);
 
 
     update();
   }
-  sendMainRequest() {
+  Future<String> downloadFile(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        return utf8.decode(response.bodyBytes);
+      } else {
+        return 'details_16'.tr;
+      }
+    } catch (e) {
+      return 'details_17'.tr +'${e.toString()}';
+    }
+  }
+  Future<String> saveStringToTxtFile(String stringData) async {
+    final directory = await getTemporaryDirectory();
+    final filePath = '${directory.path}/fileName-${DateTime.now().millisecondsSinceEpoch}.txt';
+    final file = File(filePath);
+    await file.writeAsString(stringData);
+    return filePath;
+  }
+  Future<bool> uploadFileWithDio() async {
+    var textOutPut = await saveStringToTxtFile(assetsDescreptionEditingController.text);
+    var dio = Dio();
+    var formData = d.FormData.fromMap({
+      'file': await d.MultipartFile.fromFile(textOutPut,
+filename: 'uploadfile'),
+      'asset': assetid.toString(),
+    });
+
+    dio.interceptors.add(MediaVerseConvertInterceptor());
+
+    try {
+      var response = await dio.post(
+        '${Constant.HTTP_HOST}files',
+        data: formData,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${GetStorage().read("token")}',
+            'Content-Type': 'multipart/form-data',
+            'X-App': '_Android',
+          },
+        ),
+        onSendProgress: (s, p) {
+
+        },
+      );
+
+      if (response.statusCode! >= 200||response.statusCode! < 300) {
+   return true;
+
+      } else {
+        print('Failed to upload file: ${response.statusMessage}');
+        return false;
+
+      }
+    } on DioError catch (e) {
+      print('DioError: ${e.message}');
+      return false;
+
+    }
+  }
+
+  sendMainRequest() async{
     isloading(true);
+
+   // debugger();
+    if(type ==PostType.text) await uploadFileWithDio();
     var box = GetStorage();
     var body = {
       "name": assetsEditingController.text,
 
       "license_type": _getPlanByDropDown(),
       "subscription_period":getSubscrptioonPeriod(),
-      "description": assetsDescreptionEditingController.text,
+
       "lat": 0,
       "lng": 0,
       "language": Constant.languageMap[languageController.text],
@@ -179,6 +258,12 @@ class EditProfileLogic extends GetxController implements RequestInterface {
       "commenting_status": 1,
       "tags": []
     };
+    if(type != PostType.text){
+      body["description"] = assetsDescreptionEditingController.text;
+    }else{
+      body["description"] = details['media']['description'];
+
+    }
     if (!_getPlanByDropDown().toString().contains("1")) {
       body['price'] = (double.tryParse((priceController.text))!*100).toInt().toString();
     }
