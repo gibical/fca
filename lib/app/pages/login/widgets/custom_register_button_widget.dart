@@ -93,3 +93,37 @@ Widget GoogleCustomRegisterButtonWidget({required String title  , required Funct
     ),
   );
 }
+Widget TwitterCustomRegisterButtonWidget({required String title  , required Function() onTap , color,required bool isloading}){
+  return  Padding(
+    padding: const EdgeInsets.only(left: 25 , right: 25),
+    child: SizedBox(
+      height: 52,
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: onTap,
+        child:isloading?Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json"): Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+
+          children: [
+            Image.asset("assets/${F.assetTitle}/images/twitter.png",height: 2.4.h,),
+            SizedBox(width: 3.w,),
+            Text(
+                title,
+                style: FontStyleApp.bodyLarge.copyWith(
+                  color: AppColor.primaryDarkColor,
+                  fontWeight: FontWeight.w500,
+                )
+            ),
+          ],
+        ),
+        style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.sp)
+            ),
+            backgroundColor:AppColor.primaryLightColor
+
+        ),
+      ),
+    ),
+  );
+}

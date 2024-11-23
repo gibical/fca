@@ -588,7 +588,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
                     onPressed: () {
                       logic.list.remove(elementAt);
                       logic.update();
-                      logic.deleteModel(elementAt);
+                     // logic.deleteModel(elementAt);
                     },
                     icon: Icon(Icons.delete))
             ],

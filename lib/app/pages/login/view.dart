@@ -4,6 +4,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mediaverse/app/common/app_color.dart';
@@ -84,6 +85,7 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: 10.h,
                     ),
+
                     ///Deleted We Dont have a sign up form
                     // GestureDetector(
                     //   //go to login screen
@@ -121,13 +123,25 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: 3.h,
                     ),
-                  if(Platform.isAndroid&&F.appFlavor!=Flavor.ravi)  GoogleCustomRegisterButtonWidget(onTap: () {
-                      //  logic.requestLogin();
-                      //signInWithGoogle();
-                      _googleLogIn();
-                    },
-                        title: 'login_9_1'.tr,
-                        isloading: false),
+                    if(Platform.isAndroid && F.appFlavor !=
+                        Flavor.ravi) GoogleCustomRegisterButtonWidget(
+                        onTap: () {
+                          //  logic.requestLogin();
+                          //signInWithGoogle();
+                          _googleLogIn();
+                        }, title: 'login_9_1'.tr, isloading: false),
+                    SizedBox(height: 3.h,),
+                    if(F.appFlavor != Flavor.ravi) Obx(() {
+                      return FocusDetector(
+                        onFocusGained: (){
+                          logic.twiiterButtonVisiable();
+                        },
+                        child: TwitterCustomRegisterButtonWidget(onTap: () {
+                          logic.getTwitterLogin();
+                        }, title: 'login_9_2'.tr, isloading: logic
+                            .isloadingTwitter.value),
+                      );
+                    }),
                     SizedBox(
                       height: 3.h,
                     ),
@@ -154,7 +168,7 @@ class LoginScreen extends StatelessWidget {
               height: 3.h,
             ),
             CustomTextFieldLogin(
-                prefix: CountryCodeWidget(context,logic),
+                prefix: CountryCodeWidget(context, logic),
                 hintText: 'login_2'.tr,
                 editingController: logic.eTextEditingControllerPhone,
                 context: context),
@@ -196,8 +210,9 @@ class LoginScreen extends StatelessWidget {
                       logic.update();
                     },
                     child: Text(
-                      ("login_5".tr) +"    /     ",
-                      style: TextStyle(color: "#83839C".toColor(), fontSize: 10.sp),
+                      ("login_5".tr) + "    /     ",
+                      style: TextStyle(
+                          color: "#83839C".toColor(), fontSize: 10.sp),
                     )),
                 InkWell(
                     onTap: () {
@@ -206,7 +221,8 @@ class LoginScreen extends StatelessWidget {
                     },
                     child: Text(
                       "login_20".tr,
-                      style: TextStyle(color: "#83839C".toColor(), fontSize: 10.sp),
+                      style: TextStyle(
+                          color: "#83839C".toColor(), fontSize: 10.sp),
                     )),
               ],
             ),
@@ -294,7 +310,8 @@ class LoginScreen extends StatelessWidget {
                     },
                     child: Text(
                       ("login_12".tr) + "    /     ",
-                      style: TextStyle(color: "#83839C".toColor(), fontSize: 10.sp),
+                      style: TextStyle(
+                          color: "#83839C".toColor(), fontSize: 10.sp),
                     )),
                 InkWell(
                     onTap: () {
@@ -303,7 +320,8 @@ class LoginScreen extends StatelessWidget {
                     },
                     child: Text(
                       "login_20".tr,
-                      style: TextStyle(color: "#83839C".toColor(), fontSize: 10.sp),
+                      style: TextStyle(
+                          color: "#83839C".toColor(), fontSize: 10.sp),
                     )),
               ],
             ),
@@ -312,12 +330,11 @@ class LoginScreen extends StatelessWidget {
             ),
 
 
-
           ],
         );
 
       case LoginEnum.SMS:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
         return Column(
           key: UniqueKey(),
           mainAxisSize: MainAxisSize.min,
@@ -329,7 +346,7 @@ class LoginScreen extends StatelessWidget {
               height: 3.h,
             ),
             CustomTextFieldLogin(
-                prefix: CountryCodeWidget(context,logic),
+                prefix: CountryCodeWidget(context, logic),
                 hintText: 'login_2'.tr,
                 editingController: logic.eTextEditingControllerPhone,
                 context: context),
@@ -347,7 +364,8 @@ class LoginScreen extends StatelessWidget {
                     },
                     child: Text(
                       ("login_5".tr) + "    /     ",
-                      style: TextStyle(color: "#83839C".toColor(), fontSize: 10.sp),
+                      style: TextStyle(
+                          color: "#83839C".toColor(), fontSize: 10.sp),
                     )),
                 InkWell(
                     onTap: () {
@@ -356,19 +374,19 @@ class LoginScreen extends StatelessWidget {
                     },
                     child: Text(
                       "login_12".tr.substring("login_12".tr.indexOf("p")),
-                      style: TextStyle(color: "#83839C".toColor(), fontSize: 10.sp),
+                      style: TextStyle(
+                          color: "#83839C".toColor(), fontSize: 10.sp),
                     )),
               ],
             ),
 
-         
+
             SizedBox(
               height: 2.h,
             ),
 
           ],
         );
-
     }
   }
 
@@ -384,21 +402,24 @@ class LoginScreen extends StatelessWidget {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn(
 
       );
-      final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+      final GoogleSignInAuthentication googleAuth = await googleUser!
+          .authentication;
 
-      String? token = googleAuth.accessToken; // Save the token to send to your backend
+      String? token = googleAuth
+          .accessToken; // Save the token to send to your backend
 
       print("Google ID Token: $token");
-      logic.sendIDTokenToServer(token??"");
-
+      logic.sendIDTokenToServer(token ?? "");
     } catch (error) {
       print('Error signing in: $error');
     }
   }
-  void _googleLogIn() async{
+
+  void _googleLogIn() async {
     signInWithGoogle();
   }
 }
+
 class Authentication {
   static Future<User?> signInWithGoogle() async {
     print('Authentication.signInWithGoogle 1 ');
@@ -407,26 +428,30 @@ class Authentication {
     final GoogleSignIn googleSignIn = GoogleSignIn();
     print('Authentication.signInWithGoogle 3 ');
 
-    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAccount? googleSignInAccount = await googleSignIn
+        .signIn();
     print('Authentication.signInWithGoogle 4 ');
     if (googleSignInAccount != null) {
-    print('Authentication.signInWithGoogle 5 ');
-      final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
-    print('Authentication.signInWithGoogle 6 ');
+      print('Authentication.signInWithGoogle 5 ');
+      final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount
+          .authentication;
+      print('Authentication.signInWithGoogle 6 ');
 
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
-    print('Authentication.signInWithGoogle 7 ');
+      print('Authentication.signInWithGoogle 7 ');
 
       try {
-    print('Authentication.signInWithGoogle 7 ');
-        final UserCredential userCredential = await auth.signInWithCredential(credential);
-    print('Authentication.signInWithGoogle 8 ${userCredential.credential!.accessToken}');
+        print('Authentication.signInWithGoogle 7 ');
+        final UserCredential userCredential = await auth.signInWithCredential(
+            credential);
+        print('Authentication.signInWithGoogle 8 ${userCredential.credential!
+            .accessToken}');
         return userCredential.user;
       } on FirebaseAuthException catch (e) {
-    print('Authentication.signInWithGoogle 9 ');
+        print('Authentication.signInWithGoogle 9 ');
         // Handle error
       }
     }

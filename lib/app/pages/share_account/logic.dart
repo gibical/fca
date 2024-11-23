@@ -20,6 +20,7 @@ import 'package:mediaverse/app/pages/share_account/widgets/add_upcoming_widget.d
 import 'package:mediaverse/gen/model/json/FromJsonGetExternalAccount.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../gen/model/json/FromJsonGetCalender.dart';
 import '../../../gen/model/json/FromJsonGetMesseges.dart';
@@ -109,7 +110,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     // TODO: implement onReady
     super.onReady();
     apiRequster = ApiRequster(this, develperModel: true);
-    getExternalAccount();
+   // getExternalAccount();
     getExterNal();
     getShareSchedules();
     getShareCustomAccounts();
@@ -247,6 +248,13 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
           "access_token": s[0]
         };
         break;
+      case 2:
+        body = {
+          "type": 2,
+          "title": s[1],
+          "access_token": s[0]
+        };
+        break;
       case 4:
         body = {
           "name": _nameEditingController.text,
@@ -272,7 +280,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
 
     try {
       var response = await dio.post(
-        '${Constant.HTTP_HOST}${(i==1)?"external-accounts":"destinations"}',
+        '${Constant.HTTP_HOST}${(i==1||i==2)?"external-accounts":"destinations"}',
         data: body,
         options: Options(
           headers: {
@@ -284,16 +292,24 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       );
 
       if (response.statusCode! >= 200 || response.statusCode! < 300) {
-        print(
-            '==================================================================================================');
-        print('External Account Create successfully = ${response.data}');
-        print(
-            '==================================================================================================');
+        if (i==2) {
+          isloadingTwitterApp(false);
+          iscreateShareAccountloading(false);
+          await launchUrlString(response.data['url']);
+          getExterNal();
+          getShareCustomAccounts();
+        }else{
+          print(
+              '==================================================================================================');
+          print('External Account Create successfully = ${response.data}');
+          print(
+              '==================================================================================================');
 
-        iscreateShareAccountloading(false);
+          iscreateShareAccountloading(false);
 
-        getExterNal();
-        getShareCustomAccounts();
+          getExterNal();
+          getShareCustomAccounts();
+        }
       } else {
         isloading(false);
 
@@ -313,8 +329,10 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     Get.bottomSheet(ProgramBottomSheet(this));
   }
 
-  void showAccountType() {
-    Get.bottomSheet(ShareAccountBottomSheet(this));
+  void showAccountType() async{
+   await Get.bottomSheet(ShareAccountBottomSheet(this));
+   getExterNal();
+   getShareCustomAccounts();
   }
 
   void showRTSPform() {
@@ -608,7 +626,10 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   void parseJsonFromExternalAccount(source) {
+    print('ShareAccountLogic.parseJsonFromExternalAccount');
     externalList = fromJsonGetExternalAccountFromJson(source).data ?? [];
+
+    isloading(false);
     update();
   }
 
@@ -711,42 +732,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
 
   void getTwitterAuth() async{
     isloadingTwitterApp(true);
-
-    try {
-      print('ShareAccountLogic.onAddDestinationToProgramRequest 1 ');
-      final token = GetStorage().read("token");
-      String apiUrl = '${Constant.HTTP_HOST}authorization/twitter';
-
-      var dio = Dio();
-
-      dio.interceptors.add(MediaVerseConvertInterceptor());
-      dio.interceptors.add(CurlLoggerDioInterceptor());
-
-      var response = await dio.get(
-        apiUrl,
-        options: Options(
-          headers: {
-            'Accept': 'application/json',
-            'X-App': '_Android',
-            'Accept-Language': 'en-US',
-            'Authorization': 'Bearer $token',
-          },
-        ),
-      );
-
-      isloadingTwitterApp(false);
-
-      if (response.statusCode == 200) {
-
-      } else {
-
-      }
-    } catch (e) {
-      print('Error: $e');
-      isloadingTwitterApp(false);
-
-
-    }
+    createChannelRequest("twitter",2);
   }
 }
 

@@ -17,6 +17,8 @@ import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/gen/model/enums/login_enum.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetLogin.dart';
 import 'package:meta/meta.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../gen/model/json/FromJsonGetLoginV2.dart';
 import '../../common/app_color.dart';
@@ -77,7 +79,10 @@ class LoginController extends GetxController implements RequestInterface {
 
   ///bool
   var isloading = false.obs;
+  var isloadingTwitter = false.obs;
 
+  ///String
+  String twitterLoginState = "";
 
   requestLogin(){
 
@@ -125,6 +130,7 @@ class LoginController extends GetxController implements RequestInterface {
   @override
   void onError(String content, int reqCode, bodyError) {
     // TODO: implement onError
+    isloadingTwitter(false);
     isloading(false);
     print('LoginController.onError ${bodyError}');
     try{
@@ -152,6 +158,8 @@ class LoginController extends GetxController implements RequestInterface {
         praseJsonFromGetLogin(source);
       case 2 :
         peaseJsonFromGetPhoneOTP(source);
+       case 3 :
+        peaseJsonFromGetTwitterAuth(source);
     }
   }
 
@@ -228,6 +236,30 @@ class LoginController extends GetxController implements RequestInterface {
       "access_token":s
     });
 
+  }
+
+  void getTwitterLogin() {
+    isloadingTwitter(true);
+    apiRequster.request("auth/twitter/url", ApiRequster.MHETOD_GET, 3);
+  }
+  void getTwitterAccessToken() {
+    isloadingTwitter(true);
+    apiRequster.request("auth/twitter", ApiRequster.MHETOD_POST, 1,body: {
+      "state":twitterLoginState
+    });
+  }
+
+  void peaseJsonFromGetTwitterAuth(source)async {
+    twitterLoginState = jsonDecode(source)['state'];
+    await launchUrlString(jsonDecode(source)['url']);
+
+
+  }
+
+  void twiiterButtonVisiable() {
+    if(isloadingTwitter.isTrue){
+      getTwitterAccessToken();
+    }
   }
 
 
