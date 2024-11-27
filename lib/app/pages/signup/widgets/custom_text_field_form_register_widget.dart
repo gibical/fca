@@ -1,68 +1,96 @@
-
-
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:sizer/sizer.dart';
+import 'package:mediaverse/app/common/app_color.dart';
 
-import '../../../common/app_color.dart';
+class CustomTextFieldRegisterWidget extends StatefulWidget {
+  final String hintText;
+  final String titleText;
+  final bool needful;
+  final TextEditingController? textEditingController;
+  final bool showCursor;
+  final BuildContext context;
+  final bool isPassword;
 
+  CustomTextFieldRegisterWidget({
+    required this.hintText,
+    required this.titleText,
+    required this.context,
+    required this.needful,
+    this.textEditingController,
+    this.showCursor = false,
+    this.isPassword = false,
+  });
 
+  @override
+  _CustomTextFieldRegisterState createState() => _CustomTextFieldRegisterState();
+}
 
-Widget CustomTextFieldRegisterWidget({required String hintText ,required String titleText , required bool needful  , required context ,
+class _CustomTextFieldRegisterState extends State<CustomTextFieldRegisterWidget> {
+  bool _obscureText = true;
 
-TextEditingController? textEditingController,bool? showCursor} ){
-  final textTheme = Theme.of(context).textTheme;
-  return     Padding(
-    padding: const EdgeInsets.symmetric(vertical: 10 , horizontal: 25),
-    child: SizedBox(
-      height: 53,
-      child: TextFormField(
-        controller: textEditingController??TextEditingController(),
-        showCursor: showCursor??false,
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
 
-        style: textTheme.bodyMedium?.copyWith(
-          color:  AppColor.whiteColor
-        ),
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle:  textTheme.bodyMedium?.copyWith(
-            color:  AppColor.whiteColor.withOpacity(0.2),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+      child: SizedBox(
+        height: 53,
+        child: TextFormField(
+          controller: widget.textEditingController ?? TextEditingController(),
+          showCursor: widget.showCursor,
+          obscureText: widget.isPassword ? _obscureText : false,
+          style: textTheme.bodyMedium?.copyWith(
+            color: Colors.white, // Replace with AppColor.whiteColor if defined
           ),
-          // contentPadding: EdgeInsets.only( left: 8 , right: 8  ),
-          prefixIcon: Stack(
-             alignment: Alignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 25 , left: 10),
-                child: Text(titleText , style: textTheme.bodyMedium?.copyWith(
-                    color: Color(0xff4E4E61).withOpacity(0.5)
-                )
+          decoration: InputDecoration(
+            hintText: widget.hintText,
+            hintStyle: textTheme.bodyMedium?.copyWith(
+              color: Colors.white.withOpacity(0.75), // Replace with AppColor.whiteColor if defined
+            ),
+            prefixIcon: Stack(
+              alignment: Alignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 25, left: 10),
+                  child: Text(
+                    widget.titleText,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: Colors.white.withOpacity(0.75), // Replace with AppColor.whiteColor if defined
+                    ),
+                  ),
                 ),
-              ),
-              Positioned(
-
-                right: 10,
-                child: Container(
+                Positioned(
+                  right: 10,
+                  child: Container(
                     height: 28,
                     width: 1.5,
-                    color:Color(0xff4E4E61).withOpacity(0.5)
+                    color: Color(0xff4E4E61).withOpacity(0.9),
+                  ),
                 ),
-              )
-            ],
+              ],
+            ),
+            suffixIcon: widget.isPassword
+                ? IconButton(
+              icon: Icon(
+                _obscureText ? Icons.visibility : Icons.visibility_off,
+                color: AppColor.primaryLightColor, // Adjust icon color as needed
+              ),
+              onPressed: () {
+                setState(() {
+                  _obscureText = !_obscureText;
+                });
+              },
+            )
+                : null,
+            fillColor: Color(0xff0E0E12).withOpacity(0.5),
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(9.0), // Adjust as needed
+              borderSide: BorderSide.none,
+            ),
           ),
-          fillColor: Color(0xff0E0E12).withOpacity(0.5),
-          filled: true,
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(9.sp),
-              borderSide: BorderSide.none
-          ),
-
-
-
         ),
       ),
-    ),
-  );
+    );
+  }
 }

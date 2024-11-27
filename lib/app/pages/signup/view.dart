@@ -62,7 +62,7 @@ class SignupScreen extends StatelessWidget {
                     CustomTextFieldRegisterWidget(
                         context: context,
                         titleText: 'signup_6'.tr,
-                        hintText: 'signup_7'.tr,
+                        hintText: 'signup_7'.tr,isPassword: true,
                         textEditingController: logic.passwordNameController,
                         needful: true),
                     CustomTextFieldRegisterWidget(

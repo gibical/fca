@@ -12,6 +12,7 @@ import 'package:mediaverse/app/common/app_route.dart';
 import 'package:meta/meta.dart';
 
 import '../../../gen/model/json/FromJsonGetCountriesModel.dart';
+import '../../../gen/model/json/FromJsonGetNewCountries.dart';
 import '../../common/app_color.dart';
 import '../../common/app_config.dart';
 import '../../common/utils/dio_inperactor.dart';
@@ -25,7 +26,7 @@ class SignUpController extends GetxController implements RequestInterface{
   TextEditingController usernameNameController = TextEditingController();
   TextEditingController passwordNameController = TextEditingController();
   TextEditingController languageController = TextEditingController();
-  List<CountriesModel> countreisModel =[];
+  List<CountryModel> countreisModel =[];
   List<String> countreisString =[];
 
   Future<void> getAllCountries() async {
@@ -59,7 +60,7 @@ class SignUpController extends GetxController implements RequestInterface{
 
 
         (response.data['data'] as List<dynamic>).forEach((element) {
-          countreisModel.add(CountriesModel.fromJson(element));
+          countreisModel.add(CountryModel.fromJson(element));
         });
         (countreisModel).forEach((element) {
           countreisString.add(element.title??"");

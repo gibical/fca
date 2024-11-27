@@ -15,7 +15,9 @@ import 'package:mediaverse/app/common/app_api.dart';
 import 'package:mediaverse/app/common/app_config.dart';
 import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/gen/model/enums/login_enum.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetCountriesModel.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetLogin.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetNewCountries.dart';
 import 'package:meta/meta.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -27,7 +29,15 @@ class LoginController extends GetxController implements RequestInterface {
 
   late ApiRequster apiRequster;
 
-  CountryCode code = CountryCode(dialCode: "+33");
+  var code = CountryModel.fromJson(jsonDecode(""" {
+      "iso": "FR",
+      "name": "France",
+      "title": "France",
+      "calling_code": "+33",
+      "dialing_code": "+33",
+      "continent": "Europe",
+      "stripe_supported": 1
+    }""")).obs;
   var timeLeft = 30.obs; // Observable variable
   Timer? _timer;
 
@@ -59,6 +69,7 @@ class LoginController extends GetxController implements RequestInterface {
     // TODO: implement onInit
     super.onInit();
     apiRequster = ApiRequster(this,develperModel: true);
+    getCountries();
   }
 
 
@@ -69,6 +80,7 @@ class LoginController extends GetxController implements RequestInterface {
 
   ///TextControllers
 
+  List<CountryModel> countries = [];
 
   TextEditingController  eTextEditingControllerPhone = TextEditingController();
   TextEditingController  eTextEditingControllerUsername = TextEditingController();
@@ -160,13 +172,15 @@ class LoginController extends GetxController implements RequestInterface {
         peaseJsonFromGetPhoneOTP(source);
        case 3 :
         peaseJsonFromGetTwitterAuth(source);
+       case 4 :
+        peaseJsonFromGetCountries(source);
     }
   }
 
   void _getPhoneReuqest()async {
 
     var body = {
-      "cellphone": code.dialCode!+eTextEditingControllerPhone.text,
+      "cellphone": code.value.dialingCode!+eTextEditingControllerPhone.text,
       "password":eTextEditingControllerPassword.text
     };
      apiRequster.request("auth/sign-in", ApiRequster.MHETOD_POST, 1,body: body);
@@ -217,7 +231,7 @@ class LoginController extends GetxController implements RequestInterface {
 
   void _getOTPReuqest() {
     var body = {
-      "cellphone":(code.dialCode??"")+(eTextEditingControllerPhone.text),
+      "cellphone":(code.value.dialingCode??"")+(eTextEditingControllerPhone.text),
     };
     print('LoginController._getOTPReuqest = ${body}');
     apiRequster.request("auth/otp/request", ApiRequster.MHETOD_POST, 2,body: body);
@@ -225,7 +239,7 @@ class LoginController extends GetxController implements RequestInterface {
   void getOTPSumbit() {
     isloading(true);
     var body = {
-      "cellphone":"${code.dialCode}${eTextEditingControllerPhone.text}",
+      "cellphone":"${code.value.dialingCode}${eTextEditingControllerPhone.text}",
       "otp":eTextEditingControllerOTP.text,
     };
     apiRequster.request("auth/otp/submit", ApiRequster.MHETOD_POST, 1,body: body);
@@ -238,6 +252,9 @@ class LoginController extends GetxController implements RequestInterface {
 
   }
 
+  void getCountries() {
+    apiRequster.request("countries", ApiRequster.MHETOD_GET, 4);
+  }
   void getTwitterLogin() {
     isloadingTwitter(true);
     apiRequster.request("auth/twitter/url", ApiRequster.MHETOD_GET, 3);
@@ -260,6 +277,11 @@ class LoginController extends GetxController implements RequestInterface {
     if(isloadingTwitter.isTrue){
       getTwitterAccessToken();
     }
+  }
+
+  void peaseJsonFromGetCountries(source) {
+    countries = FromJsonGetNewCountries.fromJson(jsonDecode(source)).data??[];
+
   }
 
 
