@@ -13,6 +13,7 @@ import 'package:mediaverse/app/common/app_config.dart';
 import 'package:mediaverse/app/pages/wrapper/logic.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetAllAsstes.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetAssets.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetNewCountries.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetProfile.dart';
 import 'package:meta/meta.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -35,13 +36,13 @@ class ProfileControllers extends GetxController implements RequestInterface {
 
   set obj(value) => _obj.value = value;
   WalletModel walletModel = WalletModel();
-
+CountryModel countryModel = CountryModel();
   get obj => _obj.value;
 
   late FromJsonGetImages fromJsonGetImages;
   ProfileModel model = ProfileModel();
   late ApiRequster apiRequster;
-  List<CountriesModel> countreisModel =[];
+  List<CountryModel> countreisModel =[];
   List<String> countreisString =[];
 
   List<dynamic> ownerImages = [];
@@ -146,7 +147,7 @@ class ProfileControllers extends GetxController implements RequestInterface {
 
 
         (response.data['data'] as List<dynamic>).forEach((element) {
-          countreisModel.add(CountriesModel.fromJson(element));
+          countreisModel.add(CountryModel.fromJson(element));
         });
         (countreisModel).forEach((element) {
           countreisString.add(element.title??"");

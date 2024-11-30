@@ -41,6 +41,8 @@ class LoginController extends GetxController implements RequestInterface {
   var timeLeft = 30.obs; // Observable variable
   Timer? _timer;
 
+  LoginController(this.loginEnum);
+
 
 
   void startTimer() {
@@ -76,7 +78,7 @@ class LoginController extends GetxController implements RequestInterface {
 
 
 
-  LoginEnum loginEnum = LoginEnum.phone;
+  LoginEnum loginEnum;
 
   ///TextControllers
 

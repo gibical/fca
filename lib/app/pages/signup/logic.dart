@@ -25,10 +25,10 @@ class SignUpController extends GetxController implements RequestInterface{
   TextEditingController lastNameController = TextEditingController();
   TextEditingController usernameNameController = TextEditingController();
   TextEditingController passwordNameController = TextEditingController();
-  TextEditingController languageController = TextEditingController();
+  TextEditingController languageController = TextEditingController(text: '    ');
   List<CountryModel> countreisModel =[];
   List<String> countreisString =[];
-
+  CountryModel? countryModel ;
   Future<void> getAllCountries() async {
     print('SignUpController.getAllCountries 1 ');
     var dio = Dio();
@@ -92,7 +92,7 @@ class SignUpController extends GetxController implements RequestInterface{
       "password": passwordNameController.text,
       "first_name": firstNameController.text,
       "last_name": lastNameController.text,
-      "country_iso":countreisModel.firstWhere((element) => element.title.toString().contains(languageController.text)).iso??"",
+      "country_iso":countreisModel.firstWhere((element) => element.name.toString().contains(countryModel!.name.toString())).iso??"",
     };
     print('SignUpController.signUpRequest = ${body}');
     apiRequster.request("auth/sign-up-completion", ApiRequster.MHETOD_POST, 1,body: body);

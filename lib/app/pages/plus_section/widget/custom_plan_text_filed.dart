@@ -1,11 +1,16 @@
+
+import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/common/font_style.dart';
+import 'package:mediaverse/app/pages/signup/logic.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetNewCountries.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../common/app_color.dart';
+import '../../../widgets/country_picker.dart';
 
 Widget CustomTextFieldPlusWidget(
     {required String hintText,
@@ -85,6 +90,93 @@ Widget CustomTDropDownPlusWidget(
           style: textTheme.bodyMedium?.copyWith(color: AppColor.whiteColor),
           decoration: InputDecoration(
               hintText: hintText,
+              hintStyle: textTheme.bodyMedium?.copyWith(
+                color: AppColor.whiteColor.withOpacity(0.2),
+              ),
+              // contentPadding: EdgeInsets.only( left: 8 , right: 8  ),
+              fillColor: Color(0xff0E0E12).withOpacity(0.5),
+              filled: true,
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(9.sp),
+                  borderSide: BorderSide.none),
+              suffixIcon: RotatedBox(
+                  quarterTurns: 1,
+                  child: Icon(
+                    Icons.arrow_forward_ios_sharp,
+                    color: "666680".toColor(),
+                    size: 10.sp,
+                  ))),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget CustomShowAndPickCountry(
+    {required String hintText,
+    required String titleText,
+    required CountryModel? countryModel,
+    required List<CountryModel> countries,
+    required bool needful,
+    required dynamic signlogic,
+    bool isLarge = false,
+    required context,
+    required List<String> models,
+    TextEditingController? textEditingController}) {
+  final textTheme = Theme.of(context).textTheme;
+  return GestureDetector(
+    onTap: () async{
+      CountryModel? model = await Get.bottomSheet(
+          CountryPickerBottomSheet(countries));
+      if (model != null) {
+      textEditingController!.text = model.name.toString();
+      signlogic.countryModel =model;
+
+      signlogic.update();
+      }
+    },
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(9.sp),
+            border: Border.all(color: "353542".toColor())),
+        height: isLarge ? 130 : 53,
+        child: TextFormField(
+          enabled: false,
+          minLines: isLarge ? 5 : 1,
+          maxLines: isLarge ? 6 : 1,
+          controller: textEditingController ?? TextEditingController(),
+          showCursor: true,
+          style: textTheme.bodyMedium?.copyWith(color: AppColor.whiteColor),
+          decoration: InputDecoration(
+
+
+              suffix: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child:Row(
+                  children: [
+                   if(countryModel!=null) Container(
+
+                       child: CountryFlag.fromCountryCode(countryModel.iso.toString(),
+                       width: 30,
+                           height: 15,)),
+                   if(countryModel!=null) Container(
+
+                     margin: EdgeInsets.only(left: 3.w),
+                       child: Text(countryModel.name.toString(),style: TextStyle(
+                         color: Colors.white
+                       ),)),
+                   if(countryModel==null) Container(
+
+                     margin: EdgeInsets.only(left: 3.w),
+                       child: Text("signup_10_1".tr,style: TextStyle(
+                         color: Colors.white
+                       ),)),
+
+                  ],
+                ) ,
+              ),
               hintStyle: textTheme.bodyMedium?.copyWith(
                 color: AppColor.whiteColor.withOpacity(0.2),
               ),

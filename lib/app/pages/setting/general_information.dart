@@ -99,17 +99,22 @@ class _GeneralInformationPageState extends State<GeneralInformationPage> {
                       titleText: 'setting_11'.tr,
                       hintText: 'setting_12'.tr,
                       needful: false),
+
                   Container(
                     margin: EdgeInsets.fromLTRB(24, 0, 24, 0),
-                    child: CustomTDropDownPlusWidget(
+                    child: CustomShowAndPickCountry(
+                        signlogic: logic,
+                        countries: logic.countreisModel,
+                        countryModel: logic.countryModel,//
                         models: logic.countreisString,
                         context: context,
                         textEditingController: logic.languageController,
 
-                        titleText: 'Countries'.tr,
-                        hintText: 'Countries'.tr,
+                        titleText: 'signup_10_1'.tr,
+                        hintText: 'signup_10_1'.tr,
                         needful: false),
-                  )
+                  ),
+
                 ],
               ),
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_route.dart';
+import 'package:mediaverse/gen/model/enums/login_enum.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
@@ -38,13 +39,13 @@ class IntroPage extends StatelessWidget {
                     height: 25.h,),//
                   Spacer(),
                   CustomRegisterButtonWidgetBlue(onTap: () {
-                    Get.offNamed(PageRoutes.LOGIN);
+                    Get.offNamed(PageRoutes.LOGIN,arguments:LoginEnum.SMS );
                   },
                       title: 'intro_3'.tr,
                       isloading:false),
                   SizedBox(height: 3.h,),
                   CustomRegisterButtonWidget(onTap: () {
-                    Get.offNamed(PageRoutes.LOGIN);
+                    Get.offNamed(PageRoutes.LOGIN,arguments:LoginEnum.username );
 
                   },
                       title: 'intro_4'.tr,

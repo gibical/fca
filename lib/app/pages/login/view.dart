@@ -19,7 +19,7 @@ import 'package:mediaverse/gen/model/enums/login_enum.dart';
 import 'package:sizer/sizer.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginController logic = Get.put(LoginController());
+  LoginController logic = Get.put(LoginController((Get.arguments as LoginEnum)));
 
   @override
   Widget build(BuildContext context) {
