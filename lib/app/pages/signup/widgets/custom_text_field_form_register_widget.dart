@@ -37,7 +37,7 @@ class _CustomTextFieldRegisterState extends State<CustomTextFieldRegisterWidget>
         height: 53,
         child: TextFormField(
           controller: widget.textEditingController ?? TextEditingController(),
-          showCursor: widget.showCursor,
+          showCursor: true,
           obscureText: widget.isPassword ? _obscureText : false,
           style: textTheme.bodyMedium?.copyWith(
             color: Colors.white, // Replace with AppColor.whiteColor if defined

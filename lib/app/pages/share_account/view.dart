@@ -372,7 +372,9 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
         return GetBuilder<ShareAccountLogic>(
             init: logic,
             builder: (logics) {
+
               var list = logics.externalList;
+              print('ShareAccountPage.build list.length = ${list.length}');
               try {
                 print('ShareAccountPage.build = ${upcomingWidget}');
                 // if (upcomingWidget) {
@@ -586,7 +588,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
               if (!isSendedByCondactor)
                 IconButton(
                     onPressed: () {
-                      logic.list.remove(elementAt);
+                      logic.externalList.removeWhere((s)=>s.id.toString().contains(elementAt.id.toString()));
                       logic.update();
                      // logic.deleteModel(elementAt);
                     },
@@ -680,7 +682,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
               if (!isSendedByCondactor)
                 IconButton(
                     onPressed: () {
-                      logic.list.remove(elementAt);
+                      logic.externalList.remove(elementAt);
                       logic.update();
                       logic.deleteShareModel(elementAt);
                     },

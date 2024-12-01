@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/profile/logic.dart';
@@ -184,10 +185,41 @@ class SettingScreen extends StatelessWidget {
               ),
 
             ),
+            SizedBox(height: 4.h),
+
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 7.5.w),
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    ItemAccountScreenWidget(title: 'setting_6'.tr, onTap: () {
+                      _logOut();
+                    },),
+
+                  ],
+                ),
+                decoration: BoxDecoration(
+                    color: Color(0xff4E4E61).withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(16.sp),
+                    border: Border(
+                      top: BorderSide(color: Colors.grey.withOpacity(0.4) , width: 0.9),
+                      left: BorderSide(color: Colors.grey.withOpacity(0.4) , width: 0.5),
+                    )
+                ),
+              ),
+
+            ),
           ],
         ),
       ),
     );
+  }
+  void _logOut() async{
+
+    var box  = GetStorage();
+    box.write("islogin", false);
+    Get.offAllNamed(PageRoutes.SPLASH,);
   }
 }
 
@@ -206,9 +238,15 @@ class ItemSettingScreenWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return this.enable? GestureDetector(
+    return this.enable? MaterialButton(
 
-      onTap: onTap,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.sp),
+
+      ),
+      onPressed: (){
+        onTap.call();
+      },
       child: SizedBox(
         height: 8.h,
         child: Padding(

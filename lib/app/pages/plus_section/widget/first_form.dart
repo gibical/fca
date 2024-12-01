@@ -45,7 +45,7 @@ import '../../signup/widgets/custom_text_field_form_register_widget.dart';
 import 'custom_plan_text_filed.dart';
 
 class FirstForm extends StatefulWidget {
-  PlusSectionLogic logic ;
+  PlusSectionLogic logic;
 
   FirstForm(this.logic);
 
@@ -56,20 +56,20 @@ class FirstForm extends StatefulWidget {
 
 class _FirstFormState extends State<FirstForm> {
   final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()async{
+      onWillPop: () async {
         return true;
-
       },
-      child: Scaffold(
+      child: Scaffold( //
         backgroundColor: AppColor.blueDarkColor,
 
         body: Center(
           child: SafeArea(
             child: Container(
-              padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+              padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
               child: Stack(
                 children: [
                   SingleChildScrollView(
@@ -89,7 +89,8 @@ class _FirstFormState extends State<FirstForm> {
                               Container(
                                 width: 16.w,
                               ),
-                              Text("plus_1".tr, style: TextStyle(color: Colors.white),),
+                              Text("plus_1".tr,
+                                style: TextStyle(color: Colors.white),),
                               Container(
                                 width: 16.w,
                               )
@@ -98,81 +99,126 @@ class _FirstFormState extends State<FirstForm> {
                         ),
                         SizedBox(height: 4.h),
 
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("plus_2".tr,style: TextStyle(color: Colors.white,
-                                fontWeight: FontWeight.bold),),
-                            CustomTextFieldPlusWidget(
-                                context: context,
-                                textEditingController: widget.logic.titleController,
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
 
-                                titleText: 'plus_3'.tr,
-                                hintText: 'plus_4'.tr,isLarge: false,
-                                isFocus: true,
-                                onTap: (){
-                                  _scrollToBottom();
-                                },
-                                needful: false),
-                          ],
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("plus_2".tr,
+                                style: TextStyle(color: Colors.white,
+                                    fontWeight: FontWeight.bold),),
+                              CustomTextFieldPlusWidget(
+                                  context: context,
+                                  textEditingController: widget.logic
+                                      .titleController,
+
+                                  titleText: 'plus_3'.tr,
+                                  hintText: 'plus_4'.tr,
+                                  isLarge: false,
+                                  isFocus: true,
+                                  onTap: () {
+                                    _scrollToBottom();
+                                  },
+                                  needful: false),
+                            ],
+                          ),
                         ),
-                        SizedBox(height: 4.h,),
-                        Column(
+                        if(widget.logic.mediaMode!=MediaMode.image)SizedBox(height: 4.h,),
+                        if(widget.logic.mediaMode!=MediaMode.image)Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("signup_10_1".tr,style: TextStyle(color: Colors.white,
-                                fontWeight: FontWeight.bold),),
-                            CustomTDropDownPlusWidget(
-                                models:widget.logic.countreisString,
-                                context: context,
-                                textEditingController: widget.logic.languageController,
-
-                                titleText: 'signup_10_1'.tr,
-                                hintText: 'signup_10_1'.tr,
-                                needful: false),
-                          ],
-                        ),
-                        SizedBox(height: 4.h,),
-                        if(widget.logic.videoOutPut.isNotEmpty&&widget.logic.videoOutPut.contains("mp4"))   Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("plus_8".tr,style: TextStyle(color: Colors.white,
-                                fontWeight: FontWeight.bold),),
-
-                            CustomTDropDownPlusWidget(
-                                models:Constant.generes,
-                                context: context,
-                                textEditingController: widget.logic.genreController,
-                                titleText: 'plus_9'.tr,
-                                hintText: 'plus_10'.tr,
-                                needful: false),
-                          ],
-                        ),
-                        if(widget.logic.videoOutPut.isNotEmpty&&widget.logic.videoOutPut.contains("mp4"))  SizedBox(height: 4.h,),
-
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("plus_11".tr,style: TextStyle(color: Colors.white,
-                                fontWeight: FontWeight.bold),),
-                            CustomTextFieldPlusWidget(
-                                context: context,
-                                textEditingController: widget.logic.captionController,
-                                titleText: 'plus_3'.tr,
-                                hintText: 'plus_11'.tr,isLarge: true,
-                                needful: false,
-                              isFocus: true,
-                              onTap: (){
-                                _scrollToBottom();
-                              }
-
-
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 16),
+                              child: Text("signup_10_1".tr,
+                                style: TextStyle(color: Colors.white,
+                                    fontWeight: FontWeight.bold),),
                             ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(24, 0, 24, 0),
+                              child: GetBuilder<PlusSectionLogic>(
+                                  init: widget.logic,
+                                  builder: (logic) {
+                                return CustomShowAndPickCountry(
+                                    signlogic: widget.logic,
+                                    countries: widget.logic.countreisModel,
+                                    countryModel: widget.logic.countryModel,
+                                    //
+                                    models: widget.logic.countreisString,
+                                    context: context,
+                                    textEditingController: widget.logic
+                                        .languageController,
+
+                                    titleText: 'signup_10_1'.tr,
+                                    hintText: 'signup_10_1'.tr,
+                                    needful: false);
+                              }),
+                            ),
+
+
                           ],
+                        ),
+                        SizedBox(height: 4.h,),
+                        if(widget.logic.videoOutPut.isNotEmpty &&
+                            widget.logic.videoOutPut.contains("mp4")) Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+
+                          child: GetBuilder<PlusSectionLogic>(
+                              init: widget.logic,
+                              builder: (logic) {
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("plus_8".tr,
+                                      style: TextStyle(color: Colors.white,
+                                          fontWeight: FontWeight.bold),),
+
+                                    CustomTDropDownPlusWidget(
+                                        models: Constant.generes,
+                                        context: context,
+                                        textEditingController: widget.logic
+                                            .genreController,
+                                        titleText: 'plus_9'.tr,
+                                        hintText: 'plus_10'.tr,
+                                        needful: false),
+                                  ],
+                                );
+                              }),
+                        ),
+                        if(widget.logic.videoOutPut.isNotEmpty &&
+                            widget.logic.videoOutPut.contains("mp4")) SizedBox(
+                          height: 4.h,),
+
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("plus_11".tr,
+                                style: TextStyle(color: Colors.white,
+                                    fontWeight: FontWeight.bold),),
+                              CustomTextFieldPlusWidget(
+                                  context: context,
+                                  textEditingController: widget.logic
+                                      .captionController,
+                                  titleText: 'plus_3'.tr,
+                                  hintText: 'plus_11'.tr,
+                                  isLarge: true,
+                                  needful: false,
+                                  isFocus: true,
+                                  onTap: () {
+                                    _scrollToBottom();
+                                  }
+
+
+                              ),
+                            ],
+                          ),
                         ),
 
                         SizedBox(height: 4.h,),
@@ -188,26 +234,34 @@ class _FirstFormState extends State<FirstForm> {
                                     width: 10.w,
                                     height: 10.w,
                                     child: MaterialButton(
-                                      onPressed: (){
-                                        if(
-                                            widget.logic.titleController.text.isNotEmpty&&
-                                            widget.logic.languageController.text.isNotEmpty&&
-                                            widget.logic.captionController.text.isNotEmpty
-                                        ){
-                                          Get.to(SecendForm(),arguments: [widget.logic]);
-                                        }else{
+                                      onPressed: () {
+                                        if (
+                                        widget.logic.titleController.text
+                                            .isNotEmpty &&
+                                            widget.logic.languageController.text
+                                                .isNotEmpty &&
+                                            widget.logic.captionController.text
+                                                .isNotEmpty
+                                        ) {
+                                          Get.to(SecendForm(),
+                                              arguments: [widget.logic]);
+                                        } else {
                                           Constant.showMessege("plus_12".tr);
                                         }
                                       },
                                       padding: EdgeInsets.zero,
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(100)
+                                          borderRadius: BorderRadius.circular(
+                                              100)
                                       ),
                                       child: Stack(
                                         children: [
-                                          SizedBox.expand(child: Image.asset("assets/${F.assetTitle}/images/save_bg.png")),
+                                          SizedBox.expand(child: Image.asset(
+                                              "assets/${F
+                                                  .assetTitle}/images/save_bg.png")),
                                           Align(
-                                            child: SvgPicture.asset("assets/${F.assetTitle}/images/save.svg"),
+                                            child: SvgPicture.asset("assets/${F
+                                                .assetTitle}/images/save.svg"),
                                           )
                                         ],
                                       ),
@@ -216,8 +270,9 @@ class _FirstFormState extends State<FirstForm> {
                                   visible: widget.logic.getVisibilaty(),
                                 ),
                                 SizedBox(height: 1.h,),
-                                Text("plus_13".tr,style: TextStyle(
-                                    color: Colors.white,fontWeight: FontWeight.bold
+                                Text("plus_13".tr, style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold
                                 ),)
                               ],
                             ),
@@ -237,18 +292,22 @@ class _FirstFormState extends State<FirstForm> {
                                     width: 10.w,
                                     height: 10.w,
                                     child: MaterialButton(
-                                      onPressed: (){
-                                       Get.back();
+                                      onPressed: () {
+                                        Get.back();
                                       },
                                       padding: EdgeInsets.zero,
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(100)
+                                          borderRadius: BorderRadius.circular(
+                                              100)
                                       ),
                                       child: Stack(
                                         children: [
-                                          SizedBox.expand(child: Image.asset("assets/${F.assetTitle}/images/save_bg.png")),
+                                          SizedBox.expand(child: Image.asset(
+                                              "assets/${F
+                                                  .assetTitle}/images/save_bg.png")),
                                           Align(
-                                            child: Icon(Icons.cancel_outlined,color: Colors.white,),
+                                            child: Icon(Icons.cancel_outlined,
+                                              color: Colors.white,),
                                           )
                                         ],
                                       ),
@@ -257,8 +316,9 @@ class _FirstFormState extends State<FirstForm> {
                                   visible: widget.logic.getVisibilaty(),
                                 ),
                                 SizedBox(height: 1.h,),
-                                Text("Cancel".tr,style: TextStyle(
-                                    color: Colors.white,fontWeight: FontWeight.bold
+                                Text("Cancel".tr, style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold
                                 ),)
                               ],
                             ),
@@ -276,8 +336,8 @@ class _FirstFormState extends State<FirstForm> {
         ),
       ),
     );
-
   }
+
   void _scrollToBottom() {
     _scrollController.animateTo(
       _scrollController.position.maxScrollExtent,

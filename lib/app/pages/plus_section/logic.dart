@@ -25,6 +25,7 @@ import 'package:mediaverse/app/pages/plus_section/widget/first_form.dart';
 import 'package:mediaverse/app/pages/plus_section/widget/secned_form.dart';
 import 'package:mediaverse/app/pages/plus_section/widget/upload_asset_file.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetCountriesModel.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetNewCountries.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -52,8 +53,9 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   String videoOutPut = "";
   String soundOutPut = "";
   String textOutPut = "";
-  List<CountriesModel> countreisModel =[];
+  List<CountryModel> countreisModel =[];
   List<String> countreisString =[];
+  CountryModel? countryModel ;
   double uploadedCount = 0.0;
 
   var isRecordingTimeVisible = false.obs;
@@ -761,7 +763,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
 
 
         (response.data['data'] as List<dynamic>).forEach((element) {
-          countreisModel.add(CountriesModel.fromJson(element));
+          countreisModel.add(CountryModel.fromJson(element));
         });
         (countreisModel).forEach((element) {
           countreisString.add(element.title??"");

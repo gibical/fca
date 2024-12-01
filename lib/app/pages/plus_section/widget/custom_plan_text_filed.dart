@@ -123,6 +123,11 @@ Widget CustomShowAndPickCountry(
     required context,
     required List<String> models,
     TextEditingController? textEditingController}) {
+  try {
+    print('CustomShowAndPickCountry = ${countryModel!.iso}');
+  }  catch (e) {
+    // TODO
+  }
   final textTheme = Theme.of(context).textTheme;
   return GestureDetector(
     onTap: () async{

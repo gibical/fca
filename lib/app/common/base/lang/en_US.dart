@@ -236,7 +236,7 @@ const Map<String, String> enUS = {
   "plus_18":"Free",
   "plus_19":"Ownership",
   "plus_20":"Subscription",
-  "plus_21":"Is editable for others",
+  "plus_21":"Is useable for others",
   "plus_22":"Yes",
   "plus_23":"No",
   "plus_24":"Check Editable status",

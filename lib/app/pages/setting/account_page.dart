@@ -90,30 +90,7 @@ class AccountPage extends StatelessWidget {
           
               ),
               SizedBox(height: 4.h),
-              Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 7.5.w),
-                child: Container(
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      ItemAccountScreenWidget(title: 'setting_6'.tr, onTap: () {
-                        _logOut();
-                      },),
-          
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                      color: Color(0xff4E4E61).withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(16.sp),
-                      border: Border(
-                        top: BorderSide(color: Colors.grey.withOpacity(0.4) , width: 0.9),
-                        left: BorderSide(color: Colors.grey.withOpacity(0.4) , width: 0.5),
-                      )
-                  ),
-                ),
-          
-              ),
-              SizedBox(height: 4.h),
+
               Padding(
                 padding:  EdgeInsets.symmetric(horizontal: 7.5.w),
                 child: Container(
@@ -151,12 +128,7 @@ DeleteAccountWidget()
     );
   }
 
-  void _logOut() async{
 
-    var box  = GetStorage();
-    box.write("islogin", false);
-    Get.offAllNamed(PageRoutes.SPLASH,);
-  }
 }
 
 class ItemSettingScreenWidget extends StatelessWidget {
@@ -216,7 +188,7 @@ class ItemAccountScreenWidget extends StatelessWidget {
   ItemAccountScreenWidget({required this.title,required this.onTap,this.color});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {//
     return InkWell(
       onTap: onTap,
       radius: 500,

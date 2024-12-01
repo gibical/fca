@@ -442,6 +442,9 @@ CountryModel countryModel = CountryModel();
 
   void parseJsonFromEditText(source) {
     isloadingEdit(false);
+    print('ProfileControllers.parseJsonFromEditText = ${source}');
+    model = ProfileModel.fromJson(jsonDecode(source));
+    update();
     Constant.showMessege(" Profile Update Successful ");
   }
 
