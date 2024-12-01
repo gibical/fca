@@ -62,7 +62,6 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   google_sign_in: any
   widget_zoom: ^0.0.3
-  ffmpeg_kit_flutter_min: ^5.1.0
   pinch_zoom: ^2.0.0
   app_links: ^3.5.0
   firebase_core: ^2.24.2

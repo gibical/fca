@@ -25,8 +25,7 @@ import 'package:mediaverse/app/pages/share_account/view.dart';
 import 'package:mediaverse/app/pages/signup/view.dart';
 import 'package:mediaverse/app/pages/splash/state.dart';
 import 'package:mediaverse/app/pages/upload/view.dart';
-import 'package:mediaverse/app/pages/video_editor/state.dart';
-import 'package:mediaverse/app/pages/video_editor/view.dart';
+
 import 'package:mediaverse/app/pages/wrapper/state.dart';
 import 'package:mediaverse/app/pages/wrapper/view.dart';
 
@@ -212,12 +211,6 @@ class PageRoutes {
       page: () => EditProfilePage(),
     ),
 
-    GetPage(
-      name: PageRoutes.VIDEOEDITOR,
-      transition: Transition.rightToLeft,
-      page: () => VideoEditorScreen(),
-      binding: VideoEditorState()
-    ),
     GetPage(
       name: PageRoutes.CHANGEPASSWORD,
       page: () => ChangePasswordPage(),
