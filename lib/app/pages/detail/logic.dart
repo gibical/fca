@@ -145,7 +145,6 @@ class DetailController extends GetxController {
 
       String type, RxMap<String, dynamic>? details, RxBool isLoading) async {
     try {
-      debugger();
 
       final token = GetStorage().read("token");
       String apiUrl =
@@ -899,10 +898,10 @@ class DetailController extends GetxController {
     }
   }
 
-  void onSendYouTubeRequest(bool youtubeMode)async {
+  void onSendShareRequest(String type)async {
     Map<String,dynamic> body = {
-      "file": file_id,
-      "account": externalAccountlist.elementAt(enableChannel).id.toString(),
+      "file_id": file_id,
+      "external_account_id": externalAccountlist.elementAt(enableChannel).id.toString(),
 
     };
     print('DetailController.onSendYouTubeRequest = ${formatDateTime( isSeletedNow?DateTime.now():dateTime)}');
@@ -913,12 +912,15 @@ class DetailController extends GetxController {
 
     }
 
-    if(youtubeMode){
+    if(type=="youtube"){
       body['title'] = titleEditingController.text;
       body['description'] = desEditingController.text;
       body['privacy'] = isPrivateContent.value?"private":"public";
+
     }
-    var url = youtubeMode?"shares/youtube":"shares/google-drive";
+    body['type'] =type;
+
+    var url ="shares";
 
     try {
       final token = GetStorage().read("token");
@@ -945,7 +947,7 @@ class DetailController extends GetxController {
           }
         }  catch (e) {
           // TODO
-          Constant.showMessege("${youtubeMode?"Send To YouTube":"Archive to Drive"} Sucssefuly");
+          //Constant.showMessege("${youtubeMode?"Send To YouTube":"Archive to Drive"} Sucssefuly");
         }
         Get.back();
         update();

@@ -109,10 +109,10 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster = ApiRequster(this, develperModel: true);
+    apiRequster = ApiRequster(this, develperModel: false);
    // getExternalAccount();
     getExterNal();
-    getShareSchedules();
+    //getShareSchedules();
     getShareCustomAccounts();
   }
 
@@ -243,14 +243,14 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     switch (i) {
       case 1:
         body = {
-          "type": 1,
+          "type": "google",
           "title": s[1],
           "access_token": s[0]
         };
         break;
       case 2:
         body = {
-          "type": 2,
+          "type": "x",
           "title": s[1],
           "access_token": s[0]
         };
@@ -626,7 +626,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   void parseJsonFromExternalAccount(source) {
-    print('ShareAccountLogic.parseJsonFromExternalAccount');
+    print('ShareAccountLogic.parseJsonFromExternalAccount = ${source}');
     externalList = fromJsonGetExternalAccountFromJson(source).data ?? [];
 
     isloading(false);

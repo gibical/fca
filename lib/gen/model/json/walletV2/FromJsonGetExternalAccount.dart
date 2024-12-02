@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 FromJsonGetExternalAccount fromJsonGetExternalAccountFromJson(String str) => FromJsonGetExternalAccount.fromJson(json.decode(str));
 String fromJsonGetExternalAccountToJson(FromJsonGetExternalAccount data) => json.encode(data.toJson());
 class FromJsonGetExternalAccount {
@@ -159,8 +160,8 @@ String dataToJson(ExternalModel data) => json.encode(data.toJson());
 class ExternalModel {
   ExternalModel({
       String? id, 
-      String? userId, 
-      num? type, 
+      String? userId,
+    String? type,
       String? title, 
       Information? information, 
       String? createdAt, 
@@ -188,7 +189,7 @@ class ExternalModel {
   }
   String? _id;
   String? _userId;
-  num? _type;
+  String? _type;
   String? _title;
   Information? _information;
   String? _createdAt;
@@ -197,7 +198,7 @@ class ExternalModel {
 
   String? get id => _id;
   String? get userId => _userId;
-  num? get type => _type;
+  String? get type => _type;
   String? get title => _title;
   Information? get information => _information;
   String? get createdAt => _createdAt;

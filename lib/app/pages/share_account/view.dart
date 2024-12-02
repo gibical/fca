@@ -662,7 +662,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Type: Youtube",
+                            "Type: ${elementAt.type.toString().toUpperCase()}",
                             style: FontStyleApp.bodyMedium.copyWith(
                               color: Colors.grey.withOpacity(0.7),
                             ),
