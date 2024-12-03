@@ -259,11 +259,11 @@ class LoginController extends GetxController implements RequestInterface {
   }
   void getTwitterLogin() {
     isloadingTwitter(true);
-    apiRequster.request("auth/twitter/url", ApiRequster.MHETOD_GET, 3);
+    apiRequster.request("auth/x/url", ApiRequster.MHETOD_GET, 3);
   }
   void getTwitterAccessToken() {
     isloadingTwitter(true);
-    apiRequster.request("auth/twitter", ApiRequster.MHETOD_POST, 1,body: {
+    apiRequster.request("auth/x", ApiRequster.MHETOD_POST, 1,body: {
       "state":twitterLoginState
     });
   }
