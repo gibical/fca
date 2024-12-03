@@ -18,6 +18,8 @@ import 'package:mediaverse/app/widgets/logo_app_widget.dart';
 import 'package:mediaverse/gen/model/enums/login_enum.dart';
 import 'package:sizer/sizer.dart';
 
+import '../signup/widgets/custom_text_field_form_register_widget.dart';
+
 class LoginScreen extends StatelessWidget {
   LoginController logic = Get.put(LoginController((Get.arguments as LoginEnum)));
 
@@ -175,29 +177,12 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: 3.h,
             ),
-            PAsswordCustomTextFieldLogin(
-                prefix: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    Text(
-                      "login_4".tr,
-                      style:
-                      TextStyle(color: "747491".toColor(), fontSize: 11.sp),
-                    ),
-                    Container(
-                      height: 28,
-                      width: 1.5,
-                      margin: EdgeInsets.symmetric(horizontal: 3.w),
-                      color: AppColor.whiteColor.withOpacity(0.2),
-                    ),
-                  ],
-                ),
-                hintText: 'login_3'.tr,
-                editingController: logic.eTextEditingControllerPassword,
-                context: context),
+            CustomTextFieldRegisterWidget(
+              titleText: "login_4".tr,
+              hintText: 'login_3'.tr,isPassword: true,
+              textEditingController: logic.eTextEditingControllerPassword,
+              context: context, needful: false,),
+
             SizedBox(
               height: 3.h,
             ),
@@ -246,55 +231,17 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: 3.h,
             ),
-            CustomTextFieldLogin(
-                prefix: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    Text(
-                      "login_15".tr,
-                      style:
-                      TextStyle(color: "747491".toColor(), fontSize: 8.sp),
-                    ),
-                    Container(
-                      height: 28,
-                      width: 1.5,
-                      margin: EdgeInsets.symmetric(horizontal: 3.w),
-                      color: AppColor.whiteColor.withOpacity(0.2),
-                    ),
-                  ],
-                ),
+            CustomTextFieldRegisterWidget(
+                titleText: "login_15".tr,
                 hintText: 'login_16'.tr,
-                editingController: logic.eTextEditingControllerUsername,
-                context: context),
-            SizedBox(
-              height: 3.h,
-            ),
-            PAsswordCustomTextFieldLogin(
-                prefix: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    Text(
-                      "login_4".tr,
-                      style:
-                      TextStyle(color: "747491".toColor(), fontSize: 11.sp),
-                    ),
-                    Container(
-                      height: 28,
-                      width: 1.5,
-                      margin: EdgeInsets.symmetric(horizontal: 3.w),
-                      color: AppColor.whiteColor.withOpacity(0.2),
-                    ),
-                  ],
-                ),
-                hintText: 'login_3'.tr,
-                editingController: logic.eTextEditingControllerPassword,
-                context: context),
+                textEditingController: logic.eTextEditingControllerUsername,
+                context: context, needful: true,),
+
+            CustomTextFieldRegisterWidget(
+                titleText: "login_4".tr,
+                hintText: 'login_3'.tr,isPassword: true,
+                textEditingController: logic.eTextEditingControllerPassword,
+                context: context, needful: false,),
             SizedBox(
               height: 3.h,
             ),

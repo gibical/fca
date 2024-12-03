@@ -32,7 +32,7 @@ class FirebaseController extends GetxController implements RequestInterface {
 
   init() async {
     onReady();
-    await Firebase.initializeApp(
+   var s =  await Firebase.initializeApp(
     );
     if (Platform.isIOS) {
       FirebaseMessaging.instance.requestPermission();
@@ -42,7 +42,10 @@ class FirebaseController extends GetxController implements RequestInterface {
     requestNotificationPermissions();
     initializeLocalNotifications();
     listenToFCMMessages();
+    print('FirebaseController.init 1 ${s.options.androidClientId}');
     if (box.read("islogin") ?? false) {
+      print('FirebaseController.init 2 ');
+
       String? token = await FirebaseMessaging.instance.getToken();
       print('FirebaseController.init = ${token}');
       box.write("firebaseToken", token);
