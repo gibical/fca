@@ -645,6 +645,48 @@ class DetailController extends GetxController {
 
     }
   }
+  void videoDubbing() async{
+
+    String language =await _runCustomSelectBottomSheet(Constant.languages, "Select Language");
+    String loclae = Constant.languageMap[language]??"";
+    try {
+      final token = GetStorage().read("token");
+
+      String apiUrl =
+          '${Constant.HTTP_HOST}tasks/video-dubbing';
+      var s = Dio();
+      s.interceptors.add(MediaVerseConvertInterceptor());
+      var response = await s. post(apiUrl, options: Options(headers: {
+        'accept': 'application/json',
+        'X-App': '_Android',
+        'Accept-Language': 'en-US',
+        'Authorization': 'Bearer $token',
+      },),data: {
+        "file": file_id,
+        "language": loclae
+
+      },);
+
+      print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+      if (response.statusCode == 200) {
+
+
+        Constant.showMessege("Request Succesful  ");
+
+      } else {
+        // Handle errors
+        //Constant.showMessege("Request Denied : ${response.data['status']}");
+
+      }
+    } catch ( e) {
+      // Handle errors
+      // Constant.showMessege("Request Denied : ${e.toString()}");
+
+      print('DetailController._fetchMediaData = $e');
+    } finally {
+
+    }
+  }
   void translateText() async{
 
     String language =await _runCustomSelectBottomSheet(Constant.languages, "Select Language");

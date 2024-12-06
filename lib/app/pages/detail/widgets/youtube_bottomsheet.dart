@@ -428,7 +428,7 @@ class _YoutubeShareBottomSheetState extends State<YoutubeShareBottomSheet> {
                             100)),
                     onPressed: () async {
                       widget.detailController.onSendShareRequest(
-                          "youtube");
+                          widget.youtubeMode? "youtube":"google_drive");
                     },
                     color: Colors.black54,
                     child:  Text("details_38".tr),

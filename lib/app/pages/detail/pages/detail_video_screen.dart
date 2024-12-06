@@ -205,6 +205,17 @@ class DetailVideoScreen extends StatelessWidget {
                                       SizedBox(
                                         width: 3.w,
                                       ),
+                                      InkWell(
+                                          onTap: () {
+                                            videoController.videoDubbing();
+                                          },
+                                          child: SvgPicture.asset(
+                                            "assets/${F.assetTitle}/icons/dubbing.svg",
+                                            width: 6.w,color: Colors.white,
+                                          )),
+                                      SizedBox(
+                                        width: 3.w,
+                                      ),
                                       GestureDetector(
                                         onTap: () {
                                           double videoLength =
