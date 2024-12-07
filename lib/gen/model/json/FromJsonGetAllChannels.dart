@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:mediaverse/gen/model/json/FromJsonGetChannels.dart';
+
+import 'FromJsonGetChannelsShow.dart';
 FromJsonGetAllChannels fromJsonGetAllChannelsFromJson(String str) => FromJsonGetAllChannels.fromJson(json.decode(str));
 String fromJsonGetAllChannelsToJson(FromJsonGetAllChannels data) => json.encode(data.toJson());
 class FromJsonGetAllChannels {
   FromJsonGetAllChannels({
-      List<ChannelModel>? data,}){
+      List<ChannelsModel>? data,}){
     _data = data;
 }
 
@@ -13,13 +15,13 @@ class FromJsonGetAllChannels {
     if (json['data'] != null) {
       _data = [];
       json['data'].forEach((v) {
-        _data?.add(ChannelModel.fromJson(v));
+        _data?.add(ChannelsModel.fromJson(v));
       });
     }
   }
-  List<ChannelModel>? _data;
+  List<ChannelsModel>? _data;
 
-  List<ChannelModel>? get data => _data;
+  List<ChannelsModel>? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

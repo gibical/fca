@@ -793,7 +793,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
               if (!isSendedByCondactor)
                 IconButton(
                     onPressed: () {
-                      logic.list.remove(elementAt);
+                      logic.channelModels.remove(elementAt);
                       logic.update();
                       logic.deleteDestinationModel(elementAt);
                     },

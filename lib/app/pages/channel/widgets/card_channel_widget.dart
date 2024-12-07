@@ -3,9 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/font_style.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetChannels.dart';
 import 'package:sizer/sizer.dart';
 
-Widget CardChannelWidget({required String title , required String date,bool isEnable =false,Function? onTap}){
+import '../../../../gen/model/json/FromJsonGetChannelsShow.dart';
+
+Widget CardChannelWidget({required String title , required String date,bool isEnable =false,Function? onTap,required ChannelsModel model}){
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 10 , horizontal: 10),
     child: Container(
@@ -38,16 +41,9 @@ Widget CardChannelWidget({required String title , required String date,bool isEn
               Container(
                 height: 35,
                 width: 35,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.sp),
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.white,
-                          AppColor.primaryLightColor,
-                        ])
-                ),
+               child: ClipRRect(
+                   borderRadius: BorderRadius.circular(5.sp),
+                   child: Image.network(model.thumbnails??"",fit: BoxFit.cover,)),
               ),
               SizedBox(width: 2.w,),
               Column(

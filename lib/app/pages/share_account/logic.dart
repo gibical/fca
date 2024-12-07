@@ -27,6 +27,7 @@ import '../../../gen/model/json/FromJsonGetCalender.dart';
 import '../../../gen/model/json/FromJsonGetChannels.dart';
 import '../../../gen/model/json/FromJsonGetChannelsShow.dart';
 import '../../../gen/model/json/FromJsonGetMesseges.dart';
+import '../../../gen/model/json/FromJsonGetNewCountries.dart';
 import '../../../gen/model/json/walletV2/FromJsonGetDestination.dart';
 import '../../../gen/model/json/walletV2/FromJsonGetExternalAccount.dart';
 import '../../common/RequestInterface.dart';
@@ -35,6 +36,7 @@ import '../../common/app_color.dart';
 import '../../common/app_config.dart';
 import '../../common/font_style.dart';
 import '../../common/utils/dio_inperactor.dart';
+import '../home/logic.dart';
 import '../login/widgets/custom_register_button_widget.dart';
 import '../signup/widgets/custom_text_field_form_register_widget.dart';
 import 'state.dart';
@@ -50,7 +52,9 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   DateTime viewMonth = DateTime.now();
 
   final _obj = ''.obs;
-
+  List<CountryModel> countreisModel =[];
+  List<String> countreisString =[];
+  CountryModel? countryModel ;
   set obj(value) => _obj.value = value;
 
   get obj => _obj.value;
@@ -84,6 +88,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
 
   TextEditingController _nameEditingController = TextEditingController();
   TextEditingController _streamUrlEditingController = TextEditingController();
+  TextEditingController languageController = TextEditingController();
   TextEditingController _streamKeyEditingController = TextEditingController();
 
 
@@ -100,12 +105,12 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   var iscreateShareAccountloading = false.obs;
   var iscreateProgramloading = false.obs;
   var isBottomSheetloading = false.obs;
-  List<ChannelModel> list = [];
+  List<ChannelsModel> channelModels = [];
   List<ExternalModel> externalList = [];
   List<DestinationModel> destinationModelList = [];
   late ApiRequster apiRequster;
 
-  List<DestinationModel> destintionList = [];
+  List<DestinationModel> destintionList = [];//
 
 
   @override
@@ -113,14 +118,103 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     // TODO: implement onReady
     super.onReady();
     apiRequster = ApiRequster(this, develperModel: false);
-   // getExternalAccount();
+    getExternalAccount();
     getExterNal();
+    getAllCountries();
+    getAllLanguages();
     //getShareSchedules();
     getShareCustomAccounts();
   }
+  Future<void> getAllCountries() async {
+    print('SignUpController.getAllCountries 1 ');
+    var dio = Dio();
+
+
+    //  debugger();
+    dio.interceptors.add(MediaVerseConvertInterceptor());
+
+    print('PlusSectionLogic.getAllCountries = ${Constant.HTTP_HOST}countries');
+    try {
+
+      print('PlusSectionLogic.getAllCountries 1');
+
+      var response = await dio.get(
+        '${Constant.HTTP_HOST}countries',
+        options: Options(
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-App': '_Android',
+          },
+        ),
+
+      );
+      print('PlusSectionLogic.getAllCountries 1 = ${response.statusCode}  - ${response.data}');
+
+      //   debugger();
+      if (response.statusCode! >= 200||response.statusCode! < 300) {
+        print('PlusSectionLogic.getAllCountries 2');
+
+
+        (response.data['data'] as List<dynamic>).forEach((element) {
+          countreisModel.add(CountryModel.fromJson(element));
+        });
+        (countreisModel).forEach((element) {
+          countreisString.add(element.title??"");
+        });
+        update();
+        print('PlusSectionLogic.getAllCountries = ${countreisModel.length}');
+      } else {
+        print('Failed to upload file: ${response.statusMessage}');
+      }
+    } on DioError catch (e) {
+      print('DioError: ${e.message}');
+    }
+  }
+  Future<void> getAllLanguages() async {
+    print('SignUpController.getAllCountries 1 ');
+    var dio = Dio();
+
+
+    //  debugger();
+    dio.interceptors.add(MediaVerseConvertInterceptor());
+
+    print('PlusSectionLogic.getAllCountries = ${Constant.HTTP_HOST}languages');
+    try {
+
+      print('PlusSectionLogic.getAllCountries 1');
+
+      var response = await dio.get(
+        '${Constant.HTTP_HOST}languages',
+        options: Options(
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-App': '_Android',
+          },
+        ),
+
+      );
+      print('PlusSectionLogic.getAllLanguages 1 = ${response.statusCode}  - ${response.data}');
+
+      //   debugger();
+      if (response.statusCode! >= 200||response.statusCode! < 300) {
+        print('PlusSectionLogic.getAllLanguages 2');
+
+
+
+
+        Constant.reversedLanguageMap = response.data;
+        update();
+        print('PlusSectionLogic.getAllLanguages = ${Constant.reversedLanguageMap.length}');
+      } else {
+        print('Failed to upload file: ${response.statusMessage}');
+      }
+    } on DioError catch (e) {
+      print('DioError: ${e.message}');
+    }
+  }
 
   getExternalAccount() {
-    apiRequster.request("programs", ApiRequster.MHETOD_GET, 1, useToken: true);
+    apiRequster.request("channels", ApiRequster.MHETOD_GET, 1, useToken: true);
   }
 
 
@@ -428,9 +522,10 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   void parseJsonFromMainList(source) {
-    log('ShareAccountLogic.parseJsonFromMainList = ${source}');
    // debugger();
-    list = FromJsonGetAllChannels.fromJson(jsonDecode(source)).data??[];
+    channelModels = FromJsonGetAllChannels.fromJson(jsonDecode(source)).data??[];
+    log('ShareAccountLogic.parseJsonFromMainList = ${channelModels.length}');
+    update();//
     isloading(false);
   }
 

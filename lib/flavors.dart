@@ -48,7 +48,7 @@ class F {
   static String get apiurl {
     switch (appFlavor) {
       case Flavor.mediaverse:
-        return 'https://api.mediaverse.land/v2/';
+        return 'https://dev.mediaverse.land/v2/';
       case Flavor.gibical:
         return "https://api.${("gibical.app")}/v2/";
       case Flavor.ravi:

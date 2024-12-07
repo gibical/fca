@@ -11,14 +11,16 @@ import 'package:mediaverse/app/common/RequestInterface.dart';
 import 'package:mediaverse/app/common/app_api.dart';
 import 'package:mediaverse/app/common/utils/firebase_controller.dart';
 import 'package:mediaverse/app/pages/profile/logic.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetAllChannels.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetBestVideos.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetChannels.dart';
 
 import '../../../gen/model/json/FromJsonGetBestModelVideows.dart';
+import '../../../gen/model/json/FromJsonGetChannelsShow.dart';
 
 class HomeLogic extends GetxController implements  RequestInterface{
 
-  List<ChannelModel> channels = [];
+  List<ChannelsModel> channels = [];
   List<dynamic> bestVideos = [];
   List<dynamic> mostImages = [];
   List<dynamic> mostText = [];
@@ -106,12 +108,12 @@ class HomeLogic extends GetxController implements  RequestInterface{
 
   void praseJsonFromChannels(source) {
     try {
-      if (Platform.isIOS) {
-        channels = (FromJsonGetChannels.fromJson(jsonDecode(source)).data ?? []).where((te)=>te.link.toString().contains("https://s1.mediaverse.app")).toList();
-      }else{
-        channels = FromJsonGetChannels.fromJson(jsonDecode(source)).data ?? [];
-
-      }
+        channels = FromJsonGetAllChannels.fromJson(jsonDecode(source)).data ?? [];
+      // if (Platform.isIOS) {
+      //   channels = (FromJsonGetAllChannels.fromJson(jsonDecode(source)).data ?? []).where((te)=>te.link.toString().contains("https://s1.mediaverse.app")).toList();
+      // }else{
+      //
+      // }
       print('HomeLogic.praseJsonFromChannels 1 =${channels}');
     }  catch (e) {
       // TODO

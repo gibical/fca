@@ -1,3 +1,4 @@
+/*
 class FromJsonGetChannels {
   FromJsonGetChannels({
     List<ChannelModel>? data,
@@ -128,3 +129,4 @@ class ChannelModel {
     return map;
   }
 }
+*/

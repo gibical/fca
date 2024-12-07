@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 FromJsonGetChannelsShow fromJsonGetChannelsShowFromJson(String str) => FromJsonGetChannelsShow.fromJson(json.decode(str));
 String fromJsonGetChannelsShowToJson(FromJsonGetChannelsShow data) => json.encode(data.toJson());
 class FromJsonGetChannelsShow {
@@ -76,7 +77,7 @@ class ChannelsModel {
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _lastEvent = json['last_event'];
-    _thumbnails = json['thumbnails'];
+    _thumbnails = json['thumbnails'].toString();
     _country = json['country'];
     _users = json['users'] != null ? json['users'].cast<String>() : [];
     if (json['events'] != null) {

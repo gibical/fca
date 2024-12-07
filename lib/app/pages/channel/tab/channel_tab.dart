@@ -6,6 +6,8 @@ import 'package:mediaverse/app/pages/share_account/widgets/program_show_bottom_s
 import 'package:lottie/lottie.dart';
 import 'package:mediaverse/app/pages/channel/widgets/add_channel_card_widget.dart';
 import 'package:mediaverse/app/pages/channel/widgets/card_channel_widget.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetChannels.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetChannelsShow.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../gen/model/json/walletV2/FromJsonGetPrograms.dart';
@@ -20,7 +22,7 @@ class ProgramsTab extends StatefulWidget {
 class _ProgramsTabState extends State<ProgramsTab> {
   final _logic = Get.find<ShareAccountLogic>();
 
-    List<ProgramModel> list = [];
+    List<ChannelsModel> list = [];
     bool isBack  =false;
 
 
@@ -54,11 +56,7 @@ class _ProgramsTabState extends State<ProgramsTab> {
           print('_ProgramsTabState.initState = ${(Get.arguments[0]==true)}');
           if(Get.arguments[0]==true){
 
-            list = _logic.list.where((test)
-            {
-              print('_ProgramsTabState.initState 1 = ${test.source.toString()}');
-              return test.source.toString().contains("publishers");
-            }).toList();//
+            list = _logic.channelModels;//
             isBack = true;
             print('ProgramsTab.build = ${list.length}');
           }
@@ -75,9 +73,9 @@ class _ProgramsTabState extends State<ProgramsTab> {
 
           ),
           SliverList.builder(
-              itemCount:(isBack?list: _logic.list).length,
+              itemCount:(isBack?list: _logic.channelModels).length,
               itemBuilder: (context, index) {
-                var model = (isBack?list:_logic.list).elementAt(index);
+                var model = (isBack?list:_logic.channelModels).elementAt(index);
                 return CardChannelWidget(
                     title: (model.name??"").toString(), date: (model.createdAt??""),onTap: (){
 
@@ -90,7 +88,7 @@ class _ProgramsTabState extends State<ProgramsTab> {
                         Get.bottomSheet(ProgramShowBottomSheet(model));
                       }
 
-                });
+                }, model: model);
               })
         ],
       );

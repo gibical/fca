@@ -15,6 +15,7 @@ import 'package:mediaverse/gen/model/json/FromJsonGetmostText.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../gen/model/json/FromJsonGetBestModelVideows.dart';
+import '../../../../gen/model/json/FromJsonGetChannelsShow.dart';
 import '../../../common/app_route.dart';
 
 class BestItemExploreWidget extends GetView<HomeLogic> {
@@ -274,7 +275,7 @@ class BestItemSongsWidget extends GetView<HomeLogic> {
 class BestChannelsWidget extends GetView<HomeLogic> {
   BestChannelsWidget({required this.model});
 
-  ChannelModel model;
+  ChannelsModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -289,7 +290,7 @@ class BestChannelsWidget extends GetView<HomeLogic> {
               color: theme.onBackground.withOpacity(0.1),
               image: DecorationImage(
                   image: NetworkImage(
-                    model.thumbnail ?? "",
+                    model.thumbnails ?? "",
                   ),
                   fit: BoxFit.cover),
               border: Border.symmetric(

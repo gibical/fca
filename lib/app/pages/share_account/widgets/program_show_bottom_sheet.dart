@@ -13,6 +13,8 @@ import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../gen/model/json/FromJsonGetChannels.dart';
+import '../../../../gen/model/json/FromJsonGetChannelsShow.dart';
 import '../../../../gen/model/json/walletV2/FromJsonGetPrograms.dart';
 import '../../../common/app_config.dart';
 import '../../../common/app_route.dart';
@@ -20,7 +22,7 @@ import '../../profile/view.dart';
 import '../../signup/widgets/custom_text_field_form_register_widget.dart';
 
 class ProgramShowBottomSheet extends StatefulWidget {
-  ProgramModel model;
+  ChannelsModel model;
 
   ProgramShowBottomSheet(this.model, {super.key});
 
@@ -69,43 +71,43 @@ class _ProgramShowBottomSheetState extends State<ProgramShowBottomSheet> {
                 textEditingController: TextEditingController(text: widget.model.name??""),
                 needful: true),
           ),
-           if(widget.model.destinations!=null&&widget.model.destinations!.length>0) Column(
-             children: widget.model.destinations!.asMap().entries.map((s){
-       return IgnorePointer(
-         child: CustomTextFieldRegisterWidget(
-             context: Get.context!,
-             titleText: 'Stream Destination ${s.key+1} '.tr,
-             hintText: 'Insert Your Program Here'.tr,
-             textEditingController: TextEditingController(text: widget.model.destinations![s.key]['name']??""),
-             needful: true),
-       );
-             }).toList(),
-           ),
-          Row(
-            children: [
-              Expanded(
-                child: IgnorePointer(
-                  child: CustomTextFieldRegisterWidget(
-                      context: Get.context!,
-                      titleText: 'URL '.tr,
-                      hintText: '${widget.model.streamURL}'.tr,
-                      textEditingController: TextEditingController(text: widget.model.streamURL),
-                      needful: true),
-                ),
-              ),
-              IconButton(onPressed: (){
-                Clipboard.setData(ClipboardData(text: widget.model.streamURL));
-                Constant.showMessege("Data Set To Clipboard");
-
-                Get.back();
-              }, icon: Icon(Icons.copy)),
-              IconButton(onPressed: (){
-                Share.share(widget.model.streamURL,subject: "Stream Link");
-
-                Get.back();
-              }, icon: Icon(Icons.share)),
-            ],
-          ),
+       //     if(widget.model.destinations!=null&&widget.model.destinations!.length>0) Column(
+       //       children: widget.model.destinations!.asMap().entries.map((s){
+       // return IgnorePointer(
+       //   child: CustomTextFieldRegisterWidget(
+       //       context: Get.context!,
+       //       titleText: 'Stream Destination ${s.key+1} '.tr,
+       //       hintText: 'Insert Your Program Here'.tr,
+       //       textEditingController: TextEditingController(text: widget.model.destinations![s.key]['name']??""),
+       //       needful: true),
+       // );
+       //       }).toList(),
+       //     ),
+       //    Row(
+       //      children: [
+       //        Expanded(
+       //          child: IgnorePointer(
+       //            child: CustomTextFieldRegisterWidget(
+       //                context: Get.context!,
+       //                titleText: 'URL '.tr,
+       //                hintText: '${widget.model.streamURL}'.tr,
+       //                textEditingController: TextEditingController(text: widget.model.streamURL),
+       //                needful: true),
+       //          ),
+       //        ),
+       //        IconButton(onPressed: (){
+       //          Clipboard.setData(ClipboardData(text: widget.model.streamURL));
+       //          Constant.showMessege("Data Set To Clipboard");
+       //
+       //          Get.back();
+       //        }, icon: Icon(Icons.copy)),
+       //        IconButton(onPressed: (){
+       //          Share.share(widget.model.streamURL,subject: "Stream Link");
+       //
+       //          Get.back();
+       //        }, icon: Icon(Icons.share)),
+       //      ],
+       //    ),
 
           Container(
             width: 100.w,
@@ -130,7 +132,7 @@ class _ProgramShowBottomSheetState extends State<ProgramShowBottomSheet> {
                     onPressed: (){
 
                       Get.back();
-                      Get.bottomSheet(ProgramBottomSheet(Get.find<ShareAccountLogic>(),isEditMode: true,model: widget.model,));
+                     // Get.bottomSheet(ProgramBottomSheet(Get.find<ShareAccountLogic>(),isEditMode: true,model: widget.model,));
                     },
                     child: Center(
                       child: Text("Edit",style: TextStyle(color: AppColor.primaryDarkColor),),
