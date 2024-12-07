@@ -22,7 +22,10 @@ import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../../gen/model/json/FromJsonGetAllChannels.dart';
 import '../../../gen/model/json/FromJsonGetCalender.dart';
+import '../../../gen/model/json/FromJsonGetChannels.dart';
+import '../../../gen/model/json/FromJsonGetChannelsShow.dart';
 import '../../../gen/model/json/FromJsonGetMesseges.dart';
 import '../../../gen/model/json/walletV2/FromJsonGetDestination.dart';
 import '../../../gen/model/json/walletV2/FromJsonGetExternalAccount.dart';
@@ -97,7 +100,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   var iscreateShareAccountloading = false.obs;
   var iscreateProgramloading = false.obs;
   var isBottomSheetloading = false.obs;
-  List<ProgramModel> list = [];
+  List<ChannelModel> list = [];
   List<ExternalModel> externalList = [];
   List<DestinationModel> destinationModelList = [];
   late ApiRequster apiRequster;
@@ -427,9 +430,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   void parseJsonFromMainList(source) {
     log('ShareAccountLogic.parseJsonFromMainList = ${source}');
    // debugger();
-    list = FromJsonGetPrograms
-        .fromJson(jsonDecode(source))
-        .data ?? [];
+    list = FromJsonGetAllChannels.fromJson(jsonDecode(source)).data??[];
     isloading(false);
   }
 
