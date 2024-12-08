@@ -55,6 +55,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   List<CountryModel> countreisModel =[];
   List<String> countreisString =[];
   CountryModel? countryModel ;
+  String? languageModel ;
   set obj(value) => _obj.value = value;
 
   get obj => _obj.value;
@@ -117,7 +118,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster = ApiRequster(this, develperModel: false);
+    apiRequster = ApiRequster(this, develperModel: true);
     getExternalAccount();
     getExterNal();
     getAllCountries();
@@ -692,33 +693,30 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     return formatter.format(dateTime);
   }
 
-  void sendRequestAddProgram(String name,bool selectFromAsset, bool isEdit, ProgramModel? model,) {
-    iscreateProgramloading(true);
-    Map<String,dynamic> body = {
-      "source": selectFromAsset?"links":"publishers",
-      "name": name,
+  void sendRequestAddProgram(String name,bool isPrivate,bool isRecordable,bool isEdit,String id) {
+    if (countryModel!=null&&languageModel!=null) {
+      iscreateProgramloading(true);
+      Map<String,dynamic> body = {
+        "name": name,
+        "country": countryModel!.iso,
+        "language": languageModel!,
+        "is_private":isPrivate?1: 0,
+        "is_recordable": isRecordable?1: 0
 
-    };
-    if(selectFromAsset){
-      body['details'] ={
-        "inputs": [
-          {
-            "type": "file",//
-            "value": "${selectedAssetid}"
-          }
-
-
-        ]
       };
-    }
-    print('ShareAccountLogic.sendRequestAddProgram = ${body}');
 
-    var url = "programs";
-    if(isEdit){
-      url+= "/${model!.id}";
+      print('ShareAccountLogic.sendRequestAddProgram = ${body}');
+
+      var url = "channels";
+      if(isEdit){
+        url+= "/${id}";
+      }
+      apiRequster.request(url, isEdit?ApiRequster.MHETOD_PUT
+          :ApiRequster.MHETOD_POST, 500, body: body,useToken: true);
+    }else{
+      Get.back();
+      Constant.showMessege("Please fill Out the Form");
     }
-    apiRequster.request(url, isEdit?ApiRequster.MHETOD_PUT
-        :ApiRequster.MHETOD_POST, 500, body: body);
   }
 
   void parseJsonFromExternalAccount(source) {
@@ -735,23 +733,12 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   void parseJsonFromCreateProgram(source)async {
-    var json =jsonDecode(source);
-    print('ShareAccountLogic.parseJsonFromCreateProgram = ${json}');
-    var id  = json['data']['id'];
+    iscreateProgramloading(false);
+    Get.back();
+    isloading(true);
+    getExternalAccount();
 
-    int index = 0;
-    destintionList.forEach((s) async {
-      index = index+1;
 
-     await onAddDestinationToProgramRequest(id, s.id.toString(),index==destintionList.length);
-    });
-
-    if(destintionList.isEmpty){
-      iscreateProgramloading(false);
-      Get.back();
-      isloading(true);
-      getExternalAccount();
-    }
   }
   Future<bool> onAddDestinationToProgramRequest( prgoramID,destinationID,bool isLast) async {
     try {

@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_color.dart';
+import 'package:mediaverse/app/common/app_config.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/pages/share_account/logic.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetChannelsShow.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../gen/model/json/walletV2/FromJsonGetPrograms.dart';
@@ -16,7 +18,7 @@ import '../../signup/widgets/custom_text_field_form_register_widget.dart';
 class ProgramBottomSheet extends StatefulWidget {
   ShareAccountLogic shareAccountLogic;
 
-  ProgramModel? model;
+  ChannelsModel? model;
   bool? isEditMode = false;
 
   ProgramBottomSheet(this.shareAccountLogic,
@@ -29,29 +31,28 @@ class ProgramBottomSheet extends StatefulWidget {
 class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
   TextEditingController _nameEditingController = TextEditingController();
 
-  var isShowinmediaverse = true.obs;
-  var isSelectFromAsset = true.obs;
-  var streamRecord = true.obs;
-  var streamStartAuto = true.obs;
+  var isRecordable = true.obs;
+  var isPrivate = true.obs;
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     if (widget.isEditMode != null && widget.isEditMode!) {
-      _nameEditingController =
-          TextEditingController(text: widget.model!.name ?? "");
+
       try {
-        widget.shareAccountLogic.selectShareModeid =
-        widget.model!.destinations![0]['id'];
-        widget.shareAccountLogic.selectShareModelName =
-        widget.model!.destinations![0]['name'];
+        _nameEditingController =
+            TextEditingController(text: widget.model!.name ?? "");
+        isRecordable.value = widget.model!.isRecordable!.toString().contains("1");
+        isPrivate.value = widget.model!.isPrivate!.toString().contains("1");
+        widget.shareAccountLogic.countryModel = widget.shareAccountLogic.countreisModel.firstWhere((test)=>test.iso.toString().contains(widget.model!.country!));
+        widget.shareAccountLogic.languageModel =widget.model!.language!;
       } catch (e) {
         // TODO
       }
       try {
-        widget.shareAccountLogic.selectedAssetName =
-        widget.model!.destinations![0]['details']['inputs'][0]['value'];
+
       } catch (e) {
         // TODO
       }
@@ -69,7 +70,7 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
       return Container(
         width: 100.w,
 
-        height: 40.h,
+        height: 46.h,
         decoration: BoxDecoration(
             color: AppColor.primaryDarkColor,
             border: Border(
@@ -112,9 +113,9 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
                     Text("Is Recordable".tr),
                     Obx(() {
                       return CupertinoSwitch(
-                        value: isSelectFromAsset.value,
+                        value: isRecordable.value,
                         onChanged: (value) {
-                          isSelectFromAsset.value = value;
+                          isRecordable.value = value;
                         },
                       );
                     }),
@@ -131,16 +132,15 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
                     Text("Is Private".tr),
                     Obx(() {
                       return CupertinoSwitch(
-                        value: isSelectFromAsset.value,
+                        value: isPrivate.value,
                         onChanged: (value) {
-                          isSelectFromAsset.value = value;
+                          isPrivate.value = value;
                         },
                       );
                     }),
                   ],
                 ),
               ),
-              SizedBox(height: 2.h,),
               Container(
                 margin: EdgeInsets.fromLTRB(24, 0, 24, 0),
                 child: CustomShowAndPickCountry(
@@ -157,6 +157,24 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
                     hintText: 'signup_10_1'.tr,
                     needful: false),
               ),
+              Container(
+                margin: EdgeInsets.fromLTRB(24, 0, 24, 0),
+                child: CustomShowAndPickLanguage(
+                    signlogic: widget.shareAccountLogic,
+                    countries: Constant.reversedLanguageMap,
+                    languageModel: widget.shareAccountLogic.languageModel,
+                    //
+                    models: widget.shareAccountLogic.countreisString,
+                    context: context,
+                    textEditingController: widget.shareAccountLogic
+                        .languageController,
+
+                    titleText: 'signup_10_1'.tr,
+                    hintText: 'signup_10_1'.tr,
+                    needful: false),
+              ),
+              SizedBox(height: 1.h,),
+
               Padding(
                 padding: EdgeInsets.only(
                   left: 25,
@@ -170,9 +188,9 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
                       borderRadius: BorderRadius.circular(10)),
                   onPressed: () async {
                     widget.shareAccountLogic.sendRequestAddProgram(
-                        _nameEditingController.text, isSelectFromAsset.value,
-                        (widget.isEditMode != null && widget.isEditMode!),
-                        widget.model);
+                        _nameEditingController.text,isRecordable.value,
+                        isPrivate.value,
+                        widget.isEditMode??false,widget.model!.id!);
                   },
                   color: AppColor.primaryLightColor,
                   child: Obx(() {
@@ -181,7 +199,7 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
                         ? Lottie.asset(
                         "assets/${F.assetTitle}/json/Y8IBRQ38bK.json",
                         height: 3.h)
-                        : Text("Create Program"));
+                        : Text("Submit"));
                   }),
                 ),
               ),

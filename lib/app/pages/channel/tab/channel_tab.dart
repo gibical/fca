@@ -69,7 +69,7 @@ class _ProgramsTabState extends State<ProgramsTab> {
       return CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: AddChannelCardWidget(),
+            child: AddChannelCardWidget(),//
 
           ),
           SliverList.builder(
@@ -78,14 +78,18 @@ class _ProgramsTabState extends State<ProgramsTab> {
                 var model = (isBack?list:_logic.channelModels).elementAt(index);
                 return CardChannelWidget(
                     title: (model.name??"").toString(), date: (model.createdAt??""),onTap: (){
-
-                      try {
+                  print('_ProgramsTabState.build');
+                        try {
                         if(isBack){
                           Get.back(result: model);
+                        }else{
+                          Get.bottomSheet(ProgramShowBottomSheet(model));
+
                         }
                       }  catch (e) {
                         // TODO
-                        Get.bottomSheet(ProgramShowBottomSheet(model));
+                        print('_ProgramsTabState.build');
+                          Get.bottomSheet(ProgramShowBottomSheet(model));
                       }
 
                 }, model: model);
