@@ -215,7 +215,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   getExternalAccount() {
-    apiRequster.request("channels", ApiRequster.MHETOD_GET, 1, useToken: true);
+    apiRequster.request("profile/channels", ApiRequster.MHETOD_GET, 1, useToken: true);//
   }
 
 
@@ -800,7 +800,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   void deleteProgram(String? id) {
-    apiRequster.request("programs/${id}", ApiRequster.MHETOD_DELETE, 503);
+    apiRequster.request("channels/${id}", ApiRequster.MHETOD_DELETE, 503);
     Get.back();
     isloading(true);
   Future.delayed(Duration(seconds: 1)).then((s){
@@ -810,6 +810,10 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
 
   void praseJsonFromDeleteProgram(source) {
 
+    iscreateProgramloading(false);
+    Get.back();
+    isloading(true);
+    getExternalAccount();
 
   }
 

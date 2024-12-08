@@ -44,7 +44,7 @@ class _ProgramShowBottomSheetState extends State<ProgramShowBottomSheet> {
     return Container(
       width: 100.w,
 
-      height: 50.h,
+      height: 55.h,
       decoration: BoxDecoration(
           color: AppColor.primaryLightColor,
           border: Border(

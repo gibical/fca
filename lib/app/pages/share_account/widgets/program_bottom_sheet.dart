@@ -190,7 +190,7 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
                     widget.shareAccountLogic.sendRequestAddProgram(
                         _nameEditingController.text,isRecordable.value,
                         isPrivate.value,
-                        widget.isEditMode??false,widget.model!.id!);
+                        widget.isEditMode??false,((widget.model??ChannelsModel()).id??""));
                   },
                   color: AppColor.primaryLightColor,
                   child: Obx(() {
