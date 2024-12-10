@@ -29,6 +29,7 @@ import 'package:mediaverse/app/pages/upload/view.dart';
 import 'package:mediaverse/app/pages/wrapper/state.dart';
 import 'package:mediaverse/app/pages/wrapper/view.dart';
 
+import '../pages/channel/tab/detail_channel_screen.dart';
 import '../pages/detail/pages/comment_screen.dart';
 import '../pages/detail/pages/detail_image_screen.dart';
 import '../pages/detail/pages/detail_music_screen.dart';
@@ -65,9 +66,16 @@ class PageRoutes {
   static const CHANGEPASSWORD = '/ChangePassword';
   static const MEDIASUIT = '/MediaSuite';
   static const SHAREACCOUNT = '/ShareAccount';
+  static const SINGLECHANNEL = '/ChannelScreen';
 
 
   static List<GetPage> routes = [
+    GetPage(
+      name: PageRoutes.SINGLECHANNEL,
+      page: () =>  DetailChannelScreen(),
+      transition: Transition.upToDown,
+
+    ),
     GetPage(
       name: PageRoutes.SPLASH,
       page: () => const SplashScreen(),

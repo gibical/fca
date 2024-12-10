@@ -238,8 +238,7 @@ class _FirstFormState extends State<FirstForm> {
                                         if (
                                         widget.logic.titleController.text
                                             .isNotEmpty &&
-                                            widget.logic.languageController.text
-                                                .isNotEmpty &&
+
                                             widget.logic.captionController.text
                                                 .isNotEmpty
                                         ) {

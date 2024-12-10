@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mediaverse/app/common/app_route.dart';
+import 'package:mediaverse/app/pages/channel/tab/detail_channel_screen.dart';
 import 'package:mediaverse/app/pages/share_account/widgets/program_show_bottom_sheet.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mediaverse/app/pages/channel/widgets/add_channel_card_widget.dart';
@@ -21,81 +23,87 @@ class ProgramsTab extends StatefulWidget {
 
 class _ProgramsTabState extends State<ProgramsTab> {
   final _logic = Get.find<ShareAccountLogic>();
+  bool isBack = false;
 
-    List<ChannelsModel> list = [];
-    bool isBack  =false;
-
-
-    @override
+  @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((callback){
-
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
+
   @override
   Widget build(BuildContext context) {
-
-
     return Obx(() {
       if (_logic.isloading.value) {
-        return Scaffold(
-          backgroundColor: AppColor.blueDarkColor,
-
-          body: Container(
-
-            child: Center(
-              child: Lottie.asset(
-                  "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 10.h),
-            ),
-          ),
-        );
+        return _buildLoadingScreen();
       } else {
-        try {
-          print('_ProgramsTabState.initState = ${(Get.arguments[0]==true)}');
-          if(Get.arguments[0]==true){
+        _initializeChannelList();
+        return _buildChannelList();
+      }
+    });
+  }//
 
-            list = _logic.channelModels;//
-            isBack = true;
-            print('ProgramsTab.build = ${list.length}');
-          }
+  Widget _buildLoadingScreen() {
+    return Scaffold(
+      backgroundColor: AppColor.blueDarkColor,
+      body: Center(
+        child: Lottie.asset(
+          "assets/${F.assetTitle}/json/Y8IBRQ38bK.json",
+          height: 10.h,
+        ),
+      ),
+    );
+  }
 
-        }  catch (e) {
-          // TODO
-        }finally{
+  void _initializeChannelList() {
+    try {
+      if (Get.arguments[0] == true) {
+        isBack = true;//
+      }
+    } catch (e) {
+      log('Error initializing channel list: $e');
+    }
+  }
 
-        }
-      return CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: AddChannelCardWidget(),//
+  Widget _buildChannelList() {
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: AddChannelCardWidget(),
+        ),
+        SliverList.builder(
+          itemCount: (isBack ? _logic.channelModels : _logic.channelModels).length,
+          itemBuilder: (context, index) {
+            var model = (isBack ? _logic.channelModels : _logic.channelModels)[index];
+            return _buildChannelCard(model);
+          },
+        ),
+      ],
+    );
+  }
 
-          ),
-          SliverList.builder(
-              itemCount:(isBack?list: _logic.channelModels).length,
-              itemBuilder: (context, index) {
-                var model = (isBack?list:_logic.channelModels).elementAt(index);
-                return CardChannelWidget(
-                    title: (model.name??"").toString(), date: (model.createdAt??""),onTap: (){
-                  print('_ProgramsTabState.build');
-                        try {
-                        if(isBack){
-                          Get.back(result: model);
-                        }else{
-                          Get.bottomSheet(ProgramShowBottomSheet(model));
+  Widget _buildChannelCard(ChannelsModel model) {
+    return CardChannelWidget(
+      title: (model.name ?? "").toString(),
+      date: (model.createdAt ?? ""),
+      onTap: () => _handleChannelTap(model),
+      model: model,
+    );
+  }
 
-                        }
-                      }  catch (e) {
-                        // TODO
-                        print('_ProgramsTabState.build');
-                          Get.bottomSheet(ProgramShowBottomSheet(model));
-                      }
-
-                }, model: model);
-              })
-        ],
-      );
-    }});
+  void _handleChannelTap(ChannelsModel model) {
+    try {
+      if (isBack) {
+        Get.back(result: model);
+      } else {
+        print('_ProgramsTabState._handleChannelTap 1 ');
+        Get.to(DetailChannelScreen(),arguments: [model]);
+        print('_ProgramsTabState._handleChannelTap 2 ');
+       // Get.bottomSheet(ProgramShowBottomSheet(model));
+      }
+    } catch (e) {
+      log('Error handling channel tap: $e');
+      Get.bottomSheet(ProgramShowBottomSheet(model));
+    }
   }
 }

@@ -123,7 +123,7 @@ class MyBorderShape extends ShapeBorder {
   Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
     return Path()
       ..addRRect(
-        RRect.fromRectAndRadius(rect, Radius.circular(rect.height / 2)),
+        RRect.fromRectAndRadius(rect, Radius.circular(rect.height / 2)),//
       );
   }
 
