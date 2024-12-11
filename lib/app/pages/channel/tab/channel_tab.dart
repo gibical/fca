@@ -66,18 +66,15 @@ class _ProgramsTabState extends State<ProgramsTab> {
   }
 
   Widget _buildChannelList() {
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
+    print('_ProgramsTabState._buildChannelList = ${_logic.channelModels}');
+    return Column(
+      children: [
+        Container(
           child: AddChannelCardWidget(),
         ),
-        SliverList.builder(
-          itemCount: (isBack ? _logic.channelModels : _logic.channelModels).length,
-          itemBuilder: (context, index) {
-            var model = (isBack ? _logic.channelModels : _logic.channelModels)[index];
-            return _buildChannelCard(model);
-          },
-        ),
+        Column(
+          children:_logic.channelModels.asMap().entries.map((toElement)=>_buildChannelCard(toElement.value)).toList(),
+        )
       ],
     );
   }

@@ -18,6 +18,7 @@ import 'package:sizer/sizer.dart';
 import '../../../common/app_icon.dart';
 import '../../../common/app_route.dart';
 import '../../media_suit/logic.dart';
+import '../widgets/card_channel_widget.dart';
 
 
 class DetailChannelScreen extends StatefulWidget {
@@ -34,29 +35,23 @@ class _DetailChannelScreenState extends State<DetailChannelScreen> {
   Widget build(BuildContext context) {
 
     SingleChannelLogic logic = Get.put(SingleChannelLogic(channelsModel));
+    print('_DetailChannelScreenState.build  = ${(channelsModel.programs ??[])}');
     return WillPopScope(//
         onWillPop: ()async{
-          if(Get.arguments['idAssetMedia'] == "idAssetMedia"){
-            Get.offAllNamed(PageRoutes.WRAPPER);
-          }else{
-            Get.back();
-          }
-
-
-          return false;
+          return true;
         },
       child: Scaffold(
 
         backgroundColor: AppColor.primaryDarkColor,
 
         body:Obx((){
-          return logic.isloading.value ? Center(child: CircularProgressIndicator(),): Stack(
+          return (logic.isloading.value )? Center(child: CircularProgressIndicator(),): Stack(
             children: [
               Column(
                 children: [
                   Container(
                     height: 27.h,
-                    color: Colors.red,
+                  //  color: Colors.red,
                     child: Stack(
                       children: [
                         Container(
@@ -95,21 +90,13 @@ class _DetailChannelScreenState extends State<DetailChannelScreen> {
                       ],
                     ),
                   ),
+
                   Container(
                     width: 100.w,
-                    height: 40.h,
-                    color: Colors.red ,
-                  ),
-                  Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: 6.5.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: 100.w,
-                          height: 5.h,
-                          color: Colors.red,
-                        ),
+
                         SizedBox(
                           height: 2.h,
                         ),
@@ -121,14 +108,30 @@ class _DetailChannelScreenState extends State<DetailChannelScreen> {
                         SizedBox(
                           height: 1.h,
                         ),
-                        Text('${channelsModel.description}' , style: FontStyleApp.bodyMedium.copyWith(
+                        Text(channelsModel.description??"" , style: FontStyleApp.bodyMedium.copyWith(
                           color: AppColor.grayLightColor.withOpacity(0.8),
                         ),),
 
                         SizedBox(
                           height: 2.h,
                         ),
-
+                        Column(
+                          children: [
+                          ...(logic.channelsModel.programs ??[]).asMap().entries.map((toElement){
+                            return CustomCardChannelWidget(title: toElement.value.name??"", date: toElement.value.createdAt.toString(),);
+                          }) .toList()
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('details_39'.tr, style: FontStyleApp.titleMedium.copyWith(
+                                color: AppColor.whiteColor,fontSize: 16.sp,
+                                fontWeight: FontWeight.w800
+                            ),),
+                            IconButton(icon: Icon(Icons.add,color: Colors.white,), onPressed: () {  },)
+                          ],
+                        ),
 
                         SizedBox(
                           height: 30.h,
@@ -169,7 +172,7 @@ class ChannelHeader extends StatelessWidget {
               bottomRight: Radius.circular(25.sp),
             ),
             image: DecorationImage(
-              image: NetworkImage(imageUrl),
+              image: NetworkImage(imageUrl),//
               fit: BoxFit.cover,
             ),
           ),
@@ -207,7 +210,7 @@ class ChannelDetails extends StatelessWidget {
   final String name;
   final String description;
 
-  ChannelDetails({required this.name, required this.description});
+  const ChannelDetails({required this.name, required this.description});
 
   @override
   Widget build(BuildContext context) {

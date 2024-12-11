@@ -66,6 +66,7 @@ class ChannelsModel {
 }
 
   ChannelsModel.fromJson(dynamic json) {
+   // debugger();
     _id = json['id'];
     _name = json['name'];
     _description = json['description'];
@@ -97,6 +98,7 @@ class ChannelsModel {
       json['programs'].forEach((v) {
         _programs?.add(Programs.fromJson(v));
       });
+
     }
   }
   String? _id;
@@ -208,9 +210,7 @@ class Programs {
     _source = json['source'];
     if (json['details'] != null) {
       _details = [];
-      json['details'].forEach((v) {
-        _details?.add(v);
-      });
+
     }
     _lastEvent = json['last_event'];
     _createdAt = json['created_at'];
@@ -420,9 +420,7 @@ class Events {
     _type = json['type'];
     if (json['details'] != null) {
       _details = [];
-      json['details'].forEach((v) {
-        _details?.add(v);
-      });
+
     }
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
@@ -492,9 +490,7 @@ class Destinations {
     _type = json['type'];
     if (json['details'] != null) {
       _details = [];
-      json['details'].forEach((v) {
-        _details?.add(v);
-      });
+
     }
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
@@ -589,9 +585,7 @@ class Channels {
     _source = json['source'];
     if (json['details'] != null) {
       _details = [];
-      json['details'].forEach((v) {
-        _details?.add(v);
-      });
+
     }
     _lastEvent = json['last_event'];
     _createdAt = json['created_at'];

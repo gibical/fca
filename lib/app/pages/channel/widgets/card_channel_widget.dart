@@ -8,6 +8,58 @@ import 'package:sizer/sizer.dart';
 
 import '../../../../gen/model/json/FromJsonGetChannelsShow.dart';
 
+Widget CustomCardChannelWidget({required String title , required String date,bool isEnable =false,Function? onTap}){
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 10 , horizontal: 10),
+    child: Container(
+      width: double.infinity,
+      height: 8.h,
+      decoration: BoxDecoration(
+        color: (isEnable?AppColor.primaryDarkColor:Colors.white).withOpacity(0.1),
+        borderRadius: BorderRadius.circular(15.sp),
+        border: Border.symmetric(
+          horizontal: BorderSide(
+            color: Colors.white.withOpacity(0.22),
+            strokeAlign: BorderSide.strokeAlignCenter
+          )
+        )
+      ),
+      child: MaterialButton(
+        padding: EdgeInsets.zero,
+        onPressed: (){
+          try{
+            onTap!.call();
+          }catch(e){
+
+          }
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 4.w),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+
+              SizedBox(width: 2.w,),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title , style: FontStyleApp.bodyMedium.copyWith(
+                    color: AppColor.whiteColor,
+                  ),
+                  ), Text(date , style: FontStyleApp.bodySmall.copyWith(
+                    color: AppColor.grayLightColor.withOpacity(0.5),
+                  ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
 Widget CardChannelWidget({required String title , required String date,bool isEnable =false,Function? onTap,required ChannelsModel model}){
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 10 , horizontal: 10),
