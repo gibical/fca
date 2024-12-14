@@ -12,6 +12,7 @@ import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetExternalAccount.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../gen/model/json/FromJsonGetChannelsShow.dart';
 import '../../common/app_color.dart';
 import '../../common/app_icon.dart';
 import '../../common/font_style.dart';
@@ -34,6 +35,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
   (Get.arguments != null && Get.arguments[0] == "onTapChannelManagement");
 
   bool upcomingWidget = Get.arguments != null;//
+  List<Destinations> destionationList =[];
 
   @override
   void initState() {
@@ -44,6 +46,14 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
         _selectedTabIndex = _tabController.index;
       });
     });
+   try {
+     destionationList =Get.arguments[2];
+     if(destionationList.isNotEmpty){
+       logic.destintionList.addAll(destionationList);
+     }
+   }  catch (e) {
+     // TODO
+   }
   }
 
   @override
@@ -144,9 +154,9 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
             builder: (logics) {
 
               var list = logics.destinationModelList;
-              print('ShareAccountPage.build 1 = ${isSendedByCondactor} - ${ list.length}');
+              //print('ShareAccountPage.build 1 = ${isSendedByCondactor} - ${ list.length}');
               try {
-                print('ShareAccountPage.build = ${upcomingWidget}');
+                //print('ShareAccountPage.build = ${upcomingWidget}');
                 // if (upcomingWidget) {
                 //   String filter = Get.arguments[1];
                 //
@@ -176,7 +186,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
 
                                 itemCount: list.length,
                                 itemBuilder: (context, index) {
-                                  print('ShareAccountPage.build 2 = ${isSendedByCondactor} - ${ list.length}');
+                                  //print('ShareAccountPage.build 2 = ${isSendedByCondactor} - ${ list.length}');
 
                                   return MassageItemWidgetDestination(
                                       list.elementAt(index));
@@ -357,7 +367,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
     });
   }
   Widget getAcoountShare(){
-    print('ShareAccountPage.build = ${isSendedByCondactor}');
+    //print('ShareAccountPage.build = ${isSendedByCondactor}');
     return Obx(() {
       if (logic.isloading.value) {
         return Scaffold(
@@ -374,9 +384,9 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
             builder: (logics) {
 
               var list = logics.externalList;
-              print('ShareAccountPage.build list.length = ${list.length}');
+              //print('ShareAccountPage.build list.length = ${list.length}');
               try {
-                print('ShareAccountPage.build = ${upcomingWidget}');
+                //print('ShareAccountPage.build = ${upcomingWidget}');
                 // if (upcomingWidget) {
                 //   String filter = Get.arguments[1];
                 //
@@ -511,7 +521,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
         padding: EdgeInsets.zero,
         onPressed: isSendedByCondactor
             ? () {
-          print('_ShareAccountPageState.MassageItemWidget = 1');
+          //print('_ShareAccountPageState.MassageItemWidget = 1');
 
           Get.find<ShareAccountLogic>().setSelectedChannel(elementAt);
                 Get.find<ShareAccountLogic>().selectShareMode = SelectShareMode.stream;
@@ -693,8 +703,9 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
       ),
     );
   }
-  Padding MassageItemWidgetDestination(DestinationModel elementAt) {
+  Padding MassageItemWidgetDestination(Destinations elementAt) {
     bool _isSelected = logic.getactiveDestinationModel(elementAt);
+    bool _isSelectedFromModel = logic.getactiveDestinationModelFromList(destionationList,elementAt);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0.6.h),
       child: MaterialButton(
@@ -704,101 +715,106 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
 
 
 
-          Get.find<ShareAccountLogic>().setSelectedDestiniation(elementAt);
-          Get.find<ShareAccountLogic>().selectShareMode = SelectShareMode.stream;
-          Get.find<ShareAccountLogic>().selectShareModelName = elementAt.name??"";
-          Get.find<ShareAccountLogic>().selectShareModeid = elementAt.id??"";
+          if (!_isSelectedFromModel) {
+            Get.find<ShareAccountLogic>().setSelectedDestiniation(elementAt);
+            Get.find<ShareAccountLogic>().selectShareMode = SelectShareMode.stream;
+            Get.find<ShareAccountLogic>().selectShareModelName = elementAt.name??"";
+            Get.find<ShareAccountLogic>().selectShareModeid = elementAt.id??"";
+          }
                //  Get.back();
               }
             : null,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.sp),
         ),
-        child: Container(
-          height: 8.5.h,
-          width: double.infinity,
-          decoration: BoxDecoration(
-              color: Color(0xff4E4E61).withOpacity(0.3),
-              borderRadius: BorderRadius.circular(16.sp),
-              border:_isSelected?Border.all(color: Colors.white): Border(
-                left: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1),
-                bottom:
-                    BorderSide(color: Colors.grey.withOpacity(0.3), width: 0.4),
-              )),
-          child: Row(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 1.5.h,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 6.w,
+        child: Opacity(
+          opacity: _isSelectedFromModel?0.3:1,
+          child: Container(
+            height: 8.5.h,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                color: Color(0xff4E4E61).withOpacity(0.3),
+                borderRadius: BorderRadius.circular(16.sp),
+                border:_isSelected?Border.all(color: Colors.white): Border(
+                  left: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1),
+                  bottom:
+                      BorderSide(color: Colors.grey.withOpacity(0.3), width: 0.4),
+                )),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 1.5.h,
                             ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  '${elementAt.name}',
-                                  style: FontStyleApp.bodyMedium
-                                      .copyWith(color: Colors.white),
-                                ),
-                                Spacer(),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 0.8.h,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 6.w),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Type: Youtube",
-                                  style: FontStyleApp.bodyMedium.copyWith(
-                                    color: Colors.grey.withOpacity(0.7),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 6.w,
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    '${elementAt.name}',
+                                    style: FontStyleApp.bodyMedium
+                                        .copyWith(color: Colors.white),
                                   ),
-                                ),
-                               
-                              ],
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 0.8.h,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 6.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Type: Youtube",
+                                    style: FontStyleApp.bodyMedium.copyWith(
+                                      color: Colors.grey.withOpacity(0.7),
+                                    ),
+                                  ),
+          
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ( _isSelected||_isSelectedFromModel)?Checkbox(value: true, onChanged: (s){}):Container(),
+                          Text(
+                            "Connected: on",//
+                            style: FontStyleApp.bodyMedium.copyWith(
+                              color: Colors.grey.withOpacity(0.7),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ( _isSelected)?Checkbox(value: true, onChanged: (s){}):Container(),
-                        Text(
-                          "Connected: on",//
-                          style: FontStyleApp.bodyMedium.copyWith(
-                            color: Colors.grey.withOpacity(0.7),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 4.w,)
-                  ],
+                      SizedBox(width: 4.w,)
+                    ],
+                  ),
                 ),
-              ),
-              if (!isSendedByCondactor)
-                IconButton(
-                    onPressed: () {
-                      logic.channelModels.remove(elementAt);
-                      logic.update();
-                      logic.deleteDestinationModel(elementAt);
-                    },
-                    icon: Icon(Icons.delete))
-            ],
+                if (!isSendedByCondactor)
+                  IconButton(
+                      onPressed: () {
+                        logic.channelModels.remove(elementAt);
+                        logic.update();
+                        logic.deleteDestinationModel(elementAt);
+                      },
+                      icon: Icon(Icons.delete))
+              ],
+            ),
           ),
         ),
       ),

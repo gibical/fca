@@ -41,7 +41,7 @@ class _ProgramsTabState extends State<ProgramsTab> {
         return _buildChannelList();
       }
     });
-  }//
+  } //
 
   Widget _buildLoadingScreen() {
     return Scaffold(
@@ -58,7 +58,7 @@ class _ProgramsTabState extends State<ProgramsTab> {
   void _initializeChannelList() {
     try {
       if (Get.arguments[0] == true) {
-        isBack = true;//
+        isBack = true; //
       }
     } catch (e) {
       log('Error initializing channel list: $e');
@@ -67,16 +67,25 @@ class _ProgramsTabState extends State<ProgramsTab> {
 
   Widget _buildChannelList() {
     print('_ProgramsTabState._buildChannelList = ${_logic.channelModels}');
-    return Column(
-      children: [
-        Container(
-          child: AddChannelCardWidget(),
-        ),
-        Column(
-          children:_logic.channelModels.asMap().entries.map((toElement)=>_buildChannelCard(toElement.value)).toList(),
-        )
-      ],
-    );
+    return GetBuilder<ShareAccountLogic>(
+
+        init: _logic,
+        builder: (logic) {
+      return Column(
+        children: [
+          Container(
+            child: AddChannelCardWidget(), //
+          ),
+          Column(
+            children: _logic.channelModels
+                .asMap()
+                .entries
+                .map((toElement) => _buildChannelCard(toElement.value))
+                .toList(),
+          )
+        ],
+      );
+    });
   }
 
   Widget _buildChannelCard(ChannelsModel model) {
@@ -94,9 +103,9 @@ class _ProgramsTabState extends State<ProgramsTab> {
         Get.back(result: model);
       } else {
         print('_ProgramsTabState._handleChannelTap 1 ');
-        Get.to(DetailChannelScreen(),arguments: [model]);
+        Get.to(DetailChannelScreen(), arguments: [model]);
         print('_ProgramsTabState._handleChannelTap 2 ');
-       // Get.bottomSheet(ProgramShowBottomSheet(model));
+        // Get.bottomSheet(ProgramShowBottomSheet(model));
       }
     } catch (e) {
       log('Error handling channel tap: $e');

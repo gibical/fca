@@ -126,9 +126,9 @@ const Map<String, String> enUS = {
   "details_37":"Your Date of Birth",
   "details_38":"Share",
   "details_39":"Programs",
-  "details_40":"Channels",
+  "details_40":"Destination",
   "details_41":"There is No Programs Here",
-  "details_42":"There is No Channels Here",
+  "details_42":"There is No Destination Here",
 
 
   "editprof_1":"Edit Asset",

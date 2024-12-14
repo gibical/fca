@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/font_style.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetChannels.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../gen/model/json/FromJsonGetChannelsShow.dart';
 
-Widget CustomCardChannelWidget({required String title , required String date,bool isEnable =false,Function? onTap}){
+Widget CustomCardChannelWidget({required String title , required String date,bool isEnable =false,Function? onTap,Function? onDelete}){
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 10 , horizontal: 10),
     child: Container(
@@ -25,6 +26,9 @@ Widget CustomCardChannelWidget({required String title , required String date,boo
         )
       ),
       child: MaterialButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.sp)
+        ),
         padding: EdgeInsets.zero,
         onPressed: (){
           try{
@@ -40,19 +44,24 @@ Widget CustomCardChannelWidget({required String title , required String date,boo
             children: [
 
               SizedBox(width: 2.w,),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title , style: FontStyleApp.bodyMedium.copyWith(
-                    color: AppColor.whiteColor,
-                  ),
-                  ), Text(date , style: FontStyleApp.bodySmall.copyWith(
-                    color: AppColor.grayLightColor.withOpacity(0.5),
-                  ),
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title , style: FontStyleApp.bodyMedium.copyWith(
+                      color: AppColor.whiteColor,
+                    ),
+                    ), Text(date , style: FontStyleApp.bodySmall.copyWith(
+                      color: AppColor.grayLightColor.withOpacity(0.5),
+                    ),
+                    ),
+                  ],
+                ),
               ),
+             if(onDelete!=null) IconButton(onPressed: (){
+               onDelete.call();
+             }, icon: Icon(Icons.delete_outline,color: Colors.white,))
             ],
           ),
         ),

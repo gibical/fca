@@ -42,20 +42,14 @@ import '../signup/widgets/custom_text_field_form_register_widget.dart';
 import 'state.dart';
 
 class ShareAccountLogic extends GetxController implements RequestInterface {
-  DateTime? selectedDates = DateTime(DateTime
-      .now()
-      .year, DateTime
-      .now()
-      .month, DateTime
-      .now()
-      .day,);
+  DateTime? selectedDates = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   DateTime viewMonth = DateTime.now();
 
   final _obj = ''.obs;
-  List<CountryModel> countreisModel =[];
-  List<String> countreisString =[];
-  CountryModel? countryModel ;
-  String? languageModel ;
+  List<CountryModel> countreisModel = [];
+  List<String> countreisString = [];
+  CountryModel? countryModel;
+  String? languageModel;
   set obj(value) => _obj.value = value;
 
   get obj => _obj.value;
@@ -69,15 +63,13 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
 
   String selectShareModelName = "";
   String selectShareModeid = "";
-  List<CalenderModel> filterCalenderByDate(List<CalenderModel> calendarList,
-      DateTime targetDate) {
+  List<CalenderModel> filterCalenderByDate(List<CalenderModel> calendarList, DateTime targetDate) {
     DateFormat dateFormat = DateFormat('yyyy-MM-dd');
 
     return calendarList.where((calenderModel) {
       if (calenderModel.time != null) {
         DateTime modelDateTime = DateTime.parse(calenderModel.time!);
-        return dateFormat.format(modelDateTime) ==
-            dateFormat.format(targetDate);
+        return dateFormat.format(modelDateTime) == dateFormat.format(targetDate);
       }
       return false;
     }).toList();
@@ -92,15 +84,13 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   TextEditingController languageController = TextEditingController();
   TextEditingController _streamKeyEditingController = TextEditingController();
 
-
   TextEditingController addUpcomingTitle = TextEditingController();
   TextEditingController addUpcomingdes = TextEditingController();
-  TextEditingController addUpcomingprivacy = TextEditingController(
-      text: "Public");
+  TextEditingController addUpcomingprivacy = TextEditingController(text: "Public");
 
   ProgramModel? selectedAccoount;
   ExternalModel? selectedShareAccoount;
-  DestinationModel? selectedDestinationAccoount;
+  Destinations? selectedDestinationAccoount;
   var isloading = true.obs;
   var isloadingTwitterApp = false.obs;
   var iscreateShareAccountloading = false.obs;
@@ -108,37 +98,27 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   var isBottomSheetloading = false.obs;
   List<ChannelsModel> channelModels = [];
   List<ExternalModel> externalList = [];
-  List<DestinationModel> destinationModelList = [];
+  List<Destinations> destinationModelList = [];
   late ApiRequster apiRequster;
 
-  List<DestinationModel> destintionList = [];//
-
+  List<Destinations> destintionList = [];
 
   @override
   void onReady() {
-    // TODO: implement onReady
     super.onReady();
-    apiRequster = ApiRequster(this, develperModel: true);
+    apiRequster = ApiRequster(this, develperModel: false);
     getExternalAccount();
     getExterNal();
     getAllCountries();
     getAllLanguages();
-    //getShareSchedules();
     getShareCustomAccounts();
   }
+
   Future<void> getAllCountries() async {
-    print('SignUpController.getAllCountries 1 ');
     var dio = Dio();
-
-
-    //  debugger();
     dio.interceptors.add(MediaVerseConvertInterceptor());
 
-    print('PlusSectionLogic.getAllCountries = ${Constant.HTTP_HOST}countries');
     try {
-
-      print('PlusSectionLogic.getAllCountries 1');
-
       var response = await dio.get(
         '${Constant.HTTP_HOST}countries',
         options: Options(
@@ -147,43 +127,25 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
             'X-App': '_Android',
           },
         ),
-
       );
-      print('PlusSectionLogic.getAllCountries 1 = ${response.statusCode}  - ${response.data}');
 
-      //   debugger();
-      if (response.statusCode! >= 200||response.statusCode! < 300) {
-        print('PlusSectionLogic.getAllCountries 2');
-
-
+      if (response.statusCode! >= 200 || response.statusCode! < 300) {
         (response.data['data'] as List<dynamic>).forEach((element) {
           countreisModel.add(CountryModel.fromJson(element));
         });
         (countreisModel).forEach((element) {
-          countreisString.add(element.title??"");
+          countreisString.add(element.title ?? "");
         });
         update();
-        print('PlusSectionLogic.getAllCountries = ${countreisModel.length}');
-      } else {
-        print('Failed to upload file: ${response.statusMessage}');
       }
-    } on DioError catch (e) {
-      print('DioError: ${e.message}');
-    }
+    } on DioError catch (e) {}
   }
+
   Future<void> getAllLanguages() async {
-    print('SignUpController.getAllCountries 1 ');
     var dio = Dio();
-
-
-    //  debugger();
     dio.interceptors.add(MediaVerseConvertInterceptor());
 
-    print('PlusSectionLogic.getAllCountries = ${Constant.HTTP_HOST}languages');
     try {
-
-      print('PlusSectionLogic.getAllCountries 1');
-
       var response = await dio.get(
         '${Constant.HTTP_HOST}languages',
         options: Options(
@@ -192,78 +154,57 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
             'X-App': '_Android',
           },
         ),
-
       );
-      print('PlusSectionLogic.getAllLanguages 1 = ${response.statusCode}  - ${response.data}');
 
-      //   debugger();
-      if (response.statusCode! >= 200||response.statusCode! < 300) {
-        print('PlusSectionLogic.getAllLanguages 2');
-
-
-
-
+      if (response.statusCode! >= 200 || response.statusCode! < 300) {
         Constant.reversedLanguageMap = response.data;
         update();
-        print('PlusSectionLogic.getAllLanguages = ${Constant.reversedLanguageMap.length}');
-      } else {
-        print('Failed to upload file: ${response.statusMessage}');
       }
-    } on DioError catch (e) {
-      print('DioError: ${e.message}');
-    }
+    } on DioError catch (e) {}
   }
 
   getExternalAccount() {
-    apiRequster.request("profile/channels", ApiRequster.MHETOD_GET, 1, useToken: true);//
+    apiRequster.request("profile/channels", ApiRequster.MHETOD_GET, 1, useToken: true);
   }
 
-
   getExterNal() {
-    apiRequster.request(
-        "external-accounts", ApiRequster.MHETOD_GET, 4, useToken: true);
+    apiRequster.request("external-accounts", ApiRequster.MHETOD_GET, 4, useToken: true);
   }
 
   getShareCustomAccounts() {
-    apiRequster.request(
-        "destinations", ApiRequster.MHETOD_GET, 5, useToken: true);
+    apiRequster.request("destinations", ApiRequster.MHETOD_GET, 5, useToken: true);
   }
 
   getShareSchedules() {
-    print('ShareAccountLogic.getShareSchedules = ${viewMonth}');
-    apiRequster.request("share-schedules?from=${formatDateTime(
-        DateTime(viewMonth.year, viewMonth.month,))}&to=${formatDateTime(
-        DateTime(viewMonth.year, viewMonth.month + 1,))}&",
-        ApiRequster.MHETOD_GET, 3, useToken: true);
+    apiRequster.request(
+        "share-schedules?from=${formatDateTime(DateTime(viewMonth.year, viewMonth.month,))}&to=${formatDateTime(DateTime(viewMonth.year, viewMonth.month + 1,))}&",
+        ApiRequster.MHETOD_GET, 3,
+        useToken: true);
   }
 
   @override
   void onError(String content, int reqCode, bodyError) {
-    // TODO: implement onError
-    if (reqCode==500||reqCode==501) {
+    if (reqCode == 500 || reqCode == 501) {
       iscreateProgramloading(false);
       Get.back();
     }
 
     try {
       var messege = jsonDecode(bodyError)['message'];
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-          SnackBar(content: Text(messege,
-            style: TextStyle(color: AppColor.primaryDarkColor),)));
-    } catch (e) {
-
-    }
+      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        content: Text(
+          messege,
+          style: TextStyle(color: AppColor.primaryDarkColor),
+        ),
+      ));
+    } catch (e) {}
   }
 
   @override
-  void onStartReuqest(int reqCode) {
-    // TODO: implement onStartReuqest
-  }
+  void onStartReuqest(int reqCode) {}
 
   @override
   void onSucces(source, int reqCdoe) {
-    // TODO: implement onSucces
-
     switch (reqCdoe) {
       case 1:
         parseJsonFromMainList(source);
@@ -277,13 +218,13 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       case 5:
         parseJsonFromShareCustomAccounts(source);
         break;
-     case 500:
+      case 500:
         parseJsonFromCreateProgram(source);
         break;
-     case 501:
+      case 501:
         praseJsonFromAddDestination(source);
         break;
-       case 503:
+      case 503:
         praseJsonFromDeleteProgram(source);
         break;
     }
@@ -299,38 +240,25 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   Future<void> signInWithGoogle() async {
     Get.back();
     try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn(
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
 
-      );
-      final GoogleSignInAuthentication googleAuth = await googleUser !
-          .authentication;
+      String? token = googleAuth.accessToken;
 
-      String? token = googleAuth
-          .accessToken; // Save the token to send to your backend
-
-      //    debugger();
-      print("Google ID Token: $token");
       createChannelRequest([token ?? "", googleUser.email ?? ""], 1);
-    } catch (error) {
-      print('Error signing in: $error');
-    }
+    } catch (error) {}
   }
 
   void deleteModel(ProgramModel elementAt) {
-    apiRequster.request(
-        "external-accounts/${elementAt.id}", ApiRequster.MHETOD_DELETE, 1,
-        useToken: true);
+    apiRequster.request("external-accounts/${elementAt.id}", ApiRequster.MHETOD_DELETE, 1, useToken: true);
   }
 
   void deleteShareModel(ExternalModel elementAt) {
-    apiRequster.request(
-        "external-accounts/${elementAt.id}", ApiRequster.MHETOD_DELETE, 1,
-        useToken: true);
+    apiRequster.request("external-accounts/${elementAt.id}", ApiRequster.MHETOD_DELETE, 1, useToken: true);
   }
-  void deleteDestinationModel(DestinationModel elementAt) {
-    apiRequster.request(
-        "destinations/${elementAt.id}", ApiRequster.MHETOD_DELETE, 1,
-        useToken: true);
+
+  void deleteDestinationModel(Destinations elementAt) {
+    apiRequster.request("destinations/${elementAt.id}", ApiRequster.MHETOD_DELETE, 1, useToken: true);
   }
 
   void createChannelRequest(dynamic s, int i) async {
@@ -340,45 +268,29 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     var body;
     switch (i) {
       case 1:
-        body = {
-          "type": "google",
-          "title": s[1],
-          "access_token": s[0]
-        };
+        body = {"type": "google", "title": s[1], "access_token": s[0]};
         break;
       case 2:
-        body = {
-          "type": "x",
-          "title": s[1],
-          "access_token": s[0]
-        };
+        body = {"type": "x", "title": s[1], "access_token": s[0]};
         break;
       case 4:
         body = {
           "name": _nameEditingController.text,
-          "type": "link",
-          "details": {
-            "link": "${_streamUrlEditingController
-                .text}/${_streamKeyEditingController.text}"
-          }
+          "type": "rtmp",
+          "details": {"link": "${_streamUrlEditingController.text}/${_streamKeyEditingController.text}"}
         };
         break;
       default:
-        body = {
-          "type": 1,
-          "title": s[1],
-          "access_token": s[0]
-        };
+        body = {"type": 1, "title": s[1], "access_token": s[0]};
         break;
     }
 
-    print('ShareAccountLogic.sendIDTokenToServer = ${body}');
     dio.interceptors.add(MediaVerseConvertInterceptor());
     dio.interceptors.add(CurlLoggerDioInterceptor());
 
     try {
       var response = await dio.post(
-        '${Constant.HTTP_HOST}${(i==1||i==2)?"external-accounts":"destinations"}',
+        '${Constant.HTTP_HOST}${(i == 1 || i == 2) ? "external-accounts" : "destinations"}',
         data: body,
         options: Options(
           headers: {
@@ -386,23 +298,16 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
             'X-App': '_Android',
           },
         ),
-
       );
 
       if (response.statusCode! >= 200 || response.statusCode! < 300) {
-        if (i==2) {
+        if (i == 2) {
           isloadingTwitterApp(false);
           iscreateShareAccountloading(false);
           await launchUrlString(response.data['url']);
           getExterNal();
           getShareCustomAccounts();
-        }else{
-          print(
-              '==================================================================================================');
-          print('External Account Create successfully = ${response.data}');
-          print(
-              '==================================================================================================');
-
+        } else {
           iscreateShareAccountloading(false);
 
           getExterNal();
@@ -410,13 +315,9 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
         }
       } else {
         isloading(false);
-
-        print('Failed to upload file: ${response.statusMessage}');
       }
     } on DioError catch (e) {
       iscreateShareAccountloading(false);
-
-      print('DioError: ${e.message}');
     }
     _streamKeyEditingController.clear();
     _streamUrlEditingController.clear();
@@ -427,41 +328,36 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     Get.bottomSheet(ProgramBottomSheet(this));
   }
 
-  void showAccountType() async{
-   await Get.bottomSheet(ShareAccountBottomSheet(this));
-   getExterNal();
-   getShareCustomAccounts();
+  void showAccountType() async {
+    await Get.bottomSheet(ShareAccountBottomSheet(this));
+    getExterNal();
+    getShareCustomAccounts();
   }
 
   void showRTSPform() {
     Get.bottomSheet(Container(
       width: 100.w,
-
       height: 45.h,
       decoration: BoxDecoration(
           color: AppColor.primaryLightColor,
           border: Border(
-            left: BorderSide(
-                color: Colors.grey.withOpacity(0.3),
-                width: 1),
-            bottom: BorderSide(
-                color: Colors.grey.withOpacity(0.3),
-                width: 0.4),
+            left: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1),
+            bottom: BorderSide(color: Colors.grey.withOpacity(0.3), width: 0.4),
           ),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(15),
             topRight: Radius.circular(15),
-          )
-      ),
+          )),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               padding: EdgeInsets.all(25),
-              child: Text("share_19".tr, style: TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold
-              ),),
+              child: Text(
+                "share_19".tr,
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
             ),
             CustomTextFieldRegisterWidget(
                 context: Get.context!,
@@ -492,26 +388,20 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
                     createChannelRequest([], 4);
                   },
                   child: Obx(() {
-                    return iscreateShareAccountloading.value?Lottie.asset(
-                        "assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 5.h): Text(
-                        "share_26".tr,//
+                    return iscreateShareAccountloading.value
+                        ? Lottie.asset("assets/${F.assetTitle}/json/Y8IBRQ38bK.json", height: 5.h)
+                        : Text("share_26".tr,
                         style: FontStyleApp.bodyLarge.copyWith(
                           color: AppColor.whiteColor,
                           fontWeight: FontWeight.w300,
-                        )
-                    );
+                        ));
                   }),
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(9.sp)
-                      ),
-                      backgroundColor: AppColor.primaryLightColor
-
-                  ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.sp)),
+                      backgroundColor: AppColor.primaryLightColor),
                 ),
               ),
             ),
-
           ],
         ),
       ),
@@ -523,23 +413,17 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   void parseJsonFromMainList(source) {
-   // debugger();
-    channelModels = FromJsonGetAllChannels.fromJson(jsonDecode(source)).data??[];
-    log('ShareAccountLogic.parseJsonFromMainList = ${channelModels.length}');
-    update();//
+    channelModels = FromJsonGetAllChannels.fromJson(jsonDecode(source)).data ?? [];
+    update();
     isloading(false);
   }
 
   void parseJsonFromSchludes(source) {
-    //   debugger();
-    models = FromJsonGetCalender
-        .fromJson(jsonDecode(source))
-        .data ?? [];
+    models = FromJsonGetCalender.fromJson(jsonDecode(source)).data ?? [];
     if (selectedDates != null) {
       todayModels = filterCalenderByDate(models, selectedDates!);
     }
     update();
-    print('ShareAccountLogic.parseJsonFromSchludes = ${models.length}');
   }
 
   void setModelShareData(String string, model) {
@@ -557,17 +441,21 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     selectedShareAccoount = elementAt;
     update();
   }
-  void setSelectedDestiniation(DestinationModel elementAt) {
-   if(getactiveDestinationModel(elementAt)){
-     destintionList.remove(elementAt);
-   }else{
-     destintionList.add(elementAt);
-   }
-   update();
+
+  void setSelectedDestiniation(Destinations elementAt) {
+    if (getactiveDestinationModel(elementAt)) {
+      destintionList.remove(elementAt);
+    } else {
+      destintionList.add(elementAt);
+    }
+    update();
   }
 
-  bool getactiveDestinationModel(DestinationModel model){
-    return destintionList.toList().firstWhereOrNull((test)=>test.id.toString().contains(model.id.toString()))!=null;
+  bool getactiveDestinationModel(Destinations model) {
+    return destintionList.toList().firstWhereOrNull((test) => test.id.toString().contains(model.id.toString())) != null;
+  }
+  bool getactiveDestinationModelFromList(List<Destinations> destintionLists,Destinations model) {
+    return destintionLists.toList().firstWhereOrNull((test) => test.id.toString().contains(model.id.toString())) != null;
   }
 
   void onSelcetedDate(DateTime calenderDateTime) {
@@ -580,41 +468,29 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     }
 
     update();
-    print('ShareAccountLogic.onSelcetedDate = ${todayModels}');
   }
 
-
   void sendMainRequeast() async {
-    if (
-    selectedAssetid.length == 0
-    ) {
+    if (selectedAssetid.length == 0) {
       Constant.showMessege("Please select Asset");
       return;
     }
-    if (
-    selectedAccoount == null
-    ) {
+    if (selectedAccoount == null) {
       Constant.showMessege("Please select Account");
       return;
     }
-    if (
-    selectedDates == null
-    ) {
+    if (selectedDates == null) {
       Constant.showMessege("Please select Time");
       return;
     }
-    if (
-    typeString.value == "Share" && addUpcomingTitle.text.isEmpty
-    ) {
+    if (typeString.value == "Share" && addUpcomingTitle.text.isEmpty) {
       Constant.showMessege("Please Input the Title");
       return;
     }
     var body = {
       "file": selectedAssetid,
       "account": selectedAccoount!.id ?? 0,
-      "times": [
-        formatDateTime(selectedDates!)
-      ]
+      "times": [formatDateTime(selectedDates!)]
     };
     if (typeString.value == "Share") {
       body['title'] = addUpcomingTitle.text;
@@ -634,14 +510,10 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
         break;
     }
 
-    print('ShareAccountLogic.sendMainRequeast =${body}');
-
     try {
       isLoadingSendMain(true);
       final token = GetStorage().read("token");
-      String apiUrl =
-          '${Constant.HTTP_HOST}$url';
-      print('DetailController._fetchMediaData = ${apiUrl}');
+      String apiUrl = '${Constant.HTTP_HOST}$url';
       var s = Dio();
       s.interceptors.add(MediaVerseConvertInterceptor());
       s.interceptors.add(CurlLoggerDioInterceptor());
@@ -652,75 +524,56 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
         'Accept-Language': 'en-US',
         'Authorization': 'Bearer $token',
       };
-      var response = await s.post(
-          apiUrl, options: Options(headers: header), data: body);
+      var response = await s.post(apiUrl, options: Options(headers: header), data: body);
 
-      log('DetailController._fetchMediaData11111 = ${response
-          .statusCode}  - ${jsonEncode(response.data)} - ${response
-          .data['media_type']}');
       isLoadingSendMain(false);
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        // externalAccountlist = FromJsonGetExternalAccount.fromJson(response.data??[]).data??[];
-
         getShareSchedules();
         Get.back();
         Constant.showMessege("Your Upcoming Event Successfully Created");
         update();
       } else {
-        // Handle errors
         Get.back();
 
         Constant.showMessege(" You Have error");
       }
     } catch (e) {
-      // Handle errors
       Get.back();
 
       Constant.showMessege(" You Have error");
       isLoadingSendMain(false);
-
-      print('DetailController._fetchMediaData = $e');
-    } finally {
-      //isLoading.value = false;
-      print('DetailController._fetchMediaData file_id = 3');
     }
   }
 
   String formatDateTime(DateTime dateTime) {
-    final DateFormat formatter = DateFormat(
-        'y-MM-dd HH:mm:ss'); // Use 'y' for year, 'MM' for zero-padded month, 'dd' for zero-padded day
+    final DateFormat formatter = DateFormat('y-MM-dd HH:mm:ss');
     return formatter.format(dateTime);
   }
 
-  void sendRequestAddProgram(String name,bool isPrivate,bool isRecordable,bool isEdit,String id) {
-    if (countryModel!=null&&languageModel!=null) {
+  void sendRequestAddProgram(String name, bool isPrivate, bool isRecordable, bool isEdit, String id) {
+    if (countryModel != null && languageModel != null) {
       iscreateProgramloading(true);
-      Map<String,dynamic> body = {
+      Map<String, dynamic> body = {
         "name": name,
         "country": countryModel!.iso,
         "language": languageModel!,
-        "is_private":isPrivate?1: 0,
-        "is_recordable": isRecordable?1: 0
-
+        "is_private": isPrivate ? 1 : 0,
+        "is_recordable": isRecordable ? 1 : 0
       };
 
-      print('ShareAccountLogic.sendRequestAddProgram = ${body}');
-
       var url = "channels";
-      if(isEdit){
-        url+= "/${id}";
+      if (isEdit) {
+        url += "/${id}";
       }
-      apiRequster.request(url, isEdit?ApiRequster.MHETOD_PUT
-          :ApiRequster.MHETOD_POST, 500, body: body,useToken: true);
-    }else{
+      apiRequster.request(url, isEdit ? ApiRequster.MHETOD_PUT : ApiRequster.MHETOD_POST, 500, body: body, useToken: true);
+    } else {
       Get.back();
       Constant.showMessege("Please fill Out the Form");
     }
   }
 
   void parseJsonFromExternalAccount(source) {
-    print('ShareAccountLogic.parseJsonFromExternalAccount = ${source}');
     externalList = fromJsonGetExternalAccountFromJson(source).data ?? [];
 
     isloading(false);
@@ -728,21 +581,23 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   void parseJsonFromShareCustomAccounts(source) {
-    destinationModelList = fromJsonGetDestinationFromJson(source).data ?? [];
+    destinationModelList.clear();
+    for (var action in (jsonDecode(source)['data'] as List)) {
+      destinationModelList.add(Destinations.fromJson(action));
+    }
+
     update();
   }
 
-  void parseJsonFromCreateProgram(source)async {
+  void parseJsonFromCreateProgram(source) async {
     iscreateProgramloading(false);
     Get.back();
     isloading(true);
     getExternalAccount();
-
-
   }
-  Future<bool> onAddDestinationToProgramRequest( prgoramID,destinationID,bool isLast) async {
+
+  Future<bool> onAddDestinationToProgramRequest(prgoramID, destinationID, bool isLast) async {
     try {
-      print('ShareAccountLogic.onAddDestinationToProgramRequest 1 ');
       final token = GetStorage().read("token");
       String apiUrl = '${Constant.HTTP_HOST}programs/${prgoramID}/destinations/${destinationID}';
 
@@ -762,37 +617,28 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
           },
         ),
       );
-      print('ShareAccountLogic.onAddDestinationToProgramRequest 2 = ${response.statusCode} ');
 
-      if(isLast){
+      if (isLast) {
         iscreateProgramloading(false);
         Get.back();
         isloading(true);
         getExternalAccount();
       }
       if (response.statusCode == 200) {
-
-      return true;
+        return true;
       } else {
         return false;
-
       }
     } catch (e) {
-      print('Error: $e');
       return false;
-
-
     }
   }
 
   void onAddDestinationToProgram(id) {
-    
-    
     apiRequster.request("", ApiRequster.MHETOD_POST, 501);
   }
 
   void praseJsonFromAddDestination(source) {
-
     iscreateProgramloading(false);
     Get.back();
     isloading(true);
@@ -803,24 +649,22 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     apiRequster.request("channels/${id}", ApiRequster.MHETOD_DELETE, 503);
     Get.back();
     isloading(true);
-  Future.delayed(Duration(seconds: 1)).then((s){
-    getExternalAccount();
-  });
+    Future.delayed(Duration(seconds: 1)).then((s) {
+      getExternalAccount();
+    });
   }
 
   void praseJsonFromDeleteProgram(source) {
-
     iscreateProgramloading(false);
     Get.back();
     isloading(true);
     getExternalAccount();
-
   }
 
-  void getTwitterAuth() async{
+  void getTwitterAuth() async {
     isloadingTwitterApp(true);
-    createChannelRequest("twitter",2);
+    createChannelRequest("twitter", 2);
   }
 }
 
-enum SelectShareMode{stream,share}
+enum SelectShareMode { stream, share }

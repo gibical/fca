@@ -62,8 +62,7 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
   @override
   Widget build(BuildContext context) {
     //
-    print('_ProgramBottomSheetState.build = ${widget.shareAccountLogic
-        .selectShareMode}');
+
     return GetBuilder<ShareAccountLogic>(
         init: widget.shareAccountLogic,
         builder: (logic) {

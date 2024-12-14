@@ -44,7 +44,7 @@ class ChannelsModel {
       String? country, 
       List<String>? users, 
       List<Events>? events, 
-      List<Destinations>? destinations, 
+      List<Destinations>? destinations,
       List<Programs>? programs,}){
     _id = id;
     _name = name;
@@ -61,7 +61,7 @@ class ChannelsModel {
     _country = country;
     _users = users;
     _events = events;
-    _destinations = destinations;
+    _destinations = destinations??[];
     _programs = programs;
 }
 
@@ -116,7 +116,7 @@ class ChannelsModel {
   String? _country;
   List<String>? _users;
   List<Events>? _events;
-  List<Destinations>? _destinations;
+  List<Destinations> _destinations=[];
   List<Programs>? _programs;
 
   String? get id => _id;
@@ -134,7 +134,7 @@ class ChannelsModel {
   String? get country => _country;
   List<String>? get users => _users;
   List<Events>? get events => _events;
-  List<Destinations>? get destinations => _destinations;
+  List<Destinations> get destinations => _destinations;
   List<Programs>? get programs => _programs;
 
   Map<String, dynamic> toJson() {
