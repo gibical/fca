@@ -60,12 +60,8 @@ class _AddProgramToChannelPageState extends State<AddProgramToChannelPage> {
           // TODO
         }
 
-        _isStarted =
-            widget.programmodel!.lastEvent.toString().toLowerCase().contains(
-                "started");
-        setState(() {
 
-        });
+        _getLiveStatus();
       }
       newProgramTypeController.addListener(() {
         setState(() {});
@@ -222,8 +218,8 @@ class _AddProgramToChannelPageState extends State<AddProgramToChannelPage> {
                               ),
                               child: MaterialButton(
                                 onPressed: () {
-                                  channelLogic.startProgram(
-                                      widget.programmodel!);
+
+                                  _onTapStartProgram();
                                 },
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10)
@@ -289,9 +285,27 @@ class _AddProgramToChannelPageState extends State<AddProgramToChannelPage> {
   }
 
   void _goToProfile() async {
-    var model = await Get.to(ProfileScreen(), arguments: 'onTapNewProgram');
+    var model = await Get.to(ProfileScreen(), arguments: 'onTapNewProgram');//
     selectedAssetName = jsonDecode(model[0])['media']['name'];
     selectedFileID = jsonDecode(model[0])['file_id'];
     setState(() {});
+  }
+
+  void _onTapStartProgram() async{
+   DateTime? date = await channelLogic.startProgram(
+        widget.programmodel!);
+   if(date!=null){
+     widget.programmodel!.lastEvent!=date.toIso8601String();
+     _getLiveStatus();
+   }
+  }
+
+  void _getLiveStatus() {
+    _isStarted =
+        widget.programmodel!.lastEvent.toString().toLowerCase().contains(
+            "started");
+    setState(() {
+
+    });
   }
 }

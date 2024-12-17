@@ -274,7 +274,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
     Get.back(result: true);
   }
   
-  Future<bool> startProgram(Programs program)async{
+  Future<DateTime?> startProgram(Programs program)async{
     var dio = Dio();
 
     dio.interceptors.add(MediaVerseConvertInterceptor());
@@ -298,14 +298,14 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         print('Request succeeded: ${response.statusCode}');
-        return true;
+        return DateTime.now();
       } else {
         print('Request failed: ${response.statusMessage}');
-        return false;
+        return null;
       }
     } on DioError catch (e) {
       print('DioError: ${e.message}');
-      return false;
+      return null;
     }
   }
 }
