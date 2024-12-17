@@ -85,6 +85,18 @@ const Map<String, String> enUS = {
   "channel_37":"Invoice",
   "channel_38":"Income",
   "channel_39":"Package",
+  "channel_40":"Add Program To",
+  "channel_41":"Name",
+  "channel_42":"Type",
+  "channel_43":"Value",
+  "channel_44":"file",
+  "channel_45":"link",
+  "channel_46":"rtmp",
+  "channel_47":"rtsp",
+  "channel_48":"webrtc",
+  "channel_49":"srt",
+
+
 
 
   "details_1":"Comments",

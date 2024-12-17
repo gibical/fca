@@ -18,8 +18,8 @@ import 'package:sizer/sizer.dart';
 import '../../../common/app_icon.dart';
 import '../../../common/app_route.dart';
 import '../../media_suit/logic.dart';
+import '../widgets/add_program_to_channel.dart';
 import '../widgets/card_channel_widget.dart';
-
 
 class DetailChannelScreen extends StatefulWidget {
   DetailChannelScreen({super.key});
@@ -35,204 +35,258 @@ class _DetailChannelScreenState extends State<DetailChannelScreen> {
   Widget build(BuildContext context) {
     SingleChannelLogic logic = Get.put(SingleChannelLogic(channelsModel));
 
-    return WillPopScope( //
+    return WillPopScope(
+      //
       onWillPop: () async {
         return true;
       },
       child: Scaffold(
-
           backgroundColor: AppColor.primaryDarkColor,
-
           body: Obx(() {
-            return (logic.isloading.value) ? Center(
-              child: CircularProgressIndicator(),) : Stack(
-              children: [
-                SingleChildScrollView(
-                  child: Column(
+            return (logic.isloading.value)
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Stack(
                     children: [
-                      Container(
-                        height: 27.h,
-                        //  color: Colors.red,
-                        child: Stack(
-                          children: [
-                            Container(
-                              height: 27.h,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(25.sp),
-                                    bottomRight: Radius.circular(25.sp)),
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      channelsModel.thumbnails ?? ""),
-                                  fit: BoxFit.cover, //
-                                ),
-                              ),
-                              child: Opacity(opacity: 0),
-                            ),
-
-                            Container(
-                              height: 27.h,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(25.sp),
-                                      bottomRight: Radius.circular(25.sp)),
-                                  gradient: LinearGradient(
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter,
-                                      colors: [
-                                        Colors.black.withOpacity(0.66),
-                                        Colors.black.withOpacity(0.3),
-                                        Colors.transparent,
-
-                                      ])
-
-                              ),
-                            ),
-                            Positioned(
-                                bottom: 15,
-                                left: 25,
-                                child: SvgPicture.asset(
-                                  AppIcon.imageIcon, color: Colors.white60,))
-                          ],
-                        ),
-                      ),
-
-                      Container(
-                        width: 100.w,
+                      SingleChildScrollView(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              height: 27.h,
+                              //  color: Colors.red,
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    height: 27.h,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(25.sp),
+                                          bottomRight: Radius.circular(25.sp)),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            channelsModel.thumbnails ?? ""),
+                                        fit: BoxFit.cover, //
+                                      ),
+                                    ),
+                                    child: Opacity(opacity: 0),
+                                  ),
+                                  Container(
+                                    height: 27.h,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(25.sp),
+                                            bottomRight:
+                                                Radius.circular(25.sp)),
+                                        gradient: LinearGradient(
+                                            begin: Alignment.bottomCenter,
+                                            end: Alignment.topCenter,
+                                            colors: [
+                                              Colors.black.withOpacity(0.66),
+                                              Colors.black.withOpacity(0.3),
+                                              Colors.transparent,
+                                            ])),
+                                  ),
+                                  Positioned(
+                                      bottom: 15,
+                                      left: 25,
+                                      child: SvgPicture.asset(
+                                        AppIcon.imageIcon,
+                                        color: Colors.white60,
+                                      ))
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: 100.w,
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(
-                                    height: 2.h,
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 2.h,
+                                        ),
+                                        Text(
+                                          '${channelsModel.name}',
+                                          style: FontStyleApp.titleMedium
+                                              .copyWith(
+                                                  color: AppColor.whiteColor,
+                                                  fontWeight: FontWeight.w600),
+                                        ),
+                                        SizedBox(
+                                          height: 1.h,
+                                        ),
+                                        Text(
+                                          channelsModel.description ?? "",
+                                          style:
+                                              FontStyleApp.bodyMedium.copyWith(
+                                            color: AppColor.grayLightColor
+                                                .withOpacity(0.8),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 2.h,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  Text('${channelsModel.name}',
-                                    style: FontStyleApp.titleMedium.copyWith(
-                                        color: AppColor.whiteColor,
-                                        fontWeight: FontWeight.w600
-                                    ),),
-
-                                  SizedBox(
-                                    height: 1.h,
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'details_39'.tr,
+                                          style: FontStyleApp.titleMedium
+                                              .copyWith(
+                                                  color: AppColor.whiteColor,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w800),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.add,
+                                            color: Colors.white,
+                                          ),
+                                          onPressed: () {
+                                            onTapNewProgram(logic);
+                                          },
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  Text(channelsModel.description ?? "",
-                                    style: FontStyleApp.bodyMedium.copyWith(
-                                      color: AppColor.grayLightColor
-                                          .withOpacity(0.8),
-                                    ),),
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16),
+                                    child: Column(
+                                      children: [
+                                        ...(logic.channelsModel.programs ?? [])
+                                            .asMap()
+                                            .entries
+                                            .map((toElement) {
+                                          return CustomCardChannelWidget(
+                                              title: toElement.value.name ?? "",
+                                              date: toElement.value.createdAt
+                                                  .toString(),
+                                              onTap: (){
+                                                onTapEditProgram(logic,toElement.value);
+                                              },
+                                              onDelete: () {
+                                                logic.deleteChannelModel(
+                                                    toElement.value);
 
+                                                ///
+                                              });
+                                        }).toList()
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'details_40'.tr,
+                                          style: FontStyleApp.titleMedium
+                                              .copyWith(
+                                                  color: AppColor.whiteColor,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w800),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.add,
+                                            color: Colors.white,
+                                          ),
+                                          onPressed: () {
+                                            logic.addDestination();
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  GetBuilder<SingleChannelLogic>(
+                                      init: logic,
+                                      builder: (logic) {
+                                        return Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 16),
+                                          child: Column(
+                                            children: [
+                                              ...(logic.channelsModel
+                                                          .destinations ??
+                                                      [])
+                                                  .asMap()
+                                                  .entries
+                                                  .map((toElement) {
+                                                return CustomCardChannelWidget(
+                                                    title:
+                                                        toElement.value.name ??
+                                                            "",
+                                                    date: toElement
+                                                        .value.createdAt
+                                                        .toString(),
+                                                    onDelete: () {
+                                                      logic
+                                                          .deleteDestionationModel(
+                                                              toElement.value);
+
+                                                      ///
+                                                    });
+                                              }).toList()
+                                            ],
+                                          ),
+                                        );
+                                      }),
                                   SizedBox(
-                                    height: 2.h,
+                                    height: 30.h,
                                   ),
                                 ],
                               ),
-                            ),
-
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceBetween,
-                                children: [
-                                  Text('details_39'.tr,
-                                    style: FontStyleApp.titleMedium.copyWith(
-                                        color: AppColor.whiteColor,
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w800
-                                    ),),
-                                  IconButton(
-                                    icon: Icon(Icons.add, color: Colors.white,),
-                                    onPressed: () {},)
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: Column(
-                                children: [
-                                  ...(logic.channelsModel.programs ?? [])
-                                      .asMap()
-                                      .entries
-                                      .map((toElement) {
-                                    return CustomCardChannelWidget(
-                                      title: toElement.value.name ?? "",
-                                      date: toElement.value.createdAt
-                                          .toString(),);
-                                  }).toList()
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceBetween,
-                                children: [
-                                  Text('details_40'.tr,
-                                    style: FontStyleApp.titleMedium.copyWith(
-                                        color: AppColor.whiteColor,
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w800
-                                    ),),
-                                  IconButton(
-                                    icon: Icon(Icons.add, color: Colors.white,),
-                                    onPressed: () {
-                                      logic.addDestination();
-                                    },)
-                                ],
-                              ),
-                            ),
-                            GetBuilder<SingleChannelLogic>(
-                                init: logic,
-                                builder: (logic) {
-                              return Container(
-                                padding: EdgeInsets.symmetric(horizontal: 16),
-                                child: Column(
-                                  children: [
-                                    ...(logic.channelsModel.destinations ?? [])
-                                        .asMap()
-                                        .entries
-                                        .map((toElement) {
-                                      return CustomCardChannelWidget(
-                                          title: toElement.value.name ?? "",
-                                          date: toElement.value.createdAt
-                                              .toString(),
-                                          onDelete: () {
-                                            logic.deleteDestionationModel(
-                                                toElement.value);
-
-                                            ///
-                                          });
-                                    }).toList()
-                                  ],
-                                ),
-                              );
-                            }),
-                            SizedBox(
-                              height: 30.h,
                             ),
                           ],
                         ),
                       ),
-
+                      BackWidget(
+                        idAssetMedia: false,
+                      )
                     ],
-                  ),
-                ),
-
-                BackWidget(idAssetMedia: false,)
-
-              ],
-            );
-          })
-
-
-      ),
+                  );
+          })),
     );
+  }
+
+  void onTapNewProgram(SingleChannelLogic logic) async {
+    var result =
+        await Get.to(() => AddProgramToChannelPage(), arguments: [logic]);
+    try {
+      if (result == true) {
+        logic.getSingleChannel();
+      }
+    } on Exception catch (e) {
+      // TODO
+    }
+  }
+  void onTapEditProgram(SingleChannelLogic logic,Programs programs) async {
+    var result =
+        await Get.to(() => AddProgramToChannelPage(isEdit: true,programmodel: programs,), arguments: [logic]);
+    try {
+      if (result == true) {
+        logic.getSingleChannel();
+      }
+    } on Exception catch (e) {
+      // TODO
+    }
   }
 }
 

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -332,20 +333,37 @@ class _GridPostView2State extends State<GridPostView2> {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
 
-        onTap:Get.arguments == 'edit_screen' ? toggleSelection:Get.arguments == 'onTapChannelManagement' ? (){
-          if (widget.model['media_type'].toString().contains("4")) {
-            Get.find<ShareAccountLogic>().setModelShareData(widget.model['media']['name'].toString() ,widget.model['file_id']);
+
+        onTap:
+
+        (){
+      if(Get.arguments == 'edit_screen'){
+        toggleSelection();
+      }
+      if(Get.arguments == 'edit_screen'){
+        if (widget.model['media_type'].toString().contains("4")) {
+
+        Get.find<ShareAccountLogic>().setModelShareData(widget.model['media']['name'].toString() ,widget.model['file_id']);
+        }else{
+          Constant.showMessege("Please Select Video ");
+        }
 //
-            Get.back();
-          }else{
-            Constant.showMessege("Please Select Video ");
-          }
+        Get.back();
+      }
+      if(Get.arguments == 'onTapNewProgram'){
+        if (widget.model['media_type'].toString().contains("4")) {
 
-        }:(){
-          _getRouteAndPushIt(widget.model['id']);
+//
+          Get.back(result: [jsonEncode(widget.model)]);
+        }else{
+          Constant.showMessege("Please Select Video ");
+        }
+      }else{
+        _getRouteAndPushIt(widget.model['id']);
+      }
 
-
-        },
+    }
+    ,
         child: Container(
             width: 45.w,
             height: 45.w,

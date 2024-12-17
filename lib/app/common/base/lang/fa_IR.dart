@@ -68,7 +68,10 @@ const Map<String, String> faIR = {
   "channel_34":"هوش مصنوعی و تولید",
   "channel_35":"جستجو",
   "channel_36":"کانال‌ها",
-
+  "channel_40":"اضافه کردن برنامه به",
+  "channel_41":"نام",
+  "channel_42":"نوع",
+  "channel_43":"مقدار",
   "details_1":"نظرات",
   "details_2":"لغو",
   "details_3":"افزودن نظر...",
