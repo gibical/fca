@@ -221,7 +221,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
     apiRequster.request(
         url,
         isEdit ? ApiRequster.MHETOD_PUT : ApiRequster.MHETOD_POST,
-        3,
+        isEdit? 3:2,
         body: body);
   }
 

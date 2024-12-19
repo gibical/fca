@@ -51,6 +51,7 @@ class _AddProgramToChannelPageState extends State<AddProgramToChannelPage> {
         newProgramTypeController.text = widget.programmodel!.source ?? "";
 
 
+        print('_AddProgramToChannelPageState.initState = ${widget.programmodel!.toJson()}');
         try {
           newProgramValueController.text = widget.programmodel!.value ?? "";
 
