@@ -9,7 +9,10 @@ import 'package:mediaverse/app/common/RequestInterface.dart';
 import 'package:mediaverse/app/common/app_api.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetChannelsShow.dart';
 import 'package:meta/meta.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:video_player/video_player.dart';
 
+import '../../../../gen/model/json/FromJsonGetChannelsLive.dart';
 import '../../../../gen/model/json/walletV2/FromJsonGetDestination.dart';
 import '../../../common/app_config.dart';
 import '../../../common/app_route.dart';
@@ -21,10 +24,16 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
 
   ChannelsModel channelsModel;
 
+  List<LiveModel> livemodels= [];
   var isloading = false.obs;
   var isloadingNewProgram = false.obs;
   var isloadingStartProgram = false.obs;
   var isloadingStopProgram = false.obs;
+
+  late VideoPlayerController controllerVideoPlay;
+
+  //Screenshot and save to gallery
+  ScreenshotController screenshotController = ScreenshotController();
 
   late ApiRequster apiRequster;
 
@@ -67,6 +76,9 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
       case 3:
         parseFromJsonEditProgram(source);
         break;
+      case 4:
+        parseFromJsonGetlives(source);
+        break;
     }
   }
 
@@ -75,9 +87,15 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
     apiRequster.request(
         "channels/${channelsModel.id}", ApiRequster.MHETOD_GET, 1);
   }
+  void getChannelsLive() {
+
+    apiRequster.request(
+        "channels/${channelsModel.id}/lives", ApiRequster.MHETOD_GET, 4);
+  }
 
   void parseFromJsonSingleChannel(source) {
     channelsModel = ChannelsModel.fromJson(jsonDecode(source)['data']);
+    getChannelsLive();
     isloading(false);
   }
 
@@ -298,6 +316,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         print('Request succeeded: ${response.statusCode}');
+        Constant.showMessege("Start Program Successfully");
         return DateTime.now();
       } else {
         print('Request failed: ${response.statusMessage}');
@@ -307,5 +326,11 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
       print('DioError: ${e.message}');
       return null;
     }
+  }
+
+  void parseFromJsonGetlives(source) {
+    debugger();
+    livemodels = FromJsonGetChannelsLive.fromJson(jsonDecode(source)).data??[];
+    update();
   }
 }

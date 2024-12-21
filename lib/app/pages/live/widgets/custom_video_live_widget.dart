@@ -23,7 +23,7 @@ import '../logic.dart';
 
 class VideoLiveWidget extends StatefulWidget {
   final String videoUrl;
-  LiveController liveController;
+  dynamic liveController;
 
    VideoLiveWidget({Key? key, required this.videoUrl, required this.liveController}) : super(key: key);
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
+import 'package:mediaverse/app/pages/plus_section/widget/media_picker.dart';
 import 'package:sizer/sizer.dart';
 
 import 'logic.dart';

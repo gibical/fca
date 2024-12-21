@@ -99,7 +99,7 @@ Widget CardChannelWidget({required String title , required String date,bool isEn
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
+              if(model.thumbnails.toString().length>7)Container(
                 height: 35,
                 width: 35,
                child: ClipRRect(
