@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -24,7 +25,8 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
 
   ChannelsModel channelsModel;
 
-  List<LiveModel> livemodels= [];
+  ValueKey mainLiveKey = ValueKey("${DateTime.now().millisecondsSinceEpoch}");
+  List<LiveModel> livemodels = [];
   var isloading = false.obs;
   var isloadingNewProgram = false.obs;
   var isloadingStartProgram = false.obs;
@@ -32,22 +34,36 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
 
   late VideoPlayerController controllerVideoPlay;
 
-  //Screenshot and save to gallery
+  // Screenshot and save to gallery
   ScreenshotController screenshotController = ScreenshotController();
 
   late ApiRequster apiRequster;
 
+  Timer? refreshTimer;
+
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
-    apiRequster = ApiRequster(this, develperModel: true);
-    getSingleChannel();
+    apiRequster = ApiRequster(this, develperModel: false);
+
+    getSingleChannel(true);
+    startPeriodicRefresh();
+  }
+
+  @override
+  void onClose() {
+    refreshTimer?.cancel();
+    super.onClose();
+  }
+
+  void startPeriodicRefresh() {
+    refreshTimer = Timer.periodic(Duration(seconds: 2), (timer) {
+      getSingleChannel(false);
+    });
   }
 
   @override
   void onError(String content, int reqCode, bodyError) {
-    // TODO: implement onError
     isloadingNewProgram(false);
     isloadingStartProgram(false);
     isloading(false);
@@ -55,46 +71,48 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
     try {
       Constant.showMessege(jsonDecode(bodyError)['message']);
     } catch (e) {
-      // TODO
+      print('Error: $e');
     }
   }
 
   @override
-  void onStartReuqest(int reqCode) {
-    // TODO: implement onStartReuqest
-  }
+  void onStartReuqest(int reqCode) {}
 
   @override
   void onSucces(source, int reqCdoe) {
-    // TODO: implement onSucces
     switch (reqCdoe) {
       case 1:
         parseFromJsonSingleChannel(source);
         break;
       case 2:
         parseFromJsonNewProgram(source);
+        break;
       case 3:
         parseFromJsonEditProgram(source);
         break;
       case 4:
         parseFromJsonGetlives(source);
         break;
+      case 5:
+        parseFromJsonFromSwitch(source);
+        break;
     }
   }
 
-  void getSingleChannel() {
-    isloading(true);
+  void getSingleChannel(bool isFirst) {
+   if(isFirst) isloading(true);
     apiRequster.request(
         "channels/${channelsModel.id}", ApiRequster.MHETOD_GET, 1);
   }
-  void getChannelsLive() {
 
+  void getChannelsLive() {
     apiRequster.request(
         "channels/${channelsModel.id}/lives", ApiRequster.MHETOD_GET, 4);
   }
 
   void parseFromJsonSingleChannel(source) {
     channelsModel = ChannelsModel.fromJson(jsonDecode(source)['data']);
+    print('SingleChannelLogic.parseFromJsonSingleChannel = ${channelsModel.url}');
     getChannelsLive();
     isloading(false);
   }
@@ -117,7 +135,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
         await addFromDestinationModelList(channelsModel.id!, action.id!);
       }
       if (index == destinationModelList.length - 1) {
-        getSingleChannel();
+        getSingleChannel(false);
       }
     });
   }
@@ -187,7 +205,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
   void deleteDestionationModel(Destinations value) {
     deleteDestinationModelList(channelsModel.id!, value.id!);
     channelsModel.destinations.removeWhere(
-        (test) => test.id.toString().contains(value.id.toString()));
+            (test) => test.id.toString().contains(value.id.toString()));
     update();
   }
 
@@ -215,7 +233,6 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
     if (programTypeController.text.contains("file") && selectedFileid == null) {
       Constant.showMessege("Please Select Asset ");
       return;
-
     }
 
     if (programTypeController.text.contains("link")) {
@@ -239,7 +256,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
     apiRequster.request(
         url,
         isEdit ? ApiRequster.MHETOD_PUT : ApiRequster.MHETOD_POST,
-        isEdit? 3:2,
+        isEdit ? 3 : 2,
         body: body);
   }
 
@@ -252,7 +269,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
   void deleteChannelModel(Programs value) {
     deleteChannelModelList(channelsModel.id!, value.id!);
     channelsModel.programs?.removeWhere(
-        (test) => test.id.toString().contains(value.id.toString()));
+            (test) => test.id.toString().contains(value.id.toString()));
     update();
   }
 
@@ -291,8 +308,8 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
     Constant.showMessege("Edit Program Successfully");
     Get.back(result: true);
   }
-  
-  Future<DateTime?> startProgram(Programs program)async{
+
+  Future<DateTime?> startProgram(Programs program) async {
     var dio = Dio();
 
     dio.interceptors.add(MediaVerseConvertInterceptor());
@@ -329,8 +346,22 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
   }
 
   void parseFromJsonGetlives(source) {
-    debugger();
-    livemodels = FromJsonGetChannelsLive.fromJson(jsonDecode(source)).data??[];
+    livemodels =
+        FromJsonGetChannelsLive.fromJson(jsonDecode(source)).data ?? [];
+    print('SingleChannelLogic.parseFromJsonGetlives = ${livemodels.length}');
     update();
+  }
+
+  void switchTo(String liveID) {
+    var body = {
+      "live_id":liveID
+    };
+    apiRequster.request("channels/${channelsModel.id}/switch", ApiRequster.MHETOD_POST, 5,
+    useToken: true,body: body);
+  }
+
+  void parseFromJsonFromSwitch(source) {
+    Constant.showMessege("Switch To Live Successfully");
+    mainLiveKey = ValueKey("${DateTime.now().millisecondsSinceEpoch}");
   }
 }

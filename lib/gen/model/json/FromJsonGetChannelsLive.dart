@@ -77,7 +77,7 @@ class LiveModel {
     _stoppedAt = json['stopped_at'];
     _length = json['length'];
     _programId = json['program_id'];
-   // _program = json['program'] != null ? Program.fromJson(json['program']) : null;
+    _program = json['program'] != null ? Program.fromJson(json['program']) : null;
     if (json['events'] != null) {
       _events = [];
       json['events'].forEach((v) {
@@ -242,37 +242,37 @@ class Program {
 }
 
   Program.fromJson(dynamic json) {
-    _id = json['id'];
-    _channelId = json['channel_id'];
     _name = json['name'];
-    _source = json['source'];
-    if (json['details'] != null) {
-      _details = [];
-      json['details'].forEach((v) {
-        _details?.add(v);
-      });
-    }
-    _lastEvent = json['last_event'];
-    _createdAt = json['created_at'];
-    _updatedAt = json['updated_at'];
-    _value = json['value'];
-    _streamUrl = json['stream_url'];
-    _streamKey = json['stream_key'];
-    _livesCount = json['lives_count'];
-    if (json['events'] != null) {
-      _events = [];
-      json['events'].forEach((v) {
-        _events?.add(Events.fromJson(v));
-      });
-    }
-    _channel = json['channel'] != null ? Channel.fromJson(json['channel']) : null;
-    if (json['lives'] != null) {
-      _lives = [];
-      json['lives'].forEach((v) {
-        _lives?.add(v);
-      });
-    }
-    _lastLive = json['last_live'];
+    // _id = json['id'];
+    // _channelId = json['channel_id'];
+    // _source = json['source'];
+    // if (json['details'] != null) {
+    //   _details = [];
+    //   json['details'].forEach((v) {
+    //     _details?.add(v);
+    //   });
+    // }
+    // _lastEvent = json['last_event'];
+    // _createdAt = json['created_at'];
+    // _updatedAt = json['updated_at'];
+    // _value = json['value'];
+    // _streamUrl = json['stream_url'];
+    // _streamKey = json['stream_key'];
+    // _livesCount = json['lives_count'];
+    // if (json['events'] != null) {
+    //   _events = [];
+    //   json['events'].forEach((v) {
+    //     _events?.add(Events.fromJson(v));
+    //   });
+    // }
+    // _channel = json['channel'] != null ? Channel.fromJson(json['channel']) : null;
+    // if (json['lives'] != null) {
+    //   _lives = [];
+    //   json['lives'].forEach((v) {
+    //     _lives?.add(v);
+    //   });
+    // }
+    // _lastLive = json['last_live'];
   }
   String? _id;
   String? _channelId;

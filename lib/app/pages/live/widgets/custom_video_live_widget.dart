@@ -24,8 +24,9 @@ import '../logic.dart';
 class VideoLiveWidget extends StatefulWidget {
   final String videoUrl;
   dynamic liveController;
+  bool  isShowLoading ;
 
-   VideoLiveWidget({Key? key, required this.videoUrl, required this.liveController}) : super(key: key);
+   VideoLiveWidget({Key? key, required this.videoUrl, required this.liveController,this.isShowLoading=false}) : super(key: key);
 
   @override
   _VideoLiveWidgetState createState() => _VideoLiveWidgetState();
@@ -114,10 +115,10 @@ class _VideoLiveWidgetState extends State<VideoLiveWidget> {
       ),
     ): Padding(
       padding:  EdgeInsets.symmetric(vertical: 5.h),
-      child: Center(child: Container(
+      child: Center(child:(widget.isShowLoading)?Text("No Live Active Right Now"):  Container(
           width: 10.w,
           height: 10.w,
-          child: CircularProgressIndicator())),
+          child:CircularProgressIndicator())),
     );
   }
 }
