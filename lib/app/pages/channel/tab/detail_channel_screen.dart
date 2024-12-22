@@ -6,6 +6,7 @@ import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_config.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/common/font_style.dart';
+import 'package:mediaverse/app/pages/channel/tab/ChannalLiveController.dart';
 import 'package:mediaverse/app/pages/channel/tab/single_channel_logic.dart';
 import 'package:mediaverse/app/pages/detail/widgets/back_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/buy_card_widget.dart';
@@ -57,16 +58,30 @@ class _DetailChannelScreenState extends State<DetailChannelScreen> {
                             Container(
                               height: 27.h,
                               //  color: Colors.red,
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    child: VideoLiveWidget(
-                                        videoUrl: logic.channelsModel.url ?? "",isShowLoading: true,
-                                        liveController: logic),
-                                    key: logic.mainLiveKey,
-                                  )
-                                ],
-                              ),
+                              child: GetBuilder<SingleChannelLogic>(
+                                  init: logic,
+                                  builder: (logic) {
+                                    return Stack(
+                                      children: [
+                                        Container(
+                                          child: GetBuilder<
+                                              ChannelMainVideoLiveController>(
+                                            builder: (logic) {
+                                              return ChannelMainVideoLiveWidget(
+                                                  logic);
+                                            },
+                                            tag:
+                                                "live-${logic.channelsModel.id}",
+                                            init:
+                                                ChannelMainVideoLiveController(
+                                                    logic.channelsModel.url ??
+                                                        ""),
+                                          ),
+                                          key: logic.mainLiveKey,
+                                        )
+                                      ],
+                                    );
+                                  }),
                             ),
                             Container(
                               width: 100.w,

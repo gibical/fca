@@ -18,6 +18,7 @@ import '../../../common/app_color.dart';
 import '../../../common/app_icon.dart';
 import '../logic.dart';
 
+import 'package:http/http.dart' as http;
 
 
 
@@ -74,7 +75,7 @@ class _VideoLiveWidgetState extends State<VideoLiveWidget> {
 
   @override
   void dispose() {
-    widget. liveController.controllerVideoPlay.dispose();
+    widget. liveController.controllerVideoPlay.dispose();//
     super.dispose();
   }
 

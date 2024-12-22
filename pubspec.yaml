@@ -97,6 +97,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_flavorizr: ^2.2.3
   country_flags: ^3.0.0
+  lecle_yoyo_player: ^0.0.8
+  flutter_vlc_player: ^7.4.2
 
 dev_dependencies:
   flutter_test:

@@ -75,7 +75,7 @@ class BillingWidget extends StatelessWidget {
                                     SizedBox(
                                       width: 2.w,
                                     ),
-                                    Text("${double.parse(Get.find<WrapperController>().walletBalance)/100} €",style: TextStyle(
+                                    Text("${double.tryParse(Get.find<WrapperController>().walletBalance)??0/100} €",style: TextStyle(
                                         color: Colors.white,fontWeight: FontWeight.bold
                                     ),),
                         

@@ -19,6 +19,7 @@ import '../../../common/app_config.dart';
 import '../../../common/app_route.dart';
 import '../../../common/utils/dio_inperactor.dart';
 import '../../share_account/logic.dart';
+import 'ChannalLiveController.dart';
 
 class SingleChannelLogic extends GetxController implements RequestInterface {
   SingleChannelLogic(this.channelsModel);
@@ -360,8 +361,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
     useToken: true,body: body);
   }
 
-  void parseFromJsonFromSwitch(source) {
+  void parseFromJsonFromSwitch(source) async{
     Constant.showMessege("Switch To Live Successfully");
-    mainLiveKey = ValueKey("${DateTime.now().millisecondsSinceEpoch}");
   }
 }
