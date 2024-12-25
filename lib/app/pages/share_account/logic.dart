@@ -88,7 +88,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   TextEditingController addUpcomingdes = TextEditingController();
   TextEditingController addUpcomingprivacy = TextEditingController(text: "Public");
 
-  ProgramModel? selectedAccoount;
+  Programs? selectedAccoount;
   ExternalModel? selectedShareAccoount;
   Destinations? selectedDestinationAccoount;
   var isloading = true.obs;
@@ -249,7 +249,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     } catch (error) {}
   }
 
-  void deleteModel(ProgramModel elementAt) {
+  void deleteModel(Programs elementAt) {
     apiRequster.request("external-accounts/${elementAt.id}", ApiRequster.MHETOD_DELETE, 1, useToken: true);
   }
 
@@ -432,7 +432,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
     update();
   }
 
-  void setSelectedChannel(ProgramModel elementAt) {
+  void setSelectedChannel(Programs elementAt) {
     selectedAccoount = elementAt;
     update();
   }
@@ -556,7 +556,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       iscreateProgramloading(true);
       Map<String, dynamic> body = {
         "name": name,
-        "country": countryModel!.iso,
+        "country_iso": countryModel!.iso,
         "language": languageModel!,
         "is_private": isPrivate ? 1 : 0,
         "is_recordable": isRecordable ? 1 : 0

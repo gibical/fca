@@ -68,7 +68,7 @@ class _LiveScreenState extends State<LiveScreen> {
                     children: [
 
                     VideoLiveWidget(
-                    videoUrl: liveController.liveDetails?['link'] ?? '',
+                    videoUrl: liveController.liveDetails?['current_url'] ?? '',
                       liveController: liveController,),
                       SizedBox(height: 2.h),
                       Padding(
@@ -80,8 +80,8 @@ class _LiveScreenState extends State<LiveScreen> {
                               child: SizedBox(
                                 height: 5.h,
                                 width: 10.w,
-                                child: Image.network(
-                                  liveController.liveDetails?['thumbnail'] ?? '',
+                                child: Image.asset(
+                                  "assets/mediaverse/images/mainLogo.png",
                                   fit: BoxFit.cover,
                                 ),
                               ),

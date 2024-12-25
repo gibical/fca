@@ -26,16 +26,16 @@ flavors:
       name: "Gibical App"
 
     android:
-      applicationId: "com.app.gibicalapp"
+      applicationId: "app.gibical.app"
       icon: "icons/gibical/launcher_icon.png"
       firebase:
         config: "firebase/gibical/google-services.json"
     ios:
-      bundleId: "com.app.gibicalapp"
+      bundleId: "app.gibical.app"
       icon: "icons/gibical/launcher_icon.png"
 
     macos:
-      bundleId: "com.app.gibicalapp"
+      bundleId: "app.gibical.app"
 
 
   ravi:

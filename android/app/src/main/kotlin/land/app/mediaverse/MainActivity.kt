@@ -18,7 +18,7 @@ class MainActivity : FlutterActivity() {
     private val REQUEST_CODE_SCREEN_CAPTURE = 1000
     private val RECORD_AUDIO_REQUEST_CODE = 123
     private var rtmpUrl: String? = null
-    private var CHANNEL = "com.app.gibicalapp/rtmp"
+    private var CHANNEL = "app.gibical.app/rtmp"
 
     private lateinit var methodChannel: MethodChannel
     private lateinit var mediaProjectionManager: MediaProjectionManager
@@ -27,7 +27,7 @@ class MainActivity : FlutterActivity() {
         if (BuildConfig.FLAVOR == "mediaverse") {
             CHANNEL = "land.mediaverse.app/rtmp";
         } else if (BuildConfig.FLAVOR == "gibical") {
-            CHANNEL = "com.app.gibicalapp/rtmp";
+            CHANNEL = "app.gibical.app/rtmp";
 
         } else if (BuildConfig.FLAVOR == "ravi") {
             CHANNEL = "ir.app.ravi";

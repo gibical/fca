@@ -62,7 +62,7 @@ class _ScreenStreamWidgetState extends State<ScreenStreamWidget> {
               ),
               InkWell(
                 onTap: (){
-                  logic.goToChannelScreen();
+
                 },
                 child: IgnorePointer(
                   child: CustomTextFieldRegisterWidget(

@@ -22,16 +22,16 @@ import 'ControlsOverlay.dart';
 
 class ChannelVideoLiveWidget extends StatefulWidget {
   final String videoUrl;
-  final SingleChannelLogic logic;
   final String title;
   final String liveID;
+  final Function(String liveID) onSwitch;
 
   const ChannelVideoLiveWidget({
     Key? key,
     required this.videoUrl,
     required this.title,
     required this.liveID,
-    required this.logic,
+    required this.onSwitch,
   }) : super(key: key);
 
   @override
@@ -39,61 +39,64 @@ class ChannelVideoLiveWidget extends StatefulWidget {
 }
 
 class _ChannelVideoLiveWidgetState extends State<ChannelVideoLiveWidget> {
-  late bool _isPlaying;
-  double _sliderValue = 0.0;
-  var chewieController;
-  var isErrorHandling = false.obs;
+  late VideoPlayerController _videoPlayerController;
+  ChewieController? _chewieController;
 
   @override
   void initState() {
     super.initState();
+    _initializeVideoPlayer();
+  }
+
+  void _initializeVideoPlayer() {
     try {
-      widget.logic.controllerVideoPlay = VideoPlayerController.network(
-        widget.videoUrl,
-      )..initialize().then((_) {
-        chewieController = ChewieController(
-          videoPlayerController: widget.logic.controllerVideoPlay,
-          autoPlay: true,
-          looping: true,
-        );
-        setState(() {});
-      });
-      widget.logic.controllerVideoPlay.addListener(() {
-        if (widget.logic.controllerVideoPlay.value.hasError) {
-          // Handle error
+      _videoPlayerController = VideoPlayerController.network(widget.videoUrl)
+        ..initialize().then((_) {
+          _chewieController = ChewieController(
+            videoPlayerController: _videoPlayerController,
+            autoPlay: true,
+            looping: true,
+          );
+          setState(() {});
+        });
+
+      _videoPlayerController.addListener(() {
+        if (_videoPlayerController.value.hasError) {
+          print("Video player error: ${_videoPlayerController.value.errorDescription}");
         }
       });
     } catch (e) {
-      print('_VideoLiveWidgetState.initState catch: $e');
+      print('Error initializing video player: $e');
     }
   }
 
   @override
   void dispose() {
-    widget.logic.controllerVideoPlay.dispose();
+    _chewieController?.dispose();
+    _videoPlayerController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.logic.controllerVideoPlay.value.isInitialized
+    return _videoPlayerController.value.isInitialized
         ? FocusDetector(
       onFocusLost: () {
         try {
-          widget.logic.controllerVideoPlay.pause();
+          _videoPlayerController.pause();
         } catch (e) {
-          // Handle exception
+          print("Error pausing video: $e");
         }
       },
       onFocusGained: () {
         try {
-          widget.logic.controllerVideoPlay.play();
+          _videoPlayerController.play();
         } catch (e) {
-          // Handle exception
+          print("Error playing video: $e");
         }
       },
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 3.h),
+        margin: EdgeInsets.symmetric(vertical: 16.0),
         child: Column(
           children: [
             Row(
@@ -102,41 +105,34 @@ class _ChannelVideoLiveWidgetState extends State<ChannelVideoLiveWidget> {
                 Text(widget.title),
                 TextButton(
                   onPressed: () {
-                    widget.logic.switchTo(widget.liveID);
+                    widget.onSwitch(widget.liveID);
                   },
                   child: Text(
                     "Switch",
-                    style: TextStyle(color: AppColor.primaryLightColor),
+                    style: TextStyle(color: Colors.blue),
                   ),
                 ),
               ],
             ),
-            Stack(
-              children: [
-                Screenshot(
-                  controller: widget.logic.screenshotController,
-                  child: AspectRatio(
-                    aspectRatio:
-                    widget.logic.controllerVideoPlay.value.aspectRatio,
-                    child: Chewie(
-                      controller: chewieController,
-                    ),
-                  ),
-                ),
-              ],
+            AspectRatio(
+              aspectRatio: _videoPlayerController.value.aspectRatio,
+              child: Chewie(
+                controller: _chewieController!,
+              ),
             ),
           ],
         ),
       ),
     )
         : Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.h),
+      padding: EdgeInsets.symmetric(vertical: 16.0),
       child: Center(
         child: Text("Live is Starting Right Now"),
       ),
     );
   }
 }
+
 class ChannelMainVideoLiveWidget extends StatelessWidget {
   ChannelMainVideoLiveController controller;
 

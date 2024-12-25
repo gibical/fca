@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
 import '../../../flavors.dart';
+import '../../../gen/model/json/FromJsonGetChannelsShow.dart';
 import '../../../gen/model/json/walletV2/FromJsonGetPrograms.dart';
 import '../channel/view.dart';
 import '../share_account/logic.dart';
@@ -25,7 +26,7 @@ class StreamViewController extends GetxController {
   var isLoading = true.obs;
    AnimationController? animationController;
 
-  ProgramModel? programModel;
+  Programs? programModel;
   ShareAccountLogic shareAccountLogic = Get.put(ShareAccountLogic(), tag: "stream");
   int selectedCamera;
 
@@ -223,7 +224,7 @@ class StreamViewController extends GetxController {
         try {
           print('StreamViewController.startScreenStreaming = ${'${F.packageName}/rtmp'}');
           final String result = await MethodChannel('${F.packageName}/rtmp').invokeMethod('startScreenShare', {
-            'rtmpUrl': programModel!.streamURL,
+            'rtmpUrl': programModel!.streamUrl,
           });
           print(result);
 
@@ -311,9 +312,9 @@ class StreamViewController extends GetxController {
   }
 
   void goToChannelScreen() async {
-    ProgramModel programModel = await Get.to(ChannelScreen(), arguments: [true]);
+    Programs programModel = await Get.to(ChannelScreen(), arguments: [true]);
     this.programModel = programModel;
-    url = programModel.streamURL;
+    url = programModel.streamUrl;
     update();
   }
 

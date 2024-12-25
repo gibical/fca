@@ -70,7 +70,7 @@ class ChannelsModel {
     _id = json['id'];
     _name = json['name'];
     _description = json['description'];
-    _url = json['url'];
+    _url = json['current_url'];
     _language = json['language'];
     _isPrivate = json['is_private'];
     _isRecordable = json['is_recordable'];
@@ -78,8 +78,8 @@ class ChannelsModel {
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _lastEvent = json['last_event'];
-    _thumbnails = json['thumbnails'].toString();
-    _country = json['country'];
+    _thumbnails = json['thumbnails'];
+    _country = json['country_iso'];
     _users = json['users'] != null ? json['users'].cast<String>() : [];
     if (json['events'] != null) {
       _events = [];
@@ -112,7 +112,7 @@ class ChannelsModel {
   String? _createdAt;
   String? _updatedAt;
   String? _lastEvent;
-  String? _thumbnails;
+  dynamic? _thumbnails;
   String? _country;
   List<String>? _users;
   List<Events>? _events;
@@ -130,7 +130,7 @@ class ChannelsModel {
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
   String? get lastEvent => _lastEvent;
-  String? get thumbnails => _thumbnails;
+  dynamic? get thumbnails => _thumbnails;
   String? get country => _country;
   List<String>? get users => _users;
   List<Events>? get events => _events;
@@ -151,7 +151,7 @@ class ChannelsModel {
     map['updated_at'] = _updatedAt;
     map['last_event'] = _lastEvent;
     map['thumbnails'] = _thumbnails;
-    map['country'] = _country;
+    map['country_iso'] = _country;
     map['users'] = _users;
     if (_events != null) {
       map['events'] = _events?.map((v) => v.toJson()).toList();
@@ -216,7 +216,7 @@ class Programs {
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _value = json['value'];
-    _streamUrl = json['stream_url'];
+    _streamUrl = "${json['stream_url']}/${json['stream_key']}";
     _streamKey = json['stream_key'];
     _livesCount = json['lives_count'];
     if (json['events'] != null) {

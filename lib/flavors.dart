@@ -26,7 +26,7 @@ class F {
       case Flavor.mediaverse:
         return 'land.mediaverse.app';
       case Flavor.gibical:
-        return 'com.app.gibicalapp';
+        return 'app.gibical.app';
       case Flavor.ravi:
         return 'ir.app.ravi';
       default:

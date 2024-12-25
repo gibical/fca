@@ -136,12 +136,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
                                             right: 0, bottom: 10),
                                         child: MaterialButton(
                                             onPressed: () {
-                                              if (!_streamController
-                                                  .shareAccountLogic.isloading
-                                                  .value) {
-                                                _streamController
-                                                    .goToChannelScreen();
-                                              }
+
                                             },
                                             shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius

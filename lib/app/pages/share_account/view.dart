@@ -514,7 +514,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
     });
   }
 
-  Padding MassageItemWidget(ProgramModel elementAt) {
+  Padding MassageItemWidget(Programs elementAt) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0.6.h),
       child: MaterialButton(

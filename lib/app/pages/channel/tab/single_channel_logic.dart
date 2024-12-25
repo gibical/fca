@@ -32,6 +32,11 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
   var isloadingNewProgram = false.obs;
   var isloadingStartProgram = false.obs;
   var isloadingStopProgram = false.obs;
+  var isChannelLiveStarted = false.obs;
+  String lastEvent = "";
+
+
+
 
   late VideoPlayerController controllerVideoPlay;
 
@@ -113,7 +118,11 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
 
   void parseFromJsonSingleChannel(source) {
     channelsModel = ChannelsModel.fromJson(jsonDecode(source)['data']);
-    print('SingleChannelLogic.parseFromJsonSingleChannel = ${channelsModel.url}');
+    if(lastEvent!=channelsModel.lastEvent&&channelsModel.lastEvent.toString().contains("started")){
+      isChannelLiveStarted(true);
+    }else{
+      isChannelLiveStarted(false);
+    }
     getChannelsLive();
     isloading(false);
   }

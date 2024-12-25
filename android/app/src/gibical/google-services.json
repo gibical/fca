@@ -2,22 +2,22 @@
   "project_info": {
     "project_number": "204876365682",
     "project_id": "global-harmony-419616",
-    "storage_bucket": "global-harmony-419616.appspot.com"
+    "storage_bucket": "global-harmony-419616.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:204876365682:android:cffeee9fedc4ab0e3c67eb",
+        "mobilesdk_app_id": "1:204876365682:android:86f4f5d4b08ca64b3c67eb",
         "android_client_info": {
-          "package_name": "com.app.gibicalapp"
+          "package_name": "app.gibical.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "204876365682-qdbusj60clt2am9ddjqfffe3hmqn5uib.apps.googleusercontent.com",
+          "client_id": "204876365682-s5kifkh5ojsk3o6bpgtl4dsvkg00mc84.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.gibicalapp",
+            "package_name": "app.gibical.app",
             "certificate_hash": "6bf26a0705b5f3efd7fb60351b58734bf7b09292"
           }
         },

@@ -35,6 +35,15 @@ class _StreamHomePageState extends State<StreamHomePage>     with SingleTickerPr
         _selectedTabIndex = _tabController.index;
       });
     });
+    WidgetsBinding.instance.addPostFrameCallback((callback){
+      _streamController.programModel = Get.arguments[0];
+      _streamController.url = _streamController.programModel!.streamUrl;
+      print('_StreamHomePageState.initState = ${_streamController.programModel!
+          .streamUrl}');
+      setState(() {
+
+      });
+    });
   }
 
   @override

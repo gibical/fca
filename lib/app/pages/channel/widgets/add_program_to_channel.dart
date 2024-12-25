@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mediaverse/app/pages/channel/tab/single_channel_logic.dart';
+import 'package:mediaverse/app/pages/stream/view.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetChannelsShow.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
@@ -170,7 +171,7 @@ class _AddProgramToChannelPageState extends State<AddProgramToChannelPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                if(widget.isEdit) Container(
+                if(widget.isEdit&&(widget.programmodel!.source.toString().contains("file")||widget.programmodel!.source.toString().contains("link"))) Container(
                   width: 100.w,
                   height: 6.h,
                   margin: EdgeInsets.all(16),
@@ -232,6 +233,62 @@ class _AddProgramToChannelPageState extends State<AddProgramToChannelPage> {
                                         ? CircularProgressIndicator()
                                         : Icon(
                                       Icons.play_arrow, color: Colors.green,),
+                                  );
+                                }),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+
+                    ],
+                  ),
+                ),
+                if(widget.isEdit&&(widget.programmodel!.source.toString().contains("rtmp"))) Container(
+                  width: 100.w,
+                  height: 6.h,
+                  margin: EdgeInsets.all(16),
+
+                  child: Row(
+                    children: [
+
+                      Expanded(
+                        child: Opacity(
+                          opacity: !_isStarted ? 1 : 0.3,
+                          child: IgnorePointer(
+                            ignoring: _isStarted,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.green,
+
+                                  ),
+                                  borderRadius: BorderRadius.circular(10)
+                              ),
+                              child: MaterialButton(
+                                onPressed: () {
+
+                                  _onTapStartStream();
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Obx(() {
+                                  return Center(
+                                    child: channelLogic.isloadingNewProgram
+                                        .value
+                                        ? CircularProgressIndicator()
+                                        : Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.camera, color: Colors.green,),
+                                            SizedBox(width: 3.w,),
+                                            Text("Start Stream",style: TextStyle(
+                                              color: Colors.green,fontWeight: FontWeight.w600,fontSize: 12.sp
+                                            ),),
+                                          ],
+                                        ),
                                   );
                                 }),
                               ),
@@ -308,5 +365,9 @@ class _AddProgramToChannelPageState extends State<AddProgramToChannelPage> {
     setState(() {
 
     });
+  }
+
+  void _onTapStartStream() {
+    Get.to(StreamHomePage(),arguments: [widget.programmodel]);
   }
 }

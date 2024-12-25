@@ -66,9 +66,13 @@ class _DetailChannelScreenState extends State<DetailChannelScreen> {
                                         Container(
                                           child: GetBuilder<
                                               ChannelMainVideoLiveController>(
-                                            builder: (logic) {
-                                              return ChannelMainVideoLiveWidget(
-                                                  logic);
+                                            builder: (channelMainVideoLiveController) {
+
+                                              if(logic.isChannelLiveStarted.isFalse){
+                                                return Container();
+                                              }
+                                              return  ChannelMainVideoLiveWidget(
+                                                  channelMainVideoLiveController);
                                             },
                                             tag:
                                                 "live-${logic.channelsModel.id}",
@@ -82,6 +86,8 @@ class _DetailChannelScreenState extends State<DetailChannelScreen> {
                                       ],
                                     );
                                   }),
+                              key: ValueKey(
+                                  "${DateTime.now().millisecondsSinceEpoch}"),
                             ),
                             Container(
                               width: 100.w,
@@ -128,17 +134,23 @@ class _DetailChannelScreenState extends State<DetailChannelScreen> {
                                                     .asMap()
                                                     .entries
                                                     .map((toElement) {
-                                                  return ChannelVideoLiveWidget(
-                                                    videoUrl:
-                                                        toElement.value.url ??
-                                                            "",
-                                                    logic: logic,
-                                                    title: toElement.value
-                                                            .program!.name ??
-                                                        "",
-                                                    liveID:
-                                                        toElement.value.id ??
-                                                            "",
+                                                  return Container(
+                                                    key: ValueKey(
+                                                        "live - ${toElement.key}"),
+                                                    child:
+                                                        ChannelVideoLiveWidget(
+                                                      videoUrl:
+                                                          toElement.value.url ??
+                                                              "",
+                                                      title: toElement.value
+                                                              .program!.name ??
+                                                          "",
+                                                      liveID:
+                                                          toElement.value.id ??
+                                                              "", onSwitch: (String liveID) {
+                                                        logic.switchTo(liveID);
+                                                        },
+                                                    ),
                                                   );
                                                 }).toList()
                                             ],
