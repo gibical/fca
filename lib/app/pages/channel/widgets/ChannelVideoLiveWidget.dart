@@ -133,84 +133,93 @@ class _ChannelVideoLiveWidgetState extends State<ChannelVideoLiveWidget> {
   }
 }
 
-class ChannelMainVideoLiveWidget extends StatelessWidget {
-  ChannelMainVideoLiveController controller;
+class ChannelMainVideoLiveWidget extends StatefulWidget {
+  String url;
 
+  ChannelMainVideoLiveWidget(this.url);
 
-  ChannelMainVideoLiveWidget(this.controller);
+  @override
+  State<ChannelMainVideoLiveWidget> createState() => _ChannelMainVideoLiveWidgetState();
+}
+
+class _ChannelMainVideoLiveWidgetState extends State<ChannelMainVideoLiveWidget> {
+  late VideoPlayerController _videoPlayerController;
+
+  ChewieController? _chewieController;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeVideoPlayer();
+  }
+
+  void _initializeVideoPlayer() {
+    try {
+      _videoPlayerController = VideoPlayerController.network(widget.url)
+        ..initialize().then((_) {
+          _chewieController = ChewieController(
+            videoPlayerController: _videoPlayerController,
+            autoPlay: true,
+            looping: true,
+          );
+          setState(() {});
+        });
+
+      _videoPlayerController.addListener(() {
+        if (_videoPlayerController.value.hasError) {
+          print("Video player error: ${_videoPlayerController.value.errorDescription}");
+        }
+      });
+    } catch (e) {
+      print('Error initializing video player: $e');
+    }
+  }
+
+  @override
+  void dispose() {
+    _chewieController?.dispose();
+    _videoPlayerController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return _videoPlayerController.value.isInitialized
+        ? FocusDetector(
+      onFocusLost: () {
+        try {
+          _videoPlayerController.pause();
+        } catch (e) {
+          print("Error pausing video: $e");
+        }
+      },
+      onFocusGained: () {
+        try {
+          _videoPlayerController.play();
+        } catch (e) {
+          print("Error playing video: $e");
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 16.0),
+        child: Column(
+          children: [
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Expanded(
-          child: ColoredBox(
-            color: Colors.black,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                if(controller.playerController!=null)Center(
-                  child: VlcPlayer(
-                    controller: controller.playerController!,
-                    aspectRatio: 16 / 9,
-                    placeholder:
-                    const Center(child: CircularProgressIndicator()),
-                  ),
-                ),
-                if(controller.playerController!=null) ControlsOverlay(controller: controller.playerController!),
-              ],
+            AspectRatio(
+              aspectRatio: _videoPlayerController.value.aspectRatio,
+              child: Chewie(
+                controller: _chewieController!,
+              ),
             ),
-          ),
+          ],
         ),
-        Obx(() => Visibility(
-          visible: true,
-          child: ColoredBox(
-            color: Colors.black87,
-            child: Row(
-              children: [
-                IconButton(
-                  color: Colors.white,
-                  icon: controller.isPlaying.value
-                      ? const Icon(Icons.pause_circle_outline)
-                      : const Icon(Icons.play_circle_outline),
-                  onPressed: controller.togglePlaying,
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        controller.position.value,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      Expanded(
-                        child: Slider(
-                          activeColor: Colors.blueAccent,
-                          inactiveColor: Colors.white70,
-                          value: controller.sliderValue.value,
-                          max: controller.validPosition.value
-                              ? controller.totalDuration.value.inSeconds
-                              .toDouble()
-                              : 1.0,
-                          onChanged: controller.validPosition.value
-                              ? controller.onSliderPositionChanged
-                              : null,
-                        ),
-                      ),
-                      Text(
-                        controller.duration.value,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        )),
-      ],
+      ),
+    )
+        : Padding(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      child: Center(
+        child: Text("Live is Starting Right Now"),
+      ),
     );
   }
 }

@@ -191,7 +191,7 @@ class AllTabScreen extends StatelessWidget {
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       children: (model.all ?? []).asMap().entries.map((e) {
-        return GridPostView2((model.all ?? []).elementAt(e.key));
+        return GridPostView2((model.all ?? []).elementAt(e.key),false);
       }).toList(),
     ));
   }
@@ -280,7 +280,7 @@ class _CustomTabScreenState extends State<CustomTabScreen>
         gridDelegate:
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         children: (mainList).asMap().entries.map((e) {
-          return GridPostView2((mainList).elementAt(e.key));
+          return GridPostView2((mainList).elementAt(e.key),false);
         }).toList(),
       ),
     ));

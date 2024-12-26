@@ -272,9 +272,10 @@ class _GridPostViewState extends State<GridPostView> {
 class GridPostView2 extends StatefulWidget {
 
   dynamic model;
+  bool isSubscribation;
 
 
-  GridPostView2(this.model);
+  GridPostView2(this.model,this.isSubscribation);
 
   @override
   State<GridPostView2> createState() => _GridPostView2State();
@@ -284,6 +285,10 @@ class GridPostView2 extends StatefulWidget {
 class _GridPostView2State extends State<GridPostView2> {
   bool isSelected = false;
   void toggleSelection() {
+    if ( widget.isSubscribation&&!(widget.model['forkability_status'].toString().contains("2"))) {
+      Constant.showMessege("This Asset Not Selectable");
+      return;
+    }
     setState(() {
       isSelected = !isSelected;
     });
@@ -340,17 +345,17 @@ class _GridPostView2State extends State<GridPostView2> {
       if(Get.arguments == 'edit_screen'){
         toggleSelection();
       }
-      if(Get.arguments == 'edit_screen'){
-        if (widget.model['media_type'].toString().contains("4")) {
-
-        Get.find<ShareAccountLogic>().setModelShareData(widget.model['media']['name'].toString() ,widget.model['file_id']);
-        }else{
-          Constant.showMessege("Please Select Video ");
-        }
+//       if(Get.arguments == 'edit_screen'){
+//         if (widget.model['media_type'].toString().contains("4")) {
 //
-        Get.back();
-      }
-      if(Get.arguments == 'onTapNewProgram'){
+//         Get.find<ShareAccountLogic>().setModelShareData(widget.model['media']['name'].toString() ,widget.model['file_id']);
+//         }else{
+//           Constant.showMessege("Please Select Video ");
+//         }
+// //
+//         Get.back();
+//       }
+      else if(Get.arguments == 'onTapNewProgram'){
         if (widget.model['media_type'].toString().contains("4")) {
 
 //

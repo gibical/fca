@@ -56,7 +56,7 @@ class _DetailChannelScreenState extends State<DetailChannelScreen> {
                         child: Column(
                           children: [
                             Container(
-                              height: 27.h,
+
                               //  color: Colors.red,
                               child: GetBuilder<SingleChannelLogic>(
                                   init: logic,
@@ -68,11 +68,12 @@ class _DetailChannelScreenState extends State<DetailChannelScreen> {
                                               ChannelMainVideoLiveController>(
                                             builder: (channelMainVideoLiveController) {
 
+
                                               if(logic.isChannelLiveStarted.isFalse){
                                                 return Container();
                                               }
                                               return  ChannelMainVideoLiveWidget(
-                                                  channelMainVideoLiveController);
+                                                 logic.channelsModel.url??"");
                                             },
                                             tag:
                                                 "live-${logic.channelsModel.id}",
@@ -136,7 +137,7 @@ class _DetailChannelScreenState extends State<DetailChannelScreen> {
                                                     .map((toElement) {
                                                   return Container(
                                                     key: ValueKey(
-                                                        "live - ${toElement.key}"),
+                                                        "live - ${toElement.value.id}"),
                                                     child:
                                                         ChannelVideoLiveWidget(
                                                       videoUrl:

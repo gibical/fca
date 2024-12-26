@@ -208,7 +208,7 @@ class AllTabScreen extends StatelessWidget {
               .asMap()
               .entries
               .map((e) {
-            return GridPostView2((model.all??[]).elementAt(e.key));
+            return GridPostView2((model.all??[]).elementAt(e.key),true);
           }).toList(),
 
         ));
