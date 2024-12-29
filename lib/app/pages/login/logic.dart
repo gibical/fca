@@ -107,7 +107,7 @@ class LoginController extends GetxController implements RequestInterface {
         // TODO: Handle this case.
 
         if(eTextEditingControllerPhone.text.isEmpty||eTextEditingControllerPassword.text.isEmpty){
-       Constant.showMessege("Please fill out the form");
+       Constant.showMessege("alert_11".tr);
           isloading(false);
 
           break;
@@ -120,7 +120,7 @@ class LoginController extends GetxController implements RequestInterface {
         // TODO: Handle this case.
 
         if(eTextEditingControllerUsername.text.isEmpty||eTextEditingControllerPassword.text.isEmpty){
-          Constant.showMessege("Please fill out the form");
+          Constant.showMessege("Please fill out the form".tr);
           isloading(false);
 
           break;
@@ -130,7 +130,7 @@ class LoginController extends GetxController implements RequestInterface {
 
       case LoginEnum.SMS:
         if(eTextEditingControllerPhone.text.isEmpty){
-          Constant.showMessege("Please fill out the form");
+          Constant.showMessege("Please fill out the form".tr);
           isloading(false);
 
           break;

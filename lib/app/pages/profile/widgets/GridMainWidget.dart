@@ -286,7 +286,7 @@ class _GridPostView2State extends State<GridPostView2> {
   bool isSelected = false;
   void toggleSelection() {
     if ( widget.isSubscribation&&!(widget.model['forkability_status'].toString().contains("2"))) {
-      Constant.showMessege("This Asset Not Selectable");
+      Constant.showMessege("alert_2".tr);
       return;
     }
     setState(() {
@@ -297,15 +297,7 @@ class _GridPostView2State extends State<GridPostView2> {
     'file']['info']['time'] ??
         0)
         .toDouble();
-    print('=======================================================');
-    print('=======================================================');
-    print('=======================================================');
-    print(videoLength);
-    print(videoLength);
-    print(videoLength);
-    print('=======================================================');
-    print('=======================================================');
-    print('=======================================================');
+
     if (isSelected) {
 
       Get.find<MediaSuitController>().addItemToTempList(
@@ -361,7 +353,7 @@ class _GridPostView2State extends State<GridPostView2> {
 //
           Get.back(result: [jsonEncode(widget.model)]);
         }else{
-          Constant.showMessege("Please Select Video ");
+          Constant.showMessege("alert_3".tr);
         }
       }else{
         _getRouteAndPushIt(widget.model['id']);

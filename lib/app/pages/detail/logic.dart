@@ -403,7 +403,7 @@ class DetailController extends GetxController {
       if (response.statusCode == 200) {
 
 
-        Constant.showMessege("Request Succesful");
+        Constant.showMessege("alert_1".tr);
         print(response.data);
       } else {
         // Handle errors
@@ -444,7 +444,7 @@ class DetailController extends GetxController {
       if (response.statusCode == 200) {
 
 
-        Constant.showMessege("Request Succesful ");
+        Constant.showMessege("alert_1".tr);
         print(response.data);
       } else {
         // Handle errors
@@ -497,7 +497,7 @@ class DetailController extends GetxController {
       if (response.statusCode == 200) {
 
 
-        Constant.showMessege("Request Succesful ");
+        Constant.showMessege("alert_1".tr);
 
         print(response.data);
       } else {
@@ -536,7 +536,7 @@ class DetailController extends GetxController {
       if (response.statusCode == 200) {
 
 
-        Constant.showMessege("Request Succesful ");
+        Constant.showMessege("alert_1".tr);
 
         print(response.data);
       } else {
@@ -586,7 +586,7 @@ class DetailController extends GetxController {
       if (response.statusCode == 200) {
 
 
-        Constant.showMessege("Request Succesful  ");
+        Constant.showMessege("alert_1".tr);
 
       } else {
         // Handle errors
@@ -629,7 +629,7 @@ class DetailController extends GetxController {
       if (response.statusCode == 200) {
 
 
-        Constant.showMessege("Request Succesful  ");
+        Constant.showMessege("alert_1".tr);
 
       } else {
         // Handle errors
@@ -671,7 +671,7 @@ class DetailController extends GetxController {
       if (response.statusCode == 200) {
 
 
-        Constant.showMessege("Request Succesful  ");
+        Constant.showMessege("alert_1".tr);
 
       } else {
         // Handle errors
@@ -713,7 +713,7 @@ class DetailController extends GetxController {
       if (response.statusCode == 200) {
 
 
-        Constant.showMessege("Request Succesful  ");
+        Constant.showMessege("alert_1".tr);
         print(response.data);
       } else {
         // Handle errors
@@ -762,7 +762,7 @@ class DetailController extends GetxController {
      if (response.statusCode == 200) {
 
 
-       Constant.showMessege("Request Succesful  ");
+       Constant.showMessege("alert_1".tr);
 
        print(response.data);
      } else {
@@ -877,7 +877,7 @@ class DetailController extends GetxController {
       if (response.statusCode == 200||response.statusCode == 201) {
 
 
-        Constant.showMessege("Request Succesful");
+        Constant.showMessege("alert_1".tr);
         print(response.data);
       } else {
         // Handle errors
@@ -984,7 +984,7 @@ class DetailController extends GetxController {
       if (response.statusCode! >= 200&&response.statusCode! <300) {
         try {
           if(response.data['data']['details']['error']!=null){
-            Constant.showMessege(" You Have error = ${response.data['data']['details']['error']}");
+            Constant.showMessege(" ${"alert_10".tr} = ${response.data['data']['details']['error']}");
 
           }
         }  catch (e) {
@@ -997,14 +997,14 @@ class DetailController extends GetxController {
         // Handle errors
         Get.back();
 
-        Constant.showMessege(" You Have error");
+        Constant.showMessege("alert_10".tr);
 
       }
     } on DioException catch (e) {//
       // Handle errors
       Get.back();
 
-      Constant.showMessege(" You Have error");
+      Constant.showMessege("alert_10".tr);
 
       print('DetailController._fetchMediaData = $e');
     } finally {

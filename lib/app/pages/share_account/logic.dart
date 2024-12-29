@@ -472,19 +472,19 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
 
   void sendMainRequeast() async {
     if (selectedAssetid.length == 0) {
-      Constant.showMessege("Please select Asset");
+      Constant.showMessege("alert_5".tr);
       return;
     }
     if (selectedAccoount == null) {
-      Constant.showMessege("Please select Account");
+      Constant.showMessege("alert_6".tr);
       return;
     }
     if (selectedDates == null) {
-      Constant.showMessege("Please select Time");
+      Constant.showMessege("alert_7".tr);
       return;
     }
     if (typeString.value == "Share" && addUpcomingTitle.text.isEmpty) {
-      Constant.showMessege("Please Input the Title");
+      Constant.showMessege("alert_8".tr);
       return;
     }
     var body = {
@@ -531,17 +531,17 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         getShareSchedules();
         Get.back();
-        Constant.showMessege("Your Upcoming Event Successfully Created");
+        Constant.showMessege("alert_9".tr);
         update();
       } else {
         Get.back();
 
-        Constant.showMessege(" You Have error");
+        Constant.showMessege(" alert_10".tr);
       }
     } catch (e) {
       Get.back();
 
-      Constant.showMessege(" You Have error");
+      Constant.showMessege("alert_10".tr);
       isLoadingSendMain(false);
     }
   }
@@ -569,7 +569,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
       apiRequster.request(url, isEdit ? ApiRequster.MHETOD_PUT : ApiRequster.MHETOD_POST, 500, body: body, useToken: true);
     } else {
       Get.back();
-      Constant.showMessege("Please fill Out the Form");
+      Constant.showMessege("alert_11".tr);
     }
   }
 

@@ -246,7 +246,7 @@ class MediaSuitController extends GetxController {
         isTrimming = false;
         selectedAudioIndex.value = -1;
 
-        Constant.showMessege("Request Succesful");
+        Constant.showMessege("alert_1".tr);
 
         print(response.data);
         isloadingAssetConvert(false);
@@ -307,7 +307,7 @@ class MediaSuitController extends GetxController {
         isTrimming = false;
         // selectedVideoIndex.value = -1;
 
-        Constant.showMessege("Request Succesful");
+        Constant.showMessege("alert_1".tr);
 
         print(response.data);
         isloadingAssetConvert(false);
@@ -359,7 +359,7 @@ class MediaSuitController extends GetxController {
       print(
           'DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
       if (response.statusCode == 200) {
-        Constant.showMessege("Request Succesful");
+        Constant.showMessege("alert_1".tr);
 
         print(response.data);
         isloadingAssetConvert(false);
@@ -401,7 +401,7 @@ class MediaSuitController extends GetxController {
           data: {"file": fileId});
 
       if (response.statusCode == 200) {
-        Constant.showMessege("Request Succesful ");
+        Constant.showMessege("alert_1".tr);
         print(response.data);
 
         isloadingAssetConvert(false);
@@ -444,7 +444,7 @@ class MediaSuitController extends GetxController {
           data: {"file": fileId});
 
       if (response.statusCode == 200) {
-        Constant.showMessege("Request Succesful ");
+        Constant.showMessege("alert_1".tr);
 
         print(response.data);
         isloadingAssetConvert(false);
@@ -570,7 +570,7 @@ class MediaSuitController extends GetxController {
       if (response.statusCode == 200) {
         print('result:');
         print(response.data);
-        Constant.showMessege("Request Succesful  ");
+        Constant.showMessege("alert_1".tr);
         Get.find<MediaSuitController>().setDataEditImage(
             editTextDataList[selectedTextIndex.value!].name,
             editTextDataList[selectedTextIndex.value!].urlMedia!,
@@ -622,7 +622,7 @@ class MediaSuitController extends GetxController {
       if (response.statusCode == 200) {
         isloadingAssetConvert(false);
 
-        Constant.showMessege("Request Succesful  ");
+        Constant.showMessege("alert_1".tr);
         Get.find<MediaSuitController>().setDataEditAudio(
             editTextDataList[selectedTextIndex.value!].name,
             editTextDataList[selectedTextIndex.value!].urlMedia!,
@@ -674,7 +674,7 @@ class MediaSuitController extends GetxController {
       if (response.statusCode == 200) {
         isloadingAssetConvert(false);
 
-        Constant.showMessege("Request Succesful  ");
+        Constant.showMessege("alert_1".tr);
         Get.find<MediaSuitController>().setDataEditText(
             editTextDataList[selectedTextIndex.value!].name,
             editTextDataList[selectedTextIndex.value!].urlMedia!,

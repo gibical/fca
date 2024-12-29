@@ -231,17 +231,17 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
       "source": programTypeController.text
     };
     if (programTypeController.text.isEmpty) {
-      Constant.showMessege("Please Select Value ");
+      Constant.showMessege("alert_14".tr);
 
       return;
     }
     if (programTypeController.text.contains("link") &&
         valueController.text.isEmpty) {
-      Constant.showMessege("Please Type Value ");
+      Constant.showMessege("alert_15".tr);
       return;
     }
     if (programTypeController.text.contains("file") && selectedFileid == null) {
-      Constant.showMessege("Please Select Asset ");
+      Constant.showMessege("alert_5".tr);
       return;
     }
 
@@ -272,7 +272,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
 
   void parseFromJsonNewProgram(source) {
     isloadingNewProgram(false);
-    Constant.showMessege("New Program Successfully Created");
+    Constant.showMessege("alert_16".tr);
     Get.back(result: true);
   }
 
@@ -315,7 +315,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
 
   void parseFromJsonEditProgram(source) {
     isloadingNewProgram(false);
-    Constant.showMessege("Edit Program Successfully");
+    Constant.showMessege("alert_17".tr);
     Get.back(result: true);
   }
 
@@ -343,7 +343,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         print('Request succeeded: ${response.statusCode}');
-        Constant.showMessege("Start Program Successfully");
+        Constant.showMessege("alert_18".tr);
         return DateTime.now();
       } else {
         print('Request failed: ${response.statusMessage}');
@@ -371,6 +371,6 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
   }
 
   void parseFromJsonFromSwitch(source) async{
-    Constant.showMessege("Switch To Live Successfully");
+    Constant.showMessege("alert_19".tr);
   }
 }

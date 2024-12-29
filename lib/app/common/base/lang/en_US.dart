@@ -313,6 +313,7 @@ const Map<String, String> enUS = {
   "setting_15":"Massage",
   "setting_16":"Wallet",
   "setting_17":" Account Center ",
+  "setting_18":" Change Language ",
   "delete_1":" Are You Sure the Delete Account ?",
   "delete_2":" Yes",
   "delete_3":" No",
@@ -390,25 +391,30 @@ const Map<String, String> enUS = {
   "wallet_4":"Connect To the Stripe",
   "wallet_5":"Subscription Setting",
 
-
-
-
-
   "plus_37":"Discard",
   "plus_38":"Discard",
 
+  "alert_1":"Request Succesfuly",
 
+  "alert_2":"This Asset Not Selectable",
+  "alert_3":"Please Select Video",
+  "alert_4":"Account Deleted",
+  "alert_5":"Please select Asset",
+  "alert_6":"Please select Account",
+  "alert_7":"Please select Time",
+  "alert_8":"Please Input the Title",
+  "alert_9":"Your Upcoming Event Successfully Created",
+  "alert_10":"You Have Error",
+  "alert_11":"Please fill out the Form",
+  "alert_12":"You must Select Program First",
+  "alert_13":"Profile Update Successful",
 
-
-
-
-
-
-
-
-
-
-
-
+  "alert_14": "Please Select Value",
+  "alert_15": "Please Type Value",
+  "alert_16": "New Program Successfully Created",
+  "alert_17": "Edit Program Successfully",
+  "alert_18": "Start Program Successfully",
+  "alert_19": "Switch To Live Successfully",
+  "alert_20": "Error: select a camera first."
 
 };

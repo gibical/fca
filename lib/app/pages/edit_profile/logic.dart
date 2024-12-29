@@ -336,7 +336,7 @@ filename: 'uploadfile'),
   @override
   void onSucces(source, int reqCdoe) {
     // TODO: implement onSucces
-    Constant.showMessege("Request Succesfuly ");
+    Constant.showMessege("alert_1".tr);
     Get.back();
     isloading(false);
 

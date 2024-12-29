@@ -175,7 +175,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   Future<XFile?> takePicture() async {
     final CameraController? cameraController = controller;
     if (cameraController == null || !cameraController.value.isInitialized) {
-      Constant.showMessege('Error: select a camera first.');
+      Constant.showMessege('alert_20'.tr);
       return null;
     }
 

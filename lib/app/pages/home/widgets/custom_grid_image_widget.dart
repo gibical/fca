@@ -66,7 +66,6 @@ class CustomGridImageWidget extends StatelessWidget {
   }
 
   Widget _buildImageContainer(dynamic data, double size, {bool isLarge = false}) {
-    print('CustomGridImageWidget._buildImageContainer = ${data}');
     return  GestureDetector(
       onTap: (){
         String itemId = data['id'];

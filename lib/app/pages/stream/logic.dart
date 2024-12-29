@@ -243,7 +243,7 @@ class StreamViewController extends GetxController {
         print('Microphone permission denied');
       }
     }else{
-      Constant.showMessege("You must Select Program First");
+      Constant.showMessege("alert_12".tr);
     }
   }
 
