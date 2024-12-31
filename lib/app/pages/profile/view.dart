@@ -224,53 +224,26 @@ class _ProfileScreenState extends State<ProfileScreen>
               body: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
-                  DefaultTabController(
-                    length: 2,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 100.w,
-                          decoration: BoxDecoration(
-                            color: AppColor.blueDarkColor,
-                            borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(60.sp),
-                              bottomLeft: Radius.circular(60.sp),
-                            ),
-                          ),
-                          height: 60,
-                          child: TabBar(
-                            tabAlignment: TabAlignment.center,
-                            physics: const BouncingScrollPhysics(),
-                            isScrollable: true,
-                            controller: _tabController,
-                            labelPadding: const EdgeInsets.symmetric(horizontal: 20.0),
-                            overlayColor: MaterialStateProperty.all(Colors.transparent),
-                            enableFeedback: false,
-                            indicatorWeight: 2,
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            indicatorColor: AppColor.primaryLightColor,
-                            unselectedLabelColor: Colors.grey,
-                            labelColor: AppColor.whiteColor,
-                            dividerColor: Colors.transparent,
-                            tabs: [
-                              _buildTab(context, 0, 'prof_1'.tr),
-                              _buildTab(context, 1, 'prof_2'.tr),
-                            ],
-                          ),
-                        ),
+                  Column(
 
-                        Expanded(
-                          child: TabBarView(
-                            physics: const NeverScrollableScrollPhysics(),
-                            controller: _tabController,
-                            children: [
-                              SubscrTabScreen(),
-                              OwnerTabScreen(),
-                            ],
+                    children: [
+                      Container(
+                        width: 100.w,
+                        decoration: BoxDecoration(
+                          color: AppColor.blueDarkColor,
+                          borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(100.sp),
+                            bottomLeft: Radius.circular(100.sp),
                           ),
                         ),
-                      ],
-                    ),
+                        height: 50,
+
+                      ),
+
+                      Expanded(
+                        child:  OwnerTabScreen(),
+                      ),
+                    ],
                   ),
                   Get.arguments == 'edit_screen' ?  Obx((){
                     if(     Get.arguments == 'edit_screen' &&   Get.find<MediaSuitController>().tempSelectedItems.value.length != 0){

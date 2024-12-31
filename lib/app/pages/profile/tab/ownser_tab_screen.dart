@@ -79,17 +79,18 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                     CustomTabScreen(
                       logic.ownerImages,
                       "profile/assets",
+                      ''
                     ),
-                    CustomTabScreen(logic.ownerImages, "profile/images"),
-                    CustomTabScreen(logic.ownerImages, "profile/videos"),
-                    CustomTabScreen(logic.ownerImages, "profile/audios"),
-                    CustomTabScreen(logic.ownerImages, "profile/texts"),
+                    CustomTabScreen(logic.ownerImages, "profile/assets" , 'image'),
+                    CustomTabScreen(logic.ownerImages, "profile/assets" , 'video'),
+                    CustomTabScreen(logic.ownerImages, "profile/assets" , 'audio'),
+                    CustomTabScreen(logic.ownerImages, "profile/assets" , 'text'),
                   ],
                 ),
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(11.sp),
                   child: ClipRect(
@@ -209,13 +210,17 @@ class AllTabScreen extends StatelessWidget {
 
 class CustomTabScreen extends StatefulWidget {
   String url;
+
   List<dynamic> list;
+  String type;
   bool isExpended;
 
   CustomTabScreen(
     this.list,
-    this.url, {
+
+    this.url,    this.type, {
     this.isExpended = false,
+
   });
 
   @override
@@ -298,7 +303,7 @@ class _CustomTabScreenState extends State<CustomTabScreen>
 
   void onSendedRequest() {
     apiRequster.request(
-        widget.url + "?page=${page}", ApiRequster.MHETOD_GET, 1);
+        widget.url + "?page=${page}" + '&media_type=${widget.type}' , ApiRequster.MHETOD_GET, 1);
   }
 
   @override

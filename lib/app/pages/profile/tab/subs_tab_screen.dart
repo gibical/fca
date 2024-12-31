@@ -83,11 +83,17 @@ class _CustomTabBarWidget2State extends State<CustomTabBarWidget2>
                 controller: _tabController,
                 children: [
 
-                 CustomTabScreen(logic.ownerImages,"profile/subscriptions"),
-                 CustomTabScreen(logic.ownerImages,"profile/subscriptions/images"),
-                 CustomTabScreen(logic.ownerImages,"profile/subscriptions/videos"),
-                 CustomTabScreen(logic.ownerImages,"profile/subscriptions/audios"),
-                 CustomTabScreen(logic.ownerImages,"profile/subscriptions/texts"),
+
+                  CustomTabScreen(logic.subImages,"profile/subscriptions" ,''),
+                  CustomTabScreen(logic.subImages, "profile/subscriptions/" , 'image'),
+                  CustomTabScreen(logic.ownerImages, "profile/subscriptions" , 'video'),
+                  CustomTabScreen(logic.ownerImages, "profile/subscriptions" , 'audio'),
+                  CustomTabScreen(logic.ownerImages, "profile/subscriptions" , 'text'),
+
+
+
+
+
 
                 ],
               ),

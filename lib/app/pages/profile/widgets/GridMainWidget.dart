@@ -51,7 +51,7 @@ class _GridPostViewState extends State<GridPostView> {
     if (isSelected) {
 
       Get.find<MediaSuitController>().addItemToTempList(
-        widget.model['media']['name'].toString(),
+        widget.model['name'].toString(),
         widget.model['file']['url'],
         videoLength,
         widget.model['file_id'].toString(),
@@ -76,7 +76,7 @@ class _GridPostViewState extends State<GridPostView> {
         onTap:Get.arguments == 'edit_screen'  ? toggleSelection
             :Get.arguments == 'onTapChannelManagement' ? (){
 
-          Get.find<ShareAccountLogic>().setModelShareData(widget.model['media']['name'].toString() ,widget.model['file_id']);
+          Get.find<ShareAccountLogic>().setModelShareData(widget.model['name'].toString() ,widget.model['file_id']);
 
           Get.back();
 
@@ -108,7 +108,7 @@ class _GridPostViewState extends State<GridPostView> {
                        if(widget. model['media_type'] == 1)   Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                             widget. model['media']['name'],
+                             widget. model['name'],
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme
@@ -177,7 +177,7 @@ class _GridPostViewState extends State<GridPostView> {
                         Positioned(
                             bottom: 10,
                             left: 20,
-                            child: Text(widget.model['media']['name'])),
+                            child: Text(widget.model['name'])),
                       ],
                     ),
                     decoration:
@@ -234,6 +234,7 @@ class _GridPostViewState extends State<GridPostView> {
   }
 
   _getBackground() {
+
     //tum_video
     switch(widget.model['media_type']){
       case 1:
@@ -301,7 +302,7 @@ class _GridPostView2State extends State<GridPostView2> {
     if (isSelected) {
 
       Get.find<MediaSuitController>().addItemToTempList(
-        widget.model['media']['name'].toString(),
+        widget.model['name'].toString(),
         widget.model['file']['url'],
         videoLength,
         widget.model['file_id'].toString(),
@@ -379,7 +380,7 @@ class _GridPostView2State extends State<GridPostView2> {
                        if(widget. model['media_type'] == 1)   Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                             widget. model['media']['name'],
+                             widget. model['name'],
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme
@@ -448,7 +449,7 @@ class _GridPostView2State extends State<GridPostView2> {
                             bottom: 10,
                             left: 20,
                             child: 
-                            Text(processTitle(widget.model['media']['name']))
+                            Text(processTitle(widget.model['name']))
                           //  Text(widget.model['media']['name'])
                         ),
                       ],
