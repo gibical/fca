@@ -169,7 +169,7 @@ class MediaSuitController extends GetxController {
       ActionEditorModel(nameItem: 'Change Speech Audio', onTap: () {}),
     ];
   }
-
+  double maxValueRuler = 200;
   var editTextDataList = <EditDataModel>[].obs;
   var editImageDataList = <EditDataModel>[].obs;
   var editVideoDataList = <EditDataModel>[].obs;
@@ -246,7 +246,7 @@ class MediaSuitController extends GetxController {
         isTrimming = false;
         selectedAudioIndex.value = -1;
 
-        Constant.showMessege("alert_1".tr);
+        Constant.showMessege("Request Succesful");
 
         print(response.data);
         isloadingAssetConvert(false);
@@ -307,7 +307,7 @@ class MediaSuitController extends GetxController {
         isTrimming = false;
         // selectedVideoIndex.value = -1;
 
-        Constant.showMessege("alert_1".tr);
+        Constant.showMessege("Request Succesful");
 
         print(response.data);
         isloadingAssetConvert(false);
@@ -359,7 +359,7 @@ class MediaSuitController extends GetxController {
       print(
           'DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
       if (response.statusCode == 200) {
-        Constant.showMessege("alert_1".tr);
+        Constant.showMessege("Request Succesful");
 
         print(response.data);
         isloadingAssetConvert(false);
@@ -401,7 +401,7 @@ class MediaSuitController extends GetxController {
           data: {"file": fileId});
 
       if (response.statusCode == 200) {
-        Constant.showMessege("alert_1".tr);
+        Constant.showMessege("Request Succesful ");
         print(response.data);
 
         isloadingAssetConvert(false);
@@ -444,7 +444,7 @@ class MediaSuitController extends GetxController {
           data: {"file": fileId});
 
       if (response.statusCode == 200) {
-        Constant.showMessege("alert_1".tr);
+        Constant.showMessege("Request Succesful ");
 
         print(response.data);
         isloadingAssetConvert(false);
@@ -570,7 +570,7 @@ class MediaSuitController extends GetxController {
       if (response.statusCode == 200) {
         print('result:');
         print(response.data);
-        Constant.showMessege("alert_1".tr);
+        Constant.showMessege("Request Succesful  ");
         Get.find<MediaSuitController>().setDataEditImage(
             editTextDataList[selectedTextIndex.value!].name,
             editTextDataList[selectedTextIndex.value!].urlMedia!,
@@ -622,7 +622,7 @@ class MediaSuitController extends GetxController {
       if (response.statusCode == 200) {
         isloadingAssetConvert(false);
 
-        Constant.showMessege("alert_1".tr);
+        Constant.showMessege("Request Succesful  ");
         Get.find<MediaSuitController>().setDataEditAudio(
             editTextDataList[selectedTextIndex.value!].name,
             editTextDataList[selectedTextIndex.value!].urlMedia!,
@@ -674,7 +674,7 @@ class MediaSuitController extends GetxController {
       if (response.statusCode == 200) {
         isloadingAssetConvert(false);
 
-        Constant.showMessege("alert_1".tr);
+        Constant.showMessege("Request Succesful  ");
         Get.find<MediaSuitController>().setDataEditText(
             editTextDataList[selectedTextIndex.value!].name,
             editTextDataList[selectedTextIndex.value!].urlMedia!,
@@ -704,15 +704,30 @@ class MediaSuitController extends GetxController {
       if (item.mediaClass == 1) {
         setDataEditText(item.name, item.urlMedia!, item.assetId!,
             isloading: item.isloading);
+
+        maxValueRuler +=3;
       } else if (item.mediaClass == 2) {
         setDataEditImage(item.name, item.urlMedia!, item.assetId!,
             isloading: item.isloading);
+
+        maxValueRuler +=3;
       } else if (item.mediaClass == 3) {
         setDataEditAudio(item.name, item.urlMedia!, item.assetId!,
             isloading: item.isloading);
+
+        maxValueRuler +=5;
       } else if (item.mediaClass == 4) {
         setDataEditVideo(item.name, item.urlMedia!, item.defaultWidthVideo ?? 3.0, item.assetId!,
             isloading: item.isloading);
+
+        print('----33----');
+        print(item.defaultWidthVideo);
+        print('----33----');
+        maxValueRuler +=item.defaultWidthVideo?.round() ?? 0 ;
+
+        print('----44----');
+        print(maxValueRuler);
+        print('----44----');
       }
     }
     tempSelectedItems.clear();
@@ -733,6 +748,8 @@ class MediaSuitController extends GetxController {
     } else if (mediaClass == 4) {
       tempSelectedItems.add(EditDataModel(name, url, widthVideoItem, assetId, 4,
           isloading: isloading));
+      print('wwww=wwww');
+
     } else {}
   }
 
