@@ -88,7 +88,7 @@ class DetailImageScreen extends StatelessWidget {
                           SizedBox(
                             height: 2.h,
                           ),
-                   Text('${imageController.imageDetails?['media']['name']}', style: FontStyleApp.titleMedium.copyWith(
+                   Text('${imageController.imageDetails?['name']}', style: FontStyleApp.titleMedium.copyWith(
                                 color: AppColor.whiteColor,
                                 fontWeight: FontWeight.w600
                             ),),
@@ -96,7 +96,7 @@ class DetailImageScreen extends StatelessWidget {
                           SizedBox(
                             height: 1.h,
                           ),
-                          Text('${imageController.imageDetails?['media']['description']}' , style: FontStyleApp.bodyMedium.copyWith(
+                          Text('${imageController.imageDetails?['description']}' , style: FontStyleApp.bodyMedium.copyWith(
                             color: AppColor.grayLightColor.withOpacity(0.8),
                           ),),
 
@@ -141,7 +141,7 @@ class DetailImageScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: (){
-                              Get.find<MediaSuitController>().setDataEditImage(imageController.imageDetails?['media']['name'] ?? '' , imageController.imageDetails?['file']['url'] , imageController.imageDetails!['file_id'].toString());
+                              Get.find<MediaSuitController>().setDataEditImage(imageController.imageDetails?['name'] ?? '' , imageController.imageDetails?['file']['url'] , imageController.imageDetails!['file_id'].toString());
                               Get.toNamed(PageRoutes.MEDIASUIT);
                             },
                             child:  Icon(Icons.edit),
@@ -153,6 +153,11 @@ class DetailImageScreen extends StatelessWidget {
                           Wrap(
                             children: [
                               //
+
+                              CardMarkSinglePageWidget(
+                                  label: 'details_8'.tr,
+                                  type:  imageController.imageDetails?[
+                                  'media_type'] ),
                           // CardMarkSinglePageWidget(label: 'details_7'.tr, type: "Somethi"),
                         //   CardMarkSinglePageWidget(label: 'Type', type: imageController.imageDetails!['file']['extension']),
                        //    CardMarkSinglePageWidget(label: 'Language', type: "en"),

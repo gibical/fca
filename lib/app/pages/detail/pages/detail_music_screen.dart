@@ -194,7 +194,7 @@ class DetailMusicScreen extends StatelessWidget {
                                           height: 1.h,
                                         ),
                                         Text(
-                                          '${controller.musicDetails?['media']['name']}',
+                                          '${controller.musicDetails?['name']}',
                                           style: Theme
                                   .of(context)
                                   .textTheme.bodySmall?.copyWith(
@@ -289,7 +289,7 @@ class DetailMusicScreen extends StatelessWidget {
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 2.w),
                                   child: Text(
-                                      '${controller.musicDetails?['media']['description'] ?? ''}',
+                                      '${controller.musicDetails?['description'] ?? ''}',
                                       style: Theme
                                   .of(context)
                                   .textTheme.bodySmall?.copyWith(
@@ -338,7 +338,7 @@ class DetailMusicScreen extends StatelessWidget {
                                     GestureDetector(
                                       onTap: (){
                                        var audioLength = controller.musicDetails?['file']['time'] ?? 5.0;
-                                        Get.find<MediaSuitController>().setDataEditAudio(controller.musicDetails?['media']['name']?? '' , controller.musicDetails?['file']['url'] , controller.musicDetails!['file_id'].toString() ,time: double.parse(audioLength));
+                                        Get.find<MediaSuitController>().setDataEditAudio(controller.musicDetails?['name']?? '' , controller.musicDetails?['file']['url'] , controller.musicDetails!['file_id'].toString() ,time: double.parse(audioLength));
                                         Get.toNamed(PageRoutes.MEDIASUIT);
                                         // print(audioLength);
                                       },

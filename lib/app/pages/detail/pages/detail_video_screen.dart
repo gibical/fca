@@ -102,7 +102,7 @@ class DetailVideoScreen extends StatelessWidget {
                                   height: 2.h,
                                 ),
                                 Text(
-                                  '${videoController.videoDetails?['media']['name']}',
+                                  '${videoController.videoDetails?['name']}',
                                   style: FontStyleApp.titleMedium.copyWith(
                                       color: AppColor.whiteColor,
                                       fontWeight: FontWeight.w600),
@@ -111,7 +111,7 @@ class DetailVideoScreen extends StatelessWidget {
                                   height: 1.h,
                                 ),
                                 Text(
-                                  '${videoController.videoDetails?['media']['description'] ?? ''}',
+                                  '${videoController.videoDetails?['description'] ?? ''}',
                                   style: FontStyleApp.bodyMedium.copyWith(
                                     color: AppColor.grayLightColor
                                         .withOpacity(0.8),
@@ -124,7 +124,7 @@ class DetailVideoScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       child: videoController
-                                                      .videoDetails?['user']
+                                                      .videoDetails?
                                                   ['image_url'] ==
                                               null
                                           ? CircleAvatar(
@@ -266,14 +266,12 @@ class DetailVideoScreen extends StatelessWidget {
                                                   .videoDetails?['genre']),
                                     CardMarkSinglePageWidget(
                                         label: 'details_8'.tr,
-                                        type: videoController.getTypeString(
-                                            videoController.videoDetails?[
-                                                    'media_type'] ??
-                                                1)),
+                                        type:  videoController.videoDetails?[
+                                        'media_type'] ),
                                     CardMarkSinglePageWidget(
                                         label: 'details_10'.tr,
                                         type:
-                                            '${videoController.videoDetails?['media']['language']}'),
+                                            '${videoController.videoDetails?['language']}'),
                                   ],
                                 ),
                                 SizedBox(

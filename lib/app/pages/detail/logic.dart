@@ -115,22 +115,22 @@ class DetailController extends GetxController {
   void fetchVideoData() async {
     print('DetailController.onInit 1 ');
 
-    await _fetchMediaData('videos', videoDetails, isLoadingVideos);
+    await _fetchMediaData('video', videoDetails, isLoadingVideos);
   }
 
   void fetchImageData() async {
     print('DetailController.onInit 2 ');
 
-    await _fetchMediaData('images', imageDetails, isLoadingImages);
+    await _fetchMediaData('image', imageDetails, isLoadingImages);
   }
 
   void fetchMusicData() async {
-    await _fetchMediaData('audios', musicDetails, isLoadingMusic);
+    await _fetchMediaData('audio', musicDetails, isLoadingMusic);
   }
 
   void fetchTextData() async {
 
-    await _fetchMediaData('texts', textDetails, isLoadingText);
+    await _fetchMediaData('text', textDetails, isLoadingText);
   }
 
 
@@ -148,8 +148,8 @@ class DetailController extends GetxController {
 
       final token = GetStorage().read("token");
       String apiUrl =
-          '${Constant.HTTP_HOST}$type/${Get.arguments['id']}';
-      print('DetailController._fetchMediaData = ${apiUrl}');
+          '${Constant.HTTP_HOST}assets/${Get.arguments['id']}' + '?${type}';
+      print('DetailController._fetchMediaData355 = ${apiUrl}');
       var response = await Dio().get(apiUrl, options: Options(headers: {
         'accept': 'application/json',
         'X-App': '_Android',
@@ -157,7 +157,8 @@ class DetailController extends GetxController {
         'Authorization': 'Bearer $token',
       }));
 
-     log('DetailController._fetchMediaData11111 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['media_type']}');
+      print('object2323');
+     log('DetailController._fetchMediaData111115 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['media_type']}');
       if (response.statusCode == 200) {
         details?.value = RxMap<String, dynamic>.from(response.data['data']);
         detailss = RxMap<String, dynamic>.from(response.data['data']);

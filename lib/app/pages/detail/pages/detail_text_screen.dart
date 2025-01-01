@@ -319,7 +319,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                           Wrap(
                             children: [
                               CardMarkSinglePageWidget(label: 'Suffix' , type: (logic.textDetails?['suffix'] ?? 'null') ),
-                              CardMarkSinglePageWidget(label: 'Type' , type: logic.getTypeString(logic.textDetails?['media_type']??1)),
+                              CardMarkSinglePageWidget(label: 'Type' , type: logic.textDetails?['media_type']),
                             ],
                           ),
                           SizedBox(
