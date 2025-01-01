@@ -125,7 +125,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
 
   void _getBestVideos() {
-    apiRequster.request("videos/newest", ApiRequster.MHETOD_GET, 2);
+    apiRequster.request("assets/newest"+'?media_type=video', ApiRequster.MHETOD_GET, 2);
 
   }
 
@@ -139,15 +139,15 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
 
   void _getMostVideos() {
-    apiRequster.request("images/most-viewed", ApiRequster.MHETOD_GET, 3);
+    apiRequster.request("assets/most-viewed"+'?media_type=image', ApiRequster.MHETOD_GET, 3);
 
   }
   void _getMostText() {
-    apiRequster.request("texts/most-viewed", ApiRequster.MHETOD_GET, 4);
+    apiRequster.request("assets/most-viewed"+'?media_type=text', ApiRequster.MHETOD_GET, 4);
 
   }
   void _getMostSongs() {
-    apiRequster.request("audios/newest", ApiRequster.MHETOD_GET, 5);
+    apiRequster.request("assets/newest"+'?media_type=audio', ApiRequster.MHETOD_GET, 5);
 
   }
 
@@ -170,7 +170,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
 
   void sendImageRecentlyReuqest() {
-    apiRequster.request("images/daily-recommended", ApiRequster.MHETOD_GET, 6);
+    apiRequster.request("assets/daily-recommended"+'?media_type=image', ApiRequster.MHETOD_GET, 6);
 
   }
 
@@ -181,7 +181,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
 
   void sendSoundRecentlyReuqest() {
 
-    apiRequster.request("audios/daily-recommended", ApiRequster.MHETOD_GET, 7);
+    apiRequster.request("assets/daily-recommended" +'?media_type=audio', ApiRequster.MHETOD_GET, 7);
 
   }
 
@@ -191,7 +191,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
   void sendTextRecentlyReuqest() {
 
-    apiRequster.request("texts/daily-recommended", ApiRequster.MHETOD_GET, 8);
+    apiRequster.request("assets/daily-recommended"+'?media_type=text', ApiRequster.MHETOD_GET, 8);
 
   }
 

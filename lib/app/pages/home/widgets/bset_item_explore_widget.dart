@@ -98,7 +98,7 @@ class BestItemExploreWidget extends GetView<HomeLogic> {
                   Container(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: Text(
-                        elementAt['media']['name'],
+                        elementAt['name'],
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: Color(0xFF666680),
@@ -225,7 +225,7 @@ class BestItemSongsWidget extends GetView<HomeLogic> {
                   Container(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: Text(
-                        elementAt['media']['name'],
+                        elementAt['name'],
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: Color(0xFF666680),
@@ -393,7 +393,7 @@ class BestTextWidget extends GetView<HomeLogic> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              model['media']['name'],
+                              model['name'],
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme
@@ -408,7 +408,7 @@ class BestTextWidget extends GetView<HomeLogic> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              model['media']['description'] ?? " ",
+                              model['description'] ?? " ",
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: Theme
