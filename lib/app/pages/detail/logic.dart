@@ -40,7 +40,7 @@ class DetailController extends GetxController {
   RxMap<String, dynamic>? detailss = RxMap<String, dynamic>();
   ScreenshotController screenshotController = ScreenshotController();
   List<ExternalAccountModel> externalAccountlist = [];
-
+  bool isExpandedViewBodyText = false;
   int index ;
   int enableChannel = 0 ;
 

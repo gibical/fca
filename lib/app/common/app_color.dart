@@ -126,6 +126,8 @@ class AppColor {
   static late Color primaryLightColor;
   static late Color primaryDarkColor;
   static late Color errorColor;
+  static  Color secondaryDark = '#000018'.toColor();
+
 
   static void init() {
     switch (F.appFlavor) {
@@ -158,6 +160,6 @@ class AppColor {
         break;
     }
 
-    whiteColor = const Color(0xffffffff); // ثابت برای همه طعم‌ها
+    whiteColor = const Color(0xffffffff);
   }
 }
