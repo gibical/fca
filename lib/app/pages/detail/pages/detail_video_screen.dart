@@ -55,300 +55,364 @@ class DetailVideoScreen extends StatelessWidget {
         backgroundColor: AppColor.secondaryDark,
 
         body: SafeArea(
-          child: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                elevation: 0,
-                toolbarHeight: 10.h,
-                surfaceTintColor: Colors.transparent,
-                pinned: true
-                ,
-                automaticallyImplyLeading: false,
-                flexibleSpace: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Obx((){
+            if(videoController.isLoadingVideos.value){
+              return   CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    elevation: 0,
+                    toolbarHeight: 10.h,
+                    surfaceTintColor: Colors.transparent,
+                    pinned: true
+                    ,
+                    automaticallyImplyLeading: false,
+                    flexibleSpace: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                      children: [
-                        AppbarBTNWidget(iconName: 'back1', onTap: () {
-                          Get.back();
-                        }),
+                          children: [
+                            AppbarBTNWidget(iconName: 'back1', onTap: () {
+                              Get.back();
+                            }),
 
-                        Text('Video' , style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600
-                        ),),
-                        AppbarBTNWidget(iconName: 'menu', onTap: () {  }),
+                            Text('Video' , style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600
+                            ),),
+                            AppbarBTNWidget(iconName: 'menu', onTap: () {  }),
 
-                      ],
-                    ),
-                  ),
-                ),
-                backgroundColor: AppColor.secondaryDark,
-              ),
-
-
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 18.0 , vertical: 2.h),
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: SizedBox(
-                          width: 35,
-                          height: 35,
-                          child: CachedNetworkImage(imageUrl: '' ,fit: BoxFit.cover, errorWidget: (context, url, error) {
-                            return Container(
-                              color: AppColor.primaryLightColor,
-                            );
-                          },placeholder: (context, url) {
-                             return Container(
-                               color: AppColor.primaryLightColor,
-                             );
-                          },),
+                          ],
                         ),
                       ),
-                      SizedBox(
-                        width: 10,
+                    ),
+                    backgroundColor: AppColor.secondaryDark,
+                  ),
+
+                  //--
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding:  EdgeInsets.only(top: Get.height / 2 - 100),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: AppColor.primaryColor,
+                          backgroundColor: AppColor.primaryColor.withOpacity(0.2),
+                        ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    )
+                  ),
+                  //--
+
+                ],
+              );
+            }else{
+              return   CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    elevation: 0,
+                    toolbarHeight: 10.h,
+                    surfaceTintColor: Colors.transparent,
+                    pinned: true
+                    ,
+                    automaticallyImplyLeading: false,
+                    flexibleSpace: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                          children: [
+                            AppbarBTNWidget(iconName: 'back1', onTap: () {
+                              Get.back();
+                            }),
+
+                            Text('Video' , style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600
+                            ),),
+                            AppbarBTNWidget(iconName: 'menu', onTap: () {  }),
+
+                          ],
+                        ),
+                      ),
+                    ),
+                    backgroundColor: AppColor.secondaryDark,
+                  ),
+
+
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding:  EdgeInsets.symmetric(horizontal: 18.0 , vertical: 2.h),
+                      child: Row(
                         children: [
-                          Text('data' , style: TextStyle(
-                            fontSize: 15
-                          ),),
-                          Text('Container' , style: TextStyle(
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: SizedBox(
+                              width: 35,
+                              height: 35,
+                              child: CachedNetworkImage(imageUrl: videoController
+                                  .videoDetails?['user']
+                              ['image_url'] ?? '' ,fit: BoxFit.cover, errorWidget: (context, url, error) {
+                                return Container(
+                                  color: AppColor.primaryLightColor,
+                                );
+                              },placeholder: (context, url) {
+                                return Container(
+                                  color: AppColor.primaryLightColor,
+                                );
+                              },),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('${ videoController
+                                  .videoDetails?['user']
+                              ['username'] }' , style: TextStyle(
+                                  fontSize: 15
+                              ),),
+                              Text('${ videoController
+                                  .videoDetails?['user']
+                              ['full_name'] }' , style: TextStyle(
+                                fontSize: 13,
+                                color: '#9C9CB8'.toColor(),
+                              ),),
+                            ],
+                          ),
+                          Spacer(),
+                          Text('16 Dec 2024, 6:50PM' , style: TextStyle(
                             fontSize: 13,
                             color: '#9C9CB8'.toColor(),
                           ),),
+
                         ],
                       ),
-                      Spacer(),
-                      Text('16 Dec 2024, 6:50PM' , style: TextStyle(
-                        fontSize: 13,
-                        color: '#9C9CB8'.toColor(),
+                    ),
+                  ),
+                  //--
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      child: SizedBox(
+                        height: 1.h,
+                      ),
+                    ),
+                  ),
+                  //--
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                      child: Container(
+
+                        height: 350,
+                        width: 350,
+                        decoration: BoxDecoration(
+
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(14.sp)
+                        ),
+                        child: PlayerVideo(),
+                      ),
+                    ),
+                  ),
+                  //--
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      child: SizedBox(
+                        height: 2.h,
+                      ),
+                    ),
+                  ),
+                  //--
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                      child: Row(
+                        children: [
+                          buildCustomDetailBTNWidget(iconName: 'Magic', onTap: (){}, name: 'Tools'),
+                          SizedBox(width: 8,),
+                          buildCustomDetailBTNWidget(iconName: 'globe', onTap: (){}, name: 'Publish'),
+                          Spacer(),
+                          buildCustomDetailBTNWidget(iconName: 'Forward', onTap: (){}, name: 'Share'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  //--
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      child: SizedBox(
+                        height: 2.h,
+                      ),
+                    ),
+                  ),
+                  //--
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                      child: Text('${videoController.videoDetails?['name']}' , style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600
                       ),),
-                      
-                    ],
-                  ),
-                ),
-              ),
-              //--
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  child: SizedBox(
-                    height: 1.h,
-                  ),
-                ),
-              ),
-              //--
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Container(
-
-                    height: 350,
-                    width: 350,
-                    decoration: BoxDecoration(
-
-                        color: Colors.black,
-                      borderRadius: BorderRadius.circular(14.sp)
                     ),
-                    child: PlayerVideo(),
                   ),
-                ),
-              ),
-              //--
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  child: SizedBox(
-                    height: 2.h,
-                  ),
-                ),
-              ),
-              //--
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Row(
-                    children: [
-                      buildCustomDetailBTNWidget(iconName: 'Magic', onTap: (){}, name: 'Tools'),
-                      SizedBox(width: 8,),
-                      buildCustomDetailBTNWidget(iconName: 'globe', onTap: (){}, name: 'Publish'),
-                      Spacer(),
-                      buildCustomDetailBTNWidget(iconName: 'Forward', onTap: (){}, name: 'Share'),
-                    ],
-                  ),
-                ),
-              ),
-              //--
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  child: SizedBox(
-                    height: 2.h,
-                  ),
-                ),
-              ),
-              //--
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Text('A Journey Through the Wild' , style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600
-                  ),),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: GestureDetector(
-                    onTap: (){
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                      child: GestureDetector(
+                        onTap: (){
 
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: testText == null
-                                ? ''
-                                : videoController.isExpandedViewBodyText
-                                ? testText
-                                : testText.length > 80
-                                ? testText.substring(0, 80) + ' '
-                                : videoController.videoDetails?['description'],
-                            style: TextStyle(
-                              color: '#9C9CB8'.toColor(),
-                            ),
-                          ),
-                          if (testText != null && !videoController.isExpandedViewBodyText && testText.length > 80)
-                            TextSpan(
-                              text: '...more',
-                              style: TextStyle(
-                                color: AppColor.primaryColor,
-                                fontWeight: FontWeight.bold,
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: videoController.videoDetails?['description']  == null
+                                    ? ''
+                                    : videoController.isExpandedViewBodyText
+                                    ? videoController.videoDetails!['description']
+                                    : videoController.videoDetails!['description'] .length > 80
+                                    ? videoController.videoDetails!['description'] .substring(0, 80) + ' '
+                                    : videoController.videoDetails?['description'],
+                                style: TextStyle(
+                                  color: '#9C9CB8'.toColor(),
+                                ),
                               ),
-                            ),
-                        ],
-                      ),
-                    ),
-
-                  ),
-                ),
-              ),
-              //--
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  child: SizedBox(
-                    height: 3.h,
-                  ),
-                ),
-              ),
-              //--
-
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: GestureDetector(
-                    onTap: (){
-
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Comments ',
-                            style: TextStyle(
-
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600
-                            ),
+                              if (videoController.videoDetails!['description']  != null && !videoController.isExpandedViewBodyText && videoController.videoDetails!['description'] .length > 80)
+                                TextSpan(
+                                  text: '...more',
+                                  style: TextStyle(
+                                    color: AppColor.primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                            ],
                           ),
+                        ),
 
-                            TextSpan(
-                              text: '(24)',
-                              style: TextStyle(
-                                color: '#9C9CB8'.toColor(),
-                                fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  //--
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      child: SizedBox(
+                        height: 3.h,
+                      ),
+                    ),
+                  ),
+                  //--
+
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                      child: GestureDetector(
+                        onTap: (){
+
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Comments ',
+                                style: TextStyle(
+
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600
+                                ),
                               ),
-                            ),
-                        ],
+
+                              TextSpan(
+                                text: '(24)',
+                                style: TextStyle(
+                                  color: '#9C9CB8'.toColor(),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
                       ),
                     ),
-
                   ),
-                ),
-              ),
-              //--
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  child: SizedBox(
-                    height: 1.h,
-                  ),
-                ),
-              ),
-              //--
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: TextField(
-
-                    decoration: InputDecoration(
-
-                      filled: true,
-                      hintText: 'Add a comment...',
-                      fillColor: '#0F0F26'.toColor(),
-                      contentPadding: EdgeInsets.symmetric(vertical: 13 , horizontal: 10),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-
-                        borderRadius: BorderRadius.circular(8.sp)
+                  //--
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      child: SizedBox(
+                        height: 1.h,
                       ),
-                      disabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-
-                          borderRadius: BorderRadius.circular(8.sp)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-
-                          borderRadius: BorderRadius.circular(8.sp)
-                      ),
-                      suffixIcon: Transform.scale(
-                          scale: 0.8,
-                          child: IconButton(onPressed: (){}, icon: SvgPicture.asset('assets/mediaverse/icons/send.svg' , height: 25,) ,))
                     ),
-                  )
-                ),
-              ),
-              //--
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  child: SizedBox(
-                    height: 2.h,
                   ),
-                ),
-              ),
-              //--
-              SliverList.builder(
-                  itemCount: 10,
-                  itemBuilder: (context , index){
-                return CommentBoxWidget();
-              }),
-              //--
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  child: SizedBox(
-                    height: 2.h,
+                  //--
+                  SliverToBoxAdapter(
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: TextField(
+
+                          decoration: InputDecoration(
+
+                              filled: true,
+                              hintText: 'Add a comment...',
+                              fillColor: '#0F0F26'.toColor(),
+                              contentPadding: EdgeInsets.symmetric(vertical: 13 , horizontal: 10),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+
+                                  borderRadius: BorderRadius.circular(8.sp)
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+
+                                  borderRadius: BorderRadius.circular(8.sp)
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+
+                                  borderRadius: BorderRadius.circular(8.sp)
+                              ),
+                              suffixIcon: Transform.scale(
+                                  scale: 0.8,
+                                  child: IconButton(onPressed: (){}, icon: SvgPicture.asset('assets/mediaverse/icons/send.svg' , height: 25,) ,))
+                          ),
+                        )
+                    ),
                   ),
-                ),
-              ),
-              //--
-            ],
-          ),
+                  //--
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      child: SizedBox(
+                        height: 2.h,
+                      ),
+                    ),
+                  ),
+                  //--
+                  SliverList.builder(
+                      itemCount: 10,
+                      itemBuilder: (context , index){
+                        return CommentBoxWidget();
+                      }),
+                  //--
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      child: SizedBox(
+                        height: 2.h,
+                      ),
+                    ),
+                  ),
+                  //--
+                ],
+              );
+            }
+          }),
+
+
+
         )
       ),
     );
@@ -460,347 +524,3 @@ class CommentBoxWidget extends StatelessWidget {
 
 
 
-
-//old v
-
-// class DetailVideoScreen extends StatelessWidget {
-//   DetailVideoScreen({super.key});
-//
-//   final videoController = Get.put(DetailController(4),
-//       tag: "${DateTime.now().microsecondsSinceEpoch}");
-//
-//   var idAssetMediaValte = Get.arguments['idAssetMedia'];
-//   @override
-//   Widget build(BuildContext context) {
-//     return WillPopScope(
-//       onWillPop: () async {
-//         if (Get.arguments['idAssetMedia'] == "idAssetMedia") {
-//           Get.offAllNamed(PageRoutes.WRAPPER);
-//         } else {
-//           Get.back();
-//         }
-//
-//         return false;
-//       },
-//       child: Scaffold(
-//         backgroundColor: AppColor.primaryDarkColor,
-//         bottomNavigationBar: Obx(() {
-//           if (videoController.isLoadingVideos.value) {
-//             return Center(child: CircularProgressIndicator());
-//           } else {
-//             if (videoController.videoDetails != null &&
-//                 videoController.videoDetails!.containsKey('asset') &&
-//                 videoController.videoDetails!['asset'] != null &&
-//                 videoController.videoDetails!['asset'].containsKey('plan')) {
-//               int plan = videoController.videoDetails!['asset']['license_type'];
-//               print(plan);
-//               if (plan == 1) {
-//                 return SizedBox();
-//               } else if ((plan == 2 || plan == 3)) {
-//                 return BuyCardWidget(
-//                     selectedItem: videoController.videoDetails,
-//                     title: videoController.videoDetails!['asset']
-//                     ['license_type'] ==
-//                         2
-//                         ? 'Ownership'
-//                         : videoController.videoDetails!['asset']
-//                     ['license_type'] ==
-//                         3
-//                         ? 'Subscribe'
-//                         : '',
-//                     price: videoController.videoDetails!['asset']['price']);
-//               } else {
-//                 return SizedBox();
-//               }
-//             } else {
-//               return SizedBox();
-//             }
-//           }
-//         }),
-//         body: Obx(() {
-//           return videoController.isLoadingVideos.value
-//               ? Center(child: CircularProgressIndicator())
-//               : Stack(
-//             children: [
-//               CustomScrollView(
-//                 slivers: [
-//                   CustomAppBarVideoAndImageDetailWidget(
-//                     selectedItem: videoController.videoDetails,
-//                     isVideo: true,
-//                     detailController: videoController,
-//                   ),
-//                   SliverToBoxAdapter(
-//                     child: Padding(
-//                       padding: EdgeInsets.symmetric(horizontal: 6.5.w),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           SizedBox(
-//                             height: 2.h,
-//                           ),
-//                           Text(
-//                             '${videoController.videoDetails?['name']}',
-//                             style: FontStyleApp.titleMedium.copyWith(
-//                                 color: AppColor.whiteColor,
-//                                 fontWeight: FontWeight.w600),
-//                           ),
-//                           SizedBox(
-//                             height: 1.h,
-//                           ),
-//                           Text(
-//                             '${videoController.videoDetails?['description'] ?? ''}',
-//                             style: FontStyleApp.bodyMedium.copyWith(
-//                               color: AppColor.grayLightColor
-//                                   .withOpacity(0.8),
-//                             ),
-//                           ),
-//                           SizedBox(
-//                             height: 2.h,
-//                           ),
-//                           Row(
-//                             children: [
-//                               Container(
-//                                 child: videoController
-//                                     .videoDetails?
-//                                 ['image_url'] ==
-//                                     null
-//                                     ? CircleAvatar(
-//                                   backgroundColor:
-//                                   AppColor.blueDarkColor,
-//                                 )
-//                                     : CircleAvatar(
-//                                   backgroundColor:
-//                                   AppColor.blueDarkColor,
-//                                   backgroundImage: NetworkImage(
-//                                       videoController
-//                                           .videoDetails?['user']
-//                                       ['image_url']),
-//                                 ),
-//                                 width: 7.w,
-//                               ),
-//                               CircleAvatar(
-//                                 radius: 3.w,
-//                               ),
-//                               SizedBox(
-//                                 width: 2.w,
-//                               ),
-//                               if (videoController
-//                                   .videoDetails?['asset'] !=
-//                                   null)
-//                                 Text(
-//                                   videoController.videoDetails?['asset']
-//                                   ['user']['username'],
-//                                   style: FontStyleApp.bodySmall.copyWith(
-//                                       color: AppColor.grayLightColor
-//                                           .withOpacity(0.8),
-//                                       fontSize: 13),
-//                                 ),
-//                               Spacer(),
-//                               GestureDetector(
-//                                 onTap: () {
-//                                   Get.bottomSheet(
-//                                       ReportBottomSheet(videoController));
-//                                 },
-//                                 child: Text(
-//                                   'details_6'.tr,
-//                                   style: FontStyleApp.bodySmall.copyWith(
-//                                       color: AppColor.grayLightColor
-//                                           .withOpacity(0.8),
-//                                       fontSize: 13),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                           SizedBox(
-//                             height: 2.h,
-//                           ),
-//                           if (!videoController.file_id
-//                               .toString()
-//                               .contains("null"))
-//                             Row(
-//                               children: [
-//                                 InkWell(
-//                                     onTap: () {
-//                                       videoController
-//                                           .videoConvertToAudio();
-//                                     },
-//                                     child: SvgPicture.asset(
-//                                       "assets/${F.assetTitle}/icons/icon__single-convert-to-audio.svg",
-//                                       width: 6.w,
-//                                     )),
-//                                 SizedBox(
-//                                   width: 3.w,
-//                                 ),
-//                                 InkWell(
-//                                     onTap: () {
-//                                       videoController.sendShareYouTube();
-//                                     },
-//                                     child: SvgPicture.asset(
-//                                       "assets/${F.assetTitle}/icons/icon__video-white.svg",
-//                                       width: 6.w,
-//                                     )),
-//                                 SizedBox(
-//                                   width: 3.w,
-//                                 ),
-//                                 InkWell(
-//                                     onTap: () {
-//                                       videoController.videoDubbing();
-//                                     },
-//                                     child: SvgPicture.asset(
-//                                       "assets/${F.assetTitle}/icons/dubbing.svg",
-//                                       width: 6.w,color: Colors.white,
-//                                     )),
-//                                 SizedBox(
-//                                   width: 3.w,
-//                                 ),
-//                                 GestureDetector(
-//                                   onTap: () {
-//                                     double videoLength =
-//                                     (videoController.videoDetails?[
-//                                     'file']['info']['time'] ??
-//                                         0)
-//                                         .toDouble();
-//
-//                                     Get.find<MediaSuitController>()
-//                                         .setDataEditVideo(
-//                                         videoController.videoDetails?[
-//                                         'media']['name'] ??
-//                                             '',
-//                                         videoController
-//                                             .videoDetails?['file']
-//                                         ['url'],
-//                                         videoLength,
-//                                         videoController
-//                                             .videoDetails!['file_id']
-//                                             .toString());
-//                                     Get.toNamed(PageRoutes.MEDIASUIT);
-//
-//                                   },
-//                                   child: Icon(Icons.edit),
-//                                 ),
-//                               ],
-//                             ),
-//                           if (!videoController.file_id
-//                               .toString()
-//                               .contains("null"))
-//                             SizedBox(
-//                               height: 3.h,
-//                             ),
-//                           Wrap(
-//                             children: [
-//                               //
-//                               if (videoController
-//                                   .videoDetails?['genre'] !=
-//                                   null)
-//                                 CardMarkSinglePageWidget(
-//                                     label: 'details_9'.tr,
-//                                     type: (videoController
-//                                         .videoDetails?['genre']
-//                                         .length >
-//                                         5)
-//                                         ? '${videoController.videoDetails?['genre'].substring(0, 5)}...'
-//                                         : videoController
-//                                         .videoDetails?['genre']),
-//                               CardMarkSinglePageWidget(
-//                                   label: 'details_8'.tr,
-//                                   type:  videoController.videoDetails?[
-//                                   'media_type'] ),
-//                               CardMarkSinglePageWidget(
-//                                   label: 'details_10'.tr,
-//                                   type:
-//                                   '${videoController.videoDetails?['language']}'),
-//                             ],
-//                           ),
-//                           SizedBox(
-//                             height: 4.h,
-//                           ),
-//                           GestureDetector(
-//                             onTap: () {
-//                               String itemId = videoController
-//                                   .videoDetails?['asset_id'];
-//                               print(itemId);
-//                               Get.toNamed(PageRoutes.COMMENT, arguments: {
-//                                 'id': itemId,
-//                                 "logic": videoController
-//                               });
-//                             },
-//                             child: CustomCommentSinglePageWidget(),
-//                           ),
-//                           SizedBox(
-//                             height: 30.h,
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//               Obx(() {
-//                 return Visibility(
-//                   visible: videoController.isEditAvaiblae.isTrue,
-//                   child: Align(
-//                     alignment: Alignment.bottomCenter,
-//                     child: DetailsBottomWidget(
-//                         videoController, PostType.video),
-//                   ),
-//                 );
-//               }),
-//               BackWidget(
-//                 idAssetMedia:
-//                 idAssetMediaValte == "idAssetMedia",
-//               )
-//             ],
-//           );
-//         }),
-//       ),
-//     );
-//   }
-// }
-//
-// class VideoDialog extends StatefulWidget {
-//   @override
-//   State<VideoDialog> createState() => _VideoDialogState();
-// }
-//
-// class _VideoDialogState extends State<VideoDialog> {
-//   final VideoPlayerController _controller = VideoPlayerController.network(
-//     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
-//   );
-//
-//   @override
-//   void dispose() {
-//     _controller.dispose();
-//     super.dispose();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return AlertDialog(
-//       title: Text('Video Dialog'),
-//       content: Container(
-//         width: double.maxFinite,
-//         child: AspectRatio(
-//           aspectRatio: _controller.value.aspectRatio,
-//           child: VideoPlayer(_controller),
-//         ),
-//       ),
-//       actions: [
-//         TextButton(
-//           onPressed: () {
-//             Navigator.of(context).pop();
-//           },
-//           child: Text('details_2'.tr),
-//         ),
-//       ],
-//     );
-//   }
-//
-//   @override
-//   void didChangeDependencies() {
-//     super.didChangeDependencies();
-//     _controller.initialize().then((_) {
-//       Get.back(result: true);
-//       _controller.play();
-//     });
-//   }
-// }
