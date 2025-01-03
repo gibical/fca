@@ -157,11 +157,13 @@ class DetailVideoScreen extends StatelessWidget {
                                   .videoDetails?['user']
                               ['image_url'] ?? '' ,fit: BoxFit.cover, errorWidget: (context, url, error) {
                                 return Container(
+                                  child: Center(child: SvgPicture.asset('assets/mediaverse/icons/userprofile.svg' , color: Colors.white,),),
                                   color: AppColor.primaryLightColor,
                                 );
                               },placeholder: (context, url) {
                                 return Container(
                                   color: AppColor.primaryLightColor,
+                                  child: Center(child: SvgPicture.asset('assets/mediaverse/icons/userprofile.svg' , color: Colors.white,),),
                                 );
                               },),
                             ),
@@ -483,10 +485,12 @@ class CommentBoxWidget extends StatelessWidget {
                       child: CachedNetworkImage(imageUrl: '' ,fit: BoxFit.cover, errorWidget: (context, url, error) {
                         return Container(
                           color: AppColor.primaryLightColor,
+                          child: Center(child: SvgPicture.asset('assets/mediaverse/icons/userprofile.svg' , color: Colors.white,),),
                         );
                       },placeholder: (context, url) {
                         return Container(
                           color: AppColor.primaryLightColor,
+                          child: Center(child: SvgPicture.asset('assets/mediaverse/icons/userprofile.svg' , color: Colors.white,),),
                         );
                       },),
                     ),
