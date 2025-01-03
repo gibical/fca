@@ -124,6 +124,7 @@ class AppColor {
   static late Color blueDarkColor;
   static late Color whiteColor;
   static late Color primaryLightColor;
+  static  Color primaryColor = '#2563EB'.toColor();
   static late Color primaryDarkColor;
   static late Color errorColor;
   static  Color secondaryDark = '#000018'.toColor();

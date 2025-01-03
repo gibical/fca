@@ -16,6 +16,7 @@ import 'package:mediaverse/app/pages/detail/widgets/buy_card_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/card_mark_singlepage_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
 import 'package:mediaverse/app/pages/detail/widgets/details_bottom_widget.dart';
+import 'package:mediaverse/app/pages/detail/widgets/player/player.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 import 'package:video_player/video_player.dart';
@@ -58,7 +59,10 @@ class DetailVideoScreen extends StatelessWidget {
             slivers: [
               SliverAppBar(
                 elevation: 0,
-                toolbarHeight: 9.h,
+                toolbarHeight: 10.h,
+                surfaceTintColor: Colors.transparent,
+                pinned: true
+                ,
                 automaticallyImplyLeading: false,
                 flexibleSpace: Center(
                   child: Padding(
@@ -145,12 +149,15 @@ class DetailVideoScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: Container(
+
                     height: 350,
                     width: 350,
                     decoration: BoxDecoration(
-                      color: Colors.orange,
+
+                        color: '#0F0F26'.toColor().withOpacity(0.5),
                       borderRadius: BorderRadius.circular(14.sp)
                     ),
+                    child: PlayerVideo(),
                   ),
                 ),
               ),
@@ -198,22 +205,148 @@ class DetailVideoScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Text(   testText == null
-                      ? ''
-                      : videoController.isExpandedViewBodyText
-                      ?testText
-                      : testText.length > 80
-                      ? testText
-                      .substring(0, 80) +
-                      '...more'
-                      : videoController.videoDetails?['description'] , style: TextStyle(
+                  child: GestureDetector(
+                    onTap: (){
 
+                    },
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: testText == null
+                                ? ''
+                                : videoController.isExpandedViewBodyText
+                                ? testText
+                                : testText.length > 80
+                                ? testText.substring(0, 80) + ' '
+                                : videoController.videoDetails?['description'],
+                            style: TextStyle(
+                              color: '#9C9CB8'.toColor(),
+                            ),
+                          ),
+                          if (testText != null && !videoController.isExpandedViewBodyText && testText.length > 80)
+                            TextSpan(
+                              text: '...more',
+                              style: TextStyle(
+                                color: AppColor.primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
 
-                    color: '#9C9CB8'.toColor(),
-
-                  ),),
+                  ),
                 ),
               ),
+              //--
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  child: SizedBox(
+                    height: 3.h,
+                  ),
+                ),
+              ),
+              //--
+
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: GestureDetector(
+                    onTap: (){
+
+                    },
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Comments ',
+                            style: TextStyle(
+
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600
+                            ),
+                          ),
+
+                            TextSpan(
+                              text: '(24)',
+                              style: TextStyle(
+                                color: '#9C9CB8'.toColor(),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+
+                  ),
+                ),
+              ),
+              //--
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  child: SizedBox(
+                    height: 1.h,
+                  ),
+                ),
+              ),
+              //--
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: TextField(
+
+                    decoration: InputDecoration(
+
+                      filled: true,
+                      hintText: 'Add a comment...',
+                      fillColor: '#0F0F26'.toColor(),
+                      contentPadding: EdgeInsets.symmetric(vertical: 13 , horizontal: 10),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+
+                        borderRadius: BorderRadius.circular(8.sp)
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+
+                          borderRadius: BorderRadius.circular(8.sp)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+
+                          borderRadius: BorderRadius.circular(8.sp)
+                      ),
+                      suffixIcon: Transform.scale(
+                          scale: 0.8,
+                          child: IconButton(onPressed: (){}, icon: SvgPicture.asset('assets/mediaverse/icons/send.svg' , height: 25,) ,))
+                    ),
+                  )
+                ),
+              ),
+              //--
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  child: SizedBox(
+                    height: 2.h,
+                  ),
+                ),
+              ),
+              //--
+              SliverList.builder(
+                  itemCount: 10,
+                  itemBuilder: (context , index){
+                return CommentBoxWidget();
+              }),
+              //--
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  child: SizedBox(
+                    height: 2.h,
+                  ),
+                ),
+              ),
+              //--
             ],
           ),
         )
@@ -256,6 +389,70 @@ class DetailVideoScreen extends StatelessWidget {
                         ),
                       ),
                     );
+  }
+}
+
+class CommentBoxWidget extends StatelessWidget {
+  const CommentBoxWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding:  EdgeInsets.symmetric(horizontal: 18.0 , vertical: 1.5.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+    
+          children: [
+            Container(
+              color: Colors.transparent,
+              child: Row(
+    
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: SizedBox(
+                      width: 35,
+                      height: 35,
+                      child: CachedNetworkImage(imageUrl: '' ,fit: BoxFit.cover, errorWidget: (context, url, error) {
+                        return Container(
+                          color: AppColor.primaryLightColor,
+                        );
+                      },placeholder: (context, url) {
+                        return Container(
+                          color: AppColor.primaryLightColor,
+                        );
+                      },),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text('username' , style: TextStyle(
+                    color: '#9C9CB8'.toColor()
+                  ),),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text('1w' , style: TextStyle(
+                    color: '#9C9CB8'.toColor()
+                  ),),
+                  Spacer(),
+                  SvgPicture.asset('assets/mediaverse/icons/menu.svg' , height: 20,)
+                ],
+              ),
+            ),
+    
+    
+            Padding(
+              padding: const EdgeInsets.only(left: 42.0 , right: 24),
+              child: Text('This video is a reminder of how incredible our planet is! Let’s do our part to protect and preserve.'),
+            )
+          ],
+        )
+    );
   }
 }
 

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:chewie/chewie.dart';
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/common/app_route.dart';
+import 'package:mediaverse/app/pages/detail/widgets/player/player.dart';
 import 'package:mediaverse/app/pages/detail/widgets/text_to_text.dart';
 import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
 import 'package:mediaverse/app/pages/wallet/view.dart';
@@ -84,7 +86,7 @@ class DetailController extends GetxController {
     isLoadingVideos.value = true;
     isLoadingText.value = true;
 
-
+    initPlayerVideo('https://f1.mediaverse.land/2024/09/06/07c86cbd-624a-4894-9501-091ceca054fe.mp4');
     initFunction();
 
   }
@@ -1018,5 +1020,71 @@ class DetailController extends GetxController {
   String formatDateTime(DateTime dateTime) {
     final DateFormat formatter = DateFormat('y-MM-dd HH:mm:ss'); // Use 'y' for year, 'MM' for zero-padded month, 'dd' for zero-padded day
     return formatter.format(dateTime);
+  }
+
+
+  //new Player Logic
+  VideoPlayerController? videoPlayerController;
+  ChewieController? chewieController;
+
+  final ValueNotifier<bool> isPlayingNotifier = ValueNotifier(true);
+  Rx<Duration> currentPosition = const Duration().obs;
+  RxBool showIconPlayPause = false.obs;
+
+  RxBool loadingVideo = true.obs;
+
+  //method
+  void updatePlayPauseState() {
+    isPlayingNotifier.value = videoPlayerController!.value.isPlaying;
+    currentPosition.value = videoPlayerController!.value.position;
+
+    if (showIconPlayPause.value) {
+      Future.delayed(const Duration(seconds: 1), () {
+        showIconPlayPause.value = false;
+      });
+    }
+  }
+
+  initPlayerVideo(String? url) async {
+    if (videoPlayerController != null) {
+      videoPlayerController?.removeListener(updatePlayPauseState);
+      chewieController?.dispose();
+      await videoPlayerController?.dispose();
+      videoPlayerController = null;
+      chewieController = null;
+    }
+    loadingVideo.value = true;
+
+    WidgetsBinding.instance.addPostFrameCallback(
+          (timeStamp) {
+        videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(
+            url ?? 'https://www.taxmann.com/emailer/images/CompaniesAct.mp4'));
+
+        videoPlayerController?.initialize().then(
+              (value) {
+            chewieController = ChewieController(
+              videoPlayerController: videoPlayerController!,
+              autoPlay: true,
+              looping: false,
+              showControlsOnInitialize: true,
+              allowFullScreen: true,
+              allowedScreenSleep: false,
+              allowMuting: true,
+              allowPlaybackSpeedChanging: false,
+              customControls:
+              CustomControls(isPlayingNotifier: isPlayingNotifier),
+              materialProgressColors: ChewieProgressColors(
+                playedColor: Colors.red,
+                handleColor: Colors.red,
+                backgroundColor: Colors.grey,
+                bufferedColor: Colors.lightGreen,
+              ),
+            );
+            loadingVideo.value = false;
+          },
+        );
+        videoPlayerController?.addListener(updatePlayPauseState);
+      },
+    );
   }
 }
