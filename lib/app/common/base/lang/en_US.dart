@@ -14,6 +14,7 @@ const Map<String, String> enUS = {
   "login_9":"Log in",
   "login_9_1":"Log in With Google",
   "login_9_2":"Log in With X",
+  "login_9_3":"Log in With",
   "login_10":"Email",
   "login_11":"Insert email..",
   "login_12":"Log in with phone",

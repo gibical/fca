@@ -4,12 +4,14 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/common/font_style.dart';
+import 'package:mediaverse/app/pages/login/OAuthService.dart';
 import 'package:mediaverse/app/pages/login/logic.dart';
 import 'package:mediaverse/app/pages/login/widgets/country_code_widget.dart';
 import 'package:mediaverse/app/pages/login/widgets/custom_register_button_widget.dart';
@@ -85,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                         child: _getMainWidgetByState(context)
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 2.h,
                     ),
 
                     ///Deleted We Dont have a sign up form
@@ -142,6 +144,20 @@ class LoginScreen extends StatelessWidget {
                           logic.getTwitterLogin();
                         }, title: 'login_9_2'.tr, isloading: logic
                             .isloadingTwitter.value),
+                      );
+                    }),
+                    SizedBox(
+                      height: 3.h,
+                    ),
+                    if(F.appFlavor != Flavor.ravi) Obx(() {
+                      return FocusDetector(
+                        onFocusGained: (){
+                          logic.twiiterButtonVisiable();
+                        },
+                        child: LoginCustomRegisterButtonWidget(onTap: () {
+                          logic.initiateLogin(context);
+                        }, title: "${'login_9_3'.tr} ${F.title}", isloading: logic
+                            .isloadingCustomLogin.value),
                       );
                     }),
                     SizedBox(
@@ -363,46 +379,44 @@ class LoginScreen extends StatelessWidget {
   }
 
   void _googleLogIn() async {
-    signInWithGoogle();
+   // signInWithGoogle();
+    oAuthFunction();
+  }
+
+  void oAuthFunction() async{
+    FlutterAppAuth appAuth = FlutterAppAuth();
+
+    OAuthService service = OAuthService();
+    service.initiateLogin(Get.context!);
   }
 }
 
 class Authentication {
   static Future<User?> signInWithGoogle() async {
-    print('Authentication.signInWithGoogle 1 ');
     FirebaseAuth auth = FirebaseAuth.instance;
-    print('Authentication.signInWithGoogle 2 ');
     final GoogleSignIn googleSignIn = GoogleSignIn();
-    print('Authentication.signInWithGoogle 3 ');
 
     final GoogleSignInAccount? googleSignInAccount = await googleSignIn
         .signIn();
-    print('Authentication.signInWithGoogle 4 ');
     if (googleSignInAccount != null) {
-      print('Authentication.signInWithGoogle 5 ');
       final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount
           .authentication;
-      print('Authentication.signInWithGoogle 6 ');
 
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
-      print('Authentication.signInWithGoogle 7 ');
 
       try {
-        print('Authentication.signInWithGoogle 7 ');
         final UserCredential userCredential = await auth.signInWithCredential(
             credential);
-        print('Authentication.signInWithGoogle 8 ${userCredential.credential!
-            .accessToken}');
+
         return userCredential.user;
       } on FirebaseAuthException catch (e) {
-        print('Authentication.signInWithGoogle 9 ');
+        print('Authentication.signInWithGoogle catch = ${e}');
         // Handle error
       }
     }
-    print('Authentication.signInWithGoogle 10 ');
     return null;
   }
 }

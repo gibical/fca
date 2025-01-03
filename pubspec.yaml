@@ -99,6 +99,9 @@ dependencies:
   country_flags: ^3.0.0
   lecle_yoyo_player: ^0.0.8
   flutter_vlc_player: ^7.4.2
+  flutter_appauth: ^8.0.3
+  crypto: ^3.0.6
+  webview_flutter: ^4.8.0
 
 dev_dependencies:
   flutter_test:
