@@ -154,7 +154,7 @@ class DetailVideoScreen extends StatelessWidget {
                     width: 350,
                     decoration: BoxDecoration(
 
-                        color: '#0F0F26'.toColor().withOpacity(0.5),
+                        color: Colors.black,
                       borderRadius: BorderRadius.circular(14.sp)
                     ),
                     child: PlayerVideo(),
