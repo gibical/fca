@@ -36,7 +36,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:http/http.dart' as http;
 
 class LoginController extends GetxController implements RequestInterface {
-  final String clientId = "9ddd87cf-12ac-464b-8fbb-874e88a10b98";
+  final String clientId = "${F.oAuthCliendID}";
   final String redirectUri = "oauth://mediaverse.global/redirect";
   final String authUrl = '${F.apiurl.substring(0, F.apiurl.lastIndexOf("/") - 2)}oauth/authorize';
   final String tokenUrl = '${F.apiurl.substring(0, F.apiurl.lastIndexOf("/") - 2)}oauth/token';

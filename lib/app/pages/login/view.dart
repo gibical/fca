@@ -152,7 +152,7 @@ class LoginScreen extends StatelessWidget {
                     if(F.appFlavor != Flavor.ravi) Obx(() {
                       return FocusDetector(
                         onFocusGained: (){
-                          logic.twiiterButtonVisiable();
+
                         },
                         child: LoginCustomRegisterButtonWidget(onTap: () {
                           logic.initiateLogin(context);
@@ -379,16 +379,10 @@ class LoginScreen extends StatelessWidget {
   }
 
   void _googleLogIn() async {
-   // signInWithGoogle();
-    oAuthFunction();
+    signInWithGoogle();
+   // oAuthFunction();
   }
 
-  void oAuthFunction() async{
-    FlutterAppAuth appAuth = FlutterAppAuth();
-
-    OAuthService service = OAuthService();
-    service.initiateLogin(Get.context!);
-  }
 }
 
 class Authentication {
