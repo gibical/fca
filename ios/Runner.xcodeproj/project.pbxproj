@@ -55,9 +55,12 @@
 
 /* Begin PBXFileReference section */
 		00546822903DECE090FFB12F /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0990D4EDBADAFC2609E8247E /* Pods-Runner.profile-gibical.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-gibical.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-gibical.xcconfig"; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
+		188079492D24332200AC590F /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		1FDF17D436620464CBF29481 /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		237003ED69386F275B5B708A /* Pods-Runner.release-ravi.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-ravi.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-ravi.xcconfig"; sourceTree = "<group>"; };
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
@@ -65,13 +68,19 @@
 		4589A8598D044C9F574698D3 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		49C42684306490974530AC1F /* gibicalProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = gibicalProfile.xcconfig; path = Flutter/gibicalProfile.xcconfig; sourceTree = "<group>"; };
 		4CF37A406D608A6DAB51AF40 /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
+		50E7004AEFCE182FDFB11341 /* Pods-Runner.profile-mediaverse.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-mediaverse.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-mediaverse.xcconfig"; sourceTree = "<group>"; };
+		50F93E212D2A07D227FC91EB /* Pods-Runner.release-mediaverse.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-mediaverse.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-mediaverse.xcconfig"; sourceTree = "<group>"; };
 		54CD4A8296AE038E30AA9FEC /* Pods_RunnerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5909BE49DFAFEE1F79EB3FA1 /* Pods-RunnerTests.release-mediaverse.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release-mediaverse.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release-mediaverse.xcconfig"; sourceTree = "<group>"; };
+		5D16CBC8775AD40F15B70DD1 /* Pods-Runner.profile-ravi.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-ravi.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-ravi.xcconfig"; sourceTree = "<group>"; };
 		5E132D145D87659F0E8A55C2 /* mediaverseProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = mediaverseProfile.xcconfig; path = Flutter/mediaverseProfile.xcconfig; sourceTree = "<group>"; };
 		601F71DEA674A485F94B605C /* gibicalRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = gibicalRelease.xcconfig; path = Flutter/gibicalRelease.xcconfig; sourceTree = "<group>"; };
 		62AEC9CE3351D023300AFC14 /* mediaverseDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = mediaverseDebug.xcconfig; path = Flutter/mediaverseDebug.xcconfig; sourceTree = "<group>"; };
+		6FDB89EF6B394186FA79A74F /* Pods-RunnerTests.profile-mediaverse.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile-mediaverse.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile-mediaverse.xcconfig"; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
+		80F1DE37AB311B7EF30C96F5 /* Pods-RunnerTests.release-ravi.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release-ravi.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release-ravi.xcconfig"; sourceTree = "<group>"; };
 		901905CB9309290DC4E58A33 /* gibicalLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = gibicalLaunchScreen.storyboard; path = Runner/gibicalLaunchScreen.storyboard; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
@@ -82,12 +91,22 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9868B9F31E8B1D6E1D9834BE /* raviProfile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = raviProfile.xcconfig; path = Flutter/raviProfile.xcconfig; sourceTree = "<group>"; };
 		98A2DA4FAA0D72213395EB34 /* raviLaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = raviLaunchScreen.storyboard; path = Runner/raviLaunchScreen.storyboard; sourceTree = "<group>"; };
+		9937BCB3BCC5C4C04611D287 /* Pods-RunnerTests.profile-gibical.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile-gibical.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile-gibical.xcconfig"; sourceTree = "<group>"; };
+		9A69C32E159BB07B3A21AA0A /* Pods-RunnerTests.profile-ravi.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile-ravi.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile-ravi.xcconfig"; sourceTree = "<group>"; };
+		9DA80B0DC88277A9BF9A924F /* Pods-RunnerTests.debug-ravi.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug-ravi.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug-ravi.xcconfig"; sourceTree = "<group>"; };
 		A1E88F839A909BCE2741D57F /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		AEAF42354A3422676788F205 /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
+		B68730318452AEFE28AE8266 /* Pods-Runner.debug-mediaverse.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-mediaverse.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-mediaverse.xcconfig"; sourceTree = "<group>"; };
+		BABE10956510014DC1AF5435 /* Pods-Runner.release-gibical.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-gibical.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-gibical.xcconfig"; sourceTree = "<group>"; };
 		BD5D3480137E9929A0716B8A /* raviDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = raviDebug.xcconfig; path = Flutter/raviDebug.xcconfig; sourceTree = "<group>"; };
 		C34B11263C1B8E71C3100988 /* gibicalDebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = gibicalDebug.xcconfig; path = Flutter/gibicalDebug.xcconfig; sourceTree = "<group>"; };
 		C7C842F3F72E085D25F9CD1D /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
+		C828887BB18F0DC7FA76F44D /* Pods-Runner.debug-ravi.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-ravi.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-ravi.xcconfig"; sourceTree = "<group>"; };
+		CC2548D710F858E5F77D38A7 /* Pods-RunnerTests.debug-gibical.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug-gibical.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug-gibical.xcconfig"; sourceTree = "<group>"; };
+		CE8983CF447457FAC1B8F92B /* Pods-Runner.debug-gibical.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-gibical.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-gibical.xcconfig"; sourceTree = "<group>"; };
 		E0B01CC2ED113756AD4D2802 /* mediaverseRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = mediaverseRelease.xcconfig; path = Flutter/mediaverseRelease.xcconfig; sourceTree = "<group>"; };
+		E70B5052AAFD64AB0EE84A06 /* Pods-RunnerTests.release-gibical.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release-gibical.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release-gibical.xcconfig"; sourceTree = "<group>"; };
+		EFED4496149DC45DE9B75F2E /* Pods-RunnerTests.debug-mediaverse.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug-mediaverse.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug-mediaverse.xcconfig"; sourceTree = "<group>"; };
 		F69EF53ED47B2BF705F41E15 /* raviRelease.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = raviRelease.xcconfig; path = Flutter/raviRelease.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -175,6 +194,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				188079492D24332200AC590F /* Runner.entitlements */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
@@ -196,8 +216,25 @@
 				1FDF17D436620464CBF29481 /* Pods-RunnerTests.debug.xcconfig */,
 				AEAF42354A3422676788F205 /* Pods-RunnerTests.release.xcconfig */,
 				4CF37A406D608A6DAB51AF40 /* Pods-RunnerTests.profile.xcconfig */,
+				B68730318452AEFE28AE8266 /* Pods-Runner.debug-mediaverse.xcconfig */,
+				50E7004AEFCE182FDFB11341 /* Pods-Runner.profile-mediaverse.xcconfig */,
+				50F93E212D2A07D227FC91EB /* Pods-Runner.release-mediaverse.xcconfig */,
+				CE8983CF447457FAC1B8F92B /* Pods-Runner.debug-gibical.xcconfig */,
+				0990D4EDBADAFC2609E8247E /* Pods-Runner.profile-gibical.xcconfig */,
+				BABE10956510014DC1AF5435 /* Pods-Runner.release-gibical.xcconfig */,
+				C828887BB18F0DC7FA76F44D /* Pods-Runner.debug-ravi.xcconfig */,
+				5D16CBC8775AD40F15B70DD1 /* Pods-Runner.profile-ravi.xcconfig */,
+				237003ED69386F275B5B708A /* Pods-Runner.release-ravi.xcconfig */,
+				EFED4496149DC45DE9B75F2E /* Pods-RunnerTests.debug-mediaverse.xcconfig */,
+				6FDB89EF6B394186FA79A74F /* Pods-RunnerTests.profile-mediaverse.xcconfig */,
+				5909BE49DFAFEE1F79EB3FA1 /* Pods-RunnerTests.release-mediaverse.xcconfig */,
+				CC2548D710F858E5F77D38A7 /* Pods-RunnerTests.debug-gibical.xcconfig */,
+				9937BCB3BCC5C4C04611D287 /* Pods-RunnerTests.profile-gibical.xcconfig */,
+				E70B5052AAFD64AB0EE84A06 /* Pods-RunnerTests.release-gibical.xcconfig */,
+				9DA80B0DC88277A9BF9A924F /* Pods-RunnerTests.debug-ravi.xcconfig */,
+				9A69C32E159BB07B3A21AA0A /* Pods-RunnerTests.profile-ravi.xcconfig */,
+				80F1DE37AB311B7EF30C96F5 /* Pods-RunnerTests.release-ravi.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -553,6 +590,183 @@
 			};
 			name = "Debug-gibical";
 		};
+		184858FD2D235F2000B0B594 /* Debug-mediaverse */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B68730318452AEFE28AE8266 /* Pods-Runner.debug-mediaverse.xcconfig */;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				PRODUCT_NAME = Runner;
+			};
+			name = "Debug-mediaverse";
+		};
+		184858FE2D235F2000B0B594 /* Profile-mediaverse */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50E7004AEFCE182FDFB11341 /* Pods-Runner.profile-mediaverse.xcconfig */;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				PRODUCT_NAME = Runner;
+			};
+			name = "Profile-mediaverse";
+		};
+		184858FF2D235F2000B0B594 /* Release-mediaverse */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50F93E212D2A07D227FC91EB /* Pods-Runner.release-mediaverse.xcconfig */;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				PRODUCT_NAME = Runner;
+			};
+			name = "Release-mediaverse";
+		};
+		184859002D235F2000B0B594 /* Debug-gibical */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE8983CF447457FAC1B8F92B /* Pods-Runner.debug-gibical.xcconfig */;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				DEVELOPMENT_TEAM = 37B8PZ3LMW;
+				PRODUCT_NAME = Runner;
+			};
+			name = "Debug-gibical";
+		};
+		184859012D235F2000B0B594 /* Profile-gibical */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0990D4EDBADAFC2609E8247E /* Pods-Runner.profile-gibical.xcconfig */;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				DEVELOPMENT_TEAM = 37B8PZ3LMW;
+				PRODUCT_NAME = Runner;
+			};
+			name = "Profile-gibical";
+		};
+		184859022D235F2000B0B594 /* Release-gibical */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BABE10956510014DC1AF5435 /* Pods-Runner.release-gibical.xcconfig */;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				DEVELOPMENT_TEAM = 37B8PZ3LMW;
+				PRODUCT_NAME = Runner;
+			};
+			name = "Release-gibical";
+		};
+		184859032D235F2000B0B594 /* Debug-ravi */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C828887BB18F0DC7FA76F44D /* Pods-Runner.debug-ravi.xcconfig */;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				PRODUCT_NAME = Runner;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+			};
+			name = "Debug-ravi";
+		};
+		184859042D235F2000B0B594 /* Profile-ravi */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D16CBC8775AD40F15B70DD1 /* Pods-Runner.profile-ravi.xcconfig */;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				PRODUCT_NAME = Runner;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+			};
+			name = "Profile-ravi";
+		};
+		184859052D235F2000B0B594 /* Release-ravi */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 237003ED69386F275B5B708A /* Pods-Runner.release-ravi.xcconfig */;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				PRODUCT_NAME = Runner;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+			};
+			name = "Release-ravi";
+		};
+		184859062D235F2000B0B594 /* Debug-mediaverse */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EFED4496149DC45DE9B75F2E /* Pods-RunnerTests.debug-mediaverse.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = RunnerTests;
+			};
+			name = "Debug-mediaverse";
+		};
+		184859072D235F2000B0B594 /* Profile-mediaverse */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6FDB89EF6B394186FA79A74F /* Pods-RunnerTests.profile-mediaverse.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = RunnerTests;
+			};
+			name = "Profile-mediaverse";
+		};
+		184859082D235F2000B0B594 /* Release-mediaverse */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5909BE49DFAFEE1F79EB3FA1 /* Pods-RunnerTests.release-mediaverse.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = RunnerTests;
+			};
+			name = "Release-mediaverse";
+		};
+		184859092D235F2000B0B594 /* Debug-gibical */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC2548D710F858E5F77D38A7 /* Pods-RunnerTests.debug-gibical.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = RunnerTests;
+			};
+			name = "Debug-gibical";
+		};
+		1848590A2D235F2000B0B594 /* Profile-gibical */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9937BCB3BCC5C4C04611D287 /* Pods-RunnerTests.profile-gibical.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = RunnerTests;
+			};
+			name = "Profile-gibical";
+		};
+		1848590B2D235F2000B0B594 /* Release-gibical */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E70B5052AAFD64AB0EE84A06 /* Pods-RunnerTests.release-gibical.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = RunnerTests;
+			};
+			name = "Release-gibical";
+		};
+		1848590C2D235F2000B0B594 /* Debug-ravi */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9DA80B0DC88277A9BF9A924F /* Pods-RunnerTests.debug-ravi.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = RunnerTests;
+			};
+			name = "Debug-ravi";
+		};
+		1848590D2D235F2000B0B594 /* Profile-ravi */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A69C32E159BB07B3A21AA0A /* Pods-RunnerTests.profile-ravi.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = RunnerTests;
+			};
+			name = "Profile-ravi";
+		};
+		1848590E2D235F2000B0B594 /* Release-ravi */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 80F1DE37AB311B7EF30C96F5 /* Pods-RunnerTests.release-ravi.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = RunnerTests;
+			};
+			name = "Release-ravi";
+		};
 		22C2FF7E5F332FFD24419B0A /* Release-ravi */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F69EF53ED47B2BF705F41E15 /* raviRelease.xcconfig */;
@@ -682,7 +896,9 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -1006,7 +1222,9 @@
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -1028,7 +1246,9 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
@@ -1415,6 +1635,15 @@
 				331C8088294A63A400263BE5 /* Debug */,
 				331C8089294A63A400263BE5 /* Release */,
 				331C808A294A63A400263BE5 /* Profile */,
+				184859062D235F2000B0B594 /* Debug-mediaverse */,
+				184859072D235F2000B0B594 /* Profile-mediaverse */,
+				184859082D235F2000B0B594 /* Release-mediaverse */,
+				184859092D235F2000B0B594 /* Debug-gibical */,
+				1848590A2D235F2000B0B594 /* Profile-gibical */,
+				1848590B2D235F2000B0B594 /* Release-gibical */,
+				1848590C2D235F2000B0B594 /* Debug-ravi */,
+				1848590D2D235F2000B0B594 /* Profile-ravi */,
+				1848590E2D235F2000B0B594 /* Release-ravi */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1444,6 +1673,15 @@
 				97C147061CF9000F007C117D /* Debug */,
 				97C147071CF9000F007C117D /* Release */,
 				249021D4217E4FDB00AE95B9 /* Profile */,
+				184858FD2D235F2000B0B594 /* Debug-mediaverse */,
+				184858FE2D235F2000B0B594 /* Profile-mediaverse */,
+				184858FF2D235F2000B0B594 /* Release-mediaverse */,
+				184859002D235F2000B0B594 /* Debug-gibical */,
+				184859012D235F2000B0B594 /* Profile-gibical */,
+				184859022D235F2000B0B594 /* Release-gibical */,
+				184859032D235F2000B0B594 /* Debug-ravi */,
+				184859042D235F2000B0B594 /* Profile-ravi */,
+				184859052D235F2000B0B594 /* Release-ravi */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
