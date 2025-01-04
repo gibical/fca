@@ -88,7 +88,7 @@ class DetailController extends GetxController {
 
     initPlayerVideo('https://f1.mediaverse.land/2024/09/06/07c86cbd-624a-4894-9501-091ceca054fe.mp4');
     initFunction();
-
+    fetchMediaComments();
   }
 
 
@@ -252,10 +252,10 @@ class DetailController extends GetxController {
     player.seek(seekPosition);
   }
 
-  
-  
-  
-  
+
+
+
+
 //==================================== get comment Detail page =======================================//
   var isLoadingComment = true.obs;
   RxMap<String, dynamic>? commentsData = RxMap<String, dynamic>();

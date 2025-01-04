@@ -56,7 +56,7 @@ class DetailVideoScreen extends StatelessWidget {
 
         body: SafeArea(
           child: Obx((){
-            if(videoController.isLoadingVideos.value){
+            if(videoController.isLoadingVideos.value ||videoController.videoDetails!.isEmpty ){
               return   CustomScrollView(
                 slivers: [
                   SliverAppBar(
@@ -321,7 +321,7 @@ class DetailVideoScreen extends StatelessWidget {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: 'Comments ',
+                                text: 'details_12'.tr ,
                                 style: TextStyle(
 
                                     fontSize: 18,
@@ -330,7 +330,7 @@ class DetailVideoScreen extends StatelessWidget {
                               ),
 
                               TextSpan(
-                                text: '(24)',
+                                text: ' (24)',
                                 style: TextStyle(
                                   color: '#9C9CB8'.toColor(),
                                   fontWeight: FontWeight.bold,
@@ -356,6 +356,7 @@ class DetailVideoScreen extends StatelessWidget {
                     child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 18.0),
                         child: TextField(
+                          controller: videoController.commentTextController,
 
                           decoration: InputDecoration(
 
@@ -380,7 +381,13 @@ class DetailVideoScreen extends StatelessWidget {
                               ),
                               suffixIcon: Transform.scale(
                                   scale: 0.8,
-                                  child: IconButton(onPressed: (){}, icon: SvgPicture.asset('assets/mediaverse/icons/send.svg' , height: 25,) ,))
+                                  child: IconButton(onPressed: ()async{
+                                    videoController.postComment();
+                                    videoController.commentTextController.text ='';
+                                    videoController.isLoadingComment.value = true;
+                                   await Future.delayed(Duration(seconds: 1));
+                                    videoController.fetchMediaComments();
+                                  }, icon: SvgPicture.asset('assets/mediaverse/icons/send.svg' , height: 25,) ,))
                           ),
                         )
                     ),
@@ -394,11 +401,32 @@ class DetailVideoScreen extends StatelessWidget {
                     ),
                   ),
                   //--
-                  SliverList.builder(
-                      itemCount: 10,
-                      itemBuilder: (context , index){
-                        return CommentBoxWidget();
-                      }),
+
+                  Obx(() {
+                    if (videoController.isLoadingComment.value) {
+                      return SliverToBoxAdapter(child: Center(child: CupertinoActivityIndicator(
+                        color: AppColor.primaryColor,
+
+                      )));
+                    } else if (videoController.commentsData == null ||
+                        videoController.commentsData!.isEmpty) {
+                      return SliverToBoxAdapter(
+                        child: SizedBox()
+                      );
+                    } else {
+                      return         SliverList.builder(
+                          itemCount:    videoController.commentsData!['data'].length,
+                          itemBuilder: (context , index){
+
+                            final comment =
+                            videoController.commentsData!['data'][index];
+                            return CommentBoxWidget(data: comment,);
+                          });
+
+
+                    }
+                  }),
+
                   //--
                   SliverToBoxAdapter(
                     child: SizedBox(
@@ -460,9 +488,10 @@ class DetailVideoScreen extends StatelessWidget {
 
 class CommentBoxWidget extends StatelessWidget {
   const CommentBoxWidget({
-    super.key,
+    super.key, required this.data,
   });
 
+  final data ;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -498,7 +527,7 @@ class CommentBoxWidget extends StatelessWidget {
                   SizedBox(
                     width: 8,
                   ),
-                  Text('username' , style: TextStyle(
+                  Text('${data['user']['username']}' , style: TextStyle(
                     color: '#9C9CB8'.toColor()
                   ),),
                   SizedBox(
@@ -516,7 +545,7 @@ class CommentBoxWidget extends StatelessWidget {
     
             Padding(
               padding: const EdgeInsets.only(left: 42.0 , right: 24),
-              child: Text('This video is a reminder of how incredible our planet is! Let’s do our part to protect and preserve.'),
+              child: Text('${data['body'].toString()}'),
             )
           ],
         )
