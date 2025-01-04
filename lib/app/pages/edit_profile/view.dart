@@ -352,6 +352,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   child: fieldEditAssetWidget(title: 'Full Ownership', onTap: () {
                     _runCustomSelectBottomEditeAssetSheet(
 
+                      isLicenceType: true,
                       isSearchBox: false,
                       title:'Licence type' ,models: [
                       "editprof_13".tr,
@@ -436,6 +437,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     required String title,
     required TextEditingController? value,
     bool isSearchBox = true,
+    bool isLicenceType = false,
   }) {
     List<String> filteredModels = List.from(models);
     final TextEditingController searchController = TextEditingController();
@@ -457,13 +459,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 3.h),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: Row(
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 3.h),
+                      Row(
                         children: [
                           RotatedBox(
                             quarterTurns: 2,
@@ -487,16 +489,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           Spacer(),
                         ],
                       ),
-                    ),
-                    SizedBox(height: 3.h),
+                      SizedBox(height: 3.h),
 
-                    if (isSearchBox)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                        child: TextField(
+                      if (isSearchBox)
+                        TextField(
                           controller: searchController,
                           onChanged: (query) {
-
                             setState(() {
                               filteredModels = models
                                   .where((item) =>
@@ -528,100 +526,144 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                           ),
                         ),
-                      ),
-                    SizedBox(height: isSearchBox ? 2.h : 0),
+                      SizedBox(height: isSearchBox ? 2.h : 0),
 
-                    Expanded(
-                      child: ListView.builder(
-                        padding: EdgeInsets.only(bottom: 75),
-                        itemCount: filteredModels.length,
-                        itemBuilder: (context, index) {
-                          final item = filteredModels[index];
-                          final isSelected = value?.text == item;
+                      Expanded(
+                        child: ListView.builder(
+                          padding: EdgeInsets.only(bottom: 75),
+                          itemCount: filteredModels.length,
+                          itemBuilder: (context, index) {
+                            final item = filteredModels[index];
+                            final isSelected = value?.text == item;
 
-                          return InkWell(
-                            onTap: () {
-                              setState(() {
-                                value?.text = item;
-                              });
-                          //    Get.back();
-                            },
-                            child: Container(
-                              height: 3.h,
-                              margin: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-                              child: Row(
+                            return InkWell(
+                              onTap: () {
+                                setState(() {
+                                  value?.text = item;
+                                });
+                              },
+                              child: Column(
                                 children: [
-                                  Checkbox(
-                                    value: isSelected,
-                                    activeColor: Colors.white,
-                                    onChanged: (_) {},
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6),
-                                      side: BorderSide(
-                                        color: '9C9CB8'.toColor(),
-                                        width: 1,
+                                  Container(
+                                    height: 3.h,
+                                    margin: EdgeInsets.symmetric(vertical: 6),
+                                    child: Row(
+                                      children: [
+                                        if (isLicenceType)
+                                          Container(
+                                            width: 20,
+                                            height: 20,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color: isSelected
+                                                    ? '2563EB'.toColor()
+                                                    : '9C9CB8'.toColor(),
+                                                width: isSelected ? 5.5 : 1,
+                                              ),
+                                            ),
+                                          )
+                                        else
+                                          SizedBox(
+                                            width: 24,
+                                            height: 24,
+                                            child: Checkbox(
+                                              value: isSelected,
+                                              activeColor: Colors.white,
+                                              onChanged: (_) {},
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(6),
+                                                side: BorderSide(
+                                                  color: '9C9CB8'.toColor(),
+                                                  width: 1,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(
+                                          item,
+                                          style: TextStyle(
+                                            color: isSelected ? Colors.white : '9C9CB8'.toColor(),
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (item == "editprof_14".tr && isSelected)
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                      child: TextField(
+                                        textDirection: TextDirection.ltr,
+                                        decoration: InputDecoration(
+                                          hintText: '00.00',
+                                          hintTextDirection: TextDirection.ltr,
+                                          hintStyle: TextStyle(color: '9C9CB8'.toColor()),
+                                          fillColor: '#17172E'.toColor(),
+                                          filled: true,
+                                          suffixIcon: IconButton(onPressed: null, icon: Text('EUR' , style: TextStyle(
+
+                                            color: '9C9CB8'.toColor()
+                                          ),),),
+                                          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(8.sp),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Text(
-                                    item,
-                                    style: TextStyle(
-                                      color: isSelected ? Colors.white : '9C9CB8'.toColor(),
-                                      fontSize: 15,
-                                    ),
-                                  ),
                                 ],
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
-                    ),
-
-                  ],
+                    ],
+                  ),
                 ),
                 Container(
                   height: 80,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        colors: [
-                          '0F0F26'.toColor(),
-                          Colors.transparent,
-                        ],
-                      ),
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        '0F0F26'.toColor(),
+                        Colors.transparent,
+                      ],
+                    ),
                     boxShadow: [
                       BoxShadow(
-                         color: '0F0F26'.toColor(),
-
+                        color: '0F0F26'.toColor(),
                         blurRadius: 50,
-
-                        spreadRadius: 30
+                        spreadRadius: 30,
                       ),
-                    ]
+                    ],
                   ),
                   child: Center(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0 ,  ),
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
                       child: SizedBox(
-
                         width: double.infinity,
                         height: 45,
-
-
                         child: Material(
-                            color: '2563EB'.toColor(),
-
-                            
+                          color: '2563EB'.toColor(),
+                          borderRadius: BorderRadius.circular(100),
+                          child: InkWell(
                             borderRadius: BorderRadius.circular(100),
-                            child: InkWell(
-                                borderRadius: BorderRadius.circular(100),
-                              splashColor: Colors.white.withOpacity(0.03),
-                                onTap: (){
-                                  Get.back();
-                                },
-                                child: Center(child: Text('Confirm'),))),
+                            splashColor: Colors.white.withOpacity(0.03),
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Center(
+                              child: Text('Confirm'),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -633,5 +675,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
       ),
     );
   }
+
+
+
 
 }
