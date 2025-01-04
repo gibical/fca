@@ -577,7 +577,7 @@ class CommentBoxWidget extends StatelessWidget {
                     child: SizedBox(
                       width: 35,
                       height: 35,
-                      child: CachedNetworkImage(imageUrl: '' ,fit: BoxFit.cover, errorWidget: (context, url, error) {
+                      child: CachedNetworkImage(imageUrl: '${data['user']['image_url']}' ,fit: BoxFit.cover, errorWidget: (context, url, error) {
                         return Container(
                           color: AppColor.primaryLightColor,
                           child: Center(child: SvgPicture.asset('assets/mediaverse/icons/userprofile.svg' , color: Colors.white,),),
