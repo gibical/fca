@@ -133,7 +133,38 @@ class DetailVideoScreen extends StatelessWidget {
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600
                             ),),
-                            AppbarBTNWidget(iconName: 'menu', onTap: () {  }),
+                            AppbarBTNWidget(iconName: 'menu', onTap: () {
+                              showMenu(
+                                color: '#0F0F26'.toColor(),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.sp)),
+                                context: context,
+                                position: RelativeRect.fromLTRB(100, 80, 0, 0),
+                                items: [
+                                  PopupMenuItem(
+                                    value: 1,
+
+                                    child: SizedBox(
+                                      width: 130,
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset('assets/mediaverse/icons/edit.svg'),
+
+                                          Text('Edit'),
+
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+
+                                ],
+                              ).then((value) {
+                                if (value != null) {
+                                  print('$value');
+                                  
+                                }
+                              });
+                            }),
 
                           ],
                         ),
@@ -317,28 +348,59 @@ class DetailVideoScreen extends StatelessWidget {
                         onTap: (){
 
                         },
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'details_12'.tr ,
-                                style: TextStyle(
+                        child:
+                        Obx(() {
+                          if (videoController.isLoadingComment.value) {
+                            return  RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'details_12'.tr ,
+                                    style: TextStyle(
 
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600
-                                ),
-                              ),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600
+                                    ),
+                                  ),
 
-                              TextSpan(
-                                text: ' (24)',
-                                style: TextStyle(
-                                  color: '#9C9CB8'.toColor(),
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            );
+                          } else if (videoController.commentsData == null ||
+                              videoController.commentsData!.isEmpty) {
+                            return SliverToBoxAdapter(
+                                child: SizedBox()
+                            );
+                          } else {
+                            return         RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'details_12'.tr ,
+                                    style: TextStyle(
+
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: ' (${videoController.commentsData!['data'].length})',
+                                    style: TextStyle(
+                                      color: '#9C9CB8'.toColor(),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+
+
+                          }
+                        }),
+
+
+
+
 
                       ),
                     ),
