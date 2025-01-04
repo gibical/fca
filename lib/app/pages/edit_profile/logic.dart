@@ -143,9 +143,9 @@ class EditProfileLogic extends GetxController implements RequestInterface {
     countreisString.clear();
     await getAllCountries();
     apiRequster = ApiRequster(this,develperModel: false);
-    assetsEditingController.text = details['media']['name'];
-    assetid = details['asset_id'];
-    if (!_isText)assetsDescreptionEditingController.text = details['media']['description']??"";
+    assetsEditingController.text = details['name'];
+    assetid = details['id'];
+    if (!_isText)assetsDescreptionEditingController.text = details['description']??"";
     subscrptionController.text =getSubscriptionPlan( int.tryParse(details['subscription_period'].toString())??24);
     priceController.text = (details['price']/100).toString();
     isEditEditingController.text = details['forkability_status'].toString().contains("1")?"Yes":"No";
@@ -252,7 +252,7 @@ filename: 'uploadfile'),
       "lng": 0,
       "language": Constant.languageMap[languageController.text],
       "country":countreisModel.firstWhere((element) => element.title.toString().contains(languageController.text)).iso??"",
-      "type": 1,
+      "type": 'video',
     //  "length":  detailController.detailss!['length'],
       "forkability_status": isEditEditingController.text.contains("Yes") ? "1" : "2",
       "commenting_status": 1,
@@ -261,7 +261,7 @@ filename: 'uploadfile'),
     if(type != PostType.text){
       body["description"] = assetsDescreptionEditingController.text;
     }else{
-      body["description"] = details['media']['description'];
+      body["description"] = details['description'];
 
     }
     if (!_getPlanByDropDown().toString().contains("1")) {
@@ -275,27 +275,10 @@ filename: 'uploadfile'),
     }
     print('PlusSectionLogic.sendMainRequest = ${body}"}');
 
-     apiRequster.request(_getUrlByMediaEnum()+"/${id}", ApiRequster.MHETOD_PUT, 1,
+     apiRequster.request('assets'+"/${id}", ApiRequster.MHETOD_PUT, 1,
          body: body, useToken: true, );
   }
-  String _getUrlByMediaEnum() {
-    switch (type) {
-      case PostType.audio:
-      // TODO: Handle this case.
-        return "audios";
-      case PostType.image:
-      // TODO: Handle this case.
-        return "images";
 
-      case PostType.text:
-      // TODO: Handle this case.
-        return "texts";
-
-      case PostType.video:
-      // TODO: Handle this case.
-        return "videos";
-    }
-  }
   _getPlanByDropDown() {
     switch (planController.text) {
       case "Free":

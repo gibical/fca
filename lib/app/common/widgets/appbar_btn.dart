@@ -1,13 +1,15 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:sizer/sizer.dart';
 
 
 
-Widget AppbarBTNWidget({required String iconName ,required Function() onTap}){
+Widget AppbarBTNWidget({required String iconName ,required Function() onTap ,RxBool? isLoading }){
   return Container(
     height: 5.5.h,
     width: 5.5.h,
@@ -33,7 +35,11 @@ Widget AppbarBTNWidget({required String iconName ,required Function() onTap}){
         ),
         onTap: onTap,
         child: Center(
-          child: SvgPicture.asset('assets/mediaverse/icons/${iconName}.svg' , color: Colors.white, height: 24 ,width: 24,),
+          child: isLoading?.value == true ?CupertinoActivityIndicator(
+            color: AppColor.whiteColor,
+            radius: 7,
+
+          ):SvgPicture.asset('assets/mediaverse/icons/${iconName}.svg' , color: Colors.white, height: 24 ,width: 24,),
         ),
       ),
     ),

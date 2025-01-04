@@ -38,7 +38,8 @@ class DetailVideoScreen extends StatelessWidget {
       tag: "${DateTime.now().microsecondsSinceEpoch}");
 
   var idAssetMediaValte = Get.arguments['idAssetMedia'];
-  String testText = 'fdfdfhqsghqgshgqjhsgjhqgshqsgqjhgsjqhsjhqgsjhgqqhsqjhgshjqghsgsgqhsgqhgshqgssghqgjsgqjhsgqhjsqhsq';
+
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -134,7 +135,7 @@ class DetailVideoScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w600
                             ),),
                             AppbarBTNWidget(iconName: 'menu', onTap: () {
-                              showMenu(
+                               videoController.isEditAvaiblae.isTrue?      showMenu(
                                 color: '#0F0F26'.toColor(),
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.sp)),
@@ -144,6 +145,9 @@ class DetailVideoScreen extends StatelessWidget {
                                   PopupMenuItem(
                                     value: 1,
 
+                                    onTap: (){
+                                      videoController.sendToEditProfile(PostType.video);
+                                    },
                                     child: SizedBox(
                                       width: 130,
                                       child: Row(
@@ -163,7 +167,7 @@ class DetailVideoScreen extends StatelessWidget {
                                   print('$value');
                                   
                                 }
-                              });
+                              }):null;
                             }),
 
                           ],
@@ -613,6 +617,7 @@ class CommentBoxWidget extends StatelessWidget {
         )
     );
   }
+
 }
 
 
