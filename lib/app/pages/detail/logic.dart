@@ -86,7 +86,7 @@ class DetailController extends GetxController {
     isLoadingVideos.value = true;
     isLoadingText.value = true;
 
-    initPlayerVideo('https://f1.mediaverse.land/2024/09/06/07c86cbd-624a-4894-9501-091ceca054fe.mp4');
+
     initFunction();
     fetchMediaComments();
   }
@@ -118,6 +118,8 @@ class DetailController extends GetxController {
     print('DetailController.onInit 1 ');
 
     await _fetchMediaData('video', videoDetails, isLoadingVideos);
+
+    initPlayerVideo('${videoDetails!['file']['url']}');
   }
 
   void fetchImageData() async {

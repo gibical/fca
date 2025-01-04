@@ -524,16 +524,16 @@ class _GridPostView2State extends State<GridPostView2> {
     String route = "";
     print('_GridPostViewState._getRouteAndPushIt 2  = ${widget.model} -  ${widget.model['media_type']} - ${model}');
     switch(widget.model['media_type']){
-      case 1:
+      case 'text':
         route = PageRoutes.DETAILTEXT;
         break;
-      case 2:
+      case 'image':
         route = PageRoutes.DETAILIMAGE;
         break;
-        case 3:
+        case 'audio':
           route = PageRoutes.DETAILMUSIC;
           break;
-          case 4:
+          case 'video':
             route = PageRoutes.DETAILVIDEO;
             break;
     }
