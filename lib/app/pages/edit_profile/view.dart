@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -115,9 +116,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     child: Padding(
                       padding:  EdgeInsets.only(top: Get.height / 2 - 100),
                       child: Center(
-                        child: CircularProgressIndicator(
-                          color: AppColor.primaryColor,
-                          backgroundColor: AppColor.primaryColor.withOpacity(0.2),
+                        child: Transform.scale(
+                          scale: 0.5,
+                          child: CircularProgressIndicator(
+                            color: AppColor.primaryColor,
+                            backgroundColor: AppColor.primaryColor.withOpacity(0.2),
+                          ),
                         ),
                       ),
                     )
@@ -174,10 +178,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     height: 20.h,
                     width: 20.h,
                     decoration: BoxDecoration(
-                        color: Colors.orange,
+                        color: '0F0F26'.toColor(),
                         borderRadius: BorderRadius.circular(8.82.sp)
                     ),
-                    child: Center(child: Text('data')),
+                    child: Center(
+                      child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.82.sp),
+                          child: CachedNetworkImage(imageUrl: '${detailController.videoDetails!['thumbnails']['525x525']}' ,fit: BoxFit.cover, errorWidget: (context, url, error) {
+                            return Transform.scale(
+                              scale: 0.5,
+                              child: CircularProgressIndicator(
+                                color: AppColor.primaryColor,
+                                backgroundColor: AppColor.primaryColor.withOpacity(0.2),
+                              ),
+                            );
+                          },
+                          placeholder: (context, url) {
+                          return  Transform.scale(
+                              scale: 0.5,
+                              child: CircularProgressIndicator(
+                                color: AppColor.primaryColor,
+                                backgroundColor: AppColor.primaryColor.withOpacity(0.2),
+                              ),
+                            );
+                          },
+                          ) , ),
+                    ),
                   ),
                 ),
               ),
@@ -411,139 +437,199 @@ class _EditProfilePageState extends State<EditProfilePage> {
     required TextEditingController? value,
     bool isSearchBox = true,
   }) {
-    final RxList<String> filteredModels = models.obs;
-
+    List<String> filteredModels = List.from(models);
     final TextEditingController searchController = TextEditingController();
 
     Get.bottomSheet(
       elevation: 0,
-      Container(
-        width: 100.w,
-        height: 50.h,
-        decoration: BoxDecoration(
-          color: "#0F0F26".toColor(),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 3.h),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
-              child: Row(
-                children: [
-                  RotatedBox(
-                    quarterTurns: 2,
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg'),
-                    ),
-                  ),
-                  Spacer(),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                    ),
-                  ),
-                  SizedBox(width: 24),
-                  Spacer(),
-                ],
+      StatefulBuilder(
+        builder: (context, setState) {
+          return Container(
+            width: 100.w,
+            height: 50.h,
+            decoration: BoxDecoration(
+              color: "#0F0F26".toColor(),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
               ),
             ),
-            SizedBox(height: 3.h),
-            isSearchBox == true?      Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
-              child: TextField(
-                controller: searchController,
-                onChanged: (query) {
-                  filteredModels.value = models
-                      .where((item) => item.toLowerCase().contains(query.toLowerCase()))
-                      .toList();
-                },
-                style: TextStyle(
-                  decorationColor: Colors.transparent,
-                  decoration: TextDecoration.none,
-                ),
-                decoration: InputDecoration(
-                  filled: true,
-                  hintText: 'Search...',
-                  hintStyle: TextStyle(color: '9C9CB8'.toColor()),
-                  fillColor: '#17172E'.toColor(),
-                  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(8.sp),
-                  ),
-                  disabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(8.sp),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(8.sp),
-                  ),
-                ),
-              ),
-            ) :SizedBox(),
-            SizedBox(height: isSearchBox == true?  2.h:0),
-            Expanded(
-              child: Obx(
-                    () => ListView.builder(
-                  padding: EdgeInsets.zero,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 3.h),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                      child: Row(
+                        children: [
+                          RotatedBox(
+                            quarterTurns: 2,
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg'),
+                            ),
+                          ),
+                          Spacer(),
+                          Text(
+                            title,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(width: 24),
+                          Spacer(),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 3.h),
 
-                  itemBuilder: (s, p) {
-                    return InkWell(
-                      onTap: () {
-                        try {
-                          value!.text = filteredModels.elementAt(p);
-                        } catch (e) {
-                          // TODO
-                        }
-                        Get.back();
-                      },
-                      child: Container(
-                        height: 3.h,
-                        margin: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-                        child: Row(
-                          children: [
-                            Opacity(
-                              opacity: value!.text == filteredModels.elementAt(p) ? 1 : 0.4,
-                              child: Checkbox(
-                                value: value!.text == filteredModels.elementAt(p) ? true : false,
-                                activeColor: Colors.white,
-                                onChanged: (_) {},
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6),
-                                  side: BorderSide(
-                                    color: '9C9CB8'.toColor(),
-                                    width: 1,
-                                  ),
-                                ),
-                              ),
+                    if (isSearchBox)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: TextField(
+                          controller: searchController,
+                          onChanged: (query) {
+
+                            setState(() {
+                              filteredModels = models
+                                  .where((item) =>
+                                  item.toLowerCase().contains(query.toLowerCase()))
+                                  .toList();
+                            });
+                          },
+                          style: TextStyle(
+                            decorationColor: Colors.transparent,
+                            decoration: TextDecoration.none,
+                          ),
+                          decoration: InputDecoration(
+                            filled: true,
+                            hintText: 'Search...',
+                            hintStyle: TextStyle(color: '9C9CB8'.toColor()),
+                            fillColor: '#17172E'.toColor(),
+                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8.sp),
                             ),
-                            Text(
-                              filteredModels.elementAt(p),
-                              style: TextStyle(color: '9C9CB8'.toColor(), fontSize: 15),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8.sp),
                             ),
-                          ],
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8.sp),
+                            ),
+                          ),
                         ),
                       ),
-                    );
-                  },
-                  itemCount: filteredModels.length,
+                    SizedBox(height: isSearchBox ? 2.h : 0),
+
+                    Expanded(
+                      child: ListView.builder(
+                        padding: EdgeInsets.only(bottom: 75),
+                        itemCount: filteredModels.length,
+                        itemBuilder: (context, index) {
+                          final item = filteredModels[index];
+                          final isSelected = value?.text == item;
+
+                          return InkWell(
+                            onTap: () {
+                              setState(() {
+                                value?.text = item;
+                              });
+                          //    Get.back();
+                            },
+                            child: Container(
+                              height: 3.h,
+                              margin: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                              child: Row(
+                                children: [
+                                  Checkbox(
+                                    value: isSelected,
+                                    activeColor: Colors.white,
+                                    onChanged: (_) {},
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(6),
+                                      side: BorderSide(
+                                        color: '9C9CB8'.toColor(),
+                                        width: 1,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    item,
+                                    style: TextStyle(
+                                      color: isSelected ? Colors.white : '9C9CB8'.toColor(),
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+
+                  ],
                 ),
-              ),
+                Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                          '0F0F26'.toColor(),
+                          Colors.transparent,
+                        ],
+                      ),
+                    boxShadow: [
+                      BoxShadow(
+                         color: '0F0F26'.toColor(),
+
+                        blurRadius: 50,
+
+                        spreadRadius: 30
+                      ),
+                    ]
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0 ,  ),
+                      child: SizedBox(
+
+                        width: double.infinity,
+                        height: 45,
+
+
+                        child: Material(
+                            color: '2563EB'.toColor(),
+
+                            
+                            borderRadius: BorderRadius.circular(100),
+                            child: InkWell(
+                                borderRadius: BorderRadius.circular(100),
+                              splashColor: Colors.white.withOpacity(0.03),
+                                onTap: (){
+                                  Get.back();
+                                },
+                                child: Center(child: Text('Confirm'),))),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
