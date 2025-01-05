@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mediaverse/app/common/app_route.dart';
+import 'package:mediaverse/app/common/utils/firebase_options.dart';
 import 'package:meta/meta.dart';
 
 import '../../pages/media_suit/logic.dart';
@@ -22,17 +23,6 @@ class FirebaseController extends GetxController implements RequestInterface {
     print('FirebaseController.initializeLocalNotifications 1 ');
     // Handle your notification response logic here
   }
-  static const FirebaseOptions iosFromPlist = FirebaseOptions(
-    apiKey: 'AIzaSyCO2pr3YO3HFSePLrqBdx_EqbZPm_Bms2o',
-    appId: '1:204876365682:ios:21a92c1bfe2df65a3c67eb',
-    messagingSenderId: '204876365682',
-    projectId: 'global-harmony-419616',
-    storageBucket: 'global-harmony-419616.firebasestorage.app',
-
-    // فیلدهای اضافهٔ مخصوص iOS:
-    iosClientId: '204876365682-dnkdul88ci375dlephj6c24odoul6inr.apps.googleusercontent.com',
-    iosBundleId: 'app.gibical.app',
-  );
   late FirebaseMessaging _firebaseMessaging;
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -44,7 +34,7 @@ class FirebaseController extends GetxController implements RequestInterface {
     onReady();
    if (true) {
      var s =  await Firebase.initializeApp(
-       options: iosFromPlist
+       options: DefaultFirebaseConfig.firebaseOptions
       );
       if (Platform.isIOS) {
         FirebaseMessaging.instance.requestPermission();
