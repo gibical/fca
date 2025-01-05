@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +40,11 @@ class _AppState extends State<App> {
       darkTheme:  AppTheme.darkMode,
 
 
-       navigatorObservers: <NavigatorObserver>[App.observer],
+       navigatorObservers: <NavigatorObserver>[
+
+        if(Platform.isAndroid) App.observer
+
+       ],
 
     );
 

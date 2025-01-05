@@ -310,7 +310,7 @@ class ChangeLangaugePickerBottomSheetState extends State<ChangeLangaugePickerBot
   Map<String, dynamic> filteredCountries = {};
   Map<String, dynamic> model = {
     "de":"Germany",
-    "fa":"Persian",
+    //"fa":"Persian",
     "en":"English",
   };
 

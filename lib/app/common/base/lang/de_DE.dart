@@ -11,7 +11,7 @@ const Map<String, String> deDE = {
   "login_8": "Registrieren",
   "login_9": "Anmelden",
   "login_9_1": "Mit Google anmelden",
-  "login_9_2": "Mit X anmelden",
+  "login_9_2": "Mit anmelden",
   "login_10": "E-Mail",
   "login_11": "E-Mail eingeben..",
   "login_12": "Mit Telefon anmelden",
