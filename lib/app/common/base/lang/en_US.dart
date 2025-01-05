@@ -427,6 +427,7 @@ const Map<String, String> enUS = {
   "auth_5": "Google",
   "auth_6": "Facebook",
   "auth_7": "Apple",
+  "auth_12": "X",
   "auth_8": "By continuing, you agree to our",
   "auth_9": "Terms of Service",
   "auth_10": "and",
