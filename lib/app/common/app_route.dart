@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:mediaverse/app/pages/auth/view.dart';
 import 'package:mediaverse/app/pages/change_password/view.dart';
 import 'package:mediaverse/app/pages/channel/all_tools.dart';
 import 'package:mediaverse/app/pages/detail/logic.dart';
@@ -67,9 +68,15 @@ class PageRoutes {
   static const MEDIASUIT = '/MediaSuite';
   static const SHAREACCOUNT = '/ShareAccount';
   static const SINGLECHANNEL = '/ChannelScreen';
+  static const AUTH = '/AuthScreen';
 
 
   static List<GetPage> routes = [
+    GetPage(
+      name: PageRoutes.AUTH,
+      page: () =>  AuthPage(),
+
+    ),
     GetPage(
       name: PageRoutes.SINGLECHANNEL,
       page: () =>  DetailChannelScreen(),

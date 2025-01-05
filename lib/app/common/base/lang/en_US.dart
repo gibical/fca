@@ -415,6 +415,19 @@ const Map<String, String> enUS = {
   "alert_17": "Edit Program Successfully",
   "alert_18": "Start Program Successfully",
   "alert_19": "Switch To Live Successfully",
-  "alert_20": "Error: select a camera first."
+  "alert_20": "Error: select a camera first.",
 
+
+
+  "auth_1": "Welcome to ",
+  "auth_2": "Continue with your preferred method to access  ",
+  "auth_3": "Continue with ",
+  "auth_4": "Or continue with",
+  "auth_5": "Google",
+  "auth_6": "Facebook",
+  "auth_7": "Apple",
+  "auth_8": "By continuing, you agree to our",
+  "auth_9": "Terms of Service",
+  "auth_10": "and",
+  "auth_11": "Privacy Policy."
 };
