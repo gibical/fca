@@ -352,6 +352,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   child: fieldEditAssetWidget(title: 'Full Ownership', onTap: () {
                     _runCustomSelectBottomEditeAssetSheet(
 
+                      priceController: logic.priceController,
                       isLicenceType: true,
                       isSearchBox: false,
                       title:'Licence type' ,models: [
@@ -436,6 +437,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     required List<String> models,
     required String title,
     required TextEditingController? value,
+     TextEditingController? priceController,
     bool isSearchBox = true,
     bool isLicenceType = false,
   }) {
@@ -598,6 +600,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                                       child: TextField(
                                         textDirection: TextDirection.ltr,
+                                        controller:  priceController,
                                         decoration: InputDecoration(
                                           hintText: '00.00',
                                           hintTextDirection: TextDirection.ltr,
