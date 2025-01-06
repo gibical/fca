@@ -43,6 +43,12 @@ class DetailController extends GetxController {
   RxMap<String, dynamic>? detailss = RxMap<String, dynamic>();
   ScreenshotController screenshotController = ScreenshotController();
   List<ExternalAccountModel> externalAccountlist = [];
+  String selectedAccountTitle = '';
+  void selectAccountPublish(int index) {
+    enableChannel = index;
+    selectedAccountTitle = externalAccountlist[index].title ?? '';
+    update();
+  }
   bool isExpandedViewBodyText = false;
   int index ;
   int enableChannel = 0 ;
@@ -714,8 +720,8 @@ class DetailController extends GetxController {
             decoration: BoxDecoration(
               color: "#0F0F26".toColor(),
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
               ),
             ),
             child: Stack(
@@ -1081,7 +1087,7 @@ class DetailController extends GetxController {
       if (response.statusCode! >= 200&&response.statusCode! <300) {
         isLoadingChannel(false);
         externalAccountlist = FromJsonGetExternalAccount.fromJson(response.data??[]).data??[];
-
+         selectAccountPublish(0);
         update();
       } else {
         // Handle errors

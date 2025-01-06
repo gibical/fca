@@ -24,11 +24,13 @@ import 'package:video_player/video_player.dart';
 
 import '../../../../gen/model/enums/post_type_enum.dart';
 import '../../../common/app_config.dart';
+import '../../channel/widgets/card_channel_widget.dart';
 import '../../login/widgets/custom_register_button_widget.dart';
 import '../../media_suit/logic.dart';
 import '../logic.dart';
 import '../widgets/back_widget.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
+import '../widgets/custom_switch.dart';
 import '../widgets/report_botton_sheet.dart';
 import '../widgets/youtube_bottomsheet.dart';
 
@@ -277,7 +279,7 @@ class DetailVideoScreen extends StatelessWidget {
                           }, name: 'Tools'),
                           SizedBox(width: 8,),
                           buildCustomDetailBTNWidget(iconName: 'globe', onTap: (){
-                            runCustomPublishSheet();
+                            runCustomPublishSheet(videoController);
                           }, name: 'Publish'),
                           Spacer(),
                           buildCustomDetailBTNWidget(iconName: 'Forward', onTap: (){}, name: 'Share'),
@@ -638,8 +640,8 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
           decoration: BoxDecoration(
             color: "#0F0F26".toColor(),
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15),
-              topRight: Radius.circular(15),
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
             ),
           ),
           child:  Column(
@@ -831,9 +833,9 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
     ),
   );
 }
-void runCustomPublishSheet() {
+void runCustomPublishSheet(DetailController detailController) {
 
-
+  detailController.fetchChannels();
 
   Get.bottomSheet(
     elevation: 0,
@@ -843,8 +845,8 @@ void runCustomPublishSheet() {
         decoration: BoxDecoration(
           color: "#0F0F26".toColor(),
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
           ),
         ),
         child:  Column(
@@ -892,7 +894,8 @@ void runCustomPublishSheet() {
             GestureDetector(
               onTap: () {
 
-
+                Get.back();
+                runPublishYoutubeSheet(detailController);
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18.0 ,),
@@ -1016,8 +1019,401 @@ void runCustomPublishSheet() {
 }
 
 
+void runPublishYoutubeSheet(DetailController detailController) {
+
+
+
+  Get.bottomSheet(
+    elevation: 0,
+
+    StatefulBuilder(builder: (context, setState) {
+      return Container(
+        width: 100.w,
+
+        decoration: BoxDecoration(
+          color: "#0F0F26".toColor(),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+        ),
+        child:  Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 3.h),
+                Row(
+                  children: [
+                    RotatedBox(
+                      quarterTurns: 2,
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg'),
+                      ),
+                    ),
+                    Spacer(),
+                    Text(
+                      'Publish in Youtube',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    SizedBox(width: 24),
+                    Spacer(),
+                  ],
+                ),
+
+
+                SizedBox(height: 1.h),
+                Container(
+
+                  height: 0.5,
+                  width: Get.width,
+                ),
+                SizedBox(height: 2.h),
+                //text filide 1 - select Account
+               Obx((){
+               return  GestureDetector(
+                   onTap: () {
+                     runSelectAccountSheet(detailController);
+                   },
+                   child: TextField(
+
+                     style: TextStyle(
+                       decorationColor: Colors.transparent,
+                       decoration: TextDecoration.none,
+                     ),
+
+                     decoration: InputDecoration(
+                       filled: true,
+                       enabled: false,
+                       suffixIcon: detailController.isLoadingChannel.value == true ?Transform.scale(
+
+                         scale: 0.3,
+                         child: CircularProgressIndicator(
+                           color: Colors.white,
+                           backgroundColor: Colors.white.withOpacity(0.3),
+                         ),
+                       ):Transform.scale(
+                           scale: 0.5,
+
+                           child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg')),
+                       hintText: detailController.selectedAccountTitle.isEmpty
+                           ? 'Select Account'
+                           : detailController.selectedAccountTitle,
+                       hintStyle: TextStyle(color:detailController. selectedAccountTitle.isEmpty ?'9C9CB8'.toColor():Colors.white),
+                       fillColor: '#17172E'.toColor(),
+                       contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                       enabledBorder: OutlineInputBorder(
+                         borderSide: BorderSide.none,
+                         borderRadius: BorderRadius.circular(8.sp),
+                       ),
+                       disabledBorder: OutlineInputBorder(
+                         borderSide: BorderSide.none,
+                         borderRadius: BorderRadius.circular(8.sp),
+                       ),
+                       focusedBorder: OutlineInputBorder(
+                         borderSide: BorderSide.none,
+                         borderRadius: BorderRadius.circular(8.sp),
+                       ),
+                     ),
+                   ),
+                 );
+               }),
+
+                SizedBox(height: 2.h),
+
+                //text filide 2 - title
+                TextField(
+
+                  style: TextStyle(
+                    decorationColor: Colors.transparent,
+                    decoration: TextDecoration.none,
+                  ),
+                  decoration: InputDecoration(
+                    filled: true,
+                    hintText: 'Title',
+                    hintStyle: TextStyle(color: '9C9CB8'.toColor()),
+                    fillColor: '#17172E'.toColor(),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(8.sp),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(8.sp),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(8.sp),
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 2.h),
+
+                //text filide 3 - Description
+                TextField(
+
+                  style: TextStyle(
+                    decorationColor: Colors.transparent,
+                    decoration: TextDecoration.none,
+                  ),
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                    filled: true,
+
+                    hintText: 'Description',
+                    hintStyle: TextStyle(color: '9C9CB8'.toColor()),
+                    fillColor: '#17172E'.toColor(),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(8.sp),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(8.sp),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(8.sp),
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 2.h),
+                //Switch 1 - Publish Later
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Publish Later' , style: TextStyle(
+                        color: '9C9CB8'.toColor(),
+                        fontSize: 15
+                    ),),
+
+                    GetBuilder<DetailController>(builder: (controller) {
+                      return  CustomSwitchWidget(
+                        value: true,
+                        onChanged: (value) {
+
+
+                        },
+                      );
+                    },)
+
+                  ],
+                ),
+
+                SizedBox(height: 2.h),
+                //Switch 2 - content private
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Is this content private?' , style: TextStyle(
+                        color: '9C9CB8'.toColor(),
+                        fontSize: 15
+                    ),),
+
+                    GetBuilder<DetailController>(builder: (controller) {
+                      return  CustomSwitchWidget(
+                        value: false,
+                        onChanged: (value) {
+
+
+                        },
+                      );
+                    },)
+
+                  ],
+                ),
+
+
+                SizedBox(height: 2.h),
+                //publish btn
+                SizedBox(
+                  width: double.infinity,
+                  height: 45,
+                  child: Material(
+                    color: '2563EB'.toColor(),
+                    borderRadius: BorderRadius.circular(100),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(100),
+                      splashColor: Colors.white.withOpacity(0.03),
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Center(
+                        child: Text('Publish'),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 2.h),
+              ],
+            ),
+          ),
+        ),
+      );
+    },)
+  );
+}
+
+
+void runSelectAccountSheet(DetailController detailController) {
+
+  detailController.fetchChannels();
+
+  Get.bottomSheet(
+    elevation: 0,
+
+    Container(
+      width: 100.w,
+
+      height: 25.h,
+      decoration: BoxDecoration(
+        color: "#0F0F26".toColor(),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      child:  Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+        child: SingleChildScrollView(
+          child:    Column(
+            children: [
+              SizedBox(height: 3.h),
+              Row(
+                children: [
+                  RotatedBox(
+                    quarterTurns: 2,
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg'),
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    'Select an account',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(width: 24),
+                  Spacer(),
+                ],
+              ),
+              SizedBox(height: 3.h),
+              Obx(() {
+                if(detailController.isLoadingChannel.value == true){
+                  return Transform.scale(
+
+                    scale: 0.5,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      backgroundColor: Colors.white.withOpacity(0.3),
+                    ),
+                  );
+                }else{
+                  return Column(
+                    children: detailController.externalAccountlist
+                    //  .where((element) => element.type.toString().contains("1"))
+                        .toList()
+                        .asMap()
+                        .entries
+                        .map((e) {
+                      var model = detailController.externalAccountlist
+                          .elementAt(e.key);
+
+                      return accountWidget(//
+                          title: (model.title ?? "").toString(),
+                          date: (model.createdAt ?? ""),
+                          isEnable: detailController.enableChannel == e.key,
+                          onTap: () {
+                            detailController. selectAccountPublish(e.key);
+                          });
+                    }).toList(),
+                  );
+                }
+              }),
+
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
 
 
 
 
+
+
+Widget accountWidget({
+  required String title,
+  required String date,
+  bool isEnable = false,
+  Function? onTap,
+}) {
+  return Container(
+    width: double.infinity,
+    height: 8.h,
+
+    child: GestureDetector(
+
+      onTap: () {
+        try {
+          onTap?.call();
+        } catch (e) {
+          // Handle error
+        }
+        Get.back();
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 1.w),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 20,
+              height: 20,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: isEnable
+                      ? '2563EB'.toColor()
+                      : '9C9CB8'.toColor(),
+                  width: isEnable ? 5.5 : 1,
+                ),
+              ),
+            ),
+
+            SizedBox(width: 2.w),
+            Text(
+              title,
+              style: FontStyleApp.bodyMedium.copyWith(
+                color: AppColor.whiteColor,
+              ),
+            ),
+
+          ],
+        ),
+      ),
+    ),
+  );
+}
 

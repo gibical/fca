@@ -487,8 +487,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
             decoration: BoxDecoration(
               color: "#0F0F26".toColor(),
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
               ),
             ),
             child: Stack(
