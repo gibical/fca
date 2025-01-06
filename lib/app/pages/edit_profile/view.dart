@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/pages/detail/logic.dart';
+import 'package:mediaverse/app/pages/detail/widgets/custom_switch.dart';
 import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
 import 'package:sizer/sizer.dart';
 
@@ -335,6 +336,40 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         _runCustomSelectBottomEditeAssetSheet( title:'Select a language' ,     models: Constant.languages,value: logic.languageController, );
 
                       }, value: logic.languageController,),),
+                    ],
+                  ),
+                ),
+              ),
+              //SizedBox
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 2.h,
+                ),
+
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 18.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Is this content public?' , style: TextStyle(
+                        color: '9C9CB8'.toColor()
+                      ),),
+
+                     GetBuilder<EditProfileLogic>(builder: (controller) {
+                       return  CustomSwitchWidget(
+                         value: logic.isEditEditingController.text == 'true',
+                         onChanged: (value) {
+
+                           logic.isEditEditingController.text = value.toString();
+
+                           logic.update();
+
+                         },
+                       );
+                     },)
+
                     ],
                   ),
                 ),
