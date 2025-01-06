@@ -276,7 +276,9 @@ class DetailVideoScreen extends StatelessWidget {
                             runCustomSelectBottomToolsAsset(videoController);
                           }, name: 'Tools'),
                           SizedBox(width: 8,),
-                          buildCustomDetailBTNWidget(iconName: 'globe', onTap: (){}, name: 'Publish'),
+                          buildCustomDetailBTNWidget(iconName: 'globe', onTap: (){
+                            runCustomPublishSheet();
+                          }, name: 'Publish'),
                           Spacer(),
                           buildCustomDetailBTNWidget(iconName: 'Forward', onTap: (){}, name: 'Share'),
                         ],
@@ -827,6 +829,189 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
         );
       },
     ),
+  );
+}
+void runCustomPublishSheet() {
+
+
+
+  Get.bottomSheet(
+    elevation: 0,
+      Container(
+        width: 100.w,
+        height: 45.h,
+        decoration: BoxDecoration(
+          color: "#0F0F26".toColor(),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+          ),
+        ),
+        child:  Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 3.h),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              child: Row(
+                children: [
+
+                  Text(
+                    'Publish in',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Spacer(),
+                  IconButton(
+                    iconSize: 18,
+                    onPressed: (){
+                      Get.back();
+                    }, icon: Icon(Icons.close_rounded , color: '9C9CB8'.toColor(),) , )
+                ],
+              ),
+            ),
+            Padding(
+
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              child: Text('Choose where to share. Connect accounts in your profile if required.',style: TextStyle(
+                color: '9C9CB8'.toColor(),
+                fontSize: 13
+              ),),
+            ),
+            SizedBox(height: 1.h),
+            Container(
+
+              height: 0.5,
+              width: Get.width,
+            ),
+            SizedBox(height: 2.h),
+            //BTN Tools 1
+            GestureDetector(
+              onTap: () {
+
+
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0 ,),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 35,
+                      width: 35,
+
+                      child: Center(child:   SvgPicture.asset('assets/mediaverse/icons/y.svg' , ),),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('Youtube' , style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600
+                    ),),
+                    Spacer(),
+                    SvgPicture.asset('assets/mediaverse/icons/arrow.svg' , color: Colors.white,)
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 2.h),
+            Container(
+
+              height: 0.5,
+              width: Get.width,
+            ),
+
+            Container(
+
+              height: 0.5,
+              width: Get.width,
+            ),
+            SizedBox(height: 2.h),
+            //BTN Tools 2
+            GestureDetector(
+              onTap: (){
+
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0 ,),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 35,
+                      width: 35,
+
+                      child: Center(child:   SvgPicture.asset('assets/mediaverse/icons/x.svg' , ),),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('X' , style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600
+                    ),),
+                    Spacer(),
+                    SvgPicture.asset('assets/mediaverse/icons/arrow.svg' , color: Colors.white,)
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 2.h),
+            Container(
+
+              height: 0.5,
+              width: Get.width,
+            ),
+
+            Container(
+
+              height: 0.5,
+              width: Get.width,
+            ),
+            SizedBox(height: 2.h),
+            //BTN Tools 3
+            GestureDetector(
+              onTap: (){
+
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0 ,),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 35,
+                      width: 35,
+
+                      child: Center(child:   SvgPicture.asset('assets/mediaverse/icons/d.svg' ,),),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('Google drive' , style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600
+                    ),),
+                    Spacer(),
+                    SvgPicture.asset('assets/mediaverse/icons/arrow.svg' , color: Colors.white,)
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 2.h),
+            Container(
+
+              height: 0.5,
+              width: Get.width,
+            ),
+
+          ],
+        ),
+      ),
   );
 }
 
