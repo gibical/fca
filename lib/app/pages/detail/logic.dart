@@ -8,6 +8,7 @@ import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
@@ -651,8 +652,8 @@ class DetailController extends GetxController {
     }
   }
   void videoDubbing() async{
+    String? language = await runCustomSelectBottomLanguageSheet(models: Constant.languages,);
 
-    String language =await _runCustomSelectBottomSheet(Constant.languages, "Select Language");
     String loclae = Constant.languageMap[language]??"";
     try {
       final token = GetStorage().read("token");
@@ -678,6 +679,9 @@ class DetailController extends GetxController {
 
         Constant.showMessege("alert_1".tr);
 
+        if(Get.isBottomSheetOpen == true){
+          Get.back();
+        }
       } else {
         // Handle errors
         //Constant.showMessege("Request Denied : ${response.data['status']}");
@@ -692,6 +696,159 @@ class DetailController extends GetxController {
 
     }
   }
+
+  Future<String?> runCustomSelectBottomLanguageSheet({
+    required List<String> models,
+    bool isSearchBox = true,
+  }) async {
+    List<String> filteredModels = List.from(models);
+    final TextEditingController searchController = TextEditingController();
+
+    return await Get.bottomSheet<String>(
+      elevation: 0,
+      StatefulBuilder(
+        builder: (context, setState) {
+          return Container(
+            width: 100.w,
+            height: 50.h,
+            decoration: BoxDecoration(
+              color: "#0F0F26".toColor(),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+            ),
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 3.h),
+                      Row(
+                        children: [
+                          RotatedBox(
+                            quarterTurns: 2,
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg'),
+                            ),
+                          ),
+                          Spacer(),
+                          Text(
+                            'Select a language',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(width: 24),
+                          Spacer(),
+                        ],
+                      ),
+                      SizedBox(height: 3.h),
+                      if (isSearchBox)
+                        TextField(
+                          controller: searchController,
+                          onChanged: (query) {
+                            setState(() {
+                              filteredModels = models
+                                  .where((item) => item
+                                  .toLowerCase()
+                                  .contains(query.toLowerCase()))
+                                  .toList();
+                            });
+                          },
+                          style: TextStyle(
+                            decorationColor: Colors.transparent,
+                            decoration: TextDecoration.none,
+                          ),
+                          decoration: InputDecoration(
+                            filled: true,
+                            hintText: 'Search...',
+                            hintStyle: TextStyle(color: '9C9CB8'.toColor()),
+                            fillColor: '#17172E'.toColor(),
+                            contentPadding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8.sp),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8.sp),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8.sp),
+                            ),
+                          ),
+                        ),
+                      SizedBox(height: isSearchBox ? 2.h : 0),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: EdgeInsets.only(bottom: 75),
+                          itemCount: filteredModels.length,
+                          itemBuilder: (context, index) {
+                            final item = filteredModels[index];
+                            return InkWell(
+                              onTap: () {
+                                Get.back(result: item); // مقدار را برمی‌گرداند
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 3.h,
+                                    margin: EdgeInsets.symmetric(vertical: 6),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 20,
+                                          height: 20,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              color: '9C9CB8'.toColor(),
+                                              width: 1,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(
+                                          item,
+                                          style: TextStyle(
+                                            color: '9C9CB8'.toColor(),
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+
   void translateText() async{
 
     String language =await _runCustomSelectBottomSheet(Constant.languages, "Select Language");

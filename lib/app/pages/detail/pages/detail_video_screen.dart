@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -165,7 +166,7 @@ class DetailVideoScreen extends StatelessWidget {
                               ).then((value) {
                                 if (value != null) {
                                   print('$value');
-                                  
+
                                 }
                               }):null;
                             }),
@@ -271,7 +272,9 @@ class DetailVideoScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
                       child: Row(
                         children: [
-                          buildCustomDetailBTNWidget(iconName: 'Magic', onTap: (){}, name: 'Tools'),
+                          buildCustomDetailBTNWidget(iconName: 'Magic', onTap: (){
+                            runCustomSelectBottomToolsAsset(videoController);
+                          }, name: 'Tools'),
                           SizedBox(width: 8,),
                           buildCustomDetailBTNWidget(iconName: 'globe', onTap: (){}, name: 'Publish'),
                           Spacer(),
@@ -564,12 +567,12 @@ class CommentBoxWidget extends StatelessWidget {
         padding:  EdgeInsets.symmetric(horizontal: 18.0 , vertical: 1.5.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-    
+
           children: [
             Container(
               color: Colors.transparent,
               child: Row(
-    
+
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ClipRRect(
@@ -607,8 +610,8 @@ class CommentBoxWidget extends StatelessWidget {
                 ],
               ),
             ),
-    
-    
+
+
             Padding(
               padding: const EdgeInsets.only(left: 42.0 , right: 24),
               child: Text('${data['body'].toString()}'),
@@ -619,6 +622,215 @@ class CommentBoxWidget extends StatelessWidget {
   }
 
 }
+void runCustomSelectBottomToolsAsset(DetailController controller) {
+
+
+
+  Get.bottomSheet(
+    elevation: 0,
+    StatefulBuilder(
+      builder: (context, setState) {
+        return Container(
+          width: 100.w,
+          height: 36.h,
+          decoration: BoxDecoration(
+            color: "#0F0F26".toColor(),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+            ),
+          ),
+          child:  Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 3.h),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: Row(
+                  children: [
+
+                    Text(
+                      'Tools',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    Spacer(),
+                    IconButton(
+                      iconSize: 18,
+                      onPressed: (){
+                        Get.back();
+                      }, icon: Icon(Icons.close_rounded , color: '9C9CB8'.toColor(),) , )
+                  ],
+                ),
+              ),
+              SizedBox(height: 1.h),
+              Container(
+                color: '9C9CB8'.toColor().withOpacity(0.3),
+                height: 0.5,
+                width: Get.width,
+              ),
+              SizedBox(height: 2.h),
+              //BTN Tools 1
+              GestureDetector(
+                onTap: () {
+                  Get.back();
+                  double videoLength =
+                  (controller.videoDetails?[
+                  'file']['info']['time'] ??
+                      0)
+                      .toDouble();
+
+                  Get.find<MediaSuitController>()
+                      .setDataEditVideo(
+                      controller.videoDetails?['name'] ??
+                          '',
+                      controller
+                          .videoDetails?['file']
+                      ['url'],
+                      videoLength,
+                      controller
+                          .videoDetails!['file_id']
+                          .toString());
+                  Get.toNamed(PageRoutes.MEDIASUIT);
+
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0 ,),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 35,
+                        width: 35,
+                        decoration: BoxDecoration(
+                            color: '2563EB'.toColor(),
+                            borderRadius: BorderRadius.circular(8.sp)
+                        ),
+                        child: Center(child:   SvgPicture.asset('assets/mediaverse/icons/tools1.svg' , color: Colors.white,),),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text('Open in media studio' , style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600
+                      ),),
+                      Spacer(),
+                      SvgPicture.asset('assets/mediaverse/icons/open.svg' , color: Colors.white,)
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 2.h),
+              Container(
+                color: '9C9CB8'.toColor().withOpacity(0.3),
+                height: 0.5,
+                width: Get.width,
+              ),
+
+              Container(
+
+                height: 0.5,
+                width: Get.width,
+              ),
+              SizedBox(height: 2.h),
+              //BTN Tools 2
+              GestureDetector(
+                onTap: (){
+                  Get.back();
+                  controller
+                      .videoConvertToAudio();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0 ,),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 35,
+                        width: 35,
+                        decoration: BoxDecoration(
+                            color: '2563EB'.toColor(),
+                            borderRadius: BorderRadius.circular(8.sp)
+                        ),
+                        child: Center(child:   SvgPicture.asset('assets/mediaverse/icons/tools2.svg' , color: Colors.white,),),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text('Video to Audio' , style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600
+                      ),),
+
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 2.h),
+              Container(
+
+                height: 0.5,
+                width: Get.width,
+              ),
+
+              Container(
+
+                height: 0.5,
+                width: Get.width,
+              ),
+              SizedBox(height: 2.h),
+              //BTN Tools 3
+              GestureDetector(
+                onTap: (){
+                 controller.videoDubbing();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0 ,),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 35,
+                        width: 35,
+                        decoration: BoxDecoration(
+                            color: '2563EB'.toColor(),
+                            borderRadius: BorderRadius.circular(8.sp)
+                        ),
+                        child: Center(child:   SvgPicture.asset('assets/mediaverse/icons/tools3.svg' , color: Colors.white,),),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text('Dubbing ' , style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600
+                      ),),
+                      Spacer(),
+                      SvgPicture.asset('assets/mediaverse/icons/arrow.svg' , color: Colors.white,)
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 2.h),
+              Container(
+
+                height: 0.5,
+                width: Get.width,
+              ),
+
+            ],
+          ),
+        );
+      },
+    ),
+  );
+}
+
+
 
 
 
