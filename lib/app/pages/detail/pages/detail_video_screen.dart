@@ -1137,6 +1137,8 @@ void runPublishYoutubeSheet(DetailController detailController) {
                     decorationColor: Colors.transparent,
                     decoration: TextDecoration.none,
                   ),
+
+                  controller: detailController.titleEditingController,
                   decoration: InputDecoration(
                     filled: true,
                     hintText: 'Title',
@@ -1168,6 +1170,7 @@ void runPublishYoutubeSheet(DetailController detailController) {
                     decoration: TextDecoration.none,
                   ),
                   maxLines: 3,
+                  controller: detailController.desEditingController,
                   decoration: InputDecoration(
                     filled: true,
 
@@ -1192,28 +1195,38 @@ void runPublishYoutubeSheet(DetailController detailController) {
 
                 SizedBox(height: 2.h),
                 //Switch 1 - Publish Later
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Publish Later' , style: TextStyle(
-                        color: '9C9CB8'.toColor(),
-                        fontSize: 15
-                    ),),
-
-                    GetBuilder<DetailController>(builder: (controller) {
-                      return  CustomSwitchWidget(
-                        value: true,
+              GetBuilder<DetailController>(
+                builder: (controller) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Publish Later',
+                        style: TextStyle(
+                          color: '9C9CB8'.toColor(),
+                          fontSize: 15,
+                        ),
+                      ),
+                      CustomSwitchWidget(
+                        value: controller.isSeletedNow,
                         onChanged: (value) {
-
-
+                          controller.isSeletedNow = value;
+                          controller.update();
+                          if (controller.isSeletedNow == true) {
+                            print('On');
+                          } else {
+                            print('Off');
+                          }
                         },
-                      );
-                    },)
+                      ),
 
-                  ],
-                ),
+                    ],
+                  );
+                },
+              ),
 
-                SizedBox(height: 2.h),
+
+              SizedBox(height: 2.h),
                 //Switch 2 - content private
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1223,15 +1236,18 @@ void runPublishYoutubeSheet(DetailController detailController) {
                         fontSize: 15
                     ),),
 
-                    GetBuilder<DetailController>(builder: (controller) {
-                      return  CustomSwitchWidget(
-                        value: false,
-                        onChanged: (value) {
-
-
-                        },
-                      );
-                    },)
+                    Obx(() => CustomSwitchWidget(
+                      value: detailController.isPrivateContent.value,
+                      onChanged: (value) {
+                        detailController.isPrivateContent.value = value;
+                        detailController.update();
+                        if(detailController.isPrivateContent.value == true){
+                          print('On');
+                        }else{
+                          print('Off');
+                        }
+                      },
+                    ))
 
                   ],
                 ),
@@ -1249,7 +1265,7 @@ void runPublishYoutubeSheet(DetailController detailController) {
                       borderRadius: BorderRadius.circular(100),
                       splashColor: Colors.white.withOpacity(0.03),
                       onTap: () {
-                        Get.back();
+
                       },
                       child: Center(
                         child: Text('Publish'),
