@@ -11,7 +11,7 @@ const Map<String, String> deDE = {
   "login_8": "Registrieren",
   "login_9": "Anmelden",
   "login_9_1": "Mit Google anmelden",
-  "login_9_2": "Mit X anmelden",
+  "login_9_2": "Mit anmelden",
   "login_10": "E-Mail",
   "login_11": "E-Mail eingeben..",
   "login_12": "Mit Telefon anmelden",
@@ -373,8 +373,19 @@ const Map<String, String> deDE = {
 "alert_17": "Programm erfolgreich bearbeitet",
 "alert_18": "Programm erfolgreich gestartet",
 "alert_19": "Erfolgreich zum Live-Modus gewechselt",
-  "alert_20": "Erfolgreich zum Live-Modus gewechselt"
+  "alert_20": "Erfolgreich zum Live-Modus gewechselt",
 
-
+"auth_1": "Willkommen bei ",
+"auth_2": "Fahren Sie mit Ihrer bevorzugten Zugriffsmethode fort ",
+"auth_3": "Fahren Sie mit ",
+"auth_4": "Oder fahren Sie mit fort",
+"auth_5": "Google",
+"auth_6": "Facebook",
+"auth_7": "Apple",
+"auth_12": "X",
+"auth_8": "Indem Sie fortfahren, stimmen Sie unseren",
+"auth_9": "Servicebedingungen",
+"auth_10": "und",
+"auth_11": "Datenschutzrichtlinien zu."
 
 };

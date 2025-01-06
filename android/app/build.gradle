@@ -43,17 +43,17 @@ android {
         mediaverse {
             dimension "flavor-type"
             applicationId "land.mediaverse.app"
-            resValue "string", "app_name", "MediaVerse App"
+            resValue "string", "app_name", "MediaVerse"
         }
         gibical {
             dimension "flavor-type"
             applicationId "app.gibical.app"
-            resValue "string", "app_name", "Gibical App"
+            resValue "string", "app_name", "Gibical"
         }
         ravi {
             dimension "flavor-type"
             applicationId "ir.app.ravi"
-            resValue "string", "app_name", "Ravi App"
+            resValue "string", "app_name", "Ravi"
         }
     }
 
@@ -77,6 +77,9 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
+        manifestPlaceholders += [
+                'appAuthRedirectScheme': 'oauth'
+        ]
     }
 
     signingConfigs {

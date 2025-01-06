@@ -14,6 +14,7 @@ const Map<String, String> enUS = {
   "login_9":"Log in",
   "login_9_1":"Log in With Google",
   "login_9_2":"Log in With X",
+  "login_9_3":"Log in With",
   "login_10":"Email",
   "login_11":"Insert email..",
   "login_12":"Log in with phone",
@@ -415,6 +416,20 @@ const Map<String, String> enUS = {
   "alert_17": "Edit Program Successfully",
   "alert_18": "Start Program Successfully",
   "alert_19": "Switch To Live Successfully",
-  "alert_20": "Error: select a camera first."
+  "alert_20": "Error: select a camera first.",
 
+
+
+  "auth_1": "Welcome to ",
+  "auth_2": "Continue with your preferred method to access  ",
+  "auth_3": "Continue with ",
+  "auth_4": "Or continue with",
+  "auth_5": "Google",
+  "auth_6": "Facebook",
+  "auth_7": "Apple",
+  "auth_12": "X",
+  "auth_8": "By continuing, you agree to our",
+  "auth_9": "Terms of Service",
+  "auth_10": "and",
+  "auth_11": "Privacy Policy."
 };

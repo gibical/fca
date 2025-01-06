@@ -12,11 +12,11 @@ class F {
   static String get title {
     switch (appFlavor) {
       case Flavor.mediaverse:
-        return 'MediaVerse App';
+        return 'MediaVerse';
       case Flavor.gibical:
-        return 'Gibical App';
+        return 'Gibical';
       case Flavor.ravi:
-        return 'Ravi App';
+        return 'Ravi';
       default:
         return 'title';
     }
@@ -41,6 +41,18 @@ class F {
         return 'gibical';
       case Flavor.ravi:
         return 'ravi';
+      default:
+        return 'mediaverse';
+    }
+  }
+  static String get oAuthCliendID {
+    switch (appFlavor) {
+      case Flavor.mediaverse:
+        return '9ddd87cf-12ac-464b-8fbb-874e88a10b98';
+      case Flavor.gibical:
+        return '9de0316b-55ad-45a4-85f0-781e05712ff2';
+      case Flavor.ravi:
+        return '9ddd87cf-12ac-464b-8fbb-874e88a10b98';
       default:
         return 'mediaverse';
     }
