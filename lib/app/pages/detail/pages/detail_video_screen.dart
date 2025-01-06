@@ -1265,7 +1265,7 @@ void runPublishYoutubeSheet(DetailController detailController) {
                       borderRadius: BorderRadius.circular(100),
                       splashColor: Colors.white.withOpacity(0.03),
                       onTap: () {
-
+                        detailController.onSendShareRequest('youtube');
                       },
                       child: Center(
                         child: Text('Publish'),
