@@ -362,37 +362,26 @@ class DetailVideoScreen extends StatelessWidget {
                         child:
                         Obx(() {
                           if (videoController.isLoadingComment.value) {
-                            return  RichText(
+                            return RichText(
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: 'details_12'.tr ,
-                                    style: TextStyle(
-
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600
-                                    ),
+                                    text: 'details_12'.tr,
+                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                                   ),
-
                                 ],
                               ),
                             );
                           } else if (videoController.commentsData == null ||
                               videoController.commentsData!.isEmpty) {
-                            return SliverToBoxAdapter(
-                                child: SizedBox()
-                            );
+                            return SizedBox();
                           } else {
-                            return         RichText(
+                            return RichText(
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: 'details_12'.tr ,
-                                    style: TextStyle(
-
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600
-                                    ),
+                                    text: 'details_12'.tr,
+                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                                   ),
                                   TextSpan(
                                     text: ' (${videoController.commentsData!['data'].length})',
@@ -404,10 +393,8 @@ class DetailVideoScreen extends StatelessWidget {
                                 ],
                               ),
                             );
-
-
                           }
-                        }),
+                        })
 
 
 

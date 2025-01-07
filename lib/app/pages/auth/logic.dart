@@ -196,7 +196,7 @@ class AuthLogic extends GetxController {
     await launchUrlString(source['url']);
   }
   void getTwitterAccessToken() async {
-    state.isloadingX(true);
+
     try {
       final token = GetStorage().read("token");
       String apiUrl = '${Constant.HTTP_HOST}auth/x';
