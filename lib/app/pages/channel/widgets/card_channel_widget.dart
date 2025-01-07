@@ -1,4 +1,5 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mediaverse/app/common/app_color.dart';
@@ -70,6 +71,7 @@ Widget CustomCardChannelWidget({required String title , required String date,boo
   );
 }
 Widget CardChannelWidget({required String title , required String date,bool isEnable =false,Function? onTap,required ChannelsModel model}){
+  print('CardChannelWidget = ${model.thumbnails}');
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 10 , horizontal: 10),
     child: Container(
@@ -104,7 +106,15 @@ Widget CardChannelWidget({required String title , required String date,bool isEn
                 width: 35,
                child: ClipRRect(
                    borderRadius: BorderRadius.circular(5.sp),
-                   child: Image.network(model.thumbnails??"",fit: BoxFit.cover,)),
+                   child: CachedNetworkImage(
+                     imageUrl:model.thumbnails['226x226'],
+                     errorWidget: (a, l, pl) {
+                       return Image.asset(
+                         "assets/${F.assetTitle}/images/avatar.jpeg",
+                         width: 4.w,
+                       );
+                     },
+                   ),),
               ),
               SizedBox(width: 2.w,),
               Column(

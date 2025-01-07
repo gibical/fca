@@ -13,6 +13,7 @@ import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/common/utils/firebase_options.dart';
 import 'package:meta/meta.dart';
 
+import '../../../flavors.dart';
 import '../../pages/media_suit/logic.dart';
 import '../RequestInterface.dart';
 import '../app_api.dart';
@@ -34,6 +35,7 @@ class FirebaseController extends GetxController implements RequestInterface {
     onReady();
    if (true) {
      var s =  await Firebase.initializeApp(
+       name: F.title,
        options: DefaultFirebaseConfig.firebaseOptions
       );
       if (Platform.isIOS) {

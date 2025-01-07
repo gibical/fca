@@ -54,7 +54,7 @@ class _ChannelVideoLiveWidgetState extends State<ChannelVideoLiveWidget> {
         ..initialize().then((_) {
           _chewieController = ChewieController(
             videoPlayerController: _videoPlayerController,
-            autoPlay: true,
+            autoPlay: false,
             looping: true,
           );
           setState(() {});
@@ -217,9 +217,9 @@ class _ChannelMainVideoLiveWidgetState extends State<ChannelMainVideoLiveWidget>
     )
         : Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: Center(
-        child: Text("Live is Starting Right Now"),
-      ),
+      child: Container(height: 20.h,child: Center(
+        child: Text("Live is Not Available Right Now"),
+      ),),
     );
   }
 }
