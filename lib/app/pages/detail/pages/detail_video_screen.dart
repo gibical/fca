@@ -42,7 +42,6 @@ class DetailVideoScreen extends StatelessWidget {
 
   var idAssetMediaValte = Get.arguments['idAssetMedia'];
 
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -56,509 +55,546 @@ class DetailVideoScreen extends StatelessWidget {
         return false;
       },
       child: Scaffold(
-        backgroundColor: AppColor.secondaryDark,
-
-        body: SafeArea(
-          child: Obx((){
-            if(videoController.isLoadingVideos.value ||videoController.videoDetails!.isEmpty ){
-              return   CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    elevation: 0,
-                    toolbarHeight: 10.h,
-                    surfaceTintColor: Colors.transparent,
-                    pinned: true
-                    ,
-                    automaticallyImplyLeading: false,
-                    flexibleSpace: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                          children: [
-                            AppbarBTNWidget(iconName: 'back1', onTap: () {
-                              Get.back();
-                            }),
-
-                            Text('Video' , style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600
-                            ),),
-                            AppbarBTNWidget(iconName: 'menu', onTap: () {  }),
-
-                          ],
+          backgroundColor: AppColor.secondaryDark,
+          body: SafeArea(
+            child: Obx(() {
+              if (videoController.isLoadingVideos.value ||
+                  videoController.videoDetails!.isEmpty) {
+                return CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      elevation: 0,
+                      toolbarHeight: 10.h,
+                      surfaceTintColor: Colors.transparent,
+                      pinned: true,
+                      automaticallyImplyLeading: false,
+                      flexibleSpace: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppbarBTNWidget(
+                                  iconName: 'back1',
+                                  onTap: () {
+                                    Get.back();
+                                  }),
+                              Text(
+                                'Video',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w600),
+                              ),
+                              AppbarBTNWidget(iconName: 'menu', onTap: () {}),
+                            ],
+                          ),
                         ),
                       ),
+                      backgroundColor: AppColor.secondaryDark,
                     ),
-                    backgroundColor: AppColor.secondaryDark,
-                  ),
 
-                  //--
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding:  EdgeInsets.only(top: Get.height / 2 - 100),
+                    //--
+                    SliverToBoxAdapter(
+                        child: Padding(
+                      padding: EdgeInsets.only(top: Get.height / 2 - 100),
                       child: Center(
                         child: CircularProgressIndicator(
                           color: AppColor.primaryColor,
-                          backgroundColor: AppColor.primaryColor.withOpacity(0.2),
+                          backgroundColor:
+                              AppColor.primaryColor.withOpacity(0.2),
                         ),
                       ),
-                    )
-                  ),
-                  //--
+                    )),
+                    //--
+                  ],
+                );
+              } else {
+                return CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      elevation: 0,
+                      toolbarHeight: 10.h,
+                      surfaceTintColor: Colors.transparent,
+                      pinned: true,
+                      automaticallyImplyLeading: false,
+                      flexibleSpace: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppbarBTNWidget(
+                                  iconName: 'back1',
+                                  onTap: () {
+                                    Get.back();
+                                  }),
+                              Text(
+                                'Video',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w600),
+                              ),
+                              AppbarBTNWidget(
+                                  iconName: 'menu',
+                                  onTap: () {
+                                    videoController.isEditAvaiblae.isTrue
+                                        ? showMenu(
+                                            color: '#0F0F26'.toColor(),
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        12.sp)),
+                                            context: context,
+                                            position: RelativeRect.fromLTRB(
+                                                100, 80, 0, 0),
+                                            items: [
+                                              PopupMenuItem(
+                                                value: 1,
+                                                onTap: () {
+                                                  videoController
+                                                      .sendToEditProfile(
+                                                          PostType.video);
+                                                },
+                                                child: SizedBox(
+                                                  width: 130,
+                                                  child: Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                          'assets/mediaverse/icons/edit.svg'),
+                                                      Text('Edit'),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ).then((value) {
+                                            if (value != null) {
+                                              print('$value');
+                                            }
+                                          })
+                                        : null;
+                                  }),
+                            ],
+                          ),
+                        ),
+                      ),
+                      backgroundColor: AppColor.secondaryDark,
+                    ),
 
-                ],
-              );
-            }else{
-              return   CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    elevation: 0,
-                    toolbarHeight: 10.h,
-                    surfaceTintColor: Colors.transparent,
-                    pinned: true
-                    ,
-                    automaticallyImplyLeading: false,
-                    flexibleSpace: Center(
+                    SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 18.0, vertical: 2.h),
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                           children: [
-                            AppbarBTNWidget(iconName: 'back1', onTap: () {
-                              Get.back();
-                            }),
-
-                            Text('Video' , style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600
-                            ),),
-                            AppbarBTNWidget(iconName: 'menu', onTap: () {
-                               videoController.isEditAvaiblae.isTrue?      showMenu(
-                                color: '#0F0F26'.toColor(),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.sp)),
-                                context: context,
-                                position: RelativeRect.fromLTRB(100, 80, 0, 0),
-                                items: [
-                                  PopupMenuItem(
-                                    value: 1,
-
-                                    onTap: (){
-                                      videoController.sendToEditProfile(PostType.video);
-                                    },
-                                    child: SizedBox(
-                                      width: 130,
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset('assets/mediaverse/icons/edit.svg'),
-
-                                          Text('Edit'),
-
-                                        ],
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: SizedBox(
+                                width: 35,
+                                height: 35,
+                                child: CachedNetworkImage(
+                                  imageUrl: videoController
+                                          .videoDetails?['user']['image_url'] ??
+                                      '',
+                                  fit: BoxFit.cover,
+                                  errorWidget: (context, url, error) {
+                                    return Container(
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          'assets/mediaverse/icons/userprofile.svg',
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
+                                      color: AppColor.primaryLightColor,
+                                    );
+                                  },
+                                  placeholder: (context, url) {
+                                    return Container(
+                                      color: AppColor.primaryLightColor,
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          'assets/mediaverse/icons/userprofile.svg',
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${videoController.videoDetails?['user']['username']}',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                Text(
+                                  '${videoController.videoDetails?['user']['full_name']}',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: '#9C9CB8'.toColor(),
                                   ),
-
-                                ],
-                              ).then((value) {
-                                if (value != null) {
-                                  print('$value');
-
-                                }
-                              }):null;
-                            }),
-
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            Text(
+                              '16 Dec 2024, 6:50PM',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: '#9C9CB8'.toColor(),
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
-                    backgroundColor: AppColor.secondaryDark,
-                  ),
-
-
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding:  EdgeInsets.symmetric(horizontal: 18.0 , vertical: 2.h),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: SizedBox(
-                              width: 35,
-                              height: 35,
-                              child: CachedNetworkImage(imageUrl: videoController
-                                  .videoDetails?['user']
-                              ['image_url'] ?? '' ,fit: BoxFit.cover, errorWidget: (context, url, error) {
-                                return Container(
-                                  child: Center(child: SvgPicture.asset('assets/mediaverse/icons/userprofile.svg' , color: Colors.white,),),
-                                  color: AppColor.primaryLightColor,
-                                );
-                              },placeholder: (context, url) {
-                                return Container(
-                                  color: AppColor.primaryLightColor,
-                                  child: Center(child: SvgPicture.asset('assets/mediaverse/icons/userprofile.svg' , color: Colors.white,),),
-                                );
-                              },),
+                    //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 1.h,
+                        ),
+                      ),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Container(
+                          height: 350,
+                          width: 350,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(14.sp)),
+                          child: PlayerVideo(),
+                        ),
+                      ),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 2.h,
+                        ),
+                      ),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Row(
+                          children: [
+                            buildCustomDetailBTNWidget(
+                                iconName: 'Magic',
+                                onTap: () {
+                                  runCustomSelectBottomToolsAsset(
+                                      videoController);
+                                },
+                                name: 'Tools'),
+                            SizedBox(
+                              width: 8,
                             ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('${ videoController
-                                  .videoDetails?['user']
-                              ['username'] }' , style: TextStyle(
-                                  fontSize: 15
-                              ),),
-                              Text('${ videoController
-                                  .videoDetails?['user']
-                              ['full_name'] }' , style: TextStyle(
-                                fontSize: 13,
-                                color: '#9C9CB8'.toColor(),
-                              ),),
-                            ],
-                          ),
-                          Spacer(),
-                          Text('16 Dec 2024, 6:50PM' , style: TextStyle(
-                            fontSize: 13,
-                            color: '#9C9CB8'.toColor(),
-                          ),),
-
-                        ],
-                      ),
-                    ),
-                  ),
-                  //--
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      child: SizedBox(
-                        height: 1.h,
-                      ),
-                    ),
-                  ),
-                  //--
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: Container(
-
-                        height: 350,
-                        width: 350,
-                        decoration: BoxDecoration(
-
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(14.sp)
+                            buildCustomDetailBTNWidget(
+                                iconName: 'globe',
+                                onTap: () {
+                                  runCustomPublishSheet(videoController);
+                                },
+                                name: 'Publish'),
+                            Spacer(),
+                            buildCustomDetailBTNWidget(
+                                iconName: 'Forward',
+                                onTap: () {},
+                                name: 'Share'),
+                          ],
                         ),
-                        child: PlayerVideo(),
                       ),
                     ),
-                  ),
-                  //--
-                  SliverToBoxAdapter(
-                    child: SizedBox(
+                    //--
+                    SliverToBoxAdapter(
                       child: SizedBox(
-                        height: 2.h,
+                        child: SizedBox(
+                          height: 2.h,
+                        ),
                       ),
                     ),
-                  ),
-                  //--
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: Row(
-                        children: [
-                          buildCustomDetailBTNWidget(iconName: 'Magic', onTap: (){
-                            runCustomSelectBottomToolsAsset(videoController);
-                          }, name: 'Tools'),
-                          SizedBox(width: 8,),
-                          buildCustomDetailBTNWidget(iconName: 'globe', onTap: (){
-                            runCustomPublishSheet(videoController);
-                          }, name: 'Publish'),
-                          Spacer(),
-                          buildCustomDetailBTNWidget(iconName: 'Forward', onTap: (){}, name: 'Share'),
-                        ],
+                    //--
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Text(
+                          '${videoController.videoDetails?['name']}',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ),
-                  ),
-                  //--
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      child: SizedBox(
-                        height: 2.h,
-                      ),
-                    ),
-                  ),
-                  //--
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: Text('${videoController.videoDetails?['name']}' , style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600
-                      ),),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: GestureDetector(
-                        onTap: (){
-
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: videoController.videoDetails?['description']  == null
-                                    ? ''
-                                    : videoController.isExpandedViewBodyText
-                                    ? videoController.videoDetails!['description']
-                                    : videoController.videoDetails!['description'] .length > 80
-                                    ? videoController.videoDetails!['description'] .substring(0, 80) + ' '
-                                    : videoController.videoDetails?['description'],
-                                style: TextStyle(
-                                  color: '#9C9CB8'.toColor(),
-                                ),
-                              ),
-                              if (videoController.videoDetails!['description']  != null && !videoController.isExpandedViewBodyText && videoController.videoDetails!['description'] .length > 80)
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
                                 TextSpan(
-                                  text: '...more',
+                                  text: videoController
+                                              .videoDetails?['description'] ==
+                                          null
+                                      ? ''
+                                      : videoController.isExpandedViewBodyText
+                                          ? videoController
+                                              .videoDetails!['description']
+                                          : videoController
+                                                      .videoDetails![
+                                                          'description']
+                                                      .length >
+                                                  80
+                                              ? videoController.videoDetails![
+                                                          'description']
+                                                      .substring(0, 80) +
+                                                  ' '
+                                              : videoController
+                                                  .videoDetails?['description'],
                                   style: TextStyle(
-                                    color: AppColor.primaryColor,
-                                    fontWeight: FontWeight.bold,
+                                    color: '#9C9CB8'.toColor(),
                                   ),
                                 ),
-                            ],
-                          ),
-                        ),
-
-                      ),
-                    ),
-                  ),
-                  //--
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      child: SizedBox(
-                        height: 3.h,
-                      ),
-                    ),
-                  ),
-                  //--
-
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: GestureDetector(
-                        onTap: (){
-
-                        },
-                        child:
-                        Obx(() {
-                          if (videoController.isLoadingComment.value) {
-                            return RichText(
-                              text: TextSpan(
-                                children: [
+                                if (videoController
+                                            .videoDetails!['description'] !=
+                                        null &&
+                                    !videoController.isExpandedViewBodyText &&
+                                    videoController.videoDetails!['description']
+                                            .length >
+                                        80)
                                   TextSpan(
-                                    text: 'details_12'.tr,
-                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                            );
-                          } else if (videoController.commentsData == null ||
-                              videoController.commentsData!.isEmpty) {
-                            return SizedBox();
-                          } else {
-                            return RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'details_12'.tr,
-                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                                  ),
-                                  TextSpan(
-                                    text: ' (${videoController.commentsData!['data'].length})',
+                                    text: '...more',
                                     style: TextStyle(
-                                      color: '#9C9CB8'.toColor(),
+                                      color: AppColor.primaryColor,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                ],
-                              ),
-                            );
-                          }
-                        })
-
-
-
-
-
-                      ),
-                    ),
-                  ),
-                  //--
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      child: SizedBox(
-                        height: 1.h,
-                      ),
-                    ),
-                  ),
-                  //--
-                  SliverToBoxAdapter(
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                        child: TextField(
-                          controller: videoController.commentTextController,
-
-                          decoration: InputDecoration(
-
-                              filled: true,
-                              hintText: 'Add a comment...',
-                              fillColor: '#0F0F26'.toColor(),
-                              contentPadding: EdgeInsets.symmetric(vertical: 13 , horizontal: 10),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-
-                                  borderRadius: BorderRadius.circular(8.sp)
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-
-                                  borderRadius: BorderRadius.circular(8.sp)
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-
-                                  borderRadius: BorderRadius.circular(8.sp)
-                              ),
-                              suffixIcon: Transform.scale(
-                                  scale: 0.8,
-                                  child: IconButton(onPressed: ()async{
-                                    videoController.postComment();
-                                    videoController.commentTextController.text ='';
-                                    videoController.isLoadingComment.value = true;
-                                   await Future.delayed(Duration(seconds: 1));
-                                    videoController.fetchMediaComments();
-                                  }, icon: SvgPicture.asset('assets/mediaverse/icons/send.svg' , height: 25,) ,))
-                          ),
-                        )
-                    ),
-                  ),
-                  //--
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      child: SizedBox(
-                        height: 2.h,
-                      ),
-                    ),
-                  ),
-                  //--
-
-                  Obx(() {
-                    if (videoController.isLoadingComment.value) {
-                      return SliverToBoxAdapter(child: Center(child: CupertinoActivityIndicator(
-                        color: AppColor.primaryColor,
-
-                      )));
-                    } else if (videoController.commentsData == null ||
-                        videoController.commentsData!.isEmpty) {
-                      return SliverToBoxAdapter(
-                        child: SizedBox()
-                      );
-                    } else {
-                      return         SliverList.builder(
-                          itemCount:    videoController.commentsData!['data'].length,
-                          itemBuilder: (context , index){
-
-                            final comment =
-                            videoController.commentsData?['data'][index];
-                            return CommentBoxWidget(data: comment,);
-                          });
-
-
-                    }
-                  }),
-
-                  //--
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      child: SizedBox(
-                        height: 2.h,
-                      ),
-                    ),
-                  ),
-                  //--
-                ],
-              );
-            }
-          }),
-
-
-
-        )
-      ),
-    );
-  }
-
-  Container buildCustomDetailBTNWidget({required String iconName  ,required Function() onTap , required String name} ) {
-    return Container(
-
-                      decoration: BoxDecoration(
-                        color: '#0F0F26'.toColor(),
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child:  Material(
-
-                        color: Colors.transparent,
-                        child: InkWell(
-                          splashColor: Colors.white.withOpacity(0.01),
-                          borderRadius: BorderRadius.circular(
-                              100
-                          ),
-                          onTap: onTap,
-                          child: Padding(
-
-                            padding: EdgeInsets.symmetric(horizontal: 18 , vertical: 13),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset('assets/mediaverse/icons/${iconName}.svg' , height: 16,),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text('${name}' , style: TextStyle(
-
-                                  fontSize: 13
-                                ),)
                               ],
                             ),
                           ),
                         ),
                       ),
-                    );
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 3.h,
+                        ),
+                      ),
+                    ),
+                    //--
+
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: GestureDetector(
+                            onTap: () {},
+                            child: Obx(() {
+                              if (videoController.isLoadingComment.value) {
+                                return RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'details_12'.tr,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              } else if (videoController.commentsData == null ||
+                                  videoController.commentsData!.isEmpty) {
+                                return SizedBox();
+                              } else {
+                                return RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'details_12'.tr,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            ' (${videoController.commentsData!['data'].length})',
+                                        style: TextStyle(
+                                          color: '#9C9CB8'.toColor(),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            })),
+                      ),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 1.h,
+                        ),
+                      ),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          child: TextField(
+                            controller: videoController.commentTextController,
+                            decoration: InputDecoration(
+                                filled: true,
+                                hintText: 'Add a comment...',
+                                fillColor: '#0F0F26'.toColor(),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 13, horizontal: 10),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(8.sp)),
+                                disabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(8.sp)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(8.sp)),
+                                suffixIcon: Transform.scale(
+                                    scale: 0.8,
+                                    child: IconButton(
+                                      onPressed: () async {
+                                        videoController.postComment();
+                                        videoController
+                                            .commentTextController.text = '';
+                                        videoController.isLoadingComment.value =
+                                            true;
+                                        await Future.delayed(
+                                            Duration(seconds: 1));
+                                        videoController.fetchMediaComments();
+                                      },
+                                      icon: SvgPicture.asset(
+                                        'assets/mediaverse/icons/send.svg',
+                                        height: 25,
+                                      ),
+                                    ))),
+                          )),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 2.h,
+                        ),
+                      ),
+                    ),
+                    //--
+
+                    Obx(() {
+                      if (videoController.isLoadingComment.value) {
+                        return SliverToBoxAdapter(
+                            child: Center(
+                                child: CupertinoActivityIndicator(
+                          color: AppColor.primaryColor,
+                        )));
+                      } else if (videoController.commentsData == null ||
+                          videoController.commentsData!.isEmpty) {
+                        return SliverToBoxAdapter(child: SizedBox());
+                      } else {
+                        return SliverList.builder(
+                            itemCount:
+                                videoController.commentsData!['data'].length,
+                            itemBuilder: (context, index) {
+                              final comment =
+                                  videoController.commentsData?['data'][index];
+                              return CommentBoxWidget(
+                                data: comment,
+                              );
+                            });
+                      }
+                    }),
+
+                    //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 2.h,
+                        ),
+                      ),
+                    ),
+                    //--
+                  ],
+                );
+              }
+            }),
+          )),
+    );
+  }
+
+  Container buildCustomDetailBTNWidget(
+      {required String iconName,
+      required Function() onTap,
+      required String name}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: '#0F0F26'.toColor(),
+        borderRadius: BorderRadius.circular(100),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          splashColor: Colors.white.withOpacity(0.01),
+          borderRadius: BorderRadius.circular(100),
+          onTap: onTap,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 13),
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/mediaverse/icons/${iconName}.svg',
+                  height: 16,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  '${name}',
+                  style: TextStyle(fontSize: 13),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
 class CommentBoxWidget extends StatelessWidget {
   const CommentBoxWidget({
-    super.key, required this.data,
+    super.key,
+    required this.data,
   });
 
-  final data ;
+  final data;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 18.0 , vertical: 1.5.h),
+        padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 1.5.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-
           children: [
             Container(
               color: Colors.transparent,
@@ -600,25 +636,25 @@ class CommentBoxWidget extends StatelessWidget {
                       ),
                     )
                   else
-    Container(
-      height: 35,
-    width: 35,
-    decoration: BoxDecoration(
-      color: AppColor.primaryLightColor,
-      shape: BoxShape.circle
-    ),
-    child: Center(
-    child: SvgPicture.asset(
-    'assets/mediaverse/icons/userprofile.svg',
-    color: Colors.white,
-    ),
-    ),
-    ),
+                    Container(
+                      height: 35,
+                      width: 35,
+                      decoration: BoxDecoration(
+                          color: AppColor.primaryLightColor,
+                          shape: BoxShape.circle),
+                      child: Center(
+                        child: SvgPicture.asset(
+                          'assets/mediaverse/icons/userprofile.svg',
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   SizedBox(
                     width: 8,
                   ),
                   Text(
-                    '${data['user']?['username'] ?? 'Unknown'}', // مقدار پیش‌فرض برای جلوگیری از ارور
+                    '${data['user']?['username'] ?? 'Unknown'}',
+
                     style: TextStyle(color: '#9C9CB8'.toColor()),
                   ),
                   SizedBox(
@@ -635,24 +671,17 @@ class CommentBoxWidget extends StatelessWidget {
                   ),
                 ],
               ),
-
             ),
-
-
             Padding(
-              padding: const EdgeInsets.only(left: 42.0 , right: 24),
+              padding: const EdgeInsets.only(left: 42.0, right: 24),
               child: Text('${data['body'].toString()}'),
             )
           ],
-        )
-    );
+        ));
   }
-
 }
+
 void runCustomSelectBottomToolsAsset(DetailController controller) {
-
-
-
   Get.bottomSheet(
     elevation: 0,
     StatefulBuilder(
@@ -667,7 +696,7 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
               topRight: Radius.circular(30),
             ),
           ),
-          child:  Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 3.h),
@@ -675,7 +704,6 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
                 child: Row(
                   children: [
-
                     Text(
                       'Tools',
                       style: TextStyle(
@@ -687,9 +715,14 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
                     Spacer(),
                     IconButton(
                       iconSize: 18,
-                      onPressed: (){
+                      onPressed: () {
                         Get.back();
-                      }, icon: Icon(Icons.close_rounded , color: '9C9CB8'.toColor(),) , )
+                      },
+                      icon: Icon(
+                        Icons.close_rounded,
+                        color: '9C9CB8'.toColor(),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -704,25 +737,20 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
               GestureDetector(
                 onTap: () {
                   Get.back();
-                  double videoLength = double.parse(controller.videoDetails?[
-                  'file']['length']);
+                  double videoLength =
+                      double.parse(controller.videoDetails?['file']['length']);
 
-                  Get.find<MediaSuitController>()
-                      .setDataEditVideo(
-                      controller.videoDetails?['name'] ??
-                          '',
-                      controller
-                          .videoDetails?['file']
-                      ['url'],
+                  Get.find<MediaSuitController>().setDataEditVideo(
+                      controller.videoDetails?['name'] ?? '',
+                      controller.videoDetails?['file']['url'],
                       videoLength,
-                      controller
-                          .videoDetails!['file_id']
-                          .toString());
+                      controller.videoDetails!['file_id'].toString());
                   Get.toNamed(PageRoutes.MEDIASUIT);
-
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0 ,),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18.0,
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -731,19 +759,27 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
                         width: 35,
                         decoration: BoxDecoration(
                             color: '2563EB'.toColor(),
-                            borderRadius: BorderRadius.circular(8.sp)
+                            borderRadius: BorderRadius.circular(8.sp)),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            'assets/mediaverse/icons/tools1.svg',
+                            color: Colors.white,
+                          ),
                         ),
-                        child: Center(child:   SvgPicture.asset('assets/mediaverse/icons/tools1.svg' , color: Colors.white,),),
                       ),
                       SizedBox(
                         width: 10,
                       ),
-                      Text('Open in media studio' , style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600
-                      ),),
+                      Text(
+                        'Open in media studio',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w600),
+                      ),
                       Spacer(),
-                      SvgPicture.asset('assets/mediaverse/icons/open.svg' , color: Colors.white,)
+                      SvgPicture.asset(
+                        'assets/mediaverse/icons/open.svg',
+                        color: Colors.white,
+                      )
                     ],
                   ),
                 ),
@@ -756,20 +792,20 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
               ),
 
               Container(
-
                 height: 0.5,
                 width: Get.width,
               ),
               SizedBox(height: 2.h),
               //BTN Tools 2
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.back();
-                  controller
-                      .videoConvertToAudio();
+                  controller.videoConvertToAudio();
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0 ,),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18.0,
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -778,42 +814,46 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
                         width: 35,
                         decoration: BoxDecoration(
                             color: '2563EB'.toColor(),
-                            borderRadius: BorderRadius.circular(8.sp)
+                            borderRadius: BorderRadius.circular(8.sp)),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            'assets/mediaverse/icons/tools2.svg',
+                            color: Colors.white,
+                          ),
                         ),
-                        child: Center(child:   SvgPicture.asset('assets/mediaverse/icons/tools2.svg' , color: Colors.white,),),
                       ),
                       SizedBox(
                         width: 10,
                       ),
-                      Text('Video to Audio' , style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600
-                      ),),
-
+                      Text(
+                        'Video to Audio',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w600),
+                      ),
                     ],
                   ),
                 ),
               ),
               SizedBox(height: 2.h),
               Container(
-
                 height: 0.5,
                 width: Get.width,
               ),
 
               Container(
-
                 height: 0.5,
                 width: Get.width,
               ),
               SizedBox(height: 2.h),
               //BTN Tools 3
               GestureDetector(
-                onTap: (){
-                 controller.videoDubbing();
+                onTap: () {
+                  controller.videoDubbing();
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0 ,),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18.0,
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -822,30 +862,36 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
                         width: 35,
                         decoration: BoxDecoration(
                             color: '2563EB'.toColor(),
-                            borderRadius: BorderRadius.circular(8.sp)
+                            borderRadius: BorderRadius.circular(8.sp)),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            'assets/mediaverse/icons/tools3.svg',
+                            color: Colors.white,
+                          ),
                         ),
-                        child: Center(child:   SvgPicture.asset('assets/mediaverse/icons/tools3.svg' , color: Colors.white,),),
                       ),
                       SizedBox(
                         width: 10,
                       ),
-                      Text('Dubbing ' , style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600
-                      ),),
+                      Text(
+                        'Dubbing ',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w600),
+                      ),
                       Spacer(),
-                      SvgPicture.asset('assets/mediaverse/icons/arrow.svg' , color: Colors.white,)
+                      SvgPicture.asset(
+                        'assets/mediaverse/icons/arrow.svg',
+                        color: Colors.white,
+                      )
                     ],
                   ),
                 ),
               ),
               SizedBox(height: 2.h),
               Container(
-
                 height: 0.5,
                 width: Get.width,
               ),
-
             ],
           ),
         );
@@ -853,203 +899,211 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
     ),
   );
 }
-void runCustomPublishSheet(DetailController detailController) {
 
+void runCustomPublishSheet(DetailController detailController) {
   detailController.fetchChannels();
 
   Get.bottomSheet(
     elevation: 0,
-      Container(
-        width: 100.w,
-        height: 45.h,
-        decoration: BoxDecoration(
-          color: "#0F0F26".toColor(),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
+    Container(
+      width: 100.w,
+      height: 45.h,
+      decoration: BoxDecoration(
+        color: "#0F0F26".toColor(),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
         ),
-        child:  Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 3.h),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 3.h),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18.0),
+            child: Row(
+              children: [
+                Text(
+                  'Publish in',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                  ),
+                ),
+                Spacer(),
+                IconButton(
+                  iconSize: 18,
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Icon(
+                    Icons.close_rounded,
+                    color: '9C9CB8'.toColor(),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18.0),
+            child: Text(
+              'Choose where to share. Connect accounts in your profile if required.',
+              style: TextStyle(color: '9C9CB8'.toColor(), fontSize: 13),
+            ),
+          ),
+          SizedBox(height: 1.h),
+          Container(
+            height: 0.5,
+            width: Get.width,
+          ),
+          SizedBox(height: 2.h),
+          //BTN Tools 1
+          GestureDetector(
+            onTap: () {
+              Get.back();
+              runPublishYoutubeSheet(detailController);
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 18.0,
+              ),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-
-                  Text(
-                    'Publish in',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
+                  Container(
+                    height: 35,
+                    width: 35,
+                    child: Center(
+                      child: SvgPicture.asset(
+                        'assets/mediaverse/icons/y.svg',
+                      ),
                     ),
                   ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'Youtube',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  ),
                   Spacer(),
-                  IconButton(
-                    iconSize: 18,
-                    onPressed: (){
-                      Get.back();
-                    }, icon: Icon(Icons.close_rounded , color: '9C9CB8'.toColor(),) , )
+                  SvgPicture.asset(
+                    'assets/mediaverse/icons/arrow.svg',
+                    color: Colors.white,
+                  )
                 ],
               ),
             ),
-            Padding(
+          ),
+          SizedBox(height: 2.h),
+          Container(
+            height: 0.5,
+            width: Get.width,
+          ),
 
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
-              child: Text('Choose where to share. Connect accounts in your profile if required.',style: TextStyle(
-                color: '9C9CB8'.toColor(),
-                fontSize: 13
-              ),),
-            ),
-            SizedBox(height: 1.h),
-            Container(
-
-              height: 0.5,
-              width: Get.width,
-            ),
-            SizedBox(height: 2.h),
-            //BTN Tools 1
-            GestureDetector(
-              onTap: () {
-
-                Get.back();
-                runPublishYoutubeSheet(detailController);
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0 ,),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 35,
-                      width: 35,
-
-                      child: Center(child:   SvgPicture.asset('assets/mediaverse/icons/y.svg' , ),),
+          Container(
+            height: 0.5,
+            width: Get.width,
+          ),
+          SizedBox(height: 2.h),
+          //BTN Tools 2
+          GestureDetector(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 18.0,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 35,
+                    width: 35,
+                    child: Center(
+                      child: SvgPicture.asset(
+                        'assets/mediaverse/icons/x.svg',
+                      ),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text('Youtube' , style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600
-                    ),),
-                    Spacer(),
-                    SvgPicture.asset('assets/mediaverse/icons/arrow.svg' , color: Colors.white,)
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'X',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  ),
+                  Spacer(),
+                  SvgPicture.asset(
+                    'assets/mediaverse/icons/arrow.svg',
+                    color: Colors.white,
+                  )
+                ],
               ),
             ),
-            SizedBox(height: 2.h),
-            Container(
+          ),
+          SizedBox(height: 2.h),
+          Container(
+            height: 0.5,
+            width: Get.width,
+          ),
 
-              height: 0.5,
-              width: Get.width,
-            ),
-
-            Container(
-
-              height: 0.5,
-              width: Get.width,
-            ),
-            SizedBox(height: 2.h),
-            //BTN Tools 2
-            GestureDetector(
-              onTap: (){
-
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0 ,),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 35,
-                      width: 35,
-
-                      child: Center(child:   SvgPicture.asset('assets/mediaverse/icons/x.svg' , ),),
+          Container(
+            height: 0.5,
+            width: Get.width,
+          ),
+          SizedBox(height: 2.h),
+          //BTN Tools 3
+          GestureDetector(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 18.0,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 35,
+                    width: 35,
+                    child: Center(
+                      child: SvgPicture.asset(
+                        'assets/mediaverse/icons/d.svg',
+                      ),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text('X' , style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600
-                    ),),
-                    Spacer(),
-                    SvgPicture.asset('assets/mediaverse/icons/arrow.svg' , color: Colors.white,)
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'Google drive',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  ),
+                  Spacer(),
+                  SvgPicture.asset(
+                    'assets/mediaverse/icons/arrow.svg',
+                    color: Colors.white,
+                  )
+                ],
               ),
             ),
-            SizedBox(height: 2.h),
-            Container(
-
-              height: 0.5,
-              width: Get.width,
-            ),
-
-            Container(
-
-              height: 0.5,
-              width: Get.width,
-            ),
-            SizedBox(height: 2.h),
-            //BTN Tools 3
-            GestureDetector(
-              onTap: (){
-
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0 ,),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 35,
-                      width: 35,
-
-                      child: Center(child:   SvgPicture.asset('assets/mediaverse/icons/d.svg' ,),),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text('Google drive' , style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600
-                    ),),
-                    Spacer(),
-                    SvgPicture.asset('assets/mediaverse/icons/arrow.svg' , color: Colors.white,)
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 2.h),
-            Container(
-
-              height: 0.5,
-              width: Get.width,
-            ),
-
-          ],
-        ),
+          ),
+          SizedBox(height: 2.h),
+          Container(
+            height: 0.5,
+            width: Get.width,
+          ),
+        ],
       ),
+    ),
   );
 }
 
-
 void runPublishYoutubeSheet(DetailController detailController) {
-
-
-
-  Get.bottomSheet(
-    elevation: 0,
-
-    StatefulBuilder(builder: (context, setState) {
+  Get.bottomSheet(elevation: 0, StatefulBuilder(
+    builder: (context, setState) {
       return Container(
         width: 100.w,
-
         decoration: BoxDecoration(
           color: "#0F0F26".toColor(),
           borderRadius: BorderRadius.only(
@@ -1057,7 +1111,7 @@ void runPublishYoutubeSheet(DetailController detailController) {
             topRight: Radius.circular(30),
           ),
         ),
-        child:  Padding(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: SingleChildScrollView(
             child: Column(
@@ -1073,7 +1127,8 @@ void runPublishYoutubeSheet(DetailController detailController) {
                         onTap: () {
                           Get.back();
                         },
-                        child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg'),
+                        child: SvgPicture.asset(
+                            'assets/mediaverse/icons/arrow.svg'),
                       ),
                     ),
                     Spacer(),
@@ -1090,81 +1145,83 @@ void runPublishYoutubeSheet(DetailController detailController) {
                   ],
                 ),
 
-
                 SizedBox(height: 1.h),
                 Container(
-
                   height: 0.5,
                   width: Get.width,
                 ),
                 SizedBox(height: 2.h),
                 //text filide 1 - select Account
-               Obx((){
-               return  GestureDetector(
-                   onTap: () {
-                     runSelectAccountSheet(detailController);
-                   },
-                   child: TextField(
-
-                     style: TextStyle(
-                       decorationColor: Colors.transparent,
-                       decoration: TextDecoration.none,
-                     ),
-
-                     decoration: InputDecoration(
-                       filled: true,
-                       enabled: false,
-                       suffixIcon: detailController.isLoadingChannel.value == true ?Transform.scale(
-
-                         scale: 0.3,
-                         child: CircularProgressIndicator(
-                           color: Colors.white,
-                           backgroundColor: Colors.white.withOpacity(0.3),
-                         ),
-                       ):Transform.scale(
-                           scale: 0.5,
-
-                           child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg')),
-                       hintText: detailController.selectedAccountTitle.isEmpty
-                           ? 'Select Account'
-                           : detailController.selectedAccountTitle,
-                       hintStyle: TextStyle(color:detailController. selectedAccountTitle.isEmpty ?'9C9CB8'.toColor():Colors.white),
-                       fillColor: '#17172E'.toColor(),
-                       contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                       enabledBorder: OutlineInputBorder(
-                         borderSide: BorderSide.none,
-                         borderRadius: BorderRadius.circular(8.sp),
-                       ),
-                       disabledBorder: OutlineInputBorder(
-                         borderSide: BorderSide.none,
-                         borderRadius: BorderRadius.circular(8.sp),
-                       ),
-                       focusedBorder: OutlineInputBorder(
-                         borderSide: BorderSide.none,
-                         borderRadius: BorderRadius.circular(8.sp),
-                       ),
-                     ),
-                   ),
-                 );
-               }),
+                Obx(() {
+                  return GestureDetector(
+                    onTap: () {
+                      runSelectAccountSheet(detailController);
+                    },
+                    child: TextField(
+                      style: TextStyle(
+                        decorationColor: Colors.transparent,
+                        decoration: TextDecoration.none,
+                      ),
+                      decoration: InputDecoration(
+                        filled: true,
+                        enabled: false,
+                        suffixIcon:
+                            detailController.isLoadingChannel.value == true
+                                ? Transform.scale(
+                                    scale: 0.3,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      backgroundColor:
+                                          Colors.white.withOpacity(0.3),
+                                    ),
+                                  )
+                                : Transform.scale(
+                                    scale: 0.5,
+                                    child: SvgPicture.asset(
+                                        'assets/mediaverse/icons/arrow.svg')),
+                        hintText: detailController.selectedAccountTitle.isEmpty
+                            ? 'Select Account'
+                            : detailController.selectedAccountTitle,
+                        hintStyle: TextStyle(
+                            color: detailController.selectedAccountTitle.isEmpty
+                                ? '9C9CB8'.toColor()
+                                : Colors.white),
+                        fillColor: '#17172E'.toColor(),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8.sp),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8.sp),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8.sp),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
 
                 SizedBox(height: 2.h),
 
                 //text filide 2 - title
                 TextField(
-
                   style: TextStyle(
                     decorationColor: Colors.transparent,
                     decoration: TextDecoration.none,
                   ),
-
                   controller: detailController.titleEditingController,
                   decoration: InputDecoration(
                     filled: true,
                     hintText: 'Title',
                     hintStyle: TextStyle(color: '9C9CB8'.toColor()),
                     fillColor: '#17172E'.toColor(),
-                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(8.sp),
@@ -1184,7 +1241,6 @@ void runPublishYoutubeSheet(DetailController detailController) {
 
                 //text filide 3 - Description
                 TextField(
-
                   style: TextStyle(
                     decorationColor: Colors.transparent,
                     decoration: TextDecoration.none,
@@ -1193,11 +1249,11 @@ void runPublishYoutubeSheet(DetailController detailController) {
                   controller: detailController.desEditingController,
                   decoration: InputDecoration(
                     filled: true,
-
                     hintText: 'Description',
                     hintStyle: TextStyle(color: '9C9CB8'.toColor()),
                     fillColor: '#17172E'.toColor(),
-                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(8.sp),
@@ -1215,63 +1271,59 @@ void runPublishYoutubeSheet(DetailController detailController) {
 
                 SizedBox(height: 2.h),
                 //Switch 1 - Publish Later
-              GetBuilder<DetailController>(
-                builder: (controller) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Publish Later',
-                        style: TextStyle(
-                          color: '9C9CB8'.toColor(),
-                          fontSize: 15,
+                GetBuilder<DetailController>(
+                  builder: (controller) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Publish Later',
+                          style: TextStyle(
+                            color: '9C9CB8'.toColor(),
+                            fontSize: 15,
+                          ),
                         ),
-                      ),
-                      CustomSwitchWidget(
-                        value: controller.isSeletedNow,
-                        onChanged: (value) {
-                          controller.isSeletedNow = value;
-                          controller.update();
-                          if (controller.isSeletedNow == true) {
-                            print('On');
-                          } else {
-                            print('Off');
-                          }
-                        },
-                      ),
+                        CustomSwitchWidget(
+                          value: controller.isSeletedNow,
+                          onChanged: (value) {
+                            controller.isSeletedNow = value;
+                            controller.update();
+                            if (controller.isSeletedNow == true) {
+                              print('On');
+                            } else {
+                              print('Off');
+                            }
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                ),
 
-                    ],
-                  );
-                },
-              ),
-
-
-              SizedBox(height: 2.h),
+                SizedBox(height: 2.h),
                 //Switch 2 - content private
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Is this content private?' , style: TextStyle(
-                        color: '9C9CB8'.toColor(),
-                        fontSize: 15
-                    ),),
-
+                    Text(
+                      'Is this content private?',
+                      style: TextStyle(color: '9C9CB8'.toColor(), fontSize: 15),
+                    ),
                     Obx(() => CustomSwitchWidget(
-                      value: detailController.isPrivateContent.value,
-                      onChanged: (value) {
-                        detailController.isPrivateContent.value = value;
-                        detailController.update();
-                        if(detailController.isPrivateContent.value == true){
-                          print('On');
-                        }else{
-                          print('Off');
-                        }
-                      },
-                    ))
-
+                          value: detailController.isPrivateContent.value,
+                          onChanged: (value) {
+                            detailController.isPrivateContent.value = value;
+                            detailController.update();
+                            if (detailController.isPrivateContent.value ==
+                                true) {
+                              print('On');
+                            } else {
+                              print('Off');
+                            }
+                          },
+                        ))
                   ],
                 ),
-
 
                 SizedBox(height: 2.h),
                 //publish btn
@@ -1299,21 +1351,17 @@ void runPublishYoutubeSheet(DetailController detailController) {
           ),
         ),
       );
-    },)
-  );
+    },
+  ));
 }
 
-
 void runSelectAccountSheet(DetailController detailController) {
-
   detailController.fetchChannels();
 
   Get.bottomSheet(
     elevation: 0,
-
     Container(
       width: 100.w,
-
       height: 25.h,
       decoration: BoxDecoration(
         color: "#0F0F26".toColor(),
@@ -1322,10 +1370,10 @@ void runSelectAccountSheet(DetailController detailController) {
           topRight: Radius.circular(30),
         ),
       ),
-      child:  Padding(
+      child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18.0),
         child: SingleChildScrollView(
-          child:    Column(
+          child: Column(
             children: [
               SizedBox(height: 3.h),
               Row(
@@ -1336,7 +1384,8 @@ void runSelectAccountSheet(DetailController detailController) {
                       onTap: () {
                         Get.back();
                       },
-                      child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg'),
+                      child:
+                          SvgPicture.asset('assets/mediaverse/icons/arrow.svg'),
                     ),
                   ),
                   Spacer(),
@@ -1354,38 +1403,37 @@ void runSelectAccountSheet(DetailController detailController) {
               ),
               SizedBox(height: 3.h),
               Obx(() {
-                if(detailController.isLoadingChannel.value == true){
+                if (detailController.isLoadingChannel.value == true) {
                   return Transform.scale(
-
                     scale: 0.5,
                     child: CircularProgressIndicator(
                       color: Colors.white,
                       backgroundColor: Colors.white.withOpacity(0.3),
                     ),
                   );
-                }else{
+                } else {
                   return Column(
                     children: detailController.externalAccountlist
-                    //  .where((element) => element.type.toString().contains("1"))
+                        //  .where((element) => element.type.toString().contains("1"))
                         .toList()
                         .asMap()
                         .entries
                         .map((e) {
-                      var model = detailController.externalAccountlist
-                          .elementAt(e.key);
+                      var model =
+                          detailController.externalAccountlist.elementAt(e.key);
 
-                      return accountWidget(//
+                      return accountWidget(
+                          //
                           title: (model.title ?? "").toString(),
                           date: (model.createdAt ?? ""),
                           isEnable: detailController.enableChannel == e.key,
                           onTap: () {
-                            detailController. selectAccountPublish(e.key);
+                            detailController.selectAccountPublish(e.key);
                           });
                     }).toList(),
                   );
                 }
               }),
-
             ],
           ),
         ),
@@ -1393,11 +1441,6 @@ void runSelectAccountSheet(DetailController detailController) {
     ),
   );
 }
-
-
-
-
-
 
 Widget accountWidget({
   required String title,
@@ -1408,9 +1451,7 @@ Widget accountWidget({
   return Container(
     width: double.infinity,
     height: 8.h,
-
     child: GestureDetector(
-
       onTap: () {
         try {
           onTap?.call();
@@ -1430,14 +1471,11 @@ Widget accountWidget({
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isEnable
-                      ? '2563EB'.toColor()
-                      : '9C9CB8'.toColor(),
+                  color: isEnable ? '2563EB'.toColor() : '9C9CB8'.toColor(),
                   width: isEnable ? 5.5 : 1,
                 ),
               ),
             ),
-
             SizedBox(width: 2.w),
             Text(
               title,
@@ -1445,11 +1483,9 @@ Widget accountWidget({
                 color: AppColor.whiteColor,
               ),
             ),
-
           ],
         ),
       ),
     ),
   );
 }
-
