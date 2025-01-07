@@ -698,15 +698,15 @@ class CommentBoxWidget extends StatelessWidget {
                   SizedBox(
                     width: 5,
                   ),
-                  Text(
-                    '1w',
-                    style: TextStyle(color: '#9C9CB8'.toColor()),
-                  ),
-                  Spacer(),
-                  SvgPicture.asset(
-                    'assets/mediaverse/icons/menu.svg',
-                    height: 20,
-                  ),
+                  // Text(
+                  //   '1w',
+                  //   style: TextStyle(color: '#9C9CB8'.toColor()),
+                  // ),
+                  // Spacer(),
+                  // SvgPicture.asset(
+                  //   'assets/mediaverse/icons/menu.svg',
+                  //   height: 20,
+                  // ),
                 ],
               ),
             ),
