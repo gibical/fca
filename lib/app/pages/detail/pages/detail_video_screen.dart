@@ -668,11 +668,8 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
               GestureDetector(
                 onTap: () {
                   Get.back();
-                  double videoLength =
-                  (controller.videoDetails?[
-                  'file']['info']['time'] ??
-                      0)
-                      .toDouble();
+                  double videoLength = double.parse(controller.videoDetails?[
+                  'file']['length']);
 
                   Get.find<MediaSuitController>()
                       .setDataEditVideo(
