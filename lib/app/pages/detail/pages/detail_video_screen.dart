@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app.dart';
@@ -1314,11 +1315,11 @@ void runPublishYoutubeSheet(DetailController detailController) {
                               ),
                             ),
                             CustomSwitchWidget(
-                              value: controller.isSeletedDate,
+                              value: controller.isSeletedDate.value,
                               onChanged: (value) {
-                                controller.isSeletedDate = value;
+                                controller.isSeletedDate.value = value;
                                 controller.update();
-                                if (controller.isSeletedDate) {
+                                if (controller.isSeletedDate.value) {
                                   print('On');
                                 } else {
                                   print('Off');
@@ -1328,7 +1329,7 @@ void runPublishYoutubeSheet(DetailController detailController) {
                           ],
                         ),
                         SizedBox(height: 10),
-                        if (controller.isSeletedDate)
+                        if (controller.isSeletedDate.value)
                           GestureDetector(
                             onTap: (){
                               runSelectDateSheet(detailController);
@@ -1349,8 +1350,8 @@ void runPublishYoutubeSheet(DetailController detailController) {
                                   ),
                                   decoration: InputDecoration(
                                     filled: true,
-                                    hintText: detailController.isSeletedDate
-                                        ? "${detailController.selectedDate.value.year}-${detailController.selectedDate.value.month}-${detailController.selectedDate.value.day}"
+                                    hintText: detailController.isSeletedDate.value
+                                        ? "${detailController.selectedDate.value.year}-${detailController.selectedDate.value.month}-${detailController.selectedDate.value.day} , ${detailController.selectedDate.value.hour.toString().padLeft(2, '0')}:${detailController.selectedDate.value.minute.toString().padLeft(2, '0')}"
                                         : 'Select date and time',
                                     suffixIcon: Transform.scale(
                                       scale: 0.5,
@@ -1374,7 +1375,8 @@ void runPublishYoutubeSheet(DetailController detailController) {
                                   ),
                                 ),
                               );
-                            }),
+                            })
+
 
                           ),
                       ],
@@ -1448,17 +1450,20 @@ void runSelectDateSheet(DetailController detailController) {
                           Get.back();
                         },
                         child: SvgPicture.asset(
-                            'assets/mediaverse/icons/arrow.svg'),
+                          'assets/mediaverse/icons/arrow.svg' , width: 24 , height: 24,),
                       ),
                     ),
                     Spacer(),
                     Text(
-                      'Select date',
+                      'Select time',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
                       ),
+                    ),
+                    SizedBox(
+                      width: 24,
                     ),
                     Spacer(),
                   ],
@@ -1488,13 +1493,13 @@ void runSelectDateSheet(DetailController detailController) {
                   ),
                   calendarStyle: CalendarStyle(
                     todayDecoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: '2563EB'.toColor(),
                       shape: BoxShape.circle,
                     ),
-                    selectedDecoration: BoxDecoration(
-                      color: Colors.blue.shade700,
-                      shape: BoxShape.circle,
-                    ),
+                    // selectedDecoration: BoxDecoration(
+                    //   color: Colors.blue.shade700,
+                    //   shape: BoxShape.circle,
+                    // ),
                     defaultTextStyle: TextStyle(color: Colors.white),
                     weekendTextStyle: TextStyle(color: Colors.white),
                     outsideTextStyle: TextStyle(color: Colors.grey),
@@ -1502,7 +1507,7 @@ void runSelectDateSheet(DetailController detailController) {
                   onDaySelected: (selectedDay, focusedDay) {
                     setState(() {
                       detailController.selectedDate.value  = selectedDay;
-                      detailController.isSeletedDate = true;
+                      detailController.isSeletedDate.value = true;
                     });
                   },
                 ),
@@ -1518,7 +1523,7 @@ void runSelectDateSheet(DetailController detailController) {
                       borderRadius: BorderRadius.circular(100),
                       splashColor: Colors.white.withOpacity(0.03),
                       onTap: () {
-                      //  detailController.onSendShareRequest('youtube');
+                        runSelectTimeSheet(detailController);
                       },
                       child: Center(
                         child: Text('Continue'),
@@ -1535,6 +1540,244 @@ void runSelectDateSheet(DetailController detailController) {
     }),
   );
 }
+
+void runSelectTimeSheet(DetailController controller) {
+  Get.bottomSheet(
+    elevation: 0,
+    enableDrag: false,
+    isDismissible: false,
+    isScrollControlled: true,
+    StatefulBuilder(builder: (context, setState) {
+      TimeOfDay selectedTime = TimeOfDay.now();
+
+      return Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: "#0F0F26".toColor(),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 3.h),
+              Row(
+                children: [
+                  RotatedBox(
+                    quarterTurns: 2,
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: SvgPicture.asset(
+                          'assets/mediaverse/icons/arrow.svg', width: 24, height: 24),
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    'Select time',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 24,
+                  ),
+                  Spacer(),
+                ],
+              ),
+              SizedBox(height: 3.h),
+              // Time Picker Section
+              SizedBox(
+                height: 200,
+                child: TimePickerSpinner(
+                  highlightedTextStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25
+                  ),
+                  normalTextStyle: TextStyle(
+
+                      color: '9C9CB8'.toColor(),
+                    fontSize: 25
+                  ),
+                  is24HourMode: false,
+                  time: DateTime(selectedTime.hour, selectedTime.minute),
+                  onTimeChange: (time) {
+                    setState(() {
+                      selectedTime = TimeOfDay(hour: time.hour, minute: time.minute);
+
+                      final currentDate = controller.selectedDate.value ?? DateTime.now();
+                      final updatedDateTime = DateTime(
+                        currentDate.year,
+                        currentDate.month,
+                        currentDate.day,
+                        selectedTime.hour,
+                        selectedTime.minute,
+                      );
+
+                      controller.selectedDate.value = updatedDateTime;
+                      controller.isSeletedDate.value = true;
+                    });
+                  },
+                ),
+              ),
+              SizedBox(height: 2.h),
+              // Confirm Button
+              SizedBox(
+                width: double.infinity,
+                height: 45,
+                child: Material(
+                  color: '2563EB'.toColor(),
+                  borderRadius: BorderRadius.circular(100),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(100),
+                    splashColor: Colors.white.withOpacity(0.03),
+                    onTap: () {
+                      Get.back();
+                      Get.back();
+                    },
+                    child: Center(
+                      child: Text(
+                        'Confirm',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 2.h),
+            ],
+          ),
+        ),
+      );
+    }),
+  );
+}
+// void runSelectTimeSheet(DetailController controller) {
+//   Get.bottomSheet(
+//     elevation: 0,
+//
+//       enableDrag: false,
+//       isDismissible: false,
+//     isScrollControlled: true,
+//     StatefulBuilder(builder: (context, setState) {
+//       TimeOfDay selectedTime = TimeOfDay.now();
+//
+//       return Container(
+//         width: double.infinity,
+//         decoration: BoxDecoration(
+//           color: "#0F0F26".toColor(),
+//           borderRadius: BorderRadius.only(
+//             topLeft: Radius.circular(30),
+//             topRight: Radius.circular(30),
+//           ),
+//         ),
+//         child: Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 18.0),
+//           child: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               SizedBox(height: 3.h),
+//               Row(
+//                 children: [
+//                   RotatedBox(
+//                     quarterTurns: 2,
+//                     child: GestureDetector(
+//                       onTap: () {
+//                         Get.back();
+//                       },
+//                       child: SvgPicture.asset(
+//                           'assets/mediaverse/icons/arrow.svg' , width: 24 , height: 24,),
+//                     ),
+//                   ),
+//                   Spacer(),
+//                   Text(
+//                     'Select time',
+//                     style: TextStyle(
+//                       color: Colors.white,
+//                       fontWeight: FontWeight.w600,
+//                       fontSize: 18,
+//                     ),
+//                   ),
+//                   SizedBox(
+//                     width: 24,
+//                   ),
+//                   Spacer(),
+//                 ],
+//               ),
+//               SizedBox(height: 3.h),
+//               // Time Picker Section
+//               SizedBox(
+//                 height: 200,
+//                 child: CupertinoTimerPicker(
+//                   mode: CupertinoTimerPickerMode.hm,
+//                   initialTimerDuration: Duration(
+//                     hours: selectedTime.hour,
+//                     minutes: selectedTime.minute,
+//                   ),
+//                   onTimerDurationChanged: (duration) {
+//                     setState(() {
+//                       selectedTime = TimeOfDay(
+//                         hour: duration.inHours % 24,
+//                         minute: duration.inMinutes % 60,
+//                       );
+//
+//                        final currentDate = controller.selectedDate.value ?? DateTime.now();
+//                       final updatedDateTime = DateTime(
+//                         currentDate.year,
+//                         currentDate.month,
+//                         currentDate.day,
+//                         selectedTime.hour,
+//                         selectedTime.minute,
+//                       );
+//
+//                       controller.selectedDate.value = updatedDateTime;
+//                       controller.isSeletedDate.value = true;
+//                     });
+//                   },
+//                 ),
+//               ),
+//               SizedBox(height: 2.h),
+//               // Confirm Button
+//               SizedBox(
+//                 width: double.infinity,
+//                 height: 45,
+//                 child: Material(
+//                   color: '2563EB'.toColor(),
+//                   borderRadius: BorderRadius.circular(100),
+//                   child: InkWell(
+//                     borderRadius: BorderRadius.circular(100),
+//                     splashColor: Colors.white.withOpacity(0.03),
+//                     onTap: () {
+//
+//
+//                       Get.back();
+//                       Get.back();
+//                     },
+//                     child: Center(
+//                       child: Text(
+//                         'Confirm',
+//                         style: TextStyle(color: Colors.white),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//               SizedBox(height: 2.h),
+//             ],
+//           ),
+//         ),
+//       );
+//     }),
+//   );
+// }
+
 
 void runSelectAccountSheet(DetailController detailController) {
   detailController.fetchChannels();
