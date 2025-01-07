@@ -13,6 +13,7 @@ import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/common/font_style.dart';
+import 'package:mediaverse/app/common/utils/data_state.dart';
 import 'package:mediaverse/app/common/widgets/appbar_btn.dart';
 import 'package:mediaverse/app/pages/detail/widgets/buy_card_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/card_mark_singlepage_widget.dart';
@@ -1400,7 +1401,16 @@ void runPublishYoutubeSheet(DetailController detailController) {
                         detailController.onSendShareRequest('youtube');
                       },
                       child: Center(
-                        child: Text('Publish'),
+                        child: Obx((){
+                          if(detailController.loadingSendShareDataSate.value.status == Status.loading ){
+                            return Transform.scale(scale: .5,child: CircularProgressIndicator(
+                              color: Colors.white,
+                              backgroundColor: Colors.white.withOpacity(0.3),
+                            ),);
+                          }else{
+                            return Text('Publish');
+                          }
+                        })
                       ),
                     ),
                   ),

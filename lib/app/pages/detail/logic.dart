@@ -16,6 +16,7 @@ import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/common/app_route.dart';
+import 'package:mediaverse/app/common/utils/data_state.dart';
 import 'package:mediaverse/app/pages/detail/widgets/player/player.dart';
 import 'package:mediaverse/app/pages/detail/widgets/text_to_text.dart';
 import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
@@ -1114,7 +1115,11 @@ class DetailController extends GetxController {
     }
   }
 
+
+  var loadingSendShareDataSate = DataState<dynamic>().obs;
   void onSendShareRequest(String type)async {
+
+    loadingSendShareDataSate.value = DataState.loading();
     Map<String,dynamic> body = {
       "file_id": file_id,
       "external_account_id": externalAccountlist.elementAt(enableChannel).id.toString(),
@@ -1158,8 +1163,13 @@ class DetailController extends GetxController {
             Constant.showMessege(" ${"alert_10".tr} = ${response.data['data']['details']['error']}");
 
           }
+
+          loadingSendShareDataSate.value = DataState.success('Success');
         }  catch (e) {
           // TODO
+
+
+          loadingSendShareDataSate.value = DataState.error('error : ${e}');
           //Constant.showMessege("${youtubeMode?"Send To YouTube":"Archive to Drive"} Sucssefuly");
         }
         Get.back();
@@ -1167,7 +1177,7 @@ class DetailController extends GetxController {
       } else {
         // Handle errors
         Get.back();
-
+        loadingSendShareDataSate.value = DataState.error('error --- ');
         Constant.showMessege("alert_10".tr);
 
       }
@@ -1176,7 +1186,7 @@ class DetailController extends GetxController {
       Get.back();
 
       Constant.showMessege("alert_10".tr);
-
+      loadingSendShareDataSate.value = DataState.error('error : ${e}');
       print('DetailController._fetchMediaData = $e');
     } finally {
       //isLoading.value = false;
