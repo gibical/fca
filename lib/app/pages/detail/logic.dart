@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
@@ -70,8 +71,8 @@ class DetailController extends GetxController {
   String fileIdMusic = Get.arguments['file_id_music'].toString();
 
   //==================================== for youtube share =======================================//
-  bool isSeletedNow = true;
-  bool isSeletedDate = false;
+  // bool isSeletedNow = true;
+  var isSeletedDate = false.obs;
   var selectedDate = DateTime.now().obs;
   void updateSelectedDate(DateTime date) {
     selectedDate.value = date;
@@ -1119,13 +1120,10 @@ class DetailController extends GetxController {
       "external_account_id": externalAccountlist.elementAt(enableChannel).id.toString(),
 
     };
-    print('DetailController.onSendYouTubeRequest = ${formatDateTime( isSeletedNow?DateTime.now():selectedDate.value)}');
-    if(!isSeletedNow){
-      body["times"]= [
-    formatDateTime( isSeletedNow?DateTime.now():selectedDate.value)
+    print('DetailController.onSendYouTubeRequest = ${formatDateTime(selectedDate.value)}');
+    body["times"]= [
+      formatDateTime( selectedDate.value)
     ];
-
-    }
 
     if(type=="youtube"){
       body['title'] = titleEditingController.text;
