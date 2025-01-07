@@ -479,7 +479,7 @@ class DetailVideoScreen extends StatelessWidget {
                           itemBuilder: (context , index){
 
                             final comment =
-                            videoController.commentsData!['data'][index];
+                            videoController.commentsData?['data'][index];
                             return CommentBoxWidget(data: comment,);
                           });
 
@@ -563,43 +563,79 @@ class CommentBoxWidget extends StatelessWidget {
             Container(
               color: Colors.transparent,
               child: Row(
-
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: SizedBox(
-                      width: 35,
-                      height: 35,
-                      child: CachedNetworkImage(imageUrl: '${data['user']['image_url']}' ,fit: BoxFit.cover, errorWidget: (context, url, error) {
-                        return Container(
-                          color: AppColor.primaryLightColor,
-                          child: Center(child: SvgPicture.asset('assets/mediaverse/icons/userprofile.svg' , color: Colors.white,),),
-                        );
-                      },placeholder: (context, url) {
-                        return Container(
-                          color: AppColor.primaryLightColor,
-                          child: Center(child: SvgPicture.asset('assets/mediaverse/icons/userprofile.svg' , color: Colors.white,),),
-                        );
-                      },),
-                    ),
-                  ),
+                  if (data['user'] != null && data['user']['image_url'] != null)
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: SizedBox(
+                        width: 35,
+                        height: 35,
+                        child: CachedNetworkImage(
+                          imageUrl: '${data['user']['image_url']}',
+                          fit: BoxFit.cover,
+                          errorWidget: (context, url, error) {
+                            return Container(
+                              color: AppColor.primaryLightColor,
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  'assets/mediaverse/icons/userprofile.svg',
+                                  color: Colors.white,
+                                ),
+                              ),
+                            );
+                          },
+                          placeholder: (context, url) {
+                            return Container(
+                              color: AppColor.primaryLightColor,
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  'assets/mediaverse/icons/userprofile.svg',
+                                  color: Colors.white,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    )
+                  else
+    Container(
+      height: 35,
+    width: 35,
+    decoration: BoxDecoration(
+      color: AppColor.primaryLightColor,
+      shape: BoxShape.circle
+    ),
+    child: Center(
+    child: SvgPicture.asset(
+    'assets/mediaverse/icons/userprofile.svg',
+    color: Colors.white,
+    ),
+    ),
+    ),
                   SizedBox(
                     width: 8,
                   ),
-                  Text('${data['user']['username']}' , style: TextStyle(
-                    color: '#9C9CB8'.toColor()
-                  ),),
+                  Text(
+                    '${data['user']?['username'] ?? 'Unknown'}', // مقدار پیش‌فرض برای جلوگیری از ارور
+                    style: TextStyle(color: '#9C9CB8'.toColor()),
+                  ),
                   SizedBox(
                     width: 5,
                   ),
-                  Text('1w' , style: TextStyle(
-                    color: '#9C9CB8'.toColor()
-                  ),),
+                  Text(
+                    '1w',
+                    style: TextStyle(color: '#9C9CB8'.toColor()),
+                  ),
                   Spacer(),
-                  SvgPicture.asset('assets/mediaverse/icons/menu.svg' , height: 20,)
+                  SvgPicture.asset(
+                    'assets/mediaverse/icons/menu.svg',
+                    height: 20,
+                  ),
                 ],
               ),
+
             ),
 
 
