@@ -25,6 +25,7 @@ class DefaultFirebaseConfig {
         );
       case Flavor.gibical:
         return const FirebaseOptions(
+
           apiKey: 'AIzaSyCO2pr3YO3HFSePLrqBdx_EqbZPm_Bms2o',
           appId: '1:204876365682:ios:21a92c1bfe2df65a3c67eb',
           messagingSenderId: '204876365682',

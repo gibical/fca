@@ -70,7 +70,9 @@ class _DetailChannelScreenState extends State<DetailChannelScreen> {
 
 
                                               if(logic.isChannelLiveStarted.isFalse){
-                                                return Container();
+                                                return Container(height: 20.h,child: Center(
+                                                  child: Text("Live is Not Available Right Now"),
+                                                ),);
                                               }
                                               return  ChannelMainVideoLiveWidget(
                                                  logic.channelsModel.url??"");

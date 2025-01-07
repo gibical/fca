@@ -327,12 +327,16 @@ class BestChannelsWidget extends GetView<HomeLogic> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    Expanded(
+                      child: Container(
 
-                      child: Text(model.name??'',style: TextStyle(
-                        fontSize: 7.sp
-                      ),),
-                      margin: EdgeInsets.symmetric(horizontal: 3),
+                        child: Text(
+                          model.name??'',
+                          style: TextStyle(
+                          fontSize: 7.sp
+                        ),),
+                        margin: EdgeInsets.symmetric(horizontal: 3),
+                      ),
                     ),
                     SvgPicture.asset(AppIcon.videoIcon,
                         color: AppColor.grayLightColor.withOpacity(0.5),

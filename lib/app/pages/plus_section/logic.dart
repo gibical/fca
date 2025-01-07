@@ -591,6 +591,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       "lat": 0,
       "lng": 0,
       "type": 1,
+      "media_type":getMediaType(),
       "genre": genreController.text,
       "length": "10",
       //"language": Constant.languageMap[languageController.text],
@@ -648,23 +649,8 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   }
 
   String _getUrlByMediaEnum() {
-    switch (mediaMode) {
-      case MediaMode.audio:
-        // TODO: Handle this case.
-        return "audios";
-      case MediaMode.image:
-        // TODO: Handle this case.
-        if(videoOutPut.isNotEmpty&&videoOutPut.contains("mp4")) return "videos";
-        return "images";
+    return "assets";
 
-      case MediaMode.text:
-        // TODO: Handle this case.
-        return "texts";
-
-      case MediaMode.video:
-        // TODO: Handle this case.
-        return "videos";
-    }
   }
 
   _getPlanByDropDown() {
@@ -857,6 +843,27 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       return false;
     }else{
       return true;
+    }
+  }
+
+  getMediaType() {
+    switch(mediaMode){
+
+      case MediaMode.audio:
+      // TODO: Handle this case.
+        return "audio";
+      case MediaMode.image:
+      // TODO: Handle this case.
+        return "image";
+
+      case MediaMode.text:
+      // TODO: Handle this case.
+        return "text";
+
+      case MediaMode.video:
+      // TODO: Handle this case.
+        return "video";
+
     }
   }
 }

@@ -45,7 +45,7 @@ class AuthLogic extends GetxController {
       'client_id': clientId,
       'redirect_uri': redirectUri,
       'response_type': 'code',
-      'scope': '',
+      'scope': 'full-access',
       'code_challenge': codeChallenge,
       'code_challenge_method': 'S256',
     });
@@ -83,6 +83,7 @@ class AuthLogic extends GetxController {
     final codeChallenge = await generateCodeChallenge(codeVerifier);
     await box.write('codeVerifier', codeVerifier);
     final url = generateAuthUrl(codeChallenge);
+    print('AuthLogic.initiateLogin redirect to = ${url}');
     state.isloadingOAuth(false);
     final codeValue = await Navigator.of(context).push<String>(
       MaterialPageRoute(
@@ -197,33 +198,35 @@ class AuthLogic extends GetxController {
   }
   void getTwitterAccessToken() async {
 
-    try {
-      final token = GetStorage().read("token");
-      String apiUrl = '${Constant.HTTP_HOST}auth/x';
-      var dio = Dio();
-      dio.interceptors.add(MediaVerseConvertInterceptor());
-      dio.interceptors.add(CurlLoggerDioInterceptor());
-      var response = await dio.post(
-        apiUrl,
-        data: {"state": twitterLoginState},
-        options: Options(
-          headers: {
-            'Accept': 'application/json',
-            'X-App': '_Android',
-            'Accept-Language': 'en-US',
-            'Authorization': 'Bearer $token',
-          },
-        ),
-      );
-      if (response.statusCode == 200) {
-        box.write("islogin", true);
-        FromJsonGetLoginV2 getLogin = FromJsonGetLoginV2.fromJson(response.data);
-        box.write("token", getLogin.token ?? "");
-        box.write("userid", getLogin.user!.id.toString());
-        Get.offAllNamed(PageRoutes.WRAPPER);
-      }
-    } catch (e) {}
-    state.isloadingX(false);
+    if (twitterLoginState.length>5) {
+      try {
+        final token = GetStorage().read("token");
+        String apiUrl = '${Constant.HTTP_HOST}auth/x';
+        var dio = Dio();
+        dio.interceptors.add(MediaVerseConvertInterceptor());
+        dio.interceptors.add(CurlLoggerDioInterceptor());
+        var response = await dio.post(
+          apiUrl,
+          data: {"state": twitterLoginState},
+          options: Options(
+            headers: {
+              'Accept': 'application/json',
+              'X-App': '_Android',
+              'Accept-Language': 'en-US',
+              'Authorization': 'Bearer $token',
+            },
+          ),
+        );
+        if (response.statusCode == 200) {
+          box.write("islogin", true);
+          FromJsonGetLoginV2 getLogin = FromJsonGetLoginV2.fromJson(response.data);
+          box.write("token", getLogin.token ?? "");
+          box.write("userid", getLogin.user!.id.toString());
+          Get.offAllNamed(PageRoutes.WRAPPER);
+        }
+      } catch (e) {}
+      state.isloadingX(false);
+    }
   }
 }
 

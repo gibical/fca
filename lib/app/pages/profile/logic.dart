@@ -279,7 +279,7 @@ CountryModel countryModel = CountryModel();
     onGetProfileAssets();
 
     onGetAssetsAll();
-    onGetSubsAssetsAll();
+   // onGetSubsAssetsAll();
   }
 
   onGetProfileAssets() {
