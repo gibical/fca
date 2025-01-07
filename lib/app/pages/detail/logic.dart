@@ -1164,13 +1164,15 @@ class DetailController extends GetxController {
 
           }
 
+          Constant.showMessege('Success');
+
           loadingSendShareDataSate.value = DataState.success('Success');
         }  catch (e) {
           // TODO
 
 
           loadingSendShareDataSate.value = DataState.error('error : ${e}');
-          //Constant.showMessege("${youtubeMode?"Send To YouTube":"Archive to Drive"} Sucssefuly");
+
         }
         Get.back();
         update();

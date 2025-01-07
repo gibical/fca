@@ -310,10 +310,10 @@ class DetailVideoScreen extends StatelessWidget {
                                 },
                                 name: 'Publish'),
                             Spacer(),
-                            buildCustomDetailBTNWidget(
-                                iconName: 'Forward',
-                                onTap: () {},
-                                name: 'Share'),
+                            // buildCustomDetailBTNWidget(
+                            //     iconName: 'Forward',
+                            //     onTap: () {},
+                            //     name: 'Share'),
                           ],
                         ),
                       ),
@@ -1013,6 +1013,7 @@ void runCustomPublishSheet(DetailController detailController) {
           //BTN Tools 2
           GestureDetector(
             onTap: () {
+              Get.back();
               runPublishXSheet(detailController);
             },
             child: Padding(
@@ -1060,7 +1061,10 @@ void runCustomPublishSheet(DetailController detailController) {
           SizedBox(height: 2.h),
           //BTN Tools 3
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Get.back();
+              runPublishGoogleDriveSheet(detailController);
+            },
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 18.0,
@@ -1461,7 +1465,7 @@ void runPublishXSheet(DetailController detailController) {
                     ),
                     Spacer(),
                     Text(
-                      'Publish in Youtube',
+                      'Publish in X',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
@@ -1534,93 +1538,6 @@ void runPublishXSheet(DetailController detailController) {
                   );
                 }),
 
-                SizedBox(height: 2.h),
-
-                //text filide 2 - title
-                TextField(
-                  style: TextStyle(
-                    decorationColor: Colors.transparent,
-                    decoration: TextDecoration.none,
-                  ),
-                  controller: detailController.titleEditingController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    hintText: 'Title',
-                    hintStyle: TextStyle(color: '9C9CB8'.toColor()),
-                    fillColor: '#17172E'.toColor(),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(8.sp),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(8.sp),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(8.sp),
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: 2.h),
-
-                //text filide 3 - Description
-                TextField(
-                  style: TextStyle(
-                    decorationColor: Colors.transparent,
-                    decoration: TextDecoration.none,
-                  ),
-                  maxLines: 3,
-                  controller: detailController.desEditingController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    hintText: 'Description',
-                    hintStyle: TextStyle(color: '9C9CB8'.toColor()),
-                    fillColor: '#17172E'.toColor(),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(8.sp),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(8.sp),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(8.sp),
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: 2.h),
-                //Switch 1 - content private
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Is this content private?',
-                      style: TextStyle(color: '9C9CB8'.toColor(), fontSize: 15),
-                    ),
-                    Obx(() => CustomSwitchWidget(
-                      value: detailController.isPrivateContent.value,
-                      onChanged: (value) {
-                        detailController.isPrivateContent.value = value;
-                        detailController.update();
-                        if (detailController.isPrivateContent.value ==
-                            true) {
-                          print('On');
-                        } else {
-                          print('Off');
-                        }
-                      },
-                    ))
-                  ],
-                ),
 
 
                 SizedBox(height: 2.h),
@@ -1722,7 +1639,160 @@ void runPublishXSheet(DetailController detailController) {
                       borderRadius: BorderRadius.circular(100),
                       splashColor: Colors.white.withOpacity(0.03),
                       onTap: () {
-                        detailController.onSendShareRequest('youtube');
+
+                        detailController.onSendShareRequest('x_tweet');
+                      },
+                      child: Center(
+                        child: Obx((){
+                          if(detailController.loadingSendShareDataSate.value.status == Status.loading ){
+                            return Transform.scale(scale: .5,child: CircularProgressIndicator(
+                              color: Colors.white,
+                              backgroundColor: Colors.white.withOpacity(0.3),
+                            ),);
+                          }else{
+                            return Text('Publish');
+                          }
+                        })
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 2.h),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  ));
+}
+void runPublishGoogleDriveSheet(DetailController detailController) {
+  Get.bottomSheet(elevation: 0, StatefulBuilder(
+    builder: (context, setState) {
+      return Container(
+        width: 100.w,
+
+        decoration: BoxDecoration(
+          color: "#0F0F26".toColor(),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 3.h),
+                Row(
+                  children: [
+                    RotatedBox(
+                      quarterTurns: 2,
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: SvgPicture.asset(
+                            'assets/mediaverse/icons/arrow.svg'),
+                      ),
+                    ),
+                    Spacer(),
+                    Text(
+                      'Publish in Google drive',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    SizedBox(width: 24),
+                    Spacer(),
+                  ],
+                ),
+
+                SizedBox(height: 1.h),
+                Container(
+                  height: 0.5,
+                  width: Get.width,
+                ),
+                SizedBox(height: 2.h),
+                //text filide 1 - select Account
+                Obx(() {
+                  return GestureDetector(
+                    onTap: () {
+                      runSelectAccountSheet(detailController);
+                    },
+                    child: TextField(
+                      style: TextStyle(
+                        decorationColor: Colors.transparent,
+                        decoration: TextDecoration.none,
+                      ),
+                      decoration: InputDecoration(
+                        filled: true,
+                        enabled: false,
+                        suffixIcon:
+                            detailController.isLoadingChannel.value == true
+                                ? Transform.scale(
+                                    scale: 0.3,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      backgroundColor:
+                                          Colors.white.withOpacity(0.3),
+                                    ),
+                                  )
+                                : Transform.scale(
+                                    scale: 0.5,
+                                    child: SvgPicture.asset(
+                                        'assets/mediaverse/icons/arrow.svg')),
+                        hintText: detailController.selectedAccountTitle.isEmpty
+                            ? 'Select Account'
+                            : detailController.selectedAccountTitle,
+                        hintStyle: TextStyle(
+                            color: detailController.selectedAccountTitle.isEmpty
+                                ? '9C9CB8'.toColor()
+                                : Colors.white),
+                        fillColor: '#17172E'.toColor(),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8.sp),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8.sp),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8.sp),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+
+
+
+
+
+
+                SizedBox(height: 2.h),
+                //publish btn
+                SizedBox(
+                  width: double.infinity,
+                  height: 45,
+                  child: Material(
+                    color: '2563EB'.toColor(),
+                    borderRadius: BorderRadius.circular(100),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(100),
+                      splashColor: Colors.white.withOpacity(0.03),
+                      onTap: () {
+
+                        detailController.onSendShareRequest('google_drive');
                       },
                       child: Center(
                         child: Obx((){
