@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
@@ -180,7 +181,7 @@ class DetailController extends GetxController {
       if (response.statusCode == 200) {
         details?.value = RxMap<String, dynamic>.from(response.data['data']);
         detailss = RxMap<String, dynamic>.from(response.data['data']);
-        asset_id= response.data['data']['asset_id'].toString();
+        asset_id= response.data['data']['id'].toString();
         file_id =response.data['data']['file_id'].toString();
         if(index==3){
         fileIdMusic =response.data['data']['file_id'].toString();
@@ -811,7 +812,7 @@ class DetailController extends GetxController {
                             final item = filteredModels[index];
                             return InkWell(
                               onTap: () {
-                                Get.back(result: item); // مقدار را برمی‌گرداند
+                                Get.back(result: item);
                               },
                               child: Column(
                                 children: [
@@ -1020,55 +1021,89 @@ class DetailController extends GetxController {
   }
 
 
+  RxList<String> reportOptions = [
+    "Annoying Content",
+    "Sexually Explicit Content",
+    "Racist Content",
+    "Insult to Religion",
+    "Insult to Politics",
+    "Spread of Violence",
+    "Spread of Child Abuse",
+    "Bullying",
+    "Inappropriate Content for Children",
+    "Copyright Infringement  ",
+    "Unauthorized Advertising",
+    "Animal Abuse",
+    "Other",
+  ].obs;
+  RxInt? selectedReportOption = 0.obs;
 
 
   ///
-  void reportPost()async {
+
+  var loadingReportDataSate = DataState<dynamic>().obs;
+  ///
+  void reportPost() async {
     try {
+      loadingReportDataSate.value = DataState.loading();
       final token = GetStorage().read("token");
 
-      String apiUrl =
-          '${Constant.HTTP_HOST}reports';
+      String apiUrl = '${Constant.HTTP_HOST}reports';
       var s = Dio();
       s.interceptors.add(MediaVerseConvertInterceptor());
-      print('DetailController._fetchMediaData =${{
+
+
+      String selectedOptionTitle = selectedReportOption != null
+          ? reportOptions[selectedReportOption!.value]
+          : '';
+
+      String reportDescription =
+      selectedOptionTitle.isNotEmpty ? '$selectedOptionTitle: ${reportEditingController.text}' : reportEditingController.text;
+
+      print('DetailController._fetchMediaData = ${{
         "type": 1,
         "asset_id": asset_id,
-        "description": reportEditingController.text
-      }} ');
-      var response = await s. post(apiUrl, options: Options(headers: {
-        'accept': 'application/json',
-        'X-App': '_Android',
-        'Accept-Language': 'en-US',
-        'Authorization': 'Bearer $token',
-      },),data: {
-      "type": 1,
-      "asset_id": asset_id,
-      "description": reportEditingController.text
-      });
+        "description": reportDescription
+      }}');
+
+      var response = await s.post(
+        apiUrl,
+        options: Options(
+          headers: {
+            'accept': 'application/json',
+            'X-App': '_Android',
+            'Accept-Language': 'en-US',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+        data: {
+          "type": 1,
+          "asset_id": asset_id,
+          "description": reportDescription,
+        },
+      );
 
       reportEditingController.clear();
       print(' ${response.statusCode}  - ${response.data}');
-      if (response.statusCode == 200||response.statusCode == 201) {
-
+      if (response.statusCode == 200 || response.statusCode == 201) {
 
         Constant.showMessege("alert_1".tr);
+        loadingReportDataSate.value = DataState.success('Success');
         print(response.data);
       } else {
         // Handle errors
-        //   Constant.showMessege("Request Denied : ${response.data['status']}");
-
+        // Constant.showMessege("Request Denied : ${response.data['status']}");
+        loadingReportDataSate.value = DataState.error('error');
       }
-    } catch ( e) {
+    } catch (e) {
       // Handle errors
       // Constant.showMessege("Request Denied : ${e.toString()}");
-
+      loadingReportDataSate.value = DataState.error('error :$e');
       print('DetailController._fetchMediaData = $e');
     } finally {
-
+      // Optional: any cleanup or final actions
     }
   }
-
   void sendToEditProfile(PostType type)async {
 
    await Get.toNamed(PageRoutes.EDITPROFILE,arguments: [this,type]);
@@ -1099,6 +1134,7 @@ class DetailController extends GetxController {
       } else {
         // Handle errors
       }
+
       log('DetailController._fetchMediaData11111 = ${externalAccountlist.length}');
 
     } catch (e) {
@@ -1157,7 +1193,7 @@ class DetailController extends GetxController {
       var response = await s.post(apiUrl, options: Options(headers:header),data: body);
 
       log('DetailController._fetchMediaData11111 = ${response.statusCode}  - ${jsonEncode(response.data)} - ${response.data['media_type']}');
-      if (response.statusCode! >= 200&&response.statusCode! <300) {
+      if (response.statusCode! == 200) {
         try {
           if(response.data['data']['details']['error']!=null){
             Constant.showMessege(" ${"alert_10".tr} = ${response.data['data']['details']['error']}");

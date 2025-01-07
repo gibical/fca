@@ -176,7 +176,42 @@ class DetailVideoScreen extends StatelessWidget {
                                               print('$value');
                                             }
                                           })
-                                        : null;
+                                        :  showMenu(
+                                      color: '#0F0F26'.toColor(),
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(
+                                              12.sp)),
+                                      context: context,
+                                      position: RelativeRect.fromLTRB(
+                                          100, 80, 0, 0),
+                                      items: [
+                                        PopupMenuItem(
+                                          value: 1,
+                                          onTap: () {
+                                            Get.bottomSheet(
+                                              elevation: 0,
+                                                isScrollControlled: true,
+                                                ReportBottomSheet2(videoController));
+                                          },
+                                          child: SizedBox(
+                                            width: 130,
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                    'assets/mediaverse/icons/report.svg' , ),
+                                                Text('Report'),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ).then((value) {
+                                      if (value != null) {
+                                        print('$value');
+                                      }
+                                    });
                                   }),
                             ],
                           ),
