@@ -2278,7 +2278,48 @@ void runSelectAccountSheet(DetailController detailController) {
                     ),
                   );
                 } else {
-                  return Column(
+                  return detailController.externalAccountlist.isEmpty ?Column(
+                    children: [
+                      Text('You haven’t connected any accounts yet. Please connect an account to publish your content.' ,
+
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+
+                        fontSize: 12,
+                        color: '9C9CB8'.toColor(),
+                      ),
+                      ),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 45,
+                        child: Material(
+                          color: '2563EB'.toColor(),
+                          borderRadius: BorderRadius.circular(100),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(100),
+                            splashColor: Colors.white.withOpacity(0.03),
+                            onTap: () {
+
+                              Get.back();
+                              Get.toNamed(PageRoutes.SHAREACCOUNT);
+                            },
+                            child: Center(
+                              child: Text(
+                                'Go to accounts center',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                    ],
+                  ):Column(
                     children: detailController.externalAccountlist
                         //  .where((element) => element.type.toString().contains("1"))
                         .toList()
