@@ -20,6 +20,7 @@ import 'package:mediaverse/app/pages/detail/widgets/details_bottom_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/player/player.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../gen/model/enums/post_type_enum.dart';
@@ -1329,42 +1330,52 @@ void runPublishYoutubeSheet(DetailController detailController) {
                         SizedBox(height: 10),
                         if (controller.isSeletedDate)
                           GestureDetector(
-                            onTap: (){},
+                            onTap: (){
+                              runSelectDateSheet(detailController);
+                            },
 
 
 
-                            child: TextField(
-                              enabled: false,
-                              style: TextStyle(
-                                decorationColor: Colors.transparent,
-                                decoration: TextDecoration.none,
-                              ),
-                              controller: detailController.titleEditingController,
-                              decoration: InputDecoration(
-                                filled: true,
-                                hintText: 'Select date and time',
-                                suffixIcon: Transform.scale(
-                                    scale: 0.5,
-                                    child: SvgPicture.asset(
-                                        'assets/mediaverse/icons/arrow.svg')),
-                                hintStyle: TextStyle(color: '9C9CB8'.toColor()),
-                                fillColor: '#17172E'.toColor(),
-                                contentPadding:
-                                EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(8),
+                            child: Obx(() {
+                              return GestureDetector(
+                                onTap: () {
+                                  runSelectDateSheet(detailController);
+                                },
+                                child: TextField(
+                                  enabled: false,
+                                  style: TextStyle(
+                                    decorationColor: Colors.transparent,
+                                    decoration: TextDecoration.none,
+                                  ),
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    hintText: detailController.isSeletedDate
+                                        ? "${detailController.selectedDate.value.year}-${detailController.selectedDate.value.month}-${detailController.selectedDate.value.day}"
+                                        : 'Select date and time',
+                                    suffixIcon: Transform.scale(
+                                      scale: 0.5,
+                                      child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg'),
+                                    ),
+                                    hintStyle: TextStyle(color: '9C9CB8'.toColor()),
+                                    fillColor: '#17172E'.toColor(),
+                                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
                                 ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
+                              );
+                            }),
+
                           ),
                       ],
                     );
@@ -1400,6 +1411,129 @@ void runPublishYoutubeSheet(DetailController detailController) {
       );
     },
   ));
+}
+
+
+
+void runSelectDateSheet(DetailController detailController) {
+  detailController.fetchChannels();
+
+  Get.bottomSheet(
+    elevation: 0,
+    isScrollControlled: true,
+    StatefulBuilder(builder: (context, setState) {
+      return Container(
+        width: double.infinity,
+
+        decoration: BoxDecoration(
+          color: "#0F0F26".toColor(),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 3.h),
+                Row(
+                  children: [
+                    RotatedBox(
+                      quarterTurns: 2,
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: SvgPicture.asset(
+                            'assets/mediaverse/icons/arrow.svg'),
+                      ),
+                    ),
+                    Spacer(),
+                    Text(
+                      'Select date',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    Spacer(),
+                  ],
+                ),
+                SizedBox(height: 3.h),
+                // Calendar Section
+                TableCalendar(
+                  firstDay: DateTime(2000),
+                  lastDay: DateTime(2050),
+                  focusedDay: detailController.selectedDate.value ?? DateTime.now(),
+                  currentDay: detailController.selectedDate.value ,
+                  calendarFormat: CalendarFormat.month,
+                  availableCalendarFormats: const {
+                    CalendarFormat.month: 'Month',
+                  },
+                  startingDayOfWeek: StartingDayOfWeek.sunday,
+                  headerStyle: HeaderStyle(
+                    formatButtonVisible: false,
+                    titleCentered: true,
+                    titleTextStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    leftChevronIcon: Icon(Icons.chevron_left, color: Colors.white),
+                    rightChevronIcon: Icon(Icons.chevron_right, color: Colors.white),
+                  ),
+                  calendarStyle: CalendarStyle(
+                    todayDecoration: BoxDecoration(
+                      color: Colors.blue,
+                      shape: BoxShape.circle,
+                    ),
+                    selectedDecoration: BoxDecoration(
+                      color: Colors.blue.shade700,
+                      shape: BoxShape.circle,
+                    ),
+                    defaultTextStyle: TextStyle(color: Colors.white),
+                    weekendTextStyle: TextStyle(color: Colors.white),
+                    outsideTextStyle: TextStyle(color: Colors.grey),
+                  ),
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      detailController.selectedDate.value  = selectedDay;
+                      detailController.isSeletedDate = true;
+                    });
+                  },
+                ),
+                SizedBox(height: 2.h),
+                //Continue btn
+                SizedBox(
+                  width: double.infinity,
+                  height: 45,
+                  child: Material(
+                    color: '2563EB'.toColor(),
+                    borderRadius: BorderRadius.circular(100),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(100),
+                      splashColor: Colors.white.withOpacity(0.03),
+                      onTap: () {
+                      //  detailController.onSendShareRequest('youtube');
+                      },
+                      child: Center(
+                        child: Text('Continue'),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 2.h),
+              ],
+            ),
+          ),
+        ),
+      );
+    }),
+  );
 }
 
 void runSelectAccountSheet(DetailController detailController) {

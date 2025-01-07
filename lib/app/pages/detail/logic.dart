@@ -72,7 +72,12 @@ class DetailController extends GetxController {
   //==================================== for youtube share =======================================//
   bool isSeletedNow = true;
   bool isSeletedDate = false;
-  DateTime dateTime = DateTime.now();
+  var selectedDate = DateTime.now().obs;
+  void updateSelectedDate(DateTime date) {
+    selectedDate.value = date;
+    update();
+  }
+  //DateTime dateTime = DateTime.now();
   TextEditingController titleEditingController = TextEditingController();
   TextEditingController desEditingController = TextEditingController();
   TextEditingController prefixEditingController = TextEditingController();
@@ -481,7 +486,7 @@ class DetailController extends GetxController {
 
   //=========================================== Share Youtube Logic ===========================================//
   void sendShareYouTube() {
-    Get.bottomSheet(YoutubeShareBottomSheet(this,true),backgroundColor: AppColor.primaryDarkColor);
+    //Get.bottomSheet(YoutubeShareBottomSheet(this,true),backgroundColor: AppColor.primaryDarkColor);
   }
   //=========================================== Share Youtube Logic ===========================================//
 
@@ -1114,10 +1119,10 @@ class DetailController extends GetxController {
       "external_account_id": externalAccountlist.elementAt(enableChannel).id.toString(),
 
     };
-    print('DetailController.onSendYouTubeRequest = ${formatDateTime( isSeletedNow?DateTime.now():dateTime)}');
+    print('DetailController.onSendYouTubeRequest = ${formatDateTime( isSeletedNow?DateTime.now():selectedDate.value)}');
     if(!isSeletedNow){
       body["times"]= [
-    formatDateTime( isSeletedNow?DateTime.now():dateTime)
+    formatDateTime( isSeletedNow?DateTime.now():selectedDate.value)
     ];
 
     }
