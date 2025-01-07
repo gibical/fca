@@ -1104,6 +1104,7 @@ void runPublishYoutubeSheet(DetailController detailController) {
     builder: (context, setState) {
       return Container(
         width: 100.w,
+
         decoration: BoxDecoration(
           color: "#0F0F26".toColor(),
           borderRadius: BorderRadius.only(
@@ -1270,38 +1271,7 @@ void runPublishYoutubeSheet(DetailController detailController) {
                 ),
 
                 SizedBox(height: 2.h),
-                //Switch 1 - Publish Later
-                GetBuilder<DetailController>(
-                  builder: (controller) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Publish Later',
-                          style: TextStyle(
-                            color: '9C9CB8'.toColor(),
-                            fontSize: 15,
-                          ),
-                        ),
-                        CustomSwitchWidget(
-                          value: controller.isSeletedNow,
-                          onChanged: (value) {
-                            controller.isSeletedNow = value;
-                            controller.update();
-                            if (controller.isSeletedNow == true) {
-                              print('On');
-                            } else {
-                              print('Off');
-                            }
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                ),
-
-                SizedBox(height: 2.h),
-                //Switch 2 - content private
+                //Switch 1 - content private
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -1310,20 +1280,97 @@ void runPublishYoutubeSheet(DetailController detailController) {
                       style: TextStyle(color: '9C9CB8'.toColor(), fontSize: 15),
                     ),
                     Obx(() => CustomSwitchWidget(
-                          value: detailController.isPrivateContent.value,
-                          onChanged: (value) {
-                            detailController.isPrivateContent.value = value;
-                            detailController.update();
-                            if (detailController.isPrivateContent.value ==
-                                true) {
-                              print('On');
-                            } else {
-                              print('Off');
-                            }
-                          },
-                        ))
+                      value: detailController.isPrivateContent.value,
+                      onChanged: (value) {
+                        detailController.isPrivateContent.value = value;
+                        detailController.update();
+                        if (detailController.isPrivateContent.value ==
+                            true) {
+                          print('On');
+                        } else {
+                          print('Off');
+                        }
+                      },
+                    ))
                   ],
                 ),
+
+
+                SizedBox(height: 2.h),
+                //Switch 2 - Publish Later
+                GetBuilder<DetailController>(
+                  builder: (controller) {
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Publish Later',
+                              style: TextStyle(
+                                color: '9C9CB8'.toColor(),
+                                fontSize: 15,
+                              ),
+                            ),
+                            CustomSwitchWidget(
+                              value: controller.isSeletedDate,
+                              onChanged: (value) {
+                                controller.isSeletedDate = value;
+                                controller.update();
+                                if (controller.isSeletedDate) {
+                                  print('On');
+                                } else {
+                                  print('Off');
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        if (controller.isSeletedDate)
+                          GestureDetector(
+                            onTap: (){},
+
+
+
+                            child: TextField(
+                              enabled: false,
+                              style: TextStyle(
+                                decorationColor: Colors.transparent,
+                                decoration: TextDecoration.none,
+                              ),
+                              controller: detailController.titleEditingController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                hintText: 'Select date and time',
+                                suffixIcon: Transform.scale(
+                                    scale: 0.5,
+                                    child: SvgPicture.asset(
+                                        'assets/mediaverse/icons/arrow.svg')),
+                                hintStyle: TextStyle(color: '9C9CB8'.toColor()),
+                                fillColor: '#17172E'.toColor(),
+                                contentPadding:
+                                EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                disabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                ),
+
 
                 SizedBox(height: 2.h),
                 //publish btn
