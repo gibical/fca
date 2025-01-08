@@ -130,7 +130,6 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
 
   void praseJsonFromBestVideos(source) {
-    log('HomeLogic.praseJsonFromBestVideos = ${source}');
     bestVideos = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
 
 

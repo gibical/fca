@@ -612,6 +612,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
         body: body, useToken: true);
   }
   Future<String> saveStringToTxtFile(String stringData) async {
+    print('PlusSectionLogic.saveStringToTxtFile = ${stringData}');
     final directory = await getTemporaryDirectory();
     final filePath = '${directory.path}/fileName.txt';
     final file = File(filePath);
@@ -667,7 +668,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   void peaseJsonFromAddAssets(source) {
     print(
         'PlusSectionLogic.peaseJsonFromAddAssets = ${jsonEncode(source)} - ${imageOutPut}');
-    assetid = jsonDecode(source)['data']['asset_id'].toString();
+    assetid = jsonDecode(source)['data']['id'].toString();
     postUploadedId = jsonDecode(source)['data']['id'].toString();
 
     isloading(false);
@@ -683,7 +684,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
           filename: 'uploadfile'),
       'asset': assetid.toString(),
     });
-   print('PlusSectionLogic.uploadFileWithDio = ${imageOutPut} - ${formData.fields}');
+   print('PlusSectionLogic.uploadFileWithDio = ${imageOutPut} - ${_getFilePathFromMediaEnum()} - ${formData.fields}');
 
    dio.interceptors.add(MediaVerseConvertInterceptor());
 

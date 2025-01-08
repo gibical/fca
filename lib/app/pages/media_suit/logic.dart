@@ -734,18 +734,18 @@ class MediaSuitController extends GetxController {
   }
 
   void addItemToTempList(
-      String name, String url, widthVideoItem, String assetId, int mediaClass,
+      String name, String url, widthVideoItem, String assetId, String mediaClass,
       {bool isloading = false}) {
-    if (mediaClass == 1) {
+    if (mediaClass == "text") {
       tempSelectedItems
           .add(EditDataModel(name, url, 0, assetId, 1, isloading: isloading));
-    } else if (mediaClass == 2) {
+    } else if (mediaClass == "image") {
       tempSelectedItems
           .add(EditDataModel(name, url, 0, assetId, 2, isloading: isloading));
-    } else if (mediaClass == 3) {
+    } else if (mediaClass == "audio") {
       tempSelectedItems
           .add(EditDataModel(name, url, 0, assetId, 3, isloading: isloading));
-    } else if (mediaClass == 4) {
+    } else if (mediaClass == "video") {
       tempSelectedItems.add(EditDataModel(name, url, widthVideoItem, assetId, 4,
           isloading: isloading));
       print('wwww=wwww');

@@ -73,14 +73,14 @@ class DetailController extends GetxController {
   String fileIdMusic = Get.arguments['file_id_music'].toString();
 
   //==================================== for youtube share =======================================//
-  // bool isSeletedNow = true;
+   bool isSeletedNow = true;
   var isSeletedDate = false.obs;
   var selectedDate = DateTime.now().obs;
   void updateSelectedDate(DateTime date) {
     selectedDate.value = date;
     update();
   }
-  //DateTime dateTime = DateTime.now();
+  DateTime dateTime = DateTime.now();
   TextEditingController titleEditingController = TextEditingController();
   TextEditingController desEditingController = TextEditingController();
   TextEditingController prefixEditingController = TextEditingController();
@@ -187,7 +187,7 @@ class DetailController extends GetxController {
         fileIdMusic =response.data['data']['file_id'].toString();
 
         }
-        print('DetailController._fetchMediaData file_id = 1  = ${file_id}= ${!file_id.toString().contains("null")}');
+        print('DetailController._fetchMediaData file_id = 1  = ${ response.data['data']['user_id']} = ${Get.find<WrapperController>().userid.toString()}');
         isEditAvaiblae= response.data['data']['user_id'].toString().contains(Get.find<WrapperController>().userid.toString()).obs;
         print('DetailController._fetchMediaData file_id = 2');
 
@@ -1153,7 +1153,7 @@ class DetailController extends GetxController {
 
 
   var loadingSendShareDataSate = DataState<dynamic>().obs;
-  void onSendShareRequest(String type)async {
+  void onSendShareRequest(String type, {bool ifNowSend=false})async {
 
     loadingSendShareDataSate.value = DataState.loading();
     Map<String,dynamic> body = {
@@ -1162,9 +1162,11 @@ class DetailController extends GetxController {
 
     };
     print('DetailController.onSendYouTubeRequest = ${formatDateTime(selectedDate.value)}');
-    body["times"]= [
-      formatDateTime( selectedDate.value)
-    ];
+    if (!ifNowSend) {
+      body["times"]= [
+        formatDateTime( selectedDate.value)
+      ];
+    }
 
     if(type=="youtube"){
       body['title'] = titleEditingController.text;

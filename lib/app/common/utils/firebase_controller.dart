@@ -35,7 +35,7 @@ class FirebaseController extends GetxController implements RequestInterface {
     onReady();
    if (true) {
      var s =  await Firebase.initializeApp(
-       name: F.title,
+      // name: F.title,
        options: DefaultFirebaseConfig.firebaseOptions
       );
       if (Platform.isIOS) {
@@ -51,7 +51,7 @@ class FirebaseController extends GetxController implements RequestInterface {
         print('FirebaseController.init 2 ');
      
         String? token = await FirebaseMessaging.instance.getToken();
-        print('FirebaseController.init = ${token}');
+        log('FirebaseController.init token = ${token}');
         box.write("firebaseToken", token);
         var body = {"token": token};
         apiRequster.request(
@@ -78,11 +78,13 @@ class FirebaseController extends GetxController implements RequestInterface {
   @override
   void onStartReuqest(int reqCode) {
     // TODO: implement onStartReuqest
+
   }
 
   @override
   void onSucces(source, int reqCdoe) {
     // TODO: implement onSucces
+    print('FirebaseController.onSucces Update Token ');
   }
 
   void logOut() {

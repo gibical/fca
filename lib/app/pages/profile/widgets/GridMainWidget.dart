@@ -294,19 +294,16 @@ class _GridPostView2State extends State<GridPostView2> {
       isSelected = !isSelected;
     });
     double videoLength =
-    ( widget.model[
-    'file']['info']['time'] ??
-        0)
-        .toDouble();
+    double.tryParse(widget.model['file']['length'])??0;
 
     if (isSelected) {
 
       Get.find<MediaSuitController>().addItemToTempList(
-        widget.model['name'].toString(),
+        "widget.model['name'].toString()",
         widget.model['file']['url'],
         videoLength,
         widget.model['file_id'].toString(),
-        widget.model['media_type'],
+        widget.model['media_type'].toString(),
       );
     } else {
       Get.find<MediaSuitController>().removeItemFromTempList(
@@ -493,13 +490,13 @@ class _GridPostView2State extends State<GridPostView2> {
 
   String _getIcon() {
     switch(widget.model['media_type']){
-      case 1:
+      case "text":
         return AppIcon.textIcon;
-      case 2:
+      case "image":
         return AppIcon.imageIcon;
-      case 3:
+      case "audio":
         return AppIcon.soundIcon;
-      case 4:
+      case "video":
         return AppIcon.videoIcon;
     }
     return AppIcon.videoIcon;

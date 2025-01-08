@@ -353,7 +353,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                  Get.to(ProfileScreen(),
+                                  Get.to(()=>ProfileScreen(),
                                       arguments: 'edit_screen');
                                 },
                                 icon: Icon(
