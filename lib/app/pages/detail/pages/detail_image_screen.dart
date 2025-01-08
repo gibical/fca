@@ -107,14 +107,10 @@ class DetailImageScreen extends StatelessWidget {
                             children: [
                               Container(
 
-                                child:imageController.imageDetails?['user']['image_url'] == null ?CircleAvatar(
+                                child:CircleAvatar(
                           backgroundColor:
                           AppColor.primaryLightColor,
-                          ): CircleAvatar(
-                                  backgroundColor: AppColor.blueDarkColor,
-                                  backgroundImage:
-                                  NetworkImage(imageController.imageDetails?['user']['image_url']),
-                                ),
+                          ),
                                 width: 5.w,
                               ),
                               SizedBox(

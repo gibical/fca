@@ -770,6 +770,7 @@ class MediaSuitController extends GetxController {
     editImageDataList.add(
         EditDataModel(name, imageUrl, 0, assetId, 2, isloading: isloading));
     selectedImageIndex.value = editImageDataList.length - 1;
+    print('MediaSuitController.setDataEditImage = ${editImageDataList}');
   }
 
   void setDataEditVideo(
@@ -951,6 +952,7 @@ class MediaSuitController extends GetxController {
     print('====================Audio==============================');
     var audi = audioConfig();
 
+    print('MediaSuitController.exportOnline = ${image}');
     isloadingSubmit(true);
 
     var dio = Dio();

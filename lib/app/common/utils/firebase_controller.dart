@@ -169,7 +169,7 @@ class FirebaseController extends GetxController implements RequestInterface {
       android: androidPlatformChannelSpecifics,
       iOS: iOSPlatformChannelSpecifics,
     );
-    print('FirebaseController.showNotification 3 ');
+ ;
 
     try {
       _flutterLocalNotificationsPlugin.show(
@@ -196,20 +196,21 @@ class FirebaseController extends GetxController implements RequestInterface {
     print('FirebaseController.sendToAssetPage = ${s}');
     // debugger();
     try {
-      var json = jsonDecode(s);
+      var json = jsonDecode(jsonDecode(s)['result']);
+      var id = json['id'];
+
       print('FirebaseController.sendToAssetPage 2  = ${json}');
       String route = PageRoutes.DETAILIMAGE;
-      switch (json['class'].toString()) {
-        case "1":
+      switch ((json['media_type']).toString()) {
+        case "text":
           route = PageRoutes.DETAILTEXT;
-        case "2":
+        case "image":
           route = PageRoutes.DETAILIMAGE;
-        case "3":
+        case "audio":
           route = PageRoutes.DETAILMUSIC;
-        case "4":
+        case "video":
           route = PageRoutes.DETAILVIDEO;
       }
-      var id = json['id'];
       Get.toNamed(route, arguments: {'id': id}, preventDuplicates: false);
     } catch (e) {
       // TODO

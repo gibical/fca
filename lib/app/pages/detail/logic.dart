@@ -187,6 +187,7 @@ class DetailController extends GetxController {
         fileIdMusic =response.data['data']['file_id'].toString();
 
         }
+
         print('DetailController._fetchMediaData file_id = 1  = ${ response.data['data']['user_id']} = ${Get.find<WrapperController>().userid.toString()}');
         isEditAvaiblae= response.data['data']['user_id'].toString().contains(Get.find<WrapperController>().userid.toString()).obs;
         print('DetailController._fetchMediaData file_id = 2');
