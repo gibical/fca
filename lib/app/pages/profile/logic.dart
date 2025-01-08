@@ -124,10 +124,8 @@ CountryModel countryModel = CountryModel();
     //  debugger();
     dio.interceptors.add(MediaVerseConvertInterceptor());
 
-    print('PlusSectionLogic.getAllCountries = ${Constant.HTTP_HOST}languages');
     try {
 
-      print('PlusSectionLogic.getAllCountries 1');
 
       var response = await dio.get(
         '${Constant.HTTP_HOST}countries',
@@ -139,11 +137,9 @@ CountryModel countryModel = CountryModel();
         ),
 
       );
-      print('PlusSectionLogic.getAllCountries 1 = ${response.statusCode}');
 
       //   debugger();
       if (response.statusCode! >= 200||response.statusCode! < 300) {
-        print('PlusSectionLogic.getAllCountries 2');
 
 
         (response.data['data'] as List<dynamic>).forEach((element) {
@@ -436,13 +432,13 @@ CountryModel countryModel = CountryModel();
       "country_iso":countreisModel.firstWhere((element) => element.title.toString().contains(languageController.text)).iso??"",
 
     };
-    print('ProfileControllers.sendEditRequest = ${body}');
+   // print('ProfileControllers.sendEditRequest = ${body}');
     apiRequster.request("profile", ApiRequster.MHETOD_PUT, 13,body: body);
   }
 
   void parseJsonFromEditText(source) {
     isloadingEdit(false);
-    print('ProfileControllers.parseJsonFromEditText = ${source}');
+   // print('ProfileControllers.parseJsonFromEditText = ${source}');
     model = ProfileModel.fromJson(jsonDecode(source));
     update();
     Constant.showMessege("alert_13".tr);
@@ -515,7 +511,7 @@ CountryModel countryModel = CountryModel();
   }
 
   void pareJsonFromStripe(source) {
-    print('ProfileControllers.pareJsonFromStripe = ${source}');
+    //print('ProfileControllers.pareJsonFromStripe = ${source}');
     isBillingStripeConnected = jsonDecode(source)['enabled'];
     var balance = jsonDecode(source)['debt'];
     Get.find<WrapperController>().walletBalance = balance.toString();
@@ -524,7 +520,7 @@ CountryModel countryModel = CountryModel();
 
   }
   void pareJsonFromPayout(source) {
-    print('ProfileControllers.pareJsonFromPayout = ${source}');
+   // print('ProfileControllers.pareJsonFromPayout = ${source}');
 
     isIncomeStripeConnected = jsonDecode(source)['enabled'];
 
@@ -544,7 +540,6 @@ CountryModel countryModel = CountryModel();
     }
   }
   void pareJsonFromPayoutConnect(source) {
-    print('ProfileControllers.pareJsonFromPayoutConnect = ${source}');
     update();
     try {
       setupURL = jsonDecode(source)['setup'];
