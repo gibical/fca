@@ -811,7 +811,7 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
                       Text(
                         'Open in media studio',
                         style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600),
+                            fontSize: 15, ),
                       ),
                       Spacer(),
                       SvgPicture.asset(
@@ -866,7 +866,7 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
                       Text(
                         'Video to Audio',
                         style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600),
+                            fontSize: 15, ),
                       ),
                     ],
                   ),
@@ -914,7 +914,7 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
                       Text(
                         'Dubbing ',
                         style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600),
+                            fontSize: 15,  ),
                       ),
                       Spacer(),
                       SvgPicture.asset(

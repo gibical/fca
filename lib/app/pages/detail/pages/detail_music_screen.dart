@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,251 +23,331 @@ import '../../../common/app_config.dart';
 import '../../../common/app_icon.dart';
 import '../../../common/app_route.dart';
 import '../../../common/utils/duraton_music_helper.dart';
+import '../../../common/widgets/appbar_btn.dart';
 import '../../media_suit/logic.dart';
 import '../logic.dart';
 import '../widgets/back_widget.dart';
 import '../widgets/custom_comment_single_pageWidget.dart';
 import '../widgets/details_bottom_widget.dart';
+import '../widgets/player/player.dart';
+import 'detail_video_screen.dart';
+
 
 class DetailMusicScreen extends StatelessWidget {
-  String tag =  "${DateTime.now().microsecondsSinceEpoch}";
+  DetailMusicScreen({super.key});
 
+  final logic = Get.put(DetailController(3),
+      tag: "${DateTime.now().microsecondsSinceEpoch}");
+
+  var idAssetMediaValte = Get.arguments['idAssetMedia'];
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(DetailController(3),
-        tag:tag);
     return WillPopScope(
-      onWillPop: ()async{
-        if(Get.arguments['idAssetMedia'] == "idAssetMedia"){
+      onWillPop: () async {
+        if (Get.arguments['idAssetMedia'] == "idAssetMedia") {
           Get.offAllNamed(PageRoutes.WRAPPER);
-        }else{
+        } else {
           Get.back();
         }
 
         return false;
       },
       child: Scaffold(
-        backgroundColor: AppColor.primaryDarkColor,
-        bottomNavigationBar: Obx(() {
-          if (controller.isLoadingMusic.value) {
-            return Center(child: CircularProgressIndicator());
-          } else {
-            if (controller.musicDetails != null &&
-                controller.musicDetails!.containsKey('asset') &&
-                controller.musicDetails!['asset'] != null &&
-                controller.musicDetails!['asset'].containsKey('plan')) {
-              int plan = controller.musicDetails!['asset']['license_type'];
-              print(plan);
-              if (plan == 1) {
-                return SizedBox();
-              } else if ((plan == 2 || plan == 3)&&(!controller.asset_id.contains(GetStorage().read("userid")))) {
-                return BuyCardWidget(
-                    selectedItem: controller.musicDetails,
-                    title: "${controller.asset_id.contains(GetStorage().read("userid"))}",
-                    price: controller.musicDetails!['asset']['price']);
-              } else {
-                return SizedBox();
-              }
-            } else {
-              return SizedBox();
-            }
-          }
-        }),
-        body: Obx(() {
-          return controller.isLoadingMusic.value
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Stack(
-                children: [
-                  CustomScrollView(
-                      slivers: [
-                        SliverToBoxAdapter(
-                          child: Stack(
+          backgroundColor: AppColor.secondaryDark,
+          body: SafeArea(
+            child: Obx(() {
+              if (logic.isLoadingMusic.value ||
+                  logic.musicDetails!.isEmpty) {
+                return CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      elevation: 0,
+                      toolbarHeight: 10.h,
+                      surfaceTintColor: Colors.transparent,
+                      pinned: true,
+                      automaticallyImplyLeading: false,
+                      flexibleSpace: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                height: 42.5.h,
-                                decoration: BoxDecoration(
-
-                                    color: Colors.white.withOpacity(0.05),
-                                    borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(40.sp),
-                                      bottomLeft: Radius.circular(40.sp),
-                                    ),
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: Colors.white.withOpacity(0.2)))),
+                              AppbarBTNWidget(
+                                  iconName: 'back1',
+                                  onTap: () {
+                                    Get.back();
+                                  }),
+                              Text(
+                                'Audio',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w600),
                               ),
+                              AppbarBTNWidget(iconName: 'menu', onTap: () {}),
+                            ],
+                          ),
+                        ),
+                      ),
+                      backgroundColor: AppColor.secondaryDark,
+                    ),
 
-                              Positioned(
-                                top: 2.h,
-                                left: 0.w,
-                                right: 0,
-                                bottom: 0,
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 2.h),
-                                  child: SizedBox(
-                                    width: 48.w,
-                                    height: 120,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                            width: 44.w,
-                                            height: 22.h,
-                                            decoration: BoxDecoration(
-                                                color: Colors.white.withOpacity(0.1),
-                                                border: Border.symmetric(
-                                                    horizontal: BorderSide(
-                                                  width: 0.9,
-                                                  color: Colors.white.withOpacity(
-                                                    0.2,
-                                                  ),
-                                                )),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(20.sp))),
-                                            child: GestureDetector(
-                                              onTap: (){
-                                                try {
-                                                  showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext context) {
-                                                        return PlayMusicDialog(videoUrl: controller.musicDetails!['file']?['url'],controller: controller,);
-                                                      });
-                                                }  catch (e) {
-                                                  // TODO
-                                                }
-                                              },
-                                              child: Stack(
-                                                alignment: Alignment.bottomRight,
-                                                children: [
-                                                if(controller.musicDetails!['thumbnails']
-                                                !=null)  SizedBox.expand(
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(20.sp),
-                                                      child: (controller.musicDetails!
-                                                      ['thumbnails']
-                                                                  .toString()
-                                                                  .length >
-                                                              3)
-                                                          ? Image.network(
-                                                              "${controller.musicDetails?['thumbnails']['336x366']}",
-                                                              fit: BoxFit.cover)
-                                                          : Image.asset(
-                                                              "assets/${F.assetTitle}/images/tum_sound.jpeg",
-                                                              fit: BoxFit.cover),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    width: 50.w,
-                                                    height: 25.h,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.all(
-                                                            Radius.circular(20.sp)),
-                                                        gradient: LinearGradient(
-                                                            begin:
-                                                                Alignment.bottomCenter,
-                                                            end: Alignment.topCenter,
-                                                            colors: [
-                                                              Colors.black
-                                                                  .withOpacity(0.6),
-                                                              Colors.black
-                                                                  .withOpacity(0.4),
-                                                              Colors.transparent,
-                                                            ])),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(
-                                                        right: 15, bottom: 10),
-                                                    child: SvgPicture.asset(
-                                                        "assets/${F.assetTitle}/icons/sound_vector.svg",
-                                                        color: AppColor.grayLightColor
-                                                            .withOpacity(0.5),
-                                                        height: 1.8.h),
-                                                  )
-                                                ],
-                                              ),
-                                            )),
-                                        SizedBox(
-                                          height: 1.h,
-                                        ),
-                                        Text(
-                                          '${controller.musicDetails?['name']}',
-                                          style: Theme
-                                  .of(context)
-                                  .textTheme.bodySmall?.copyWith(
-                                            color: Colors.white,
-                                            fontSize:  20,
+                    //--
+                    SliverToBoxAdapter(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: Get.height / 2 - 100),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: AppColor.primaryColor,
+                              backgroundColor:
+                              AppColor.primaryColor.withOpacity(0.2),
+                            ),
+                          ),
+                        )),
+                    //--
+                  ],
+                );
+              } else {
+                return CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      elevation: 0,
+                      toolbarHeight: 10.h,
+                      surfaceTintColor: Colors.transparent,
+                      pinned: true,
+                      automaticallyImplyLeading: false,
+                      flexibleSpace: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppbarBTNWidget(
+                                  iconName: 'back1',
+                                  onTap: () {
+                                    Get.back();
+                                  }),
+                              Text(
+                                'Video',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w600),
+                              ),
+                              AppbarBTNWidget(
+                                  iconName: 'menu',
+                                  onTap: () {
+                                    logic.isEditAvaiblae.isTrue
+                                        ? showMenu(
+                                      color: '#0F0F26'.toColor(),
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(
+                                              12.sp)),
+                                      context: context,
+                                      position: RelativeRect.fromLTRB(
+                                          100, 80, 0, 0),
+                                      items: [
+                                        PopupMenuItem(
+                                          value: 1,
+                                          onTap: () {
+                                            logic
+                                                .sendToEditProfile(
+                                                PostType.audio);
+                                          },
+                                          child: SizedBox(
+                                            width: 130,
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                    'assets/mediaverse/icons/edit.svg'),
+                                                Text('Edit'),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 2.3.h,
-                                        ),
-                                        SizedBox(
-                                          width: 50.w,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                          Container(
-
-                                          child:controller.musicDetails!['user']['image_url'] == null? CircleAvatar(
-                                          backgroundColor:
-                                          AppColor.primaryLightColor,
-                                          ):CircleAvatar(
-                                          backgroundColor: AppColor.blueDarkColor,
-                                            backgroundImage:
-                                            NetworkImage(controller.musicDetails!['user']['image_url']),
-                                          ),
-                                          width: 5.w,
-                                        ),
-                                              SizedBox(
-                                                width: 2.w,
-                                              ),
-                                              Text(
-                                                  (controller.musicDetails!
-                                                                  ['user']['username']
-                                                              .toString()
-                                                              .length >
-                                                          10)
-                                                      ? controller
-                                                              .musicDetails!
-                                                                  ['user']['username']
-                                                              .toString()
-                                                              .substring(0, 10) +
-                                                          '...'
-                                                      : controller
-                                                              .musicDetails?
-                                                          ['user']['username'],
-                                                  style: Theme
-                                  .of(context)
-                                  .textTheme.bodySmall?.copyWith(
-                                                    color:
-                                                        Colors.white.withOpacity(0.5),
-                                                    fontSize: 13,
-                                                  )),
-                                              Spacer(),
-                                              GestureDetector(
-                                                onTap: (){
-                                                  Get.bottomSheet(ReportBottomSheet(controller));
-                                                },
-                                                child: Text('details_6'.tr,
-                                                    style: Theme
-                                  .of(context)
-                                  .textTheme.bodySmall?.copyWith(
-                                                      color:
-                                                          Colors.white.withOpacity(0.5),
-                                                      fontSize: 13,
-                                                    )),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-
                                       ],
+                                    ).then((value) {
+                                      if (value != null) {
+                                        print('$value');
+                                      }
+                                    })
+                                        :  showMenu(
+                                      color: '#0F0F26'.toColor(),
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(
+                                              12.sp)),
+                                      context: context,
+                                      position: RelativeRect.fromLTRB(
+                                          100, 80, 0, 0),
+                                      items: [
+                                        PopupMenuItem(
+                                          value: 1,
+                                          onTap: () {
+                                            Get.bottomSheet(
+                                                elevation: 0,
+                                                isScrollControlled: true,
+                                                ReportBottomSheet2(logic));
+                                          },
+                                          child: SizedBox(
+                                            width: 130,
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/mediaverse/icons/report.svg' , ),
+                                                Text('Report'),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ).then((value) {
+                                      if (value != null) {
+                                        print('$value');
+                                      }
+                                    });
+                                  }),
+                            ],
+                          ),
+                        ),
+                      ),
+                      backgroundColor: AppColor.secondaryDark,
+                    ),
+
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 18.0, vertical: 2.h),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: SizedBox(
+                                width: 35,
+                                height: 35,
+                                child: CachedNetworkImage(
+                                  imageUrl: logic
+                                      .musicDetails?['user']['image_url'] ??
+                                      '',
+                                  fit: BoxFit.cover,
+                                  errorWidget: (context, url, error) {
+                                    return Container(
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          'assets/mediaverse/icons/userprofile.svg',
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      color: AppColor.primaryLightColor,
+                                    );
+                                  },
+                                  placeholder: (context, url) {
+                                    return Container(
+                                      color: AppColor.primaryLightColor,
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          'assets/mediaverse/icons/userprofile.svg',
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${logic.musicDetails?['user']['username']}',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                Text(
+                                  '${logic.musicDetails?['user']['full_name']}',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: '#9C9CB8'.toColor(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            Text(
+                              '16 Dec 2024, 6:50PM',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: '#9C9CB8'.toColor(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 1.h,
+                        ),
+                      ),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Container(
+                          height: 350,
+                          width: 350,
+
+
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(14.sp),
+                          ),
+                          child:     Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              PlayerVideo(),
+                              IgnorePointer(
+                                ignoring: true,
+                                child: Opacity(
+                                  opacity: 0.2,
+                                  child: FittedBox(
+                                    fit: BoxFit.cover,
+                                    child: Center(
+                                      child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(14.sp),
+                                          child: CachedNetworkImage(
+                                            imageUrl: logic.musicDetails?[
+                                            'thumbnails'] !=
+                                                null &&
+                                                logic.musicDetails!['thumbnails']
+                                                is Map<String, dynamic>
+                                                ? logic.musicDetails!['thumbnails']
+                                            ['525x525'] ??
+                                                ''
+                                                : '',
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) {
+                                              return Padding(
+                                                padding: const EdgeInsets.all(20.0),
+                                                child: SvgPicture.asset(
+                                                  'assets/mediaverse/icons/file-text.svg' , height: 4,),
+                                              );
+                                            },
+                                            errorWidget: (context, url, error) {
+                                              return Padding(
+                                                padding: const EdgeInsets.all(20.0),
+                                                child: SvgPicture.asset(
+                                                  'assets/mediaverse/icons/file-text.svg' ,height: 4,),
+                                              );
+                                            },
+                                          )),
                                     ),
                                   ),
                                 ),
@@ -274,253 +355,312 @@ class DetailMusicScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 6.5.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 2.h,
+                        ),
+                      ),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Row(
+                          children: [
+                            buildCustomDetailBTNWidget(
+                                iconName: 'Magic',
+                                onTap: () {
+                                  runCustomSelectBottomToolsAsset(
+                                      logic);
+                                },
+                                name: 'Tools'),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            buildCustomDetailBTNWidget(
+                                iconName: 'globe',
+                                onTap: () {
+                                  runCustomPublishSheet(logic);
+                                },
+                                name: 'Publish'),
+                            Spacer(),
+                            // buildCustomDetailBTNWidget(
+                            //     iconName: 'Forward',
+                            //     onTap: () {},
+                            //     name: 'Share'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 2.h,
+                        ),
+                      ),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Text(
+                          '${logic.musicDetails?['name']}',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: RichText(
+                            text: TextSpan(
                               children: [
-                                SizedBox(
-                                  height: 2.h,
+                                TextSpan(
+                                  text: logic
+                                      .musicDetails?['description'] ==
+                                      null
+                                      ? ''
+                                      : logic.isExpandedViewBodyText
+                                      ? logic
+                                      .musicDetails!['description']
+                                      : logic
+                                      .musicDetails![
+                                  'description']
+                                      .length >
+                                      80
+                                      ? logic.musicDetails![
+                                  'description']
+                                      .substring(0, 80) +
+                                      ' '
+                                      : logic
+                                      .musicDetails?['description'],
+                                  style: TextStyle(
+                                    color: '#9C9CB8'.toColor(),
+                                  ),
                                 ),
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 2.w),
-                                  child: Text(
-                                      '${controller.musicDetails?['description'] ?? ''}',
-                                      style: Theme
-                                  .of(context)
-                                  .textTheme.bodySmall?.copyWith(
-                                          fontSize: 14.5,
-                                          color: Colors.white.withOpacity(0.5))),
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                if(!controller.file_id.toString().contains("null"))    Row(
-                                  children: [
-                                    InkWell(
-                                        onTap: () {
-                                          controller.sendShareYouTube();
-                                        },
-                                        child: SvgPicture.asset(
-                                          "assets/${F.assetTitle}/icons/icon__video-white.svg",
-                                          width: 6.w,
-                                        )),
-                                    SizedBox(
-                                      width: 3.w,
+                                if (logic
+                                    .musicDetails!['description'] !=
+                                    null &&
+                                    !logic.isExpandedViewBodyText &&
+                                    logic.musicDetails!['description']
+                                        .length >
+                                        80)
+                                  TextSpan(
+                                    text: '...more',
+                                    style: TextStyle(
+                                      color: AppColor.primaryColor,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    InkWell(
-                                        onTap: () {
-                                          controller.soundConvertToText();
-                                         print( controller.file_id);
-                                        },
-                                        child: SvgPicture.asset(
-                                          "assets/${F.assetTitle}/icons/icon__single-convert-to-text.svg",
-                                          width: 6.w,
-                                        )),
-                                    SizedBox(
-                                      width: 3.w,
-                                    ),
-                                    InkWell(
-                                        onTap: () {
-                                          controller.soundTranslate();
-                                        },
-                                        child: SvgPicture.asset(
-                                          "assets/${F.assetTitle}/icons/icon__single-tranlate.svg",
-                                          width: 6.w,
-                                        )),
-                                    SizedBox(
-                                      width: 3.w,
-                                    ),
-                                    GestureDetector(
-                                      onTap: (){
-                                       var audioLength = controller.musicDetails?['file']['time'] ?? 5.0;
-                                        Get.find<MediaSuitController>().setDataEditAudio(controller.musicDetails?['name']?? '' , controller.musicDetails?['file']['url'] , controller.musicDetails!['file_id'].toString() ,time: double.parse(audioLength));
-                                        Get.toNamed(PageRoutes.MEDIASUIT);
-                                        // print(audioLength);
-                                      },
-                                      child:  Icon(Icons.edit),
-                                    )
-                                  ],
-                                ),
-                                if(!controller.file_id.toString().contains("null"))     SizedBox(
-                                  height: 3.h,
-                                ),
-
-                                Wrap(
-                                  children: [
-                                    //
-                                    CardMarkSinglePageWidget(label: 'Suffix', type: "Somethi"),
-                                    CardMarkSinglePageWidget(label: 'Type', type: "Sound"),
-                           //         CardMarkSinglePageWidget(label: 'Type', type: controller.musicDetails!['url']),
-
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                GetBuilder<DetailController>(
-                                  tag: tag,
-                                  init: controller,
-                                  builder: (context) {
-                                    if (controller.musicDetails != null &&
-                                        controller.musicDetails!['asset'] != null &&
-                                        controller.musicDetails!['asset']['license_type'] ==
-                                            1) {
-                                      return Container(
-                                          height: 15.5.h,
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                              color: AppColor.whiteColor
-                                                  .withOpacity(0.1),
-                                              border: Border(
-                                                  right: BorderSide(
-                                                      color: Colors.white
-                                                          .withOpacity(0.2),
-                                                      width: 0.9),
-                                                  bottom: BorderSide(
-                                                      color: Colors.white
-                                                          .withOpacity(0.2),
-                                                      width: 0.4)),
-                                              borderRadius:
-                                                  BorderRadius.circular(14.sp)),
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.w),
-                                                child: SliderTheme(
-                                                  data: SliderThemeData(
-                                                    thumbColor:
-                                                        AppColor.primaryLightColor,
-                                                    activeTrackColor:
-                                                        AppColor.primaryLightColor,
-                                                    inactiveTrackColor: AppColor
-                                                        .whiteColor
-                                                        .withOpacity(0.3),
-                                                    trackHeight: 5,
-                                                  ),
-                                                  child: Slider(
-                                                    min: 0,
-                                                    max: DurationMusic
-                                                        .duration.inSeconds
-                                                        .toDouble(),
-                                                    value: DurationMusic
-                                                        .position.inSeconds
-                                                        .toDouble(),
-                                                    onChanged: (value) async {
-                                                      await controller
-                                                          .sliderMetode(value);
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 12.w),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      DurationMusic.formtTime(
-                                                          DurationMusic.position),
-                                                      textAlign: TextAlign.center,
-                                                      style: Theme
-                                  .of(Get.context!)
-                                  .textTheme.bodySmall?.copyWith(
-                                                        color: Colors.white,
-                                                        fontSize: 10,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      DurationMusic.formtTime(
-                                                          DurationMusic.duration),
-                                                      textAlign: TextAlign.center,
-                                                      style: Theme
-                                  .of(Get.context!)
-                                  .textTheme.bodySmall?.copyWith(
-                                                        color: Colors.white,
-                                                        fontSize: 10,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  controller.toggleMusic(controller
-                                                          .musicDetails?['asset']
-                                                      ?['file']?['url']);
-                                                },
-                                                child: Container(
-                                                  width: 13.w,
-                                                  height: 5.4.h,
-                                                  decoration: BoxDecoration(
-                                                    color: AppColor.primaryLightColor,
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  child: Icon(
-                                                    controller.isPlaying
-                                                        ? Icons.pause
-                                                        : Icons.play_arrow,
-                                                    color: Colors.white,
-                                                    size: 24.0,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ));
-                                    } else {
-                                      return SizedBox();
-                                    }
-                                  },
-                                ),
-                                SizedBox(
-                                  height: 4.h,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    String itemId = controller.musicDetails?['asset_id'];
-                                    print(itemId);
-                                    Get.toNamed(PageRoutes.COMMENT,
-                                        arguments: {'id': itemId,"logic":controller});
-                                  },
-                                  child: CustomCommentSinglePageWidget(),
-                                ),
-                                SizedBox(
-                                  height:30.h,
-                                ),
+                                  ),
                               ],
                             ),
                           ),
                         ),
-
-                      ],
-                    ),
-                  Obx(() {
-                    return Visibility(
-                      visible: controller.isEditAvaiblae.isTrue,
-
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: DetailsBottomWidget(controller, PostType.audio),
                       ),
-                    );
-                  }),
-                  BackWidget(idAssetMedia: Get.arguments['idAssetMedia'] == "idAssetMedia",)
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 3.h,
+                        ),
+                      ),
+                    ),
+                    //--
 
-                ],
-              );
-        }),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: GestureDetector(
+                            onTap: () {},
+                            child: Obx(() {
+                              if (logic.isLoadingComment.value) {
+                                return RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'details_12'.tr,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              } else if (logic.commentsData == null ||
+                                  logic.commentsData!.isEmpty) {
+                                return SizedBox();
+                              } else {
+                                return RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'details_12'.tr,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      TextSpan(
+                                        text:
+                                        ' (${logic.commentsData!['data'].length})',
+                                        style: TextStyle(
+                                          color: '#9C9CB8'.toColor(),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            })),
+                      ),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 1.h,
+                        ),
+                      ),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          child: TextField(
+                            controller: logic.commentTextController,
+                            decoration: InputDecoration(
+                                filled: true,
+                                hintText: 'Add a comment...',
+                                fillColor: '#0F0F26'.toColor(),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 13, horizontal: 10),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(8.sp)),
+                                disabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(8.sp)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(8.sp)),
+                                suffixIcon: Transform.scale(
+                                    scale: 0.8,
+                                    child: IconButton(
+                                      onPressed: () async {
+                                        logic.postComment();
+                                        logic
+                                            .commentTextController.text = '';
+                                        logic.isLoadingComment.value =
+                                        true;
+                                        await Future.delayed(
+                                            Duration(seconds: 1));
+                                        logic.fetchMediaComments();
+                                      },
+                                      icon: SvgPicture.asset(
+                                        'assets/mediaverse/icons/send.svg',
+                                        height: 25,
+                                      ),
+                                    ))),
+                          )),
+                    ),
+                    //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 2.h,
+                        ),
+                      ),
+                    ),
+                    //--
+
+                    Obx(() {
+                      if (logic.isLoadingComment.value) {
+                        return SliverToBoxAdapter(
+                            child: Center(
+                                child: CupertinoActivityIndicator(
+                                  color: AppColor.primaryColor,
+                                )));
+                      } else if (logic.commentsData == null ||
+                          logic.commentsData!.isEmpty) {
+                        return SliverToBoxAdapter(child: SizedBox());
+                      } else {
+                        return SliverList.builder(
+                            itemCount:
+                            logic.commentsData!['data'].length,
+                            itemBuilder: (context, index) {
+                              final comment =
+                              logic.commentsData?['data'][index];
+                              return CommentBoxWidget(
+                                data: comment,
+                              );
+                            });
+                      }
+                    }),
+
+                    //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 2.h,
+                        ),
+                      ),
+                    ),
+                    //--
+                  ],
+                );
+              }
+            }),
+          )),
+    );
+  }
+
+  Container buildCustomDetailBTNWidget(
+      {required String iconName,
+        required Function() onTap,
+        required String name}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: '#0F0F26'.toColor(),
+        borderRadius: BorderRadius.circular(100),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          splashColor: Colors.white.withOpacity(0.01),
+          borderRadius: BorderRadius.circular(100),
+          onTap: onTap,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 13),
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/mediaverse/icons/${iconName}.svg',
+                  height: 16,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  '${name}',
+                  style: TextStyle(fontSize: 13),
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
 }
-
 
 class PlayMusicDialog extends StatefulWidget {
   final String videoUrl;
