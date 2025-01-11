@@ -135,6 +135,7 @@ class AppColor {
         blueDarkColor = const Color(0xff010224);
         whiteColor = const Color(0xffffffff);
         primaryLightColor = const Color(0xff5A7AFA);
+        primaryColor = const Color(0xff2563EB);
         primaryDarkColor = const Color(0xff000033);
         errorColor = const Color(0xffE01818);
         break;
