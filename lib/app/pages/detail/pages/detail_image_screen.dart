@@ -146,7 +146,7 @@ class DetailImageScreen extends StatelessWidget {
                                           onTap: () {
                                             imageController
                                                 .sendToEditProfile(
-                                                PostType.video);
+                                                PostType.image);
                                           },
                                           child: SizedBox(
                                             width: 130,
