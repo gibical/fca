@@ -625,7 +625,8 @@ class DetailController extends GetxController {
 
   void textToAudio() async{
 
-    String language =await _runCustomSelectBottomSheet(Constant.languages, "Select Language");
+    String? language = await runCustomSelectBottomLanguageSheet(models: Constant.languages,);
+
     String loclae = Constant.languageMap[language]??"";
     try {
       final token = GetStorage().read("token");
@@ -865,7 +866,8 @@ class DetailController extends GetxController {
 
   void translateText() async{
 
-    String language =await _runCustomSelectBottomSheet(Constant.languages, "Select Language");
+    String? language = await runCustomSelectBottomLanguageSheet(models: Constant.languages,);
+
     String loclae = Constant.languageMap[language]??"";
     try {
       final token = GetStorage().read("token");
@@ -906,57 +908,56 @@ class DetailController extends GetxController {
     }
   }
   void textToText() async{
- var s =   await Get.bottomSheet(TextToTextWidget(this),isScrollControlled: true,backgroundColor: "000033".toColor());
-
- if(s!=null&&s){
-
-   try {
-     final token = GetStorage().read("token");
-
-     String apiUrl =
-         '${Constant.HTTP_HOST}tasks/text-text';
-     var s = Dio();
-     s.interceptors.add(MediaVerseConvertInterceptor());
-     print('DetailController.textToText = ${
-         {
-           "file": file_id,
-           "prefix": prefixEditingController.text
-         }
-     } - ${apiUrl}');
-
-     var response = await s. post(apiUrl, options: Options(headers: {
-       'accept': 'application/json',
-       'X-App': '_Android',
-       'Accept-Language': 'en-US',
-       'Authorization': 'Bearer $token',
-     },),data: {
-       "file": file_id,
-       "prefix": prefixEditingController.text
-     },);
-
-        print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
-     if (response.statusCode == 200) {
 
 
-       Constant.showMessege("alert_1".tr);
+ try {
+   final token = GetStorage().read("token");
 
-       print(response.data);
-     } else {
-       // Handle errors
-       //   Constant.showMessege("Request Denied : ${response.data['status']}");
+   String apiUrl =
+       '${Constant.HTTP_HOST}tasks/text-text';
+   var s = Dio();
+   s.interceptors.add(MediaVerseConvertInterceptor());
+   print('DetailController.textToText = ${
+       {
+         "file": file_id,
+         "prefix": prefixEditingController.text
+       }
+   } - ${apiUrl}');
 
-     }
-   } catch ( e) {
+   var response = await s. post(apiUrl, options: Options(headers: {
+     'accept': 'application/json',
+     'X-App': '_Android',
+     'Accept-Language': 'en-US',
+     'Authorization': 'Bearer $token',
+   },),data: {
+     "file": file_id,
+     "prefix": prefixEditingController.text
+   },);
+
+   print('DetailController._fetchMediaData = ${response.statusCode}  - ${response.data}');
+   if (response.statusCode == 200) {
+
+
+     Constant.showMessege("alert_1".tr);
+
+     print(response.data);
+   } else {
      // Handle errors
-     // Constant.showMessege("Request Denied : ${e.toString()}");
-
-     print('DetailController._fetchMediaData = $e');
-   } finally {
+     //   Constant.showMessege("Request Denied : ${response.data['status']}");
 
    }
+ } catch ( e) {
+   // Handle errors
+   // Constant.showMessege("Request Denied : ${e.toString()}");
+
+   print('DetailController._fetchMediaData = $e');
+ } finally {
+
  }
  prefixEditingController.clear();
   }
+
+
   //=========================================== Text Convert ===========================================//
 
 

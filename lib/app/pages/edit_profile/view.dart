@@ -182,28 +182,56 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         color: '0F0F26'.toColor(),
                         borderRadius: BorderRadius.circular(8.82.sp)
                     ),
-                    child: Center(
-                      child: ClipRRect(
+                    child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.82.sp),
-                          child: CachedNetworkImage(imageUrl: '${detailController.videoDetails!['thumbnails']['525x525']}' ,fit: BoxFit.cover, errorWidget: (context, url, error) {
-                            return Transform.scale(
-                              scale: 0.5,
-                              child: CircularProgressIndicator(
-                                color: AppColor.primaryColor,
-                                backgroundColor: AppColor.primaryColor.withOpacity(0.2),
-                              ),
-                            );
-                          },
-                          placeholder: (context, url) {
+                      child: CachedNetworkImage(
+                        imageUrl: details?[
+                        'thumbnails'] !=
+                            null &&
+                            details!['thumbnails']
+                            is Map<String, dynamic>
+                            ? details!['thumbnails']
+                        ['525x525'] ??
+                            ''
+                            : '',
+                        fit: BoxFit.cover,
+                        errorWidget: (context, url, error) {
+                          return Center(
+                            child: SvgPicture.asset(
+                              'assets/mediaverse/icons/file-text.svg' ,),
+                          );
+                        },
+                        placeholder: (context, url) {
                           return  Transform.scale(
-                              scale: 0.5,
-                              child: CircularProgressIndicator(
-                                color: AppColor.primaryColor,
-                                backgroundColor: AppColor.primaryColor.withOpacity(0.2),
-                              ),
-                            );
-                          },
-                          ) , ),
+                            scale: 0.5,
+                            child: CircularProgressIndicator(
+                              color: AppColor.primaryColor,
+                              backgroundColor: AppColor.primaryColor.withOpacity(0.2),
+                            ),
+                          );
+                        },
+                      ),
+
+
+                      // CachedNetworkImage(imageUrl: '${details!['thumbnails']['525x525']}' ,fit: BoxFit.cover, errorWidget: (context, url, error) {
+                      //   return Transform.scale(
+                      //     scale: 0.5,
+                      //     child: CircularProgressIndicator(
+                      //       color: AppColor.primaryColor,
+                      //       backgroundColor: AppColor.primaryColor.withOpacity(0.2),
+                      //     ),
+                      //   );
+                      // },
+                      // placeholder: (context, url) {
+                      // return  Transform.scale(
+                      //     scale: 0.5,
+                      //     child: CircularProgressIndicator(
+                      //       color: AppColor.primaryColor,
+                      //       backgroundColor: AppColor.primaryColor.withOpacity(0.2),
+                      //     ),
+                      //   );
+                      // },
+                      // ) ,
                     ),
                   ),
                 ),
@@ -260,7 +288,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     padding: const EdgeInsets.symmetric(horizontal: 18.0),
                     child: TextField(
 
-                      maxLines: 4,
+                      maxLines: Get.arguments[1] == PostType.text ? 8 :4,
                       controller: logic.assetsDescreptionEditingController,
                       decoration: InputDecoration(
 
