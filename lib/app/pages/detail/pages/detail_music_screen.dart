@@ -374,7 +374,7 @@ class DetailMusicScreen extends StatelessWidget {
                             buildCustomDetailBTNWidget(
                                 iconName: 'Magic',
                                 onTap: () {
-                                  runCustomSelectBottomToolsAsset(
+                                  runCustomSelectBottomToolsAudioAsset(
                                       logic);
                                 },
                                 name: 'Tools'),
@@ -780,4 +780,238 @@ class _PlayMusicDialogState extends State<PlayMusicDialog> {
       ),
     );
   }
+}
+
+
+
+
+
+
+void runCustomSelectBottomToolsAudioAsset(DetailController controller) {
+  Get.bottomSheet(
+    elevation: 0,
+    StatefulBuilder(
+      builder: (context, setState) {
+        return Container(
+          width: 100.w,
+          height: 36.h,
+          decoration: BoxDecoration(
+            color: "#0F0F26".toColor(),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 3.h),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'Tools',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    Spacer(),
+                    IconButton(
+                      iconSize: 18,
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: Icon(
+                        Icons.close_rounded,
+                        color: '9C9CB8'.toColor(),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 1.h),
+              Container(
+                color: '9C9CB8'.toColor().withOpacity(0.3),
+                height: 0.5,
+                width: Get.width,
+              ),
+              SizedBox(height: 2.h),
+              //BTN Tools 1
+              GestureDetector(
+                onTap: () {
+                  Get.back();
+                  print('audioLength : ${controller.musicDetails?['file']}');
+                  double audioLength = controller.musicDetails?['file']['info']['time'] ?? 5.0;
+
+                  Get.find<MediaSuitController>().setDataEditAudio(controller.musicDetails?['name']?? '' , controller.musicDetails?['file']['url'] , controller.musicDetails!['file_id'].toString() ,time: audioLength);
+                  Get.toNamed(PageRoutes.MEDIASUIT);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18.0,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 35,
+                        width: 35,
+                        decoration: BoxDecoration(
+                            color: '2563EB'.toColor(),
+                            borderRadius: BorderRadius.circular(8.sp)),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            'assets/mediaverse/icons/tools1.svg',
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Open in media studio',
+                        style: TextStyle(
+                          fontSize: 15, ),
+                      ),
+                      Spacer(),
+                      SvgPicture.asset(
+                        'assets/mediaverse/icons/open.svg',
+                        color: Colors.white,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 2.h),
+              Container(
+                color: '9C9CB8'.toColor().withOpacity(0.3),
+                height: 0.5,
+                width: Get.width,
+              ),
+
+              Container(
+                height: 0.5,
+                width: Get.width,
+              ),
+              SizedBox(height: 2.h),
+              //BTN Tools 2
+              GestureDetector(
+                onTap: () {
+                  Get.back();
+                  controller.videoConvertToAudio();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18.0,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 35,
+                        width: 35,
+                        decoration: BoxDecoration(
+                            color: '2563EB'.toColor(),
+                            borderRadius: BorderRadius.circular(8.sp)),
+                        child: Center(
+                          child: SvgPicture.string(
+                          """
+                          <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M6.33285 2.70831C6.58516 2.70831 6.81272 2.86002 6.90977 3.09293L11.0764 13.0929C11.2092 13.4116 11.0585 13.7775 10.7399 13.9102C10.4213 14.043 10.0553 13.8923 9.92259 13.5737L8.69396 10.625H3.97173L2.7431 13.5737C2.61034 13.8923 2.24442 14.043 1.92579 13.9102C1.60717 13.7775 1.45649 13.4116 1.58926 13.0929L5.75592 3.09293C5.85297 2.86002 6.08053 2.70831 6.33285 2.70831ZM6.33285 4.95831L8.17312 9.37498H4.49257L6.33285 4.95831ZM19.4578 9.99998V13.3333C19.4578 13.6785 19.178 13.9583 18.8328 13.9583C18.4877 13.9583 18.2078 13.6785 18.2078 13.3333V12.8867C17.4998 13.5513 16.5472 13.9583 15.4995 13.9583C13.3134 13.9583 11.5412 12.1861 11.5412 9.99998C11.5412 7.81385 13.3134 6.04165 15.4995 6.04165C16.5472 6.04165 17.4998 6.44867 18.2078 7.11321V6.66665C18.2078 6.32147 18.4877 6.04165 18.8328 6.04165C19.178 6.04165 19.4578 6.32147 19.4578 6.66665V9.99998ZM18.2078 9.99998C18.2078 11.4958 16.9953 12.7083 15.4995 12.7083C14.0037 12.7083 12.7912 11.4958 12.7912 9.99998C12.7912 8.50421 14.0037 7.29165 15.4995 7.29165C16.9953 7.29165 18.2078 8.50421 18.2078 9.99998Z" fill="#F5F5F5"/>
+</svg>
+
+                          """,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Audio to Text',
+                        style: TextStyle(
+                          fontSize: 15, ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 2.h),
+              Container(
+                height: 0.5,
+                width: Get.width,
+              ),
+
+              Container(
+                height: 0.5,
+                width: Get.width,
+              ),
+              SizedBox(height: 2.h),
+              //BTN Tools 3
+              Opacity(
+                opacity: 0.4,
+                child: GestureDetector(
+                  onTap: () {
+                    // controller.videoDubbing();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18.0,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 35,
+                          width: 35,
+                          decoration: BoxDecoration(
+                              color: '2563EB'.toColor(),
+                              borderRadius: BorderRadius.circular(8.sp)),
+                          child: Center(
+                            child: SvgPicture.string(
+                              """
+                              <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.584 17.0833L16.334 14.3056M10.084 17.0833L11.334 14.3056M11.334 14.3056L13.834 8.75L16.334 14.3056M11.334 14.3056H16.334" stroke="#F5F5F5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3.41602 4.58335H7.16602M10.916 4.58335H9.04102M7.16602 4.58335V2.91669M7.16602 4.58335H9.04102M9.04102 4.58335C9.04102 4.58335 9.04102 11.25 3.41602 11.25M10.0827 10.4167C6.33268 10.4167 5.08268 7.08335 5.08268 7.08335" stroke="#F5F5F5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+                              """,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Translate',
+                          style: TextStyle(
+                            fontSize: 15,  ),
+                        ),
+                        Spacer(),
+                        SvgPicture.asset(
+                          'assets/mediaverse/icons/arrow.svg',
+                          color: Colors.white,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 2.h),
+              Container(
+                height: 0.5,
+                width: Get.width,
+              ),
+            ],
+          ),
+        );
+      },
+    ),
+  );
 }
