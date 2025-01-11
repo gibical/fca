@@ -767,14 +767,9 @@ void runCustomSelectBottomToolsTextAsset(DetailController controller) {
                 GestureDetector(
                   onTap: () {
                     Get.back();
-                    double videoLength =
-                    double.parse(controller.videoDetails?['file']['length']);
-            
-                    Get.find<MediaSuitController>().setDataEditVideo(
-                        controller.videoDetails?['name'] ?? '',
-                        controller.videoDetails?['file']['url'],
-                        videoLength,
-                        controller.videoDetails!['file_id'].toString());
+
+
+                    Get.find<MediaSuitController>().setDataEditText(controller.textDetails?['name'] ?? '' , controller.textDetails?['name']  , controller.textDetails!['file_id'].toString());
                     Get.toNamed(PageRoutes.MEDIASUIT);
                   },
                   child: Padding(
