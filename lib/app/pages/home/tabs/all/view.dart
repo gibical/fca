@@ -197,8 +197,8 @@ class AllTabScreen extends StatelessWidget {
 
               }),
               GetBuilder<HomeTabController>(
-                  init: logic.audioController,
-                  tag: "audio",
+                  init: logic.textController,
+                  tag: "text",
                   builder: (logic) {
                     return Container(
                       width: 100.w,

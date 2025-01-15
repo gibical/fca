@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../gen/model/json/v2/FromJsonGetContentFromExplore.dart';
+import '../../../common/app_route.dart';
 
 class MiniTextWidget extends StatelessWidget {
 
@@ -22,60 +24,70 @@ class MiniTextWidget extends StatelessWidget {
     return Container(
 
 
-      child: Column(
+      child: MaterialButton(
+        onPressed: (){
+          Get.toNamed(PageRoutes.DETAILTEXT, arguments: {'id': model.id});
 
-        children: [
+        },
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15)
+        ),
+        child: Column(
 
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Container(
-              height:height?? 32.w,
-              margin: EdgeInsets.only(
-                right: 5
-              ),
-              decoration: BoxDecoration(
-               color: "#17172E".toColor()
-              ),
-              padding: EdgeInsets.all(2.w),
-              child: Column(
-                children: [
+          children: [
 
-                  Row(
-                    children: [
-                      if(_isPermiuim) Container(
-                        margin: EdgeInsets.all(2.w),
-                        child: SvgPicture.asset("assets/all/icons/mini_icon_permiuim.svg",color: "#C0C0C0".toColor(),),
-                      ),
-                      Expanded(child: Text("${model.name}",style: TextStyle(fontWeight: FontWeight.bold),maxLines: 1,))
-                    ],
-                  ),
-                  Expanded(child: Text("""${model.description}""",style: TextStyle(fontSize: 8.sp,color: "#9C9CB8".toColor(),),overflow: TextOverflow.ellipsis,maxLines: 5,textAlign: TextAlign.left,))
-                ],
+            ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Container(
+                height:height?? 32.w,
+                margin: EdgeInsets.only(
+                  right: 5
+                ),
+                decoration: BoxDecoration(
+                 color: "#17172E".toColor()
+                ),
+                padding: EdgeInsets.all(2.w),
+                child: Column(
+                  children: [
+
+                    Row(
+                      children: [
+                        if(_isPermiuim) Container(
+                          margin: EdgeInsets.all(2.w),
+                          child: SvgPicture.asset("assets/all/icons/mini_icon_permiuim.svg",color: "#C0C0C0".toColor(),),
+                        ),
+                        Expanded(child: Text("${model.name}",style: TextStyle(fontWeight: FontWeight.bold),maxLines: 1,))
+                      ],
+                    ),
+                    Expanded(child: Text("""${model.description}""",style: TextStyle(fontSize: 8.sp,color: "#9C9CB8".toColor(),),overflow: TextOverflow.ellipsis,maxLines: 5,textAlign: TextAlign.left,))
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 1.h,),
-          Row(
+            SizedBox(height: 1.h,),
+            Row(
 
-            children: [
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(500),
-                  child: Container(
-                      width: 7.w,
-                      height: 7.w,
-                      child: Image.network(model.user!.imageUrl??"",fit: BoxFit.cover,))),
-              SizedBox(width: 2.w,),
-              Expanded(child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("${model.user!.username}",style: TextStyle(fontWeight: FontWeight.bold),maxLines: 1,),
+              children: [
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(500),
+                    child: Container(
+                        width: 7.w,
+                        height: 7.w,
+                        child: Image.network(model.user!.imageUrl??"",fit: BoxFit.cover,))),
+                SizedBox(width: 2.w,),
+                Expanded(child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("${model.user!.username}",style: TextStyle(fontWeight: FontWeight.bold),maxLines: 1,),
 
-                ],
-              ))
-            ],
-          )
-        ],
+                  ],
+                ))
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

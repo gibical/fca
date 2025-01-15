@@ -61,7 +61,7 @@ class _ChannelTabScreenState extends State<ChannelTabScreen> {
                 padding: EdgeInsets.symmetric(
                     horizontal: 16
                 ),
-                height: 60.h,
+                height: 80.h,
                 child: LayoutGrid(
                   areas: '''
                       image1

@@ -154,8 +154,8 @@ class _VideoTabScreenState extends State<VideoTabScreen> {
                             ],
                             columnGap: 6.w,
                             rowGap: 10,
-                            children:  logic.models.getRange(0, 3).toList().asMap().entries.map((toElement){
-                              return MiniVideoWidget(model:  logic.models.elementAt(toElement.key)).inGridArea("image${toElement.key+1}");
+                            children:  logic.models.getRange(1, 4).toList().asMap().entries.map((toElement){
+                              return MiniVideoWidget(model:  logic.models.elementAt(toElement.key+1)).inGridArea("image${toElement.key+1}");
                             }).toList(),
                           ),
                         ),

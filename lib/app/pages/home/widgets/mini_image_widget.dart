@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
+import 'package:mediaverse/app/common/app_route.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
@@ -26,28 +28,38 @@ class MiniImageWidget extends StatelessWidget {
       decoration: BoxDecoration(
 
       ),
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(15),
-          child: Stack(
-            children: [
-              SizedBox.expand(child:HomeImageWidget(model.thumbnails!.x1080.toString())),
-              if(_isPermiuim) Align(
-                alignment: Alignment.topLeft,
-                child: Container(
-                  margin: EdgeInsets.all(2.w),
-                  child: SvgPicture.asset("assets/all/icons/mini_icon_permiuim.svg"),
-                ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  margin: EdgeInsets.all(2.w),
-                  child: SvgPicture.asset("assets/all/icons/mini_icon_image.svg"),
-                ),
-              ),
+      child: MaterialButton(
+        onPressed: (){
+          Get.toNamed(PageRoutes.DETAILIMAGE, arguments: {'id': model.id});
 
-            ],
-          )),
+        },
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15)
+        ),
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: Stack(
+              children: [
+                SizedBox.expand(child:HomeImageWidget(model.thumbnails!.x1080.toString())),
+                if(_isPermiuim) Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    margin: EdgeInsets.all(2.w),
+                    child: SvgPicture.asset("assets/all/icons/mini_icon_permiuim.svg"),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    margin: EdgeInsets.all(2.w),
+                    child: SvgPicture.asset("assets/all/icons/mini_icon_image.svg"),
+                  ),
+                ),
+
+              ],
+            )),
+      ),
     )
     ;
   }

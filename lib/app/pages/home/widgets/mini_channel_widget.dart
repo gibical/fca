@@ -90,7 +90,7 @@ class ShimmerMiniChannelWidget extends StatelessWidget {
   double? height;
 
   ChannelsModel model;
-  MiniChannelWidget({this.height,required this.model});
+  ShimmerMiniChannelWidget({this.height,required this.model});
 
   @override
   Widget build(BuildContext context) {
