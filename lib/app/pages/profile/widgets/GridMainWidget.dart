@@ -299,7 +299,7 @@ class _GridPostView2State extends State<GridPostView2> {
     if (isSelected) {
 
       Get.find<MediaSuitController>().addItemToTempList(
-        "widget.model['name'].toString()",
+        widget.model['name'].toString(),
         widget.model['file']['url'],
         videoLength,
         widget.model['file_id'].toString(),

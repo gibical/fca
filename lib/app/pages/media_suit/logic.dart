@@ -855,7 +855,7 @@ class MediaSuitController extends GetxController {
       for (int i = 0; i < editTextDataList.length; i++) {
         var currentItem = editTextDataList[i];
         currentItem.start =
-            previousEnd + 1; // Ensure the start is properly updated
+            previousEnd ; // Ensure the start is properly updated
         currentItem.end = currentItem.start +
             currentItem.second
                 .toInt(); // Calculate the end time based on the item's length
@@ -886,7 +886,7 @@ class MediaSuitController extends GetxController {
 
       for (int i = 0; i < editImageDataList.length; i++) {
         var currentItem = editImageDataList[i];
-        currentItem.start = previousEnd + 1;
+        currentItem.start = previousEnd ;
         currentItem.end = currentItem.start + currentItem.second.toInt();
 
         jsonList.add({
@@ -915,7 +915,7 @@ class MediaSuitController extends GetxController {
 
       for (int i = 0; i < editAudioDataList.length; i++) {
         var currentItem = editAudioDataList[i];
-        currentItem.start = previousEnd + 1;
+        currentItem.start = previousEnd ;
         currentItem.end = currentItem.start + currentItem.second.toInt();
 
         jsonList.add({
