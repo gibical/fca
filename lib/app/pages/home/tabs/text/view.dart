@@ -14,6 +14,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../common/app_color.dart';
 import '../../../../common/app_route.dart';
 import '../../../detail/logic.dart';
+import '../../home_tab_logic.dart';
 import '../../widgets/bset_item_explore_widget.dart';
 import '../../widgets/custom_grid_view_widget.dart';
 import '../../widgets/mini_text_widget.dart';
@@ -27,7 +28,9 @@ class TextTabScreen extends StatefulWidget {
 }
 
 class _TextTabScreenState extends State<TextTabScreen> {
-  int sortType = 0;
+  HomeTabController logic = Get
+      .find<HomeLogic>()
+      .textController;
 
 
   @override
@@ -39,78 +42,163 @@ class _TextTabScreenState extends State<TextTabScreen> {
         .of(context)
         .textTheme;
 
-    return Scaffold(
-      backgroundColor: AppColor.backgroundColor,
-      body: SafeArea(child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return GetBuilder<HomeTabController>(
+        init: logic,
+        tag: "audio",
+        builder: (logic) {
+          return Scaffold(
+            backgroundColor: AppColor.backgroundColor,
+            body: SafeArea(child: SingleChildScrollView(
+              child:logic.isloadingPage.value
+                  ? Container(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: [
+
+                    SizedBox(height: 1.h,),
+                    Container(
+                      width: 100.w,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                    height: 20.h,
+                                    child: ShimmerMiniTextWidget()),
+                              ),
+                              SizedBox(width: 2.w,),
+                              Expanded(
+                                child: Container(
+                                    height: 20.h,
+                                    child: ShimmerMiniTextWidget()),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 1.h,),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                    height: 20.h,
+                                    child: ShimmerMiniTextWidget()),
+                              ),
+                              SizedBox(width: 2.w,),
+                              Expanded(
+                                child: Container(
+                                    height: 20.h,
+                                    child: ShimmerMiniTextWidget()),
+                              ),
+                            ],
+                          ),
+
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 1.h,),
+                    Container(
+                      width: 100.w,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                    height: 20.h,
+                                    child: ShimmerMiniTextWidget()),
+                              ),
+                              SizedBox(width: 2.w,),
+                              Expanded(
+                                child: Container(
+                                    height: 20.h,
+                                    child: ShimmerMiniTextWidget()),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 1.h,),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                    height: 20.h,
+                                    child: ShimmerMiniTextWidget()),
+                              ),
+                              SizedBox(width: 2.w,),
+                              Expanded(
+                                child: Container(
+                                    height: 20.h,
+                                    child: ShimmerMiniTextWidget()),
+                              ),
+                            ],
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+                  :  Column(
                 children: [
-                  Text("home_15_3".tr,style: TextStyle(fontWeight: FontWeight.bold),),
-                  InkWell(
-                      borderRadius: BorderRadius.circular(500),
-                      onTap: (){
-
-
-                        _openSort();
-                      },
-                      child: SvgPicture.asset("assets/all/icons/arrow-sort.svg"))
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 16
-              ),
-              height: 100.h,
-              child: LayoutGrid(
-                areas: '''
+                  Container(
+                    margin: EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("home_15_1".tr, style: TextStyle(
+                            fontWeight: FontWeight.bold),),
+                        InkWell(
+                            borderRadius: BorderRadius.circular(500),
+                            onTap: () {
+                              logic.openSort();
+                            },
+                            child: SvgPicture.asset(
+                                "assets/all/icons/arrow-sort.svg"))
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16
+                    ),
+                    height: 110.h,
+                    child: LayoutGrid(
+                      areas: '''
                       image1 image2
                       image3 image4
                       image5 image6
                       image7 image8
+                      image9 image10
                                ''',
-                columnSizes: [
-                  1.fr, 1.fr
-                ],//
-                rowSizes: [
-                  1.fr,
-                  1.fr,
-                  1.fr,
-                  1.fr,
+                      columnSizes: [
+                        1.fr, 1.fr
+                      ],
+                      //
+                      rowSizes: [
+                        1.fr,
+                        1.fr,
+                        1.fr,
+                        1.fr,
+                        1.fr,
 
-                ],
-                columnGap: 6.w,
-                rowGap: 10,
-                children: [
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image1'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image2'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image3'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image4'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image5'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image6'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image7'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image8'),
+                      ],
+                      columnGap: 6.w,
+                      rowGap: 10,
+                      children: logic.models.getRange(0, 10).toList().asMap().entries.map((toElement){
+                        List<ContentModel> models=  logic.models.getRange(0, 10).toList();
 
+                        return MiniTextWidget(model:  models.elementAt(toElement.key)).inGridArea("image${toElement.key+1}");
+                      }).toList(),
+                    ),
+                  ),
 
                 ],
               ),
-            ),
-
-          ],
-        ),
-      )),
-    );
+            )),
+          );
+        });
   }
 
-  void _openSort()async {
-    int? s =  await Get.bottomSheet(SortSelectBottomSheet(sortType));
-    if(s!=null){
-      sortType = s;
-    }
-  }
+
 }
 

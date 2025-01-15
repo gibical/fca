@@ -239,5 +239,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
 
   void onpageChanged(int value) {
+    selectedTab.value=value;
+    update();
   }
 }

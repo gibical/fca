@@ -90,7 +90,9 @@ class AllTabScreen extends StatelessWidget {
                     );
                   }),
 
-              TitleWidgetExplore("home_10".tr, () {}),
+              TitleWidgetExplore("home_10".tr, () {
+                logic.pageController.animateToPage(2, duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
+              }),
               GetBuilder<HomeTabController>(
                   init: logic.videoController,
                   tag: "video",
@@ -120,7 +122,10 @@ class AllTabScreen extends StatelessWidget {
                           }), //
                     );
                   }),
-              TitleWidgetExplore("home_12".tr, () {}),
+              TitleWidgetExplore("home_12".tr, () {
+                logic.pageController.animateToPage(3, duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
+
+              }),
               GetBuilder<HomeTabController>(
                   init: logic.imageController,
                   tag: "image",
@@ -155,7 +160,10 @@ class AllTabScreen extends StatelessWidget {
                       ), //
                     );
                   }),
-              TitleWidgetExplore("home_13".tr, () {}),
+              TitleWidgetExplore("home_13".tr, () {
+                logic.pageController.animateToPage(4, duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
+
+              }),
               GetBuilder<HomeTabController>(
                   init: logic.audioController,
                   tag: "audio",
@@ -184,7 +192,10 @@ class AllTabScreen extends StatelessWidget {
                     );
                   }),
 
-              TitleWidgetExplore("home_14".tr, () {}),
+              TitleWidgetExplore("home_14".tr, () {
+                logic.pageController.animateToPage(5, duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
+
+              }),
               GetBuilder<HomeTabController>(
                   init: logic.audioController,
                   tag: "audio",

@@ -40,6 +40,7 @@ class HomeTabController extends GetxController {
     int? s =  await Get.bottomSheet(SortSelectBottomSheet(sortType));
     if(s!=null){
       sortType = s;
+      getChnannelInitRequest(false);
       update();
     }
   }
@@ -51,6 +52,7 @@ class HomeTabController extends GetxController {
 
     if(isFirstTime)isloadingMini(true);
     isloadingPage(true);
+    update();
 
     try {
       var response = await dio.get(

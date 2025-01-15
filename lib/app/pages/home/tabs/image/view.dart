@@ -19,6 +19,7 @@ import '../../widgets/bset_item_explore_widget.dart';
 import '../../widgets/custom_grid_image_widget.dart';
 import '../../widgets/custom_grid_view_widget.dart';
 import '../../widgets/mini_image_widget.dart';
+import '../../widgets/mini_video_widget.dart';
 import '../../widgets/sort_select_bottom_sheet.dart';
 import '../all/view.dart';
 
@@ -41,11 +42,167 @@ class ImageTabScreen extends StatelessWidget {
 
     return GetBuilder<HomeTabController>(
         init: logic,
+        tag: "image",
         builder: (logic) {
       return Scaffold(
         backgroundColor: AppColor.backgroundColor,
         body: SafeArea(child: SingleChildScrollView(
-          child: Column(
+          child:logic.isloadingPage.value
+              ? Column(
+            children: [
+
+              Container(
+                height: 35.h,
+                child: Row(
+                  children: [
+
+                    Expanded(
+                      child: Container(
+                        width: 100.w,
+                        child: Column(
+                          children: [
+                            Container(
+                                height: 17.h,
+                                child: ShimmirMiniImageWidget()),
+                            SizedBox(height: 1.h,),
+                            Container(
+                                height: 17.h,
+                                child: ShimmirMiniImageWidget()),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+
+                        width: 100.w,
+                        height: 35.h,
+
+                        child: ShimmirMiniImageWidget(),
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 1.h,),
+              Container(
+                width: 100.w,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                              height: 17.h,
+                              child: ShimmirMiniImageWidget()),
+                        ),
+                        SizedBox(width: 2.w,),
+                        Expanded(
+                          child: Container(
+                              height: 17.h,
+                              child: ShimmirMiniImageWidget()),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 1.h,),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                              height: 17.h,
+                              child: ShimmirMiniImageWidget()),
+                        ),
+                        SizedBox(width: 2.w,),
+                        Expanded(
+                          child: Container(
+                              height: 17.h,
+                              child: ShimmirMiniImageWidget()),
+                        ),
+                      ],
+                    ),
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 1.h,),
+
+              Container(
+                height: 35.h,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+
+                        width: 100.w,
+                        height: 35.h,
+
+                        child: ShimmirMiniImageWidget(),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: 100.w,
+                        child: Column(
+                          children: [
+                            Container(
+                                height: 17.h,
+                                child: ShimmirMiniImageWidget()),
+                            SizedBox(height: 1.h,),
+                            Container(
+                                height: 17.h,
+                                child: ShimmirMiniImageWidget()),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 1.h,),
+              Container(
+                width: 100.w,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                              height: 17.h,
+                              child: ShimmirMiniImageWidget()),
+                        ),
+                        SizedBox(width: 2.w,),
+                        Expanded(
+                          child: Container(
+                              height: 17.h,
+                              child: ShimmirMiniImageWidget()),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 1.h,),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                              height: 17.h,
+                              child: ShimmirMiniImageWidget()),
+                        ),
+                        SizedBox(width: 2.w,),
+                        Expanded(
+                          child: Container(
+                              height: 17.h,
+                              child: ShimmirMiniImageWidget()),
+                        ),
+                      ],
+                    ),
+
+                  ],
+                ),
+              ),
+            ],
+          )
+              :  Column(
             children: [
               Container(
                 margin: EdgeInsets.all(16),
@@ -84,13 +241,11 @@ class ImageTabScreen extends StatelessWidget {
                   ],
                   columnGap: 10,
                   rowGap: 10,
-                  children: [
-                    MiniImageWidget(model: ContentModel(),).inGridArea('image1'),
-                    MiniImageWidget(model: ContentModel(),).inGridArea('image2'),
-                    MiniImageWidget(model: ContentModel(),).inGridArea('image3'),
+                  children: logic.models.getRange(0, 3).toList().asMap().entries.map((toElement){
+                    List<ContentModel> models=  logic.models.getRange(0, 3).toList();
 
-
-                  ],
+                    return MiniImageWidget(model:  models.elementAt(toElement.key)).inGridArea("image${toElement.key+1}");
+                  }).toList(),
                 ),
               ),
               SizedBox(height: 2.h,),
@@ -114,14 +269,11 @@ class ImageTabScreen extends StatelessWidget {
                   ],
                   columnGap: 10,
                   rowGap: 10,
-                  children: [
-                    MiniImageWidget(model: ContentModel(),).inGridArea('image1'),
-                    MiniImageWidget(model: ContentModel(),).inGridArea('image2'),
-                    MiniImageWidget(model: ContentModel(),).inGridArea('image3'),
-                    MiniImageWidget(model: ContentModel(),).inGridArea('image4'),
+                  children: logic.models.getRange(3, 7).toList().asMap().entries.map((toElement){
+                    List<ContentModel> models=  logic.models.getRange(3, 10).toList();
 
-
-                  ],
+                    return MiniImageWidget(model:  models.elementAt(toElement.key)).inGridArea("image${toElement.key+1}");
+                  }).toList(),
                 ),
               ),
               SizedBox(height: 2.h,),
@@ -146,43 +298,14 @@ class ImageTabScreen extends StatelessWidget {
                   ],
                   columnGap: 10,
                   rowGap: 10,
-                  children: [
-                    MiniImageWidget(model: ContentModel(),).inGridArea('image1'),
-                    MiniImageWidget(model: ContentModel(),).inGridArea('image2'),
-                    MiniImageWidget(model: ContentModel(),).inGridArea('image3'),
-
-
-                  ],
+                  children: logic.models.getRange(7, 10).toList().asMap().entries.map((toElement){
+                    List<ContentModel> models=  logic.models.getRange(7, 10).toList();
+                    return MiniImageWidget(model:  models.elementAt(toElement.key)).inGridArea("image${toElement.key+1}");
+                  }).toList(),
                 ),
               ),
               SizedBox(height: 2.h,),
 
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 16
-                ),
-                height: 20.h,
-                child: LayoutGrid(
-                  areas: '''
-                      image1 image2
-                               ''',
-                  columnSizes: [
-                    1.fr, 1.fr
-                  ],
-                  //
-                  rowSizes: [
-                    1.fr,
-                  ],
-                  columnGap: 10,
-                  rowGap: 10,
-                  children: [
-                    MiniImageWidget(model: ContentModel(),).inGridArea('image1'),
-                    MiniImageWidget(model: ContentModel(),).inGridArea('image2'),
-
-
-                  ],
-                ),
-              ),
 
 
             ],

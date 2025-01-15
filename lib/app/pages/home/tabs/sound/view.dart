@@ -14,13 +14,13 @@ import '../../../../common/app_icon.dart';
 import '../../../../common/app_route.dart';
 import '../../../../common/font_style.dart';
 import '../../../detail/logic.dart';
+import '../../home_tab_logic.dart';
 import '../../logic.dart';
 import '../../widgets/bset_item_explore_widget.dart';
 import '../../widgets/custom_grid_view_widget.dart';
 import '../../widgets/mini_audio_widget.dart';
 import '../../widgets/sort_select_bottom_sheet.dart';
 import '../all/view.dart';
-
 
 
 class SoundTabScreen extends StatefulWidget {
@@ -31,7 +31,10 @@ class SoundTabScreen extends StatefulWidget {
 }
 
 class _SoundTabScreenState extends State<SoundTabScreen> {
-  int sortType = 0;
+
+  HomeTabController logic = Get
+      .find<HomeLogic>()
+      .audioController;
 
 
   @override
@@ -43,77 +46,162 @@ class _SoundTabScreenState extends State<SoundTabScreen> {
         .of(context)
         .textTheme;
 
-    return Scaffold(
-      backgroundColor: AppColor.backgroundColor,
-      body: SafeArea(child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("home_15_1".tr,style: TextStyle(fontWeight: FontWeight.bold),),
-                  InkWell(
-                      borderRadius: BorderRadius.circular(500),
-                      onTap: (){
-
-
-                        _openSort();
-                      },
-                      child: SvgPicture.asset("assets/all/icons/arrow-sort.svg"))
-                ],
+    return GetBuilder<HomeTabController>(
+        init: logic,
+        tag: "audio",
+        builder: (logic) {
+      return Scaffold(
+        backgroundColor: AppColor.backgroundColor,
+        body: SafeArea(child: SingleChildScrollView(
+          child:logic.isloadingPage.value
+              ? Container(
+            padding: EdgeInsets.all(16),
+                child: Column(
+                            children: [
+                
+                SizedBox(height: 1.h,),
+                Container(
+                  width: 100.w,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                                height: 20.h,
+                                child: ShimmerMiniAudioWidget()),
+                          ),
+                          SizedBox(width: 2.w,),
+                          Expanded(
+                            child: Container(
+                                height: 20.h,
+                                child: ShimmerMiniAudioWidget()),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 1.h,),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                                height: 20.h,
+                                child: ShimmerMiniAudioWidget()),
+                          ),
+                          SizedBox(width: 2.w,),
+                          Expanded(
+                            child: Container(
+                                height: 20.h,
+                                child: ShimmerMiniAudioWidget()),
+                          ),
+                        ],
+                      ),
+                
+                    ],
+                  ),
+                ),
+                SizedBox(height: 1.h,),
+                Container(
+                  width: 100.w,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                                height: 20.h,
+                                child: ShimmerMiniAudioWidget()),
+                          ),
+                          SizedBox(width: 2.w,),
+                          Expanded(
+                            child: Container(
+                                height: 20.h,
+                                child: ShimmerMiniAudioWidget()),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 1.h,),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                                height: 20.h,
+                                child: ShimmerMiniAudioWidget()),
+                          ),
+                          SizedBox(width: 2.w,),
+                          Expanded(
+                            child: Container(
+                                height: 20.h,
+                                child: ShimmerMiniAudioWidget()),
+                          ),
+                        ],
+                      ),
+                
+                    ],
+                  ),
+                ),
+                            ],
+                          ),
+              )
+              :  Column(
+            children: [
+              Container(
+                margin: EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("home_15_1".tr, style: TextStyle(
+                        fontWeight: FontWeight.bold),),
+                    InkWell(
+                        borderRadius: BorderRadius.circular(500),
+                        onTap: () {
+                          logic.openSort();
+                        },
+                        child: SvgPicture.asset(
+                            "assets/all/icons/arrow-sort.svg"))
+                  ],
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 16
-              ),
-              height: 100.h,
-              child: LayoutGrid(
-                areas: '''
+              Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 16
+                ),
+                height: 110.h,
+                child: LayoutGrid(
+                  areas: '''
                       image1 image2
                       image3 image4
                       image5 image6
                       image7 image8
+                      image9 image10
                                ''',
-                columnSizes: [
-                  1.fr, 1.fr
-                ],//
-                rowSizes: [
-                  1.fr,
-                  1.fr,
-                  1.fr,
-                  1.fr,
+                  columnSizes: [
+                    1.fr, 1.fr
+                  ],
+                  //
+                  rowSizes: [
+                    1.fr,
+                    1.fr,
+                    1.fr,
+                    1.fr,
+                    1.fr,
 
-                ],
-                columnGap: 6.w,
-                rowGap: 10,
-                children: [
-                  MiniAudioWidget(height: 40.w, model: ContentModel(),).inGridArea('image1'),
-                  MiniAudioWidget(height: 40.w,model: ContentModel(),).inGridArea('image2'),
-                  MiniAudioWidget(height: 40.w,model: ContentModel(),).inGridArea('image3'),
-                  MiniAudioWidget(height: 40.w,model: ContentModel(),).inGridArea('image4'),
-                  MiniAudioWidget(height: 40.w,model: ContentModel(),).inGridArea('image5'),
-                  MiniAudioWidget(height: 40.w,model: ContentModel(),).inGridArea('image6'),
-                  MiniAudioWidget(height: 40.w,model: ContentModel(),).inGridArea('image7'),
-                  MiniAudioWidget(height: 40.w,model: ContentModel(),).inGridArea('image8'),
+                  ],
+                  columnGap: 6.w,
+                  rowGap: 10,
+                  children: logic.models.getRange(0, 10).toList().asMap().entries.map((toElement){
+                    List<ContentModel> models=  logic.models.getRange(0, 10).toList();
 
-
-                ],
+                    return MiniAudioWidget(model:  models.elementAt(toElement.key)).inGridArea("image${toElement.key+1}");
+                  }).toList(),
+                ),
               ),
-            ),
 
-          ],
-        ),
-      )),
-    );
+            ],
+          ),
+        )),
+      );
+    });
   }
 
-  void _openSort()async {
-    int? s =  await Get.bottomSheet(SortSelectBottomSheet(sortType));
-    if(s!=null){
-      sortType = s;
-    }
-  }
+
 }

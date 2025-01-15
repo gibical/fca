@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
@@ -76,7 +77,7 @@ class ShimmirMiniImageWidget extends StatelessWidget {
 
                 SizedBox.expand(
                   child: Container(
-                    color: Colors.red,
+                    color: AppColor.backgroundColor,
                   ),
                 )
 
