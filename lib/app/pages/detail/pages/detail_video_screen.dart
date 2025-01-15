@@ -1463,7 +1463,8 @@ void runPublishYoutubeSheet(DetailController detailController) {
         ),
       );
     },
-  ));
+  )
+  );
 }
 void runPublishXSheet(DetailController detailController) {
   Get.bottomSheet(elevation: 0, StatefulBuilder(
