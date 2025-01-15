@@ -56,6 +56,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
       case PostType.text:
       // TODO: Handle this case.
         details = detailController.textDetails;
+      case PostType.channel:
+        // TODO: Handle this case.
     }
 
     logic.startPageFunction(details, PostType.text);

@@ -1,5 +1,38 @@
 const Map<String, String> enUS = {
 
+  // Re Design
+
+  "home_1":"Search something...",
+  "home_2":"All",
+  "home_3":"Channel",
+  "home_4":"Video",
+  "home_5":"Image",
+  "home_6":"Audio",
+  "home_7":"Text",
+  "home_8":"Recommended channels",
+  "home_9":"View all",
+  "home_10":"Most Viewed Videos",
+  "home_11":"Password",
+  "home_12":"Newest Images",
+  "home_13":"Most Played Audios",
+  "home_14":"Newest Texts",
+  "home_15":"All pictures",
+  "home_15_1":"All songs",
+  "home_15_2":"All videos",
+  "home_15_3":"All texts",
+  "home_15_4":"All Channels",
+  "home_16":"Sort by",
+  "home_17":"Reset",
+  "home_18":"Newest",
+  "home_19":"Most viewed",
+  "home_20":"Most sold",
+  "home_21":"Failed To Load Image ",
+
+
+
+
+
+
 
   "login_1":"Insert your username and password to login",
   "login_1_1":"Insert your number ",
@@ -190,16 +223,16 @@ const Map<String, String> enUS = {
 
 
 
-  "home_1":"Live Channels",
-  "home_2":"Best videos",
-  "home_3":"Most viewed",
-  "home_4":"Top Text",
-  "home_5":"Top Song",
-  "home_6":"View all",
-  "home_7":"Best in month",
-  "home_8":"Recently",
-  "home_9":"Top Text",
-  "home_10":"All",
+  // "home_1":"Live Channels",
+  // "home_2":"Best videos",
+  // "home_3":"Most viewed",
+  // "home_4":"Top Text",
+  // "home_5":"Top Song",
+  // "home_6":"View all",
+  // "home_7":"Best in month",
+  // "home_8":"Recently",
+  // "home_9":"Top Text",
+  // "home_10":"All",
 
   "libe_1":"Record live",
   "libe_2":"Start recording",

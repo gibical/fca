@@ -33,7 +33,7 @@ class _AppState extends State<App> {
       translations: LocalizationService(),
       debugShowCheckedModeBanner: false,
 
-      locale:F.appFlavor==Flavor.ravi?LocalizationService.fallBackLocale2: LocalizationService.fallBackLocale,
+      locale:F.appFlavor==Flavor.ravi?LocalizationService.fallBackLocale2: LocalizationService().getCurrentLocale(),
       fallbackLocale:LocalizationService.fallBackLocale,
       themeMode: AppTheme().getCurrentTheme(),
       theme: AppTheme.darkMode,

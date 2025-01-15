@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/app_route.dart';
+import 'package:mediaverse/app/common/base/localization_service.dart';
 import 'package:mediaverse/app/pages/profile/logic.dart';
 import 'package:mediaverse/app/pages/wrapper/logic.dart';
 import 'package:sizer/sizer.dart';
@@ -266,8 +267,10 @@ class SettingScreen extends StatelessWidget {
   }
 
   void changeLanguage() async{
-    String? model = await Get.bottomSheet(
+    var res = await Get.bottomSheet(
         ChangeLangaugePickerBottomSheet());
+
+    String? model = res[0];
     if (model != null) {
       Locale locale  = Locale("fa","IR");
       switch(model){
@@ -283,6 +286,9 @@ class SettingScreen extends StatelessWidget {
       }
 
       Get.updateLocale(locale);
+
+      print('SettingScreen.changeLanguage = ${res}');
+      LocalizationService().changeLocale(res[1]);
       logic.update();
     }
   }

@@ -395,7 +395,7 @@ class ChangeLangaugePickerBottomSheetState extends State<ChangeLangaugePickerBot
                 return MaterialButton(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   onPressed: () {
-                    Get.back(result: filteredCountries.keys.elementAt(i));
+                     Get.back(result: [filteredCountries.keys.elementAt(i),model[filteredCountries.keys.elementAt(i)]]);
                   },
                   child: Container(
                     width: 100.w,

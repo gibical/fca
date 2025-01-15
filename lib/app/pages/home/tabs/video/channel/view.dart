@@ -1,32 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:lottie/lottie.dart';
-import 'package:mediaverse/app/common/font_style.dart';
-import 'package:mediaverse/app/pages/home/logic.dart';
-import 'package:mediaverse/gen/model/json/v2/FromJsonGetContentFromExplore.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../../common/app_color.dart';
-import '../../../../common/app_route.dart';
-import '../../../detail/logic.dart';
-import '../../widgets/bset_item_explore_widget.dart';
-import '../../widgets/custom_grid_view_widget.dart';
-import '../../widgets/mini_text_widget.dart';
-import '../../widgets/sort_select_bottom_sheet.dart';
-import '../all/view.dart';
+import '../../../../../common/app_color.dart';
+import '../../../widgets/mini_channel_widget.dart';
+import '../../../widgets/sort_select_bottom_sheet.dart';
 
-class TextTabScreen extends StatefulWidget {
+class ChannelTabScreen extends StatefulWidget {
+  const ChannelTabScreen({super.key});
 
   @override
-  State<TextTabScreen> createState() => _TextTabScreenState();
+  State<ChannelTabScreen> createState() => _ChannelTabScreenState();
 }
 
-class _TextTabScreenState extends State<TextTabScreen> {
+class _ChannelTabScreenState extends State<ChannelTabScreen> {
   int sortType = 0;
 
 
@@ -49,7 +39,7 @@ class _TextTabScreenState extends State<TextTabScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("home_15_3".tr,style: TextStyle(fontWeight: FontWeight.bold),),
+                  Text("home_15_4".tr,style: TextStyle(fontWeight: FontWeight.bold),),
                   InkWell(
                       borderRadius: BorderRadius.circular(500),
                       onTap: (){
@@ -65,18 +55,25 @@ class _TextTabScreenState extends State<TextTabScreen> {
               padding: EdgeInsets.symmetric(
                   horizontal: 16
               ),
-              height: 100.h,
+              height: 60.h,
               child: LayoutGrid(
                 areas: '''
-                      image1 image2
-                      image3 image4
-                      image5 image6
-                      image7 image8
+                      image1
+                      image2
+                      image3
+                      image4
+                      image5
+                      image6
+                      image7
+                     
                                ''',
                 columnSizes: [
-                  1.fr, 1.fr
+                  1.fr
                 ],//
                 rowSizes: [
+                  1.fr,
+                  1.fr,
+                  1.fr,
                   1.fr,
                   1.fr,
                   1.fr,
@@ -86,15 +83,13 @@ class _TextTabScreenState extends State<TextTabScreen> {
                 columnGap: 6.w,
                 rowGap: 10,
                 children: [
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image1'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image2'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image3'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image4'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image5'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image6'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image7'),
-                  MiniTextWidget(height: 40.w, model: ContentModel(),).inGridArea('image8'),
-
+                  MiniChannelWidget(height: 100.w,).inGridArea('image1'),
+                  MiniChannelWidget(height: 100.w,).inGridArea('image2'),
+                  MiniChannelWidget(height: 100.w,).inGridArea('image3'),
+                  MiniChannelWidget(height: 100.w,).inGridArea('image4'),
+                  MiniChannelWidget(height: 100.w,).inGridArea('image5'),
+                  MiniChannelWidget(height: 100.w,).inGridArea('image6'),
+                  MiniChannelWidget(height: 100.w,).inGridArea('image7'),
 
                 ],
               ),
@@ -113,4 +108,3 @@ class _TextTabScreenState extends State<TextTabScreen> {
     }
   }
 }
-
