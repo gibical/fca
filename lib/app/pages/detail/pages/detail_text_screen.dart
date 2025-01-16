@@ -384,7 +384,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                               child: GestureDetector(
                                 onTap: () {
 
-                                  Get.to(TextPage(title: '${logic.textDetails?['name']}', text: '${logic.textDetails?['description']}'));
+                                  Get.to(TextPage(title: '${logic.textDetails?['name']}', url: '${logic.textDetails?['file']['url']}'));
                                 },
                                 child: Container(
                                   margin: EdgeInsets.all(12),
