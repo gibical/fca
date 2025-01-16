@@ -238,6 +238,7 @@ class DetailController extends GetxController {
 
         Constant.showMessege("Failed to delete asset");
 
+
       }
     } catch (e) {
 
