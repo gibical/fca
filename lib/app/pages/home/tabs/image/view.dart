@@ -248,7 +248,7 @@ class ImageTabScreen extends StatelessWidget {
                   }).toList(),
                 ),
               ),
-              SizedBox(height: 2.h,),
+              SizedBox(height: 1.h,),
               Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: 16
@@ -276,7 +276,7 @@ class ImageTabScreen extends StatelessWidget {
                   }).toList(),
                 ),
               ),
-              SizedBox(height: 2.h,),
+              SizedBox(height: 1.h,),
 
               Container(
                 padding: EdgeInsets.symmetric(

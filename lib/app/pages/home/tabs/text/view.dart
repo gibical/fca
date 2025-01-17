@@ -161,7 +161,7 @@ class _TextTabScreenState extends State<TextTabScreen> {
                     padding: EdgeInsets.symmetric(
                         horizontal: 16
                     ),
-                    height: 110.h,
+                    height: 130.h,
                     child: LayoutGrid(
                       areas: '''
                       image1 image2

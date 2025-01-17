@@ -170,9 +170,9 @@ class AllTabScreen extends StatelessWidget {
                   builder: (logic) {
                     return Container(
                       width: 100.w,
-                      height: 25.h,
-                      decoration: BoxDecoration(
+                      height: 28.h,
 
+                      decoration: BoxDecoration(
                       ),
                       child: ListView.builder(
                           padding: EdgeInsets.only(left: 16),
@@ -181,7 +181,7 @@ class AllTabScreen extends StatelessWidget {
                               .models.length,
                           itemBuilder: (s, i) {
                             return Container(
-                                width: 34.w,
+                                width: 45.w,
                                 child: logic.isloadingMini.value
                                     ? ShimmerMiniAudioWidget()
                                     :
@@ -202,7 +202,7 @@ class AllTabScreen extends StatelessWidget {
                   builder: (logic) {
                     return Container(
                       width: 100.w,
-                      height: 25.h,
+                      height: 28.h,
                       decoration: BoxDecoration(
 
                       ),
@@ -213,13 +213,18 @@ class AllTabScreen extends StatelessWidget {
                               .models.length,
                           itemBuilder: (s, i) {
                             return Container(
-                                width: 34.w,
+                                width: 46.w,
                                 child: logic.isloadingMini.value
                                     ? ShimmerMiniTextWidget()
                                     :
 
-                                MiniTextWidget(
-                                  model: logic.models.elementAt(i),));
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      right: 3.w
+                                  ),
+                                  child: MiniTextWidget(
+                                    model: logic.models.elementAt(i),),
+                                ));
                           }), //
                     );
                   }),

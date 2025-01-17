@@ -17,7 +17,7 @@ const Map<String, String> enUS = {
   "home_13":"Most Played Audios",
   "home_14":"Newest Texts",
   "home_15":"All pictures",
-  "home_15_1":"All songs",
+  "home_15_1":"All Audios",
   "home_15_2":"All videos",
   "home_15_3":"All texts",
   "home_15_4":"All Channels",

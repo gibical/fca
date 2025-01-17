@@ -140,7 +140,7 @@ class _VideoTabScreenState extends State<VideoTabScreen> {
                         ),
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 16),
-                          height: 75.h,
+                          height: 50.h,
                           child: LayoutGrid(
                             areas: '''
                       image1 image2
@@ -155,7 +155,7 @@ class _VideoTabScreenState extends State<VideoTabScreen> {
                             columnGap: 6.w,
                             rowGap: 10,
                             children:  logic.models.getRange(1, 4).toList().asMap().entries.map((toElement){
-                              return MiniVideoWidget(model:  logic.models.elementAt(toElement.key+1)).inGridArea("image${toElement.key+1}");
+                              return MiniVideoWidget(model:  logic.models.elementAt(toElement.key+1),height: 40.w,).inGridArea("image${toElement.key+1}");
                             }).toList(),
                           ),
                         ),

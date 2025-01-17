@@ -40,10 +40,8 @@ class MiniTextWidget extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: Container(
-                height:height?? 32.w,
-                margin: EdgeInsets.only(
-                  right: 5
-                ),
+                height:height?? 42.w,
+
                 decoration: BoxDecoration(
                  color: "#17172E".toColor()
                 ),
@@ -112,10 +110,8 @@ class ShimmerMiniTextWidget extends StatelessWidget {
 
 
           Container(
-            height:height?? 32.w,
-            margin: EdgeInsets.only(
-                right: 5
-            ),
+            height:height?? 45.w,
+
             decoration: BoxDecoration(
 
             ),

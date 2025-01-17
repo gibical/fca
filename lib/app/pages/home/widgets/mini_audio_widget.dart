@@ -38,7 +38,7 @@ class MiniAudioWidget extends StatelessWidget {
           children: [
 
             Container(
-              height:height?? 32.w,
+              height:height?? 45.w,
               margin: EdgeInsets.only(
                   right: 5
               ),
@@ -126,7 +126,7 @@ class ShimmerMiniAudioWidget extends StatelessWidget {
 
 
           Container(
-            height:height?? 32.w,
+            height:height?? 45.w,
             margin: EdgeInsets.only(
                 right: 5
             ),
