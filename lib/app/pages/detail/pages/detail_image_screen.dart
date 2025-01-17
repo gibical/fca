@@ -159,6 +159,37 @@ class DetailImageScreen extends StatelessWidget {
                                             ),
                                           ),
                                         ),
+                                        PopupMenuItem(
+                                          value: 1,
+                                          onTap: () {
+                                            imageController.
+                                            deleteAsset();
+                                          },
+                                          child: SizedBox(
+                                            width: 130,
+                                            child: Row(
+                                              children: [
+                                                Obx(() {
+                                                  if (imageController.isLoadingDeleteAsset.value) {
+                                                    return Transform.scale(
+
+                                                      scale: 0.5,
+                                                      child: CircularProgressIndicator(
+                                                        color: Colors.redAccent,
+                                                        backgroundColor: Colors.redAccent.withOpacity(0.2),
+                                                      ),
+                                                    );
+                                                  }
+                                                  return   SvgPicture.asset(
+                                                      'assets/mediaverse/icons/delete.svg');
+                                                }),
+
+
+                                                Text('Delete'),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ).then((value) {
                                       if (value != null) {

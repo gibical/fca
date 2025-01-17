@@ -170,6 +170,37 @@ class DetailVideoScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
+                                              PopupMenuItem(
+                                                value: 1,
+                                                onTap: () {
+                                                  videoController.
+                                                  deleteAsset();
+                                                },
+                                                child: SizedBox(
+                                                  width: 130,
+                                                  child: Row(
+                                                    children: [
+                                                      Obx(() {
+                                                if (videoController.isLoadingDeleteAsset.value) {
+                                                return Transform.scale(
+
+                                                  scale: 0.5,
+                                                  child: CircularProgressIndicator(
+                                                    color: Colors.redAccent,
+                                                    backgroundColor: Colors.redAccent.withOpacity(0.2),
+                                                  ),
+                                                );
+                                                }
+                                                return   SvgPicture.asset(
+                                                    'assets/mediaverse/icons/delete.svg');
+                                                }),
+
+
+                                                      Text('Delete'),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
                                             ],
                                           ).then((value) {
                                             if (value != null) {
@@ -1463,7 +1494,8 @@ void runPublishYoutubeSheet(DetailController detailController) {
         ),
       );
     },
-  ));
+  )
+  );
 }
 void runPublishXSheet(DetailController detailController) {
   Get.bottomSheet(elevation: 0, StatefulBuilder(
@@ -1577,89 +1609,88 @@ void runPublishXSheet(DetailController detailController) {
 
                 SizedBox(height: 2.h),
                 //Switch 2 - Publish Later
-                GetBuilder<DetailController>(
-                  builder: (controller) {
-                    return Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Publish Later',
-                              style: TextStyle(
-                                color: '9C9CB8'.toColor(),
-                                fontSize: 15,
-                              ),
-                            ),
-                            CustomSwitchWidget(
-                              value: controller.isSeletedDate.value,
-                              onChanged: (value) {
-                                controller.isSeletedDate.value = value;
-                                controller.update();
-                                if (controller.isSeletedDate.value) {
-                                  print('On');
-                                } else {
-                                  print('Off');
-                                }
-                              },
-                            ),
-                          ],
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Publish Later',
+                        style: TextStyle(
+                          color: '9C9CB8'.toColor(),
+                          fontSize: 15,
                         ),
-                        SizedBox(height: 10),
-                        if (controller.isSeletedDate.value)
-                          GestureDetector(
-                            onTap: (){
+                      ),
+                      CustomSwitchWidget(
+                        value: detailController.isSeletedDate.value,
+                        onChanged: (value) {
+                          detailController.isSeletedDate.value = value;
+                          setState(() {
+
+                          });
+                          if (detailController.isSeletedDate.value) {
+                            print('On');
+                          } else {
+                            print('Off');
+                          }
+                        },
+
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  if (detailController.isSeletedDate.value)
+                    GestureDetector(
+                        onTap: (){
+                          runSelectDateSheet(detailController);
+                        },
+
+
+
+                        child: Obx(() {
+                          return GestureDetector(
+                            onTap: () {
                               runSelectDateSheet(detailController);
                             },
-
-
-
-                            child: Obx(() {
-                              return GestureDetector(
-                                onTap: () {
-                                  runSelectDateSheet(detailController);
-                                },
-                                child: TextField(
-                                  enabled: false,
-                                  style: TextStyle(
-                                    decorationColor: Colors.transparent,
-                                    decoration: TextDecoration.none,
-                                  ),
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    hintText: detailController.isSeletedDate.value
-                                        ? "${detailController.selectedDate.value.year}-${detailController.selectedDate.value.month}-${detailController.selectedDate.value.day} , ${detailController.selectedDate.value.hour.toString().padLeft(2, '0')}:${detailController.selectedDate.value.minute.toString().padLeft(2, '0')}"
-                                        : 'Select date and time',
-                                    suffixIcon: Transform.scale(
-                                      scale: 0.5,
-                                      child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg'),
-                                    ),
-                                    hintStyle: TextStyle(color: '9C9CB8'.toColor()),
-                                    fillColor: '#17172E'.toColor(),
-                                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    disabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
+                            child: TextField(
+                              enabled: false,
+                              style: TextStyle(
+                                decorationColor: Colors.transparent,
+                                decoration: TextDecoration.none,
+                              ),
+                              decoration: InputDecoration(
+                                filled: true,
+                                hintText: detailController.isSeletedDate.value
+                                    ? "${detailController.selectedDate.value.year}-${detailController.selectedDate.value.month}-${detailController.selectedDate.value.day} , ${detailController.selectedDate.value.hour.toString().padLeft(2, '0')}:${detailController.selectedDate.value.minute.toString().padLeft(2, '0')}"
+                                    : 'Select date and time',
+                                suffixIcon: Transform.scale(
+                                  scale: 0.5,
+                                  child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg'),
                                 ),
-                              );
-                            })
+                                hintStyle: TextStyle(color: '9C9CB8'.toColor()),
+                                fillColor: '#17172E'.toColor(),
+                                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                disabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          );
+                        })
 
 
-                          ),
-                      ],
-                    );
-                  },
-                ),
+                    ),
+                ],
+              ),
 
 
                 SizedBox(height: 2.h),

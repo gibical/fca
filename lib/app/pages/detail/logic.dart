@@ -21,6 +21,7 @@ import 'package:mediaverse/app/common/utils/data_state.dart';
 import 'package:mediaverse/app/pages/detail/widgets/player/player.dart';
 import 'package:mediaverse/app/pages/detail/widgets/text_to_text.dart';
 import 'package:mediaverse/app/pages/detail/widgets/youtube_bottomsheet.dart';
+import 'package:mediaverse/app/pages/profile/logic.dart';
 import 'package:mediaverse/app/pages/wallet/view.dart';
 import 'package:mediaverse/app/pages/wrapper/logic.dart';
 import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
@@ -159,13 +160,13 @@ class DetailController extends GetxController {
 
 
 
+  final token = GetStorage().read("token");
 
   Future<void> _fetchMediaData(
 
       String type, RxMap<String, dynamic>? details, RxBool isLoading) async {
     try {
 
-      final token = GetStorage().read("token");
       String apiUrl =
           '${Constant.HTTP_HOST}assets/${Get.arguments['id']}' + '?${type}';
       print('DetailController._fetchMediaData355 = ${apiUrl}');
@@ -189,7 +190,11 @@ class DetailController extends GetxController {
         }
 
         print('DetailController._fetchMediaData file_id = 1  = ${ response.data['data']['user_id']} = ${Get.find<WrapperController>().userid.toString()}');
-        isEditAvaiblae= response.data['data']['user_id'].toString().contains(Get.find<WrapperController>().userid.toString()).obs;
+       if(  response.data['data']['is_owned'] == true){
+         isEditAvaiblae.value = true;
+       }else{
+         isEditAvaiblae.value = false;
+       }
         print('DetailController._fetchMediaData file_id = 2');
 
 
@@ -207,6 +212,43 @@ class DetailController extends GetxController {
   }
 
 
+  var isLoadingDeleteAsset = false.obs;
+
+  Future<void> deleteAsset() async {
+    final String url = '${Constant.HTTP_HOST}assets/${Get.arguments['id']}';
+
+    try {
+      isLoadingDeleteAsset.value = true;
+
+      var response = await Dio().delete(
+        url,
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 204) {
+
+        Constant.showMessege("Asset deleted successfully");
+        Get.back();
+        Get.find<ProfileControllers>().onGetProfileAssets();
+      } else {
+
+        Constant.showMessege("Failed to delete asset");
+
+
+      }
+    } catch (e) {
+
+
+      Constant.showMessege("Error while deleting asset: $e");
+    } finally {
+      isLoadingDeleteAsset.value = false;
+    }
+  }
 
 
   String getTypeString(int type) {

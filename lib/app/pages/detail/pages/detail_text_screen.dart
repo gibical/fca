@@ -168,6 +168,37 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                                   ),
                                                 ),
                                               ),
+                                              PopupMenuItem(
+                                                value: 1,
+                                                onTap: () {
+                                                  logic.
+                                                  deleteAsset();
+                                                },
+                                                child: SizedBox(
+                                                  width: 130,
+                                                  child: Row(
+                                                    children: [
+                                                      Obx(() {
+                                                        if (logic.isLoadingDeleteAsset.value) {
+                                                          return Transform.scale(
+
+                                                            scale: 0.5,
+                                                            child: CircularProgressIndicator(
+                                                              color: Colors.redAccent,
+                                                              backgroundColor: Colors.redAccent.withOpacity(0.2),
+                                                            ),
+                                                          );
+                                                        }
+                                                        return   SvgPicture.asset(
+                                                            'assets/mediaverse/icons/delete.svg');
+                                                      }),
+
+
+                                                      Text('Delete'),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
                                             ],
                                           ).then((value) {
                                             if (value != null) {
@@ -353,7 +384,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                               child: GestureDetector(
                                 onTap: () {
 
-                                  Get.to(TextPage(title: '${logic.textDetails?['name']}', text: '${logic.textDetails?['description']}'));
+                                  Get.to(TextPage(title: '${logic.textDetails?['name']}', url: '${logic.textDetails?['file']['url']}'));
                                 },
                                 child: Container(
                                   margin: EdgeInsets.all(12),
