@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
+import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/home/logic.dart';
 import 'package:mediaverse/app/pages/home/tabs/image/view.dart';
 import 'package:mediaverse/app/pages/home/tabs/sound/view.dart';
@@ -49,12 +50,19 @@ class HomeScreen extends GetView<WrapperController> {
                     color: "0F0F26".toColor(),
                     borderRadius: BorderRadius.circular(10)
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    Text(
-                      "home_1".tr, style: TextStyle(color: "9C9CB8".toColor()),)
-                  ],
+                child: MaterialButton(
+
+
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  onPressed: (){
+                    Get.toNamed(PageRoutes.SEARCH);
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        "home_1".tr, style: TextStyle(color: "9C9CB8".toColor()),)
+                    ],
+                  ),
                 ),
               ),
 

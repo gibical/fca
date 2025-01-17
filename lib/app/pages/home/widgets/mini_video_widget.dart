@@ -21,7 +21,6 @@ class MiniVideoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool _isPermiuim = model.licenseType!=0 ;
-    print('MiniVideoWidget.build = ${model.thumbnails!.toJson()}');
     return Container(
 
 

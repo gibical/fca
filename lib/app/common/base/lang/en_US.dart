@@ -28,6 +28,27 @@ const Map<String, String> enUS = {
   "home_20":"Most sold",
   "home_21":"Failed To Load Image ",
 
+  "search_1":"Search",
+  "search_2":"Assets",
+  "search_3":"Channels",
+  "search_4":"Filters",
+  "search_5":"Plans",
+  "search_6":"All",
+  "search_7":"Free",
+  "search_8":"Paid",
+  "search_9":"Reset",
+  "search_10":"Type",
+  "search_11":"All",
+  "search_12":"Image",
+  "search_13":"Video",
+  "search_14":"Text",
+  "search_15":"Audio",
+  "search_16":"Reset",
+  "search_17":"See Results",
+
+
+
+
 
 
 
@@ -305,22 +326,6 @@ const Map<String, String> enUS = {
   "prof_1":"Subscribe",
   "prof_2":"Ownership",
 
-
-  "search_1":"Advance search",
-  "search_2":"search in tags",
-  "search_3":"Tag:",
-  "search_4":"search in plans",
-  "search_5":"Plan:",
-  "search_6":"Image",
-  "search_7":"Video",
-  "search_8":"Sound",
-  "search_9":"Text",
-  "search_10":"Result Search",
-  "search_11":"Search in all media",
-  "search_12":"Tag",
-  "search_13":"Plan",
-  "search_14":"Search in",
-  "search_15":"All",
 
 
 

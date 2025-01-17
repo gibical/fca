@@ -44,39 +44,30 @@ class MiniChannelWidget extends StatelessWidget {
                 ),
                 Align(
                   alignment: Alignment.topCenter,
-                  child: Container(
-
-                    margin: EdgeInsets.only(
-                        top: (15.w-(1.5.h/2))
+                  child: Visibility(
+                    visible: model.lastEvent.toString().contains("started"),
+                    child: Container(
+                    
+                      margin: EdgeInsets.only(
+                          top: (15.w-(1.5.h/2))
+                      ),
+                      width: 7.w,
+                      height: 1.5.h,
+                      decoration: BoxDecoration(
+                          color: "B71D18".toColor(),
+                          borderRadius: BorderRadius.circular(3)
+                      ),
+                      child: Center(child: Text("Live",style: TextStyle(fontSize: 6.sp,fontWeight: FontWeight.bold),)),
                     ),
-                    width: 7.w,
-                    height: 1.5.h,
-                    decoration: BoxDecoration(
-                        color: "B71D18".toColor(),
-                        borderRadius: BorderRadius.circular(3)
-                    ),
-                    child: Center(child: Text("Live",style: TextStyle(fontSize: 6.sp,fontWeight: FontWeight.bold),)),
                   ),
                 ),
               ],
             ),
           ),
           Expanded(
-            child: Column(
-              crossAxisAlignment:CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("${ model.name}",style: TextStyle(
-                  fontWeight: FontWeight.bold
-                ),),
-                Expanded(
-                  child: Text(model.description??"",
-                    style: TextStyle(
-                    fontWeight: FontWeight.w300,color: "#9C9CB8".toColor()
-                  ),maxLines: 2,overflow: TextOverflow.ellipsis,),
-                ),
-              ],
-            ),
+            child:Text("${ model.name}",style: TextStyle(
+                fontWeight: FontWeight.bold
+            ),textAlign: TextAlign.left,),
           )
 
         ],

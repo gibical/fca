@@ -99,8 +99,8 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 20,
-              height: 20,
+              width: 15,
+              height: 15,
               decoration: BoxDecoration(
                 color: widget.isChecked ? AppColor.primaryLightColor: Colors.transparent,
                 border: Border.all(color:widget.isChecked?AppColor.primaryLightColor: Colors.white, width: 1),
@@ -119,7 +119,7 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
               widget.title,
               style: TextStyle(
                 color:!widget.isChecked ?Colors.white.withOpacity(0.4): Colors.white,
-                fontSize: 16,
+                fontSize: 10.sp,
                 fontWeight: FontWeight.w400,
               ),
             ),

@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
+
+import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
 FromJsonGetContentFromExplore fromJsonGetContentFromExploreFromJson(String str) => FromJsonGetContentFromExplore.fromJson(json.decode(str));
 String fromJsonGetContentFromExploreToJson(FromJsonGetContentFromExplore data) => json.encode(data.toJson());
 class FromJsonGetContentFromExplore {
@@ -204,6 +206,7 @@ class ContentModel {
     _language = json['language'];
     _countryIso = json['country_iso'];
     _mediaType = json['media_type'];
+    postType = _getPostTypeByMediaType(_mediaType);
     _licenseType = json['license_type'];
     _status = json['status'];
     _price = json['price'];
@@ -262,6 +265,7 @@ class ContentModel {
   dynamic _country;
   File? _file;
 
+  PostType  postType = PostType.video;
   String? get id => _id;
   String? get name => _name;
   String? get slug => _slug;
@@ -334,6 +338,22 @@ class ContentModel {
       map['file'] = _file?.toJson();
     }
     return map;
+  }
+
+  PostType _getPostTypeByMediaType(String? mediaType) {
+    switch(mediaType){
+      case "text":
+       return PostType.text;
+      case "image":
+        return PostType.image;
+      case "audio":
+        return PostType.audio;
+      case "video":
+        return PostType.video;
+      default:
+        return PostType.video;
+
+    }
   }
 
 }
