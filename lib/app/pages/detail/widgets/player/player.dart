@@ -32,6 +32,7 @@ class _PlayerVideoState extends State<PlayerVideo>     with WidgetsBindingObserv
   @override
   void dispose() {
     super.dispose();
+    logic.videoPlayerController!.dispose();
   }
 
   void _togglePlayPause() {
