@@ -21,7 +21,7 @@ class MiniLiveWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            height: 15.w+1.5.h,
+            height: 20.w+1.5.h,
             child: Stack(
               children: [
                 Align(
@@ -29,8 +29,8 @@ class MiniLiveWidget extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(5000),
                     child: Container(
-                      width: 15.w,
-                      height: 15.w,
+                      width: 20.w,
+                      height: 20.w,
                       child: model.thumbnails.toString().length>10?CachedNetworkImage(imageUrl: model.thumbnails['226x226'],fit: BoxFit.cover,
                         errorWidget: (s,p,q){
                           return Container(
@@ -41,12 +41,14 @@ class MiniLiveWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
+                Visibility(
+                  visible: model.lastEvent.toString().contains("STARTED"),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
 
                     margin: EdgeInsets.only(
-                      top: (15.w-(1.5.h/2))
+                      top: (20.w-(1.5.h/2))
                     ),
                     width: 7.w,
                     height: 1.5.h,
@@ -57,10 +59,13 @@ class MiniLiveWidget extends StatelessWidget {
                     child: Center(child: Text("Live",style: TextStyle(fontSize: 6.sp,fontWeight: FontWeight.bold),)),
                   ),
                 ),
+                  )
               ],
             ),
           ),
-          Text("${model.name}",maxLines: 1,style: TextStyle(fontSize: 8.sp),)
+          Container(
+              width: 15.w,
+              child: Text("${model.name}",maxLines: 1,style: TextStyle(fontSize: 8.sp,fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,))
         ],
       ),
     );

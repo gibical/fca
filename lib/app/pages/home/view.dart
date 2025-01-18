@@ -105,7 +105,7 @@ class HomeScreen extends GetView<WrapperController> {
                                         color: _isActive
                                             ? Colors.white
                                             : "9C9CB8"
-                                            .toColor()
+                                            .toColor(),fontSize: 11.sp
                                     ),)),
                                     AnimatedContainer(
                                       duration: Duration(milliseconds: 300),

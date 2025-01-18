@@ -13,6 +13,7 @@ class TitleWidgetExplore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 3.h,
       margin: EdgeInsets.symmetric(
         horizontal: 16,vertical: 0
       ),
@@ -21,6 +22,7 @@ class TitleWidgetExplore extends StatelessWidget {
         children: [
           Text(title,style: TextStyle(fontWeight: FontWeight.bold),),
           MaterialButton(
+
             onPressed: (){
               onTap.call();
             },

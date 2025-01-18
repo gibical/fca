@@ -120,7 +120,7 @@ class _VideoTabScreenState extends State<VideoTabScreen> {
                         ),
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 16),
-                          height: 23.h,
+                          height: 26.h,
                           child: LayoutGrid(
                             areas: '''
                     image1 image1

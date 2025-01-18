@@ -58,6 +58,8 @@ class AllTabScreen extends StatelessWidget {
 
 
               TitleWidgetExplore("home_8".tr, () {}),
+              SizedBox(height: 1.h,),
+
               GetBuilder<HomeTabController>(
                   init: logic.channelController,
                   tag: "channel",
@@ -68,7 +70,7 @@ class AllTabScreen extends StatelessWidget {
                             .isloadingMini}');
                     return Container(
                       width: 100.w,
-                      height: 11.h,
+                      height: 13.h,
                       decoration: BoxDecoration(
 
                       ),
@@ -79,17 +81,21 @@ class AllTabScreen extends StatelessWidget {
                               .channelsModel.length,
                           itemBuilder: (s, i) {
                             return Container(
-                                width: 32.w,
+                                width: 26.w,//
                                 child: logic.isloadingMini.value
-                                    ? ShimmerMiniLiveWidget()
+                                    ? ShimmerMiniLiveWidget()//
                                     :
 
-                                MiniLiveWidget(
-                                   logic.channelsModel.elementAt(i),));
+                                Container(
+
+                                  child: MiniLiveWidget(
+                                     logic.channelsModel.elementAt(i),),
+                                ));
                           }), //
                     );
                   }),
 
+              SizedBox(height: 2.h,),
               TitleWidgetExplore("home_10".tr, () {
                 logic.pageController.animateToPage(2, duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
               }),
@@ -101,7 +107,7 @@ class AllTabScreen extends StatelessWidget {
 
                     return Container(
                       width: 100.w,
-                      height: 20.h,
+                      height: 26.h,
                       decoration: BoxDecoration(
 
                       ),
@@ -112,7 +118,7 @@ class AllTabScreen extends StatelessWidget {
                               .models.length,
                           itemBuilder: (s, i) {
                             return Container(
-                                width: 32.w,
+                                width: 45.w,
                                 child: logic.isloadingMini.value
                                     ? ShimmerMiniVideoWidget()
                                     :
@@ -122,6 +128,8 @@ class AllTabScreen extends StatelessWidget {
                           }), //
                     );
                   }),
+              SizedBox(height: 2.h,),
+
               TitleWidgetExplore("home_12".tr, () {
                 logic.pageController.animateToPage(3, duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
 
@@ -133,8 +141,8 @@ class AllTabScreen extends StatelessWidget {
                   builder: (logic) {
                     return Container(
                       width: 100.w,
-                      height: 32.h,
-                      padding: EdgeInsets.all(16),
+                      height: 30.h,
+                      padding: EdgeInsets.symmetric(horizontal: 16),
                       decoration: BoxDecoration(
 
                       ),
@@ -160,6 +168,8 @@ class AllTabScreen extends StatelessWidget {
                       ), //
                     );
                   }),
+              SizedBox(height: 2.h,),
+
               TitleWidgetExplore("home_13".tr, () {
                 logic.pageController.animateToPage(4, duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
 
@@ -191,6 +201,7 @@ class AllTabScreen extends StatelessWidget {
                           }), //
                     );
                   }),
+              SizedBox(height: 2.h,),
 
               TitleWidgetExplore("home_14".tr, () {
                 logic.pageController.animateToPage(5, duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
