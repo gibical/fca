@@ -173,27 +173,107 @@ class DetailVideoScreen extends StatelessWidget {
                                               PopupMenuItem(
                                                 value: 1,
                                                 onTap: () {
-                                                  videoController.
-                                                  deleteAsset();
+
+                                                  Get.dialog(
+                                                    Material(
+                                                      color: Colors.transparent,
+                                                      child: Center(
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                            color: '#0F0F26'.toColor(),
+                                                            borderRadius: BorderRadius.circular(12.sp),
+                                                          ),
+                                                          padding: const EdgeInsets.symmetric(horizontal: 16 , vertical: 22),
+                                                          margin: EdgeInsets.symmetric(horizontal: 18),
+                                                          child: Column(
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(
+                                                                'Delete asset?',
+                                                                style: TextStyle(color: Colors.white  , fontWeight: FontWeight.w600),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              Text(
+                                                                'Are you sure you want to delete this? This action cannot be undone.',
+                                                                style: TextStyle(color:'#9C9CB8'.toColor() , fontSize: 13),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 30,
+                                                              ),
+                                                              Row(
+                                                                mainAxisAlignment: MainAxisAlignment.end,
+                                                                children: [
+                                                                  InkWell(
+                                                                    onTap:(){
+                                                                      Get.back();
+                                                                    },
+                                                                    child: Text(
+                                                                      'Cancel',
+                                                                      style: TextStyle(color: Colors.white  , fontWeight: FontWeight.w600),
+                                                                    ),
+                                                                  ),
+
+                                                                  SizedBox(
+                                                                    width: 20,
+                                                                  ),
+                                                                  InkWell(
+                                                                    onTap:(){
+                                                                      videoController.
+                                                                      deleteAsset(id:videoController
+                                                                          .videoDetails?['id'] );
+                                                                    },
+                                                                    child:  Obx(() {
+                                                                      if (videoController.isLoadingDeleteAsset.value) {
+                                                                        return Transform.scale(
+
+                                                                          scale: 0.5,
+                                                                          child: CircularProgressIndicator(
+                                                                            color: Colors.redAccent,
+                                                                            backgroundColor: Colors.redAccent.withOpacity(0.2),
+                                                                          ),
+                                                                        );
+                                                                      }
+                                                                      return    Text(
+                                                                        'Delete',
+                                                                        style: TextStyle(color:'#FF5630'.toColor()  , fontWeight: FontWeight.w600),
+                                                                      );
+                                                                    }),
+
+
+
+                                                                  ),
+
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+
                                                 },
                                                 child: SizedBox(
                                                   width: 130,
                                                   child: Row(
                                                     children: [
                                                       Obx(() {
-                                                if (videoController.isLoadingDeleteAsset.value) {
-                                                return Transform.scale(
+                                                        if (videoController.isLoadingDeleteAsset.value) {
+                                                          return Transform.scale(
 
-                                                  scale: 0.5,
-                                                  child: CircularProgressIndicator(
-                                                    color: Colors.redAccent,
-                                                    backgroundColor: Colors.redAccent.withOpacity(0.2),
-                                                  ),
-                                                );
-                                                }
-                                                return   SvgPicture.asset(
-                                                    'assets/mediaverse/icons/delete.svg');
-                                                }),
+                                                            scale: 0.5,
+                                                            child: CircularProgressIndicator(
+                                                              color: Colors.redAccent,
+                                                              backgroundColor: Colors.redAccent.withOpacity(0.2),
+                                                            ),
+                                                          );
+                                                        }
+                                                        return   SvgPicture.asset(
+                                                            'assets/mediaverse/icons/delete.svg');
+                                                      }),
 
 
                                                       Text('Delete'),

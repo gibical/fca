@@ -213,8 +213,8 @@ class DetailController extends GetxController {
 
   var isLoadingDeleteAsset = false.obs;
 
-  Future<void> deleteAsset() async {
-    final String url = '${Constant.HTTP_HOST}assets/${Get.arguments['id']}';
+  Future<void> deleteAsset({required  id}) async {
+    final String url = '${Constant.HTTP_HOST}assets/${id}';
 
     try {
       isLoadingDeleteAsset.value = true;
@@ -232,6 +232,7 @@ class DetailController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 204) {
 
         Constant.showMessege("Asset deleted successfully");
+        Get.back();
         Get.back();
         Get.find<ProfileControllers>().onGetProfileAssets();
       } else {
