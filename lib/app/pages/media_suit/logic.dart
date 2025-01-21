@@ -780,7 +780,8 @@ class MediaSuitController extends GetxController {
 
     editVideoDataList.add(EditDataModel(
         name, videoUrl, widthVideoItem, assetId, 4,
-        isloading: isloading, second: videoTime));
+        isloading: isloading, second: videoTime)
+    );
 
     selectedVideoIndex.value = editVideoDataList.length - 1;
   }
@@ -790,7 +791,7 @@ class MediaSuitController extends GetxController {
     String audioUrl,
     String assetId, {
     bool isloading = false,
-    double time = 5,
+    double time = 0,
   }) {
     editAudioDataList.add(EditDataModel(name, audioUrl, 0, assetId, 3,
         isloading: isloading, second: time));
@@ -813,7 +814,6 @@ class MediaSuitController extends GetxController {
       selectedAudioIndex(0);
     }
   }
-
   String videoConfig() {
     if (editVideoDataList.isNotEmpty) {
       List<Map<String, dynamic>> jsonList = [];
@@ -824,9 +824,7 @@ class MediaSuitController extends GetxController {
         var currentItemEnd =
             previousItemEnd + currentItem.defaultWidthVideo!.round();
 
-
         var resultEnd = currentItemEnd / 16;
-
 
         if (i == 0) {
           currentItem.start = 0;
@@ -837,6 +835,10 @@ class MediaSuitController extends GetxController {
         currentItem.end = resultEnd.toInt();
 
         currentItem.length = currentItem.end - currentItem.start;
+        if (currentItem.length <= 0) {
+          currentItem.length = 1;
+          currentItem.end = currentItem.start + 1;
+        }
 
         jsonList.add(currentItem.toJson());
 
@@ -853,6 +855,7 @@ class MediaSuitController extends GetxController {
   }
 
 
+
   String textConfig() {
     if (editTextDataList.isNotEmpty) {
       List<Map<String, dynamic>> jsonList = [];
@@ -860,12 +863,14 @@ class MediaSuitController extends GetxController {
 
       for (int i = 0; i < editTextDataList.length; i++) {
         var currentItem = editTextDataList[i];
-        currentItem.start =
-            previousEnd ; // Ensure the start is properly updated
-        currentItem.end = currentItem.start +
-            currentItem.second
-                .toInt(); // Calculate the end time based on the item's length
 
+        if (i == 0) {
+          currentItem.start = 0;
+        } else {
+          currentItem.start = previousEnd + 1;
+        }
+
+        currentItem.end = currentItem.start + currentItem.second.toInt();
         jsonList.add({
           'start': currentItem.start,
           'end': currentItem.end,
@@ -873,7 +878,7 @@ class MediaSuitController extends GetxController {
           'id': currentItem.assetId,
         });
 
-        previousEnd = currentItem.end; // Update previousEnd for the next item
+        previousEnd = currentItem.end;
       }
 
       String jsonData = jsonEncode(jsonList);
@@ -892,9 +897,14 @@ class MediaSuitController extends GetxController {
 
       for (int i = 0; i < editImageDataList.length; i++) {
         var currentItem = editImageDataList[i];
-        currentItem.start = previousEnd ;
-        currentItem.end = currentItem.start + currentItem.second.toInt();
 
+        if (i == 0) {
+          currentItem.start = 0;
+        } else {
+          currentItem.start = previousEnd + 1;
+        }
+
+        currentItem.end = currentItem.start + currentItem.second.toInt();
         jsonList.add({
           'start': currentItem.start,
           'end': currentItem.end,
@@ -921,9 +931,14 @@ class MediaSuitController extends GetxController {
 
       for (int i = 0; i < editAudioDataList.length; i++) {
         var currentItem = editAudioDataList[i];
-        currentItem.start = previousEnd ;
-        currentItem.end = currentItem.start + currentItem.second.toInt();
 
+        if (i == 0) {
+          currentItem.start = 0;
+        } else {
+          currentItem.start = previousEnd + 1;
+        }
+
+        currentItem.end = currentItem.start + currentItem.second.toInt();
         jsonList.add({
           'start': currentItem.start,
           'end': currentItem.end,
@@ -942,6 +957,7 @@ class MediaSuitController extends GetxController {
       return "null";
     }
   }
+
 
   void exportOnline() async {
     selectedTextIndex.value = null;

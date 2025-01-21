@@ -279,17 +279,17 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                     editorController.selectedAudioIndex,
                               ),
                               CustomDividerTilmelineWidget(),
-                              TimelineItemList(
-                                controller: _listScrollControllerText,
-                                itemCount:
-                                    editorController.editTextDataList.length,
-                                totalItemCount: totalItemCount,
-                                color: Colors.green,
-                                dataList: editorController.editTextDataList,
-                                selectedIndex:
-                                    editorController.selectedTextIndex,
-                              ),
-                              CustomDividerTilmelineWidget(),
+                              // TimelineItemList(
+                              //   controller: _listScrollControllerText,
+                              //   itemCount:
+                              //       editorController.editTextDataList.length,
+                              //   totalItemCount: totalItemCount,
+                              //   color: Colors.green,
+                              //   dataList: editorController.editTextDataList,
+                              //   selectedIndex:
+                              //       editorController.selectedTextIndex,
+                              // ),
+                              // CustomDividerTilmelineWidget(),
                               SizedBox(
                                 height: 1.h,
                               ),
