@@ -469,5 +469,20 @@ const Map<String, String> enUS = {
   "auth_8": "By continuing, you agree to our",
   "auth_9": "Terms of Service",
   "auth_10": "and",
-  "auth_11": "Privacy Policy."
+  "auth_11": "Privacy Policy.",
+
+
+  "add_channel_1": "Create Channel",
+  "add_channel_2": "Edit thumbnail",
+  "add_channel_3": "Name ",
+  "add_channel_4": "Description",
+  "add_channel_5": "Global",
+  "add_channel_6": "Language",
+  "add_channel_7": "Private content",
+  "add_channel_8": "Recordable by others",
+  "add_channel_9": "Save",
+  "add_channel_12": "Uploading Image",
+  "add_channel_10": "You Haven't pick image ",
+  "add_channel_11": "File Upload Succesfuly",
+
 };

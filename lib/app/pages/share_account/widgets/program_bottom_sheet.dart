@@ -165,8 +165,7 @@ class _ProgramBottomSheetState extends State<ProgramBottomSheet> {
                     //
                     models: widget.shareAccountLogic.countreisString,
                     context: context,
-                    textEditingController: widget.shareAccountLogic
-                        .languageController,
+                    textEditingController: widget.shareAccountLogic.languageController,
 
                     titleText: 'signup_10_1'.tr,
                     hintText: 'signup_10_1'.tr,

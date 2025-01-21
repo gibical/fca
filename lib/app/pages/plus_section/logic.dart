@@ -30,6 +30,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
+import '../../common/utils/upload_file_controller.dart';
 import 'state.dart';
 
 class PlusSectionLogic extends GetxController implements RequestInterface {
@@ -45,6 +46,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   TextEditingController genreController = TextEditingController();
   TextEditingController subscrptionController = TextEditingController(text: "1 day");
 
+  UploadFileController _uploadFileController = Get.put(UploadFileController());
 
   String assetid = "";
   String postUploadedId = "";
@@ -505,19 +507,15 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       case MediaMode.image:
         // TODO: Handle this case.
 
-        print('PlusSectionLogic.getMainWidget 1 ${controller} ');
         if (controller == null || !controller!.value.isInitialized) {
-          print('PlusSectionLogic.getMainWidget 1 - 1 ');
 
           return FocusDetector(onFocusGained: () {
-            print('PlusSectionLogic.getMainWidget 2 ');
                 initCamera();
           }, child: Container(
             width: 100.w,
             height: 100.h,
           ));
         }
-        print('PlusSectionLogic.getMainWidget 3 ');
 
         return Stack(
           children: [
@@ -572,17 +570,18 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     if (priceController.text.isNotEmpty) {
       double? number = double.parse(priceController.text);
       if (number != null) {
-
           _resultPrice = ((number.toInt()) * 100).toString();
-
       }}
 
   }
-  sendMainRequest() {
+  sendMainRequest() async{
     isloading(true);
     _multiplyBy100();
     var box = GetStorage();
+    String fileID =await uploadFileWithDio()??"";
+    print('PlusSectionLogic.sendMainRequest fileID = ${fileID}');
     var body = {
+      "file_id":"fileID",
       "name": titleController.text,
       "user": box.read("userid"),
       "license_type": _getPlanByDropDown(),
@@ -673,55 +672,18 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
 
     isloading(false);
 
-    Get.to(UploadAssetPage(), arguments: [this]);
+    Get.toNamed(_getRouteByMedia(), arguments: {'id': postUploadedId , 'idAssetMedia':'idAssetMedia'});
   }
 
-  Future<void> uploadFileWithDio() async {
+  Future<String?> uploadFileWithDio() async {
    textOutPut = await saveStringToTxtFile(captionController.text);
-    var dio = Dio();
-    var formData = d.FormData.fromMap({
-      'file': await d.MultipartFile.fromFile(_getFilePathFromMediaEnum(),
-          filename: 'uploadfile'),
-      'asset': assetid.toString(),
-    });
-   print('PlusSectionLogic.uploadFileWithDio = ${imageOutPut} - ${_getFilePathFromMediaEnum()} - ${formData.fields}');
 
-   dio.interceptors.add(MediaVerseConvertInterceptor());
+   return await _uploadFileController.upload(_getFilePathFromMediaEnum(), (s, p) {
+     uploadedCount = (s * 100) / p;
+     print('PlusSectionLogic.uploadFileWithDio = ${s} - ${p}');
+     update();
+   });
 
-    try {
-      var response = await dio.post(
-        '${Constant.HTTP_HOST}files',
-        data: formData,
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer ${GetStorage().read("token")}',
-            'Content-Type': 'multipart/form-data',
-            'X-App': '_Android',
-          },
-        ),
-        onSendProgress: (s, p) {
-          uploadedCount = (s * 100) / p;
-          print('PlusSectionLogic.uploadFileWithDio = ${s} - ${p}');
-          update();
-        },
-      );
-
-      if (response.statusCode! >= 200||response.statusCode! < 300) {
-        print('==================================================================================================');
-        print('File uploaded successfully = ${response.data}');
-        print('==================================================================================================');
-
-
-
-        Get.toNamed(_getRouteByMedia(), arguments: {'id': postUploadedId , 'idAssetMedia':'idAssetMedia'});
-
-
-      } else {
-        print('Failed to upload file: ${response.statusMessage}');
-      }
-    } on DioError catch (e) {
-      print('DioError: ${e.message}');
-    }
   }
   Future<void> getAllCountries() async {
     var dio = Dio();

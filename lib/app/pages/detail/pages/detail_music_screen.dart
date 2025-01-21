@@ -77,7 +77,11 @@ class DetailMusicScreen extends StatelessWidget {
                               AppbarBTNWidget(
                                   iconName: 'back1',
                                   onTap: () {
-                                    Get.back();
+                                    if (Get.arguments['idAssetMedia'] == "idAssetMedia") {
+                                      Get.offAllNamed(PageRoutes.WRAPPER);
+                                    } else {
+                                      Get.back();
+                                    }
                                   }),
                               Text(
                                 'Audio',

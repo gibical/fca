@@ -133,6 +133,7 @@ flutter:
     - assets/gibical/json/
     - assets/mediaverse/icons/
     - assets/all/icons/
+    - assets/all/images/
     - assets/mediaverse/images/
     - assets/mediaverse/json/
     - assets/ravi/icons/

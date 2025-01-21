@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 //import 'package:dio/dio.dart' as d;
 import 'package:get_storage/get_storage.dart';
+import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/share_account/widgets/program_bottom_sheet.dart';
 import 'package:mediaverse/app/pages/share_account/widgets/share_account_bottom_sheet.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetProfile.dart';
@@ -325,7 +326,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   void showAddProgramBottomSheet() {
-    Get.bottomSheet(ProgramBottomSheet(this));
+    Get.toNamed(PageRoutes.ADDCHANNEL);
   }
 
   void showAccountType() async {
