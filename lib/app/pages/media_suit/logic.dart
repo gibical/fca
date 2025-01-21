@@ -820,22 +820,27 @@ class MediaSuitController extends GetxController {
       int previousItemEnd = 0;
       for (int i = 0; i < editVideoDataList.length; i++) {
         var currentItem = editVideoDataList[i];
+
         var currentItemEnd =
             previousItemEnd + currentItem.defaultWidthVideo!.round();
 
+
         var resultEnd = currentItemEnd / 16;
 
-        currentItem.start = previousItemEnd + 1;
-        // var endTime = currentItem.second.toInt();
+
+        if (i == 0) {
+          currentItem.start = 0;
+        } else {
+          currentItem.start = previousItemEnd + 1;
+        }
+
         currentItem.end = resultEnd.toInt();
 
-        if (i > 0) {
-          currentItem.end = resultEnd.toInt() * 2;
-        }
         currentItem.length = currentItem.end - currentItem.start;
+
         jsonList.add(currentItem.toJson());
 
-        previousItemEnd = resultEnd.toInt();
+        previousItemEnd = currentItem.end;
       }
 
       String jsonData = jsonEncode(jsonList);
@@ -846,6 +851,7 @@ class MediaSuitController extends GetxController {
       return "null";
     }
   }
+
 
   String textConfig() {
     if (editTextDataList.isNotEmpty) {
