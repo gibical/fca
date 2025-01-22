@@ -88,7 +88,7 @@ class _LiveScreenState extends State<LiveScreen> {
                             ),
                             SizedBox(width: 2.w),
                             Text(
-                              liveController.liveDetails?['title'] ?? '',
+                              liveController.liveDetails?['name'] ?? '',
                               style: Theme
                                       .of(context)
                                       .textTheme.bodySmall?.copyWith(fontSize: 14),

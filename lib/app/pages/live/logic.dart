@@ -45,6 +45,7 @@ class LiveController extends GetxController{
       isLoading.value = true;
       String apiUrl =
           '${Constant.HTTP_HOST}channels/${Get.arguments['channelId']}';
+
       var response = await Dio().get(apiUrl, options: Options(headers: {
         'accept': 'application/json',
         'X-App': '_Android',
@@ -54,6 +55,8 @@ class LiveController extends GetxController{
 
       if (response.statusCode == 200) {
         details?.value = RxMap<String, dynamic>.from(response.data['data']);
+
+        print('82872738238273');
         print(response.data);
       } else {
         // Handle errors
