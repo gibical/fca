@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/channel/tab/detail_channel_screen.dart';
+import 'package:mediaverse/app/pages/channel/v2/my_channel/view.dart';
 import 'package:mediaverse/app/pages/share_account/widgets/program_show_bottom_sheet.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mediaverse/app/pages/channel/widgets/add_channel_card_widget.dart';
@@ -102,9 +103,7 @@ class _ProgramsTabState extends State<ProgramsTab> {
       if (isBack) {
         Get.back(result: model);
       } else {
-        print('_ProgramsTabState._handleChannelTap 1 ');
-        Get.to(DetailChannelScreen(), arguments: [model]);
-        print('_ProgramsTabState._handleChannelTap 2 ');
+       Get.bottomSheet(MyChannelManagementBottomSheet(model),isScrollControlled: true);
         // Get.bottomSheet(ProgramShowBottomSheet(model));
       }
     } catch (e) {

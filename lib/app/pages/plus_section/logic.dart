@@ -330,6 +330,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
 
   void _startRecordingTimer() {
     _recordingDuration = Duration.zero;
+
     _recordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       _recordingDuration += Duration(seconds: 1);
       update(); // به‌روزرسانی ویو برای نمایش زمان جدید
@@ -363,6 +364,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
           debugPrint(path);
           soundOutPut = path ?? "";
           debugPrint("Recorded file size: ${File(path).lengthSync()}");
+
           Get.to(FirstForm(this), arguments: [this]);
         }
       } else {
@@ -579,9 +581,9 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     _multiplyBy100();
     var box = GetStorage();
     String fileID =await uploadFileWithDio()??"";
-    print('PlusSectionLogic.sendMainRequest fileID = ${fileID}');
+    print('PlusSectionLogic.sendMainRequest fileID = ${fileID} -${mediaMode}');
     var body = {
-      "file_id":"fileID",
+      "file_id":fileID,
       "name": titleController.text,
       "user": box.read("userid"),
       "license_type": _getPlanByDropDown(),
@@ -605,7 +607,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       print(_resultPrice);
     }
 
-    print('PlusSectionLogic.sendMainRequest = ${body}');
+    print('PlusSectionLogic.sendMainRequest = ${jsonEncode(body)}');
 
     apiRequster.request(_getUrlByMediaEnum(), ApiRequster.MHETOD_POST, 1,
         body: body, useToken: true);
@@ -817,7 +819,8 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
         return "audio";
       case MediaMode.image:
       // TODO: Handle this case.
-        return "image";
+        if(imageOutPut.length>5)return "image";
+        if(videoOutPut.length>5)return "video";
 
       case MediaMode.text:
       // TODO: Handle this case.

@@ -14,9 +14,10 @@ class MiniVideoWidget extends StatelessWidget {
 
 
   double? height;
+  bool? selectedAsset;
 
   ContentModel model;
-  MiniVideoWidget({this.height,required this.model});
+  MiniVideoWidget({this.height,required this.model,this.selectedAsset});
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +51,8 @@ class MiniVideoWidget extends StatelessWidget {
                   child: Stack(
                     children: [
                       SizedBox.expand(child:HomeImageWidget(model.thumbnails!.x226.toString())),
+                     if(selectedAsset!=null&&selectedAsset==true) SizedBox.expand(child:Container(color: Colors.black.withOpacity(0.6),)),
+                     if(selectedAsset!=null&&selectedAsset==true) Align(child:SvgPicture.asset("assets/all/icons/check-circle.svg") ,),
                      if(_isPermiuim) Align(
                         alignment: Alignment.topLeft,
                         child: Container(
