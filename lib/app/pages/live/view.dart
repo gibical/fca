@@ -20,6 +20,7 @@ import 'package:mediaverse/app/pages/detail/widgets/card_mark_singlepage_widget.
 import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_and_image.dart';
 import 'package:mediaverse/app/pages/detail/widgets/details_bottom_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/player/player.dart';
+import 'package:mediaverse/app/pages/live/widgets/player_live_widget.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -248,7 +249,7 @@ class LiveScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                               color: Colors.black,
                               borderRadius: BorderRadius.circular(14.sp)),
-                          child: PlayerVideo(),
+                          child: PlayerLiveWidget(),
                         ),
                       ),
                     ),

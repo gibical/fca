@@ -3,12 +3,14 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:chewie/chewie.dart';
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/common/utils/dio_inperactor.dart';
+import 'package:mediaverse/app/pages/live/widgets/player_live_widget.dart';
 import 'package:mediaverse/app/pages/plus_section/logic.dart';
 import 'package:mediaverse/app/pages/plus_section/widget/first_form.dart';
 import 'package:path_provider/path_provider.dart';
@@ -34,6 +36,7 @@ class LiveController extends GetxController{
 
   void fetchLiveData() async {
     await _getLive( liveDetails, isLoadingLive);
+
   }
 
 
@@ -57,6 +60,7 @@ class LiveController extends GetxController{
       if (response.statusCode == 200) {
         details?.value = RxMap<String, dynamic>.from(response.data['data']);
 
+        initPlayerVideo('https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8');
         print('82872738238273');
         print(response.data);
       } else {
@@ -172,8 +176,6 @@ class LiveController extends GetxController{
 
 
 
-  late VideoPlayerController controllerVideoPlay;
-
   //Screenshot and save to gallery
   ScreenshotController screenshotController = ScreenshotController();
 
@@ -219,6 +221,75 @@ class LiveController extends GetxController{
 
     });
     //Get.snackbar('Success', 'The screenshot is saved in your gallery' , backgroundColor: Colors.green);
+  }
+
+
+
+
+
+  //new Player Logic
+  VideoPlayerController? videoPlayerController;
+  ChewieController? chewieController;
+
+  final ValueNotifier<bool> isPlayingNotifier = ValueNotifier(true);
+  Rx<Duration> currentPosition = const Duration().obs;
+  RxBool showIconPlayPause = false.obs;
+
+  RxBool loadingVideo = true.obs;
+
+  //method
+  void updatePlayPauseState() {
+    isPlayingNotifier.value = videoPlayerController!.value.isPlaying;
+    currentPosition.value = videoPlayerController!.value.position;
+
+    if (showIconPlayPause.value) {
+      Future.delayed(const Duration(seconds: 1), () {
+        showIconPlayPause.value = false;
+      });
+    }
+  }
+
+  initPlayerVideo(String? url) async {
+    if (videoPlayerController != null) {
+      videoPlayerController?.removeListener(updatePlayPauseState);
+      chewieController?.dispose();
+      await videoPlayerController?.dispose();
+      videoPlayerController = null;
+      chewieController = null;
+    }
+    loadingVideo.value = true;
+
+    WidgetsBinding.instance.addPostFrameCallback(
+          (timeStamp) {
+        videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(
+            url ?? 'https://www.taxmann.com/emailer/images/CompaniesAct.mp4'));
+
+        videoPlayerController?.initialize().then(
+              (value) {
+            chewieController = ChewieController(
+              videoPlayerController: videoPlayerController!,
+              autoPlay: true,
+              looping: false,
+              showControlsOnInitialize: true,
+              allowFullScreen: true,
+              allowedScreenSleep: false,
+              allowMuting: true,
+              allowPlaybackSpeedChanging: false,
+              customControls:
+              CustomControls(isPlayingNotifier: isPlayingNotifier),
+              materialProgressColors: ChewieProgressColors(
+                playedColor: Colors.red,
+                handleColor: Colors.red,
+                backgroundColor: Colors.grey,
+                bufferedColor: Colors.lightGreen,
+              ),
+            );
+            loadingVideo.value = false;
+          },
+        );
+        videoPlayerController?.addListener(updatePlayPauseState);
+      },
+    );
   }
 }
 
