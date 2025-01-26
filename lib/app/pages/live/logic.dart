@@ -22,6 +22,7 @@ class LiveController extends GetxController{
   RxBool isLoadingLive = false.obs;
   RxBool isRecordingLive = false.obs;
 
+  bool isExpandedViewBodyText = false;
 
   @override
   void onInit() {
