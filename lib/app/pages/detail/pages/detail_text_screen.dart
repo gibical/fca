@@ -397,7 +397,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                             ),
                             Spacer(),
                             Text(
-                              '16 Dec 2024, 6:50PM',
+                              '${logic.formatDateString(logic.textDetails?['created_at'])}',
                               style: TextStyle(
                                 fontSize: 13,
                                 color: '#9C9CB8'.toColor(),
@@ -428,41 +428,40 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                               decoration: BoxDecoration(
                                   color: '#17172E'.toColor(),
                                   borderRadius: BorderRadius.circular(14.sp)),
-                              child:              FittedBox(
-                                fit: BoxFit.cover,
-                                child: Center(
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(14.sp),
-                                      child: CachedNetworkImage(
-                                        imageUrl: logic.textDetails?[
-                                        'thumbnails'] !=
-                                            null &&
-                                            logic.textDetails!['thumbnails']
-                                            is Map<String, dynamic>
-                                            ? logic.textDetails!['thumbnails']
-                                        ['525x525'] ??
-                                            ''
-                                            : '',
-                                        fit: BoxFit.cover,
+                              child:     ClipRRect(
+                                  borderRadius: BorderRadius.circular(14.sp),
+                                  child: CachedNetworkImage(
+                                    imageUrl: logic.textDetails?[
+                                    'thumbnails'] !=
+                                        null &&
+                                        logic.textDetails!['thumbnails']
+                                        is Map<String, dynamic>
+                                        ? logic.textDetails!['thumbnails']
+                                    ['525x525'] ??
+                                        ''
+                                        : '',
+                                    fit: BoxFit.cover,
 
 
-                                        placeholder: (context, url) {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(20.0),
-                                            child: SvgPicture.asset(
-                                              'assets/mediaverse/icons/file-text.svg' , height: 4,),
-                                          );
-                                        },
-                                        errorWidget: (context, url, error) {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(20.0),
-                                            child: SvgPicture.asset(
-                                              'assets/mediaverse/icons/file-text.svg' ,height: 4,),
-                                          );
-                                        },
-                                      )),
-                                ),
-                              ),
+                                    placeholder: (context, url) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Center(
+                                          child: SvgPicture.asset(
+                                            'assets/mediaverse/icons/file-text.svg' , height: 40,),
+                                        ),
+                                      );
+                                    },
+                                    errorWidget: (context, url, error) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Center(
+                                          child: SvgPicture.asset(
+                                            'assets/mediaverse/icons/file-text.svg' ,height: 40,),
+                                        ),
+                                      );
+                                    },
+                                  )),
                               // child: PlayerVideo(),
                             ),
 

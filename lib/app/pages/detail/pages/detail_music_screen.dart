@@ -393,7 +393,7 @@ class DetailMusicScreen extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              '16 Dec 2024, 6:50PM',
+                              '${logic.formatDateString(logic.musicDetails?['created_at'])}',
                               style: TextStyle(
                                 fontSize: 13,
                                 color: '#9C9CB8'.toColor(),

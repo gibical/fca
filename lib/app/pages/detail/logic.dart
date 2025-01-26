@@ -61,6 +61,11 @@ class DetailController extends GetxController {
 
   var asset_id  ="";
   var file_id  ="";
+  String formatDateString(String inputDate) {
+    DateTime date = DateTime.parse(inputDate);
+
+    return DateFormat('dd MMM yyyy').format(date);
+  }
   //==================================== loading Detail page =======================================//
   RxBool isLoadingVideos = false.obs;
   RxBool isLoadingImages = false.obs;
