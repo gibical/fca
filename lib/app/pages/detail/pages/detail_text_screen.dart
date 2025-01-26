@@ -444,6 +444,8 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                             ''
                                             : '',
                                         fit: BoxFit.cover,
+
+
                                         placeholder: (context, url) {
                                           return Padding(
                                             padding: const EdgeInsets.all(20.0),
@@ -463,6 +465,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                               ),
                               // child: PlayerVideo(),
                             ),
+
                             Positioned(
                               left: 0,
                               bottom: 0,

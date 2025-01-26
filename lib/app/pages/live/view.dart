@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mediaverse/app.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
@@ -21,6 +22,7 @@ import 'package:mediaverse/app/pages/detail/widgets/custom_app_bar_detail_video_
 import 'package:mediaverse/app/pages/detail/widgets/details_bottom_widget.dart';
 import 'package:mediaverse/app/pages/detail/widgets/player/player.dart';
 import 'package:mediaverse/app/pages/live/widgets/player_live_widget.dart';
+import 'package:mediaverse/app/pages/live/widgets/show_time_record_widget.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -30,6 +32,7 @@ import '../../../../gen/model/enums/post_type_enum.dart';
 import '../detail/logic.dart';
 import '../home/logic.dart';
 import 'logic.dart';
+import 'old.dart';
 
 class LiveScreen extends StatelessWidget {
   LiveScreen({super.key});
@@ -56,7 +59,8 @@ class LiveScreen extends StatelessWidget {
           backgroundColor: AppColor.secondaryDark,
           body: SafeArea(
             child: Obx(() {
-              if (liveController.isLoadingLive.value ) {
+              if (liveController.isLoadingLive.value ||
+                  liveController.liveDetails!.isEmpty) {
                 return CustomScrollView(
                   slivers: [
                     SliverAppBar(
@@ -240,6 +244,27 @@ class LiveScreen extends StatelessWidget {
                       ),
                     ),
                     //--
+
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 22.0 ,  ),
+                        child: Row(
+                          children: [
+                            Text('Current program: ' , style: TextStyle(
+                              color: '#9C9CB8'.toColor()
+                            ),),
+                            Text('Name of program'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 2.h,
+                        ),
+                      ),
+                    ),
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -263,11 +288,154 @@ class LiveScreen extends StatelessWidget {
                     ),
                     //--
 
-                    //--
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Obx(() {
+                              return GestureDetector(
+                                onTap:liveController.remainingTime.value == 0? () {
+                                  liveController.toggleExpand();
+                                }:null,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 45,
+                                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(200),
+                                        color: 'B71D18'.toColor(),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          liveController.remainingTime.value != 0
+                                              ? Icon(
+                                            Icons.circle,
+                                            color: Colors.white,
+                                            size: 16,
+                                          )
+                                              : liveController.isLoadingRecord.value
+                                              ? SizedBox(
+                                            width: 14,
+                                            height: 14,
+                                            child: CircularProgressIndicator(
+                                              color: Colors.white,
+                                              backgroundColor: Colors.white.withOpacity(0.3),
+                                              strokeWidth: 1.2,
+                                            ),
+                                          )
+                                              : SvgPicture.asset('assets/mediaverse/images/record1.svg'),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(liveController.remainingTime.value == 0
+                                              ? "Record"
+                                              : '${liveController.formatTime(liveController.remainingTime.value)}')
+                                        ],
+                                      ),
+                                    ),
+
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    AnimatedContainer(
+                                      duration: Duration(milliseconds: 300),
+                                      height: liveController.isExpanded.value
+                                          ? liveController.titlesRecordText.length * 50.0
+                                          : 0,
+                                      curve: Curves.easeInOut,
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                          color: '#0F0F26'.toColor(),
+                                          borderRadius: BorderRadius.circular(12.sp),
+                                        ),
+                                        child: SingleChildScrollView(
+
+                                          physics: NeverScrollableScrollPhysics(),
+                                          child: Column(
+                                            children: [
+                                              for (int index = 0; index < liveController.titlesRecordText.length; index++)
+                                                GestureDetector(
+                                                  onTap: () {
+
+                                                    liveController.selectedIndex = index;
+                                                    liveController.postTimeRecord(liveController.liveDetails?['id']);
+                                                    liveController.toggleExpand();
+                                                  },
+                                                  child: Container(
+                                                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                                                    margin: EdgeInsets.symmetric(vertical: 4.0),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.transparent,
+                                                      borderRadius: BorderRadius.circular(10.sp),
+                                                    ),
+                                                    child: Row(
+                                                      children: [
+                                                        SvgPicture.asset(liveController.titlesRecordIcon[index]),
+                                                        SizedBox(
+                                                          width: 8,
+                                                        ),
+                                                        Text(
+                                                          liveController.titlesRecordText[index],
+                                                          style: TextStyle(
+                                                            color: '#9C9CB8'.toColor(),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              );
+                            }),
+                            SizedBox(
+                              width: 10,
+                            ),
+              GestureDetector(
+              onTap: () {
+
+              },
+              child:    Container(
+                height: 45,
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(200),
+                  color: '#0F0F26'.toColor(),
+                ),
+                child: Row(
+                  children: [
+                    SvgPicture.asset('assets/mediaverse/icons/calendar01.svg'),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(liveController.remainingTime.value == 0
+                        ? "Conductor"
+                        : '${liveController.formatTime(liveController.remainingTime.value)}')
+                  ],
+                ),
+              ),
+              ),
+
+                          ],
+                        ),
+                      ),
+                    ),
+
                     SliverToBoxAdapter(
                       child: SizedBox(
                         child: SizedBox(
-                          height: 2.h,
+                          height: 1.h,
                         ),
                       ),
                     ),
@@ -334,6 +502,44 @@ class LiveScreen extends StatelessWidget {
                       ),
                     ),
                     //--
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        child: SizedBox(
+                          height: 3.h,
+                        ),
+                      ),
+                    ),//--
+
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Country'),
+                                Text('United States' ,style: TextStyle(
+                                  color: '#9C9CB8'.toColor(),
+                                  fontSize: 16
+                                ),)
+                              ],
+                            ),
+                            SizedBox(width: 10.w,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Language'),
+                                Text('Cantonese' ,style: TextStyle(
+                                  color: '#9C9CB8'.toColor(),
+                                  fontSize: 16
+                                ),)
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     SliverToBoxAdapter(
                       child: SizedBox(
                         child: SizedBox(
