@@ -243,28 +243,28 @@ class LiveScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    //--
-
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 22.0 ,  ),
-                        child: Row(
-                          children: [
-                            Text('Current program: ' , style: TextStyle(
-                              color: '#9C9CB8'.toColor()
-                            ),),
-                            Text('Name of program'),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                        child: SizedBox(
-                          height: 2.h,
-                        ),
-                      ),
-                    ),
+                    // //--
+                    //
+                    // SliverToBoxAdapter(
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.symmetric(horizontal: 22.0 ,  ),
+                    //     child: Row(
+                    //       children: [
+                    //         Text('Current program: ' , style: TextStyle(
+                    //           color: '#9C9CB8'.toColor()
+                    //         ),),
+                    //         Text('Name of program'),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    // SliverToBoxAdapter(
+                    //   child: SizedBox(
+                    //     child: SizedBox(
+                    //       height: 2.h,
+                    //     ),
+                    //   ),
+                    // ),
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -400,7 +400,7 @@ class LiveScreen extends StatelessWidget {
                               );
                             }),
                             SizedBox(
-                              width: 10,
+                              width: 5,
                             ),
               GestureDetector(
               onTap: () {
@@ -408,6 +408,7 @@ class LiveScreen extends StatelessWidget {
               },
               child:    Container(
                 height: 45,
+
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(200),
@@ -419,9 +420,7 @@ class LiveScreen extends StatelessWidget {
                     SizedBox(
                       width: 5,
                     ),
-                    Text(liveController.remainingTime.value == 0
-                        ? "Conductor"
-                        : '${liveController.formatTime(liveController.remainingTime.value)}')
+                    Text('Conductor')
                   ],
                 ),
               ),
@@ -515,22 +514,22 @@ class LiveScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 18.0),
                         child: Row(
                           children: [
-                            Column(
+                            liveController.liveDetails!["country"] !=null ?    Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('Country'),
-                                Text('United States' ,style: TextStyle(
+                                Text('${liveController.liveDetails!["country"] !=null? liveController.liveDetails!["country"]["name"] :''}' ,style: TextStyle(
                                   color: '#9C9CB8'.toColor(),
                                   fontSize: 16
                                 ),)
                               ],
-                            ),
-                            SizedBox(width: 10.w,),
+                            ):SizedBox(),
+                            SizedBox(width:  liveController.liveDetails!["country"] !=null ?  10.w:0,),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('Language'),
-                                Text('Cantonese' ,style: TextStyle(
+                                Text('${ liveController.liveDetails!["language"]}' ,style: TextStyle(
                                   color: '#9C9CB8'.toColor(),
                                   fontSize: 16
                                 ),)
