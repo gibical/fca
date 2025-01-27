@@ -85,13 +85,13 @@ dependencies:
   firebase_auth: ^4.20.0
   country_picker: ^2.0.26
   rtmp_broadcaster: 2.2.6
-  wakelock_plus: ^1.2.8
+  wakelock_plus: any
   auto_size_text: ^3.0.0
   share_plus: ^10.0.0
   flu_wake_lock: ^0.0.2
   keep_screen_on: ^3.0.0
-  win32: any
-  screenshot: any
+  win32: ^5.0.0
+  screenshot: ^3.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -386,7 +386,7 @@ class DetailImageScreen extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              '16 Dec 2024, 6:50PM',
+                              '${imageController.formatDateString(imageController.imageDetails?['created_at'])}',
                               style: TextStyle(
                                 fontSize: 13,
                                 color: '#9C9CB8'.toColor(),

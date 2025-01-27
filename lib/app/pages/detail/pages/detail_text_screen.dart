@@ -397,7 +397,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                             ),
                             Spacer(),
                             Text(
-                              '16 Dec 2024, 6:50PM',
+                              '${logic.formatDateString(logic.textDetails?['created_at'])}',
                               style: TextStyle(
                                 fontSize: 13,
                                 color: '#9C9CB8'.toColor(),
@@ -417,51 +417,54 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                     ),
                     //--
                     SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                      child:Padding(
+                        padding: const EdgeInsets.symmetric(horizontal:18.0 ),
                         child: Stack(
+                          alignment: Alignment.center,
                           children: [
                             Container(
                               height: 350,
-                              width: 350,
+                              width: Get.width,
                               decoration: BoxDecoration(
                                   color: '#17172E'.toColor(),
                                   borderRadius: BorderRadius.circular(14.sp)),
-                              child:              FittedBox(
-                                fit: BoxFit.cover,
-                                child: Center(
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(14.sp),
-                                      child: CachedNetworkImage(
-                                        imageUrl: logic.textDetails?[
-                                        'thumbnails'] !=
-                                            null &&
-                                            logic.textDetails!['thumbnails']
-                                            is Map<String, dynamic>
-                                            ? logic.textDetails!['thumbnails']
-                                        ['525x525'] ??
-                                            ''
-                                            : '',
-                                        fit: BoxFit.cover,
-                                        placeholder: (context, url) {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(20.0),
-                                            child: SvgPicture.asset(
-                                                'assets/mediaverse/icons/file-text.svg' , height: 4,),
-                                          );
-                                        },
-                                        errorWidget: (context, url, error) {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(20.0),
-                                            child: SvgPicture.asset(
-                                                'assets/mediaverse/icons/file-text.svg' ,height: 4,),
-                                          );
-                                        },
-                                      )),
-                                ),
-                              ),
+                              child:     ClipRRect(
+                                  borderRadius: BorderRadius.circular(14.sp),
+                                  child: CachedNetworkImage(
+                                    imageUrl: logic.textDetails?[
+                                    'thumbnails'] !=
+                                        null &&
+                                        logic.textDetails!['thumbnails']
+                                        is Map<String, dynamic>
+                                        ? logic.textDetails!['thumbnails']
+                                    ['525x525'] ??
+                                        ''
+                                        : '',
+                                    fit: BoxFit.cover,
+
+
+                                    placeholder: (context, url) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Center(
+                                          child: SvgPicture.asset(
+                                            'assets/mediaverse/icons/file-text.svg' , height: 40,),
+                                        ),
+                                      );
+                                    },
+                                    errorWidget: (context, url, error) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Center(
+                                          child: SvgPicture.asset(
+                                            'assets/mediaverse/icons/file-text.svg' ,height: 40,),
+                                        ),
+                                      );
+                                    },
+                                  )),
                               // child: PlayerVideo(),
                             ),
+
                             Positioned(
                               left: 0,
                               bottom: 0,
@@ -481,9 +484,9 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                                     children: [
                                       SvgPicture.string(
                                           """<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4.66602 6.87887C5.72083 7.04222 6.8975 7.31381 7.99935 7.7399M4.66602 10.2122C5.19892 10.2947 5.76293 10.4049 6.33268 10.5486M10.4993 5.04447V16.9187M3.82796 2.50939C5.6766 2.71829 8.16029 3.28027 9.93004 4.52037C10.2702 4.75871 10.7285 4.75871 11.0687 4.52037C12.8384 3.28027 15.3221 2.71829 17.1707 2.50939C18.0857 2.40601 18.8327 3.17002 18.8327 4.11265V13.5C18.8327 14.4426 18.0857 15.2069 17.1707 15.3103C15.3221 15.5192 12.8384 16.0811 11.0687 17.3212C10.7285 17.5596 10.2702 17.5596 9.93004 17.3212C8.16029 16.0811 5.6766 15.5192 3.82796 15.3103C2.91304 15.2069 2.16602 14.4426 2.16602 13.5V4.11265C2.16602 3.17002 2.91304 2.40601 3.82796 2.50939Z" stroke="#F5F5F5" stroke-linecap="round"/>
-                                </svg>
-                                """),
+                                  <path d="M4.66602 6.87887C5.72083 7.04222 6.8975 7.31381 7.99935 7.7399M4.66602 10.2122C5.19892 10.2947 5.76293 10.4049 6.33268 10.5486M10.4993 5.04447V16.9187M3.82796 2.50939C5.6766 2.71829 8.16029 3.28027 9.93004 4.52037C10.2702 4.75871 10.7285 4.75871 11.0687 4.52037C12.8384 3.28027 15.3221 2.71829 17.1707 2.50939C18.0857 2.40601 18.8327 3.17002 18.8327 4.11265V13.5C18.8327 14.4426 18.0857 15.2069 17.1707 15.3103C15.3221 15.5192 12.8384 16.0811 11.0687 17.3212C10.7285 17.5596 10.2702 17.5596 9.93004 17.3212C8.16029 16.0811 5.6766 15.5192 3.82796 15.3103C2.91304 15.2069 2.16602 14.4426 2.16602 13.5V4.11265C2.16602 3.17002 2.91304 2.40601 3.82796 2.50939Z" stroke="#F5F5F5" stroke-linecap="round"/>
+                                  </svg>
+                                  """),
                                       SizedBox(
                                         width: 5,
                                       ),
@@ -504,7 +507,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                     SliverToBoxAdapter(
                       child: SizedBox(
                         child: SizedBox(
-                          height: 2.h,
+                          height: 3.h,
                         ),
                       ),
                     ),
