@@ -326,7 +326,7 @@ class ShareAccountLogic extends GetxController implements RequestInterface {
   }
 
   void showAddProgramBottomSheet() {
-    Get.toNamed(PageRoutes.ADDCHANNEL);
+    Get.toNamed(PageRoutes.ADDCHANNEL,arguments: [false,null]);
   }
 
   void showAccountType() async {

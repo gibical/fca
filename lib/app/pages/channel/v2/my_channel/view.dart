@@ -9,6 +9,8 @@ import 'package:mediaverse/app/pages/channel/v2/my_channel/logic.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetChannelsShow.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../common/app_route.dart';
+
 class MyChannelManagementBottomSheet extends StatefulWidget {
   ChannelsModel baseModel;
 
@@ -23,7 +25,7 @@ class _MyChannelManagementBottomSheetState
     extends State<MyChannelManagementBottomSheet>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  late MyChannelController logic;
+  late  MyChannelController logic;
 
   @override
   void initState() {
@@ -66,7 +68,7 @@ class _MyChannelManagementBottomSheetState
                               Get.back();
                             }),
                         Text(
-                          logic.baseModel.name ?? "",
+                          logic.mainChannelModel.name ?? "",
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),
@@ -86,7 +88,10 @@ class _MyChannelManagementBottomSheetState
                                       items: [
                                         PopupMenuItem(
                                           value: 1,
-                                          onTap: () {},
+                                          onTap: () {
+                                            Get.toNamed(PageRoutes.ADDCHANNEL,arguments: [true,logic.mainChannelModel]);
+
+                                          },
                                           child: SizedBox(
                                             width: 130,
                                             child: Row(
@@ -100,13 +105,15 @@ class _MyChannelManagementBottomSheetState
                                         ),
                                         PopupMenuItem(
                                           value: 1,
-                                          onTap: () {},
+                                          onTap: () {
+                                            logic.deleteChannels();
+                                          },
                                           child: SizedBox(
                                             width: 130,
                                             child: Row(
                                               children: [
                                                 Obx(() {
-                                                  if (true) {
+                                                  if (logic.isLoadingDeleteChannel.value) {
                                                     return Transform.scale(
                                                       scale: 0.5,
                                                       child:

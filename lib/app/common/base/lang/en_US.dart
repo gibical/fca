@@ -518,7 +518,22 @@ const Map<String, String> enUS = {
   "my_channel_31": "Stream URL",
   "my_channel_32": "Add",
   "my_channel_33": "Programs",
-  "my_channel_34": "You haven’t scheduled any programs yet. Plan your content to see them here!"
+  "my_channel_34": "You haven’t scheduled any programs yet. Plan your content to see them here!",
+  "my_channel_35": "Delete program?",
+  "my_channel_36": "Are you sure you want to delete this? This action cannot be undone.",
+  "my_channel_37": "Cancel",
+  "my_channel_38": "Delete",
+  "my_channel_39": "Add new schedule",
+  "my_channel_42": "Add new destination",
 
+  "my_channel_40": "You haven’t connected any accounts yet. Please connect an account to publish your content.",
+  "my_channel_41": "You haven’t scheduled any programs yet. Plan your content to see them here!",
+  "my_channel_43": "New Destination",
+  "my_channel_44": "Name",
+  "my_channel_45": "Stream key",
+  "my_channel_46": "Stream URL",
+
+  "my_channel_47":"Destionation Successfully Created",
+  "my_channel_48":"Add Destionation Have Error: ",
 
 };

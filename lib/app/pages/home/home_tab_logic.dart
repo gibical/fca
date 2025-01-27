@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/pages/home/widgets/sort_select_bottom_sheet.dart';
@@ -75,7 +76,7 @@ class HomeTabController extends GetxController {
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
 
         models = FromJsonGetContentFromExplore.fromJson(response.data).data??[];
-        print('Request succeeded: ${response.statusCode} = ${models.length} = ${response.requestOptions.queryParameters}');
+        if(kDebugMode)print('Request succeeded: ${response.statusCode} = ${models.length} = ${response.requestOptions.queryParameters}');
         isloadingPage(false);
         isloadingMini(false);
         update();
@@ -142,7 +143,7 @@ class HomeTabController extends GetxController {
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
 
         channelsModel = FromJsonGetAllChannels.fromJson(response.data).data??[];
-        print('Request succeeded: ${response.statusCode} = ${models.length} = ${response.requestOptions.queryParameters}');
+        if(kDebugMode)print('Request succeeded: ${response.statusCode} = ${models.length} = ${response.requestOptions.queryParameters}');
         isloadingPage(false);
         isloadingMini(false);
         update();

@@ -962,6 +962,7 @@ void runCustomSelectBottomToolsAudioAsset(DetailController controller) {
                   double audioLength = (controller.musicDetails?['file']['info']['time'] ?? 0.0);
                   audioLength = audioLength >= 1.0 ? audioLength : 0.0;
 
+
                   Get.find<MediaSuitController>().setDataEditAudio(controller.musicDetails?['name']?? '' , controller.musicDetails?['file']['url'] , controller.musicDetails!['file_id'].toString() ,time: audioLength);
                   Get.toNamed(PageRoutes.MEDIASUIT);
                 },
@@ -1018,7 +1019,7 @@ void runCustomSelectBottomToolsAudioAsset(DetailController controller) {
               GestureDetector(
                 onTap: () {
                   Get.back();
-                  controller.videoConvertToAudio();
+                  controller.soundConvertToText();
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(

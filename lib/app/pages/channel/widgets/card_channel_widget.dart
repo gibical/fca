@@ -71,7 +71,6 @@ Widget CustomCardChannelWidget({required String title , required String date,boo
   );
 }
 Widget CardChannelWidget({required String title , required String date,bool isEnable =false,Function? onTap,required ChannelsModel model}){
-  print('CardChannelWidget = ${model.thumbnails}');
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 10 , horizontal: 10),
     child: Container(

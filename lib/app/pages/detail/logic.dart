@@ -503,7 +503,6 @@ class DetailController extends GetxController {
         "file":fileIdMusic
       });
 
-      print('DetailController.soundConvertToText');
 
       if (response.statusCode == 200) {
 

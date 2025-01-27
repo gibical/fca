@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/common/app_config.dart';
@@ -114,7 +115,7 @@ class SearchLogic extends GetxController {
             'Authorization': 'Bearer ${GetStorage().read("token")}',
             'Content-Type': 'application/json',
           },
-        ),
+        ),//
       );
 
 
@@ -122,7 +123,7 @@ class SearchLogic extends GetxController {
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
 
         channelsModel = FromJsonGetAllChannels.fromJson(response.data).data??[];
-        print('Request succeeded: ${response.statusCode} = ${channelsModel.length} = ${response.requestOptions.queryParameters}');
+        if(kDebugMode)print('Request succeeded: ${response.statusCode} = ${channelsModel.length} = ${response.requestOptions.queryParameters}');
         isLoadingChannels(false);
         update();
       } else {

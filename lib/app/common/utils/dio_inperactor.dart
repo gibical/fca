@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/RequestInterface.dart';
 import 'package:mediaverse/app/common/app_config.dart';
@@ -17,7 +18,7 @@ class MediaVerseInterceptor extends Interceptor{
     // TODO: implement onError
     super.onError(err, handler);
 
-    print('MediaVerseInterceptor.onError = ${err.response!.statusCode} - $reqQode - ${err.response!.data} - ${err.requestOptions.uri}');
+    if(kDebugMode) print('MediaVerseInterceptor.onError = ${err.response!.statusCode} - $reqQode - ${err.response!.data} - ${err.requestOptions.uri}');
 
     requestInterface.onError(jsonEncode(err.response!.data), reqQode, err.response!.data.toString());
     if(err.response!.statusCode==406){
@@ -35,7 +36,7 @@ class MediaVerseConvertInterceptor extends Interceptor{
     // TODO: implement onError
     super.onError(err, handler);
 
-    print('MediaVerseInterceptor.onError = ${err.response!.statusCode} - ${err.response!.data}');
+    if(kDebugMode)print('MediaVerseInterceptor.onError = ${err.response!.statusCode} - ${err.response!.data}');
 
 
     try {

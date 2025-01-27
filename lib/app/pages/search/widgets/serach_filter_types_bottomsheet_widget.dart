@@ -56,7 +56,18 @@ class _SerachFilterBottomsheetWidgetState extends State<SerachFilterTypesottomSh
               ),
             ],
           ),
-
+          Expanded(
+            child: ListView.builder(
+              itemCount: logic.types.length,
+              itemBuilder: (s,i){
+                return CustomCheckbox(isChecked: logic.selecetedType==i, onChanged: (){
+                  logic.selecetedType=i;
+                  logic.update();
+                  Get.back();
+                }, title: logic.types.elementAt(i));
+              },
+            ),
+          )
 
         ],
       ),

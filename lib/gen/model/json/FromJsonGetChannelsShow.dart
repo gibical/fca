@@ -212,7 +212,7 @@ class Programs {
       _details = [];
 
     }
-    _lastEvent = json['last_event'];
+    _lastEvent = json['last_event_type'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _value = json['value'];
@@ -482,7 +482,14 @@ class Destinations {
     _user = user;
     _channels = channels;
 }
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Destinations && other.id == id;
+  }
 
+  @override
+  int get hashCode => id.hashCode;
   Destinations.fromJson(dynamic json) {
     _id = json['id'];
     _name = json['name'];

@@ -15,7 +15,9 @@ import 'package:mediaverse/app/pages/channel/v2/widgets/channels_title_widget.da
 import 'package:sizer/sizer.dart';
 
 class AddChannelsPage extends StatelessWidget {
-  AddChannelController logic = Get.put(AddChannelController(false));
+
+
+  AddChannelController logic = Get.put(AddChannelController(Get.arguments[0],model: Get.arguments[1]));
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class AddChannelsPage extends StatelessWidget {
                       children: [
                         Obx(() {
                           return Visibility(
-                            visible: !logic.isLoadingUploadFile.value,
+                            visible: (!logic.isLoadingUploadFile.value&&!( (Get.arguments[0])&&(logic.model!.thumbnails.toString().length>20))),
                             child: SizedBox.expand(
                               child: logic.isShowImageFromPath.value
                                   ? Image.file(
@@ -48,6 +50,10 @@ class AddChannelsPage extends StatelessWidget {
                             ),
                           );
                         }),
+                  if(( (Get.arguments[0])&&(logic.model!.thumbnails.toString().length>20)))SizedBox.expand(
+                    child:  Image.network(
+                       logic.model!.thumbnails['226x226']), //
+                  ),
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: Container(

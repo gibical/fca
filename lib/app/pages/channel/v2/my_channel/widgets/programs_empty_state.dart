@@ -66,7 +66,7 @@ class ProgramsEmptyState extends StatelessWidget {
   }
 
   void _showSlecltProGramTyoeBottmSheet()async {
-   dynamic result =  Get.bottomSheet(AddProgramBottonsheet(),isScrollControlled: true);
+   dynamic result =  Get.bottomSheet(AddProgramBottonsheet(false),isScrollControlled: true);
 
   }
 }

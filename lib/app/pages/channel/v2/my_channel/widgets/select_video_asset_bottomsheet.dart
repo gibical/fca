@@ -23,7 +23,8 @@ class _SelectVideoAssetBottomsheetState
     extends State<SelectVideoAssetBottomsheet> {
   MyChannelController logic = Get.find<MyChannelController>();
 
-  int? selectedAsset ;
+  int? selectedAsset;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -64,42 +65,44 @@ class _SelectVideoAssetBottomsheetState
                 ],
               ),
               SizedBox(
-                height:  4.h,
+                height: 4.h,
               ),
-              Expanded(
-                  child: logic.isLoadingAssets.value
-                      ? Center(
-                    child: Lottie.asset(
-                        "assets/${F.assetTitle}/json/Y8IBRQ38bK.json",
-                        height: 9.h),
-                  )
-                      : GridView.builder(
-                    itemCount: logic.videoContentModels.length,
-                      itemBuilder: (s, i) {
-                      bool? _isSelcetd ;
-                      if(selectedAsset!=null){
-                        _isSelcetd= (selectedAsset==i);
-                      }
-                        return MaterialButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: (){
-                            selectedAsset=i;
-                            setState(() {
+              Obx(() {
+                return Expanded(
+                    child: logic.isLoadingAssets.value
+                        ? Center(
+                      child: Lottie.asset(
+                          "assets/${F.assetTitle}/json/Y8IBRQ38bK.json",
+                          height: 9.h),
+                    )
+                        : GridView.builder(
+                        itemCount: logic.videoContentModels.length,
+                        itemBuilder: (s, i) {
+                          bool? _isSelcetd;
+                          if (selectedAsset != null) {
+                            _isSelcetd = (selectedAsset == i);
+                          }
+                          return MaterialButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              selectedAsset = i;
+                              setState(() {
 
-                            });
-                          },
-                          child: IgnorePointer(
-                            child: MiniVideoWidget(
-                              model: logic.videoContentModels.elementAt(i),
-                              height: 40.w,selectedAsset: _isSelcetd,),
-                          ),
-                        );
-                      },
-                      gridDelegate:
-                      SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,childAspectRatio: 9/10))),
+                              });
+                            },
+                            child: IgnorePointer(
+                              child: MiniVideoWidget(
+                                model: logic.videoContentModels.elementAt(i),
+                                height: 40.w, selectedAsset: _isSelcetd,),
+                            ),
+                          );
+                        },
+                        gridDelegate:
+                        SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, childAspectRatio: 9 / 10)));
+              }),
               Opacity(
-                opacity: (selectedAsset==null)?0.4:1,
+                opacity: (selectedAsset == null) ? 0.4 : 1,
                 child: Container(
                   width: 100.w,
                   height: 5.h,
@@ -109,13 +112,16 @@ class _SelectVideoAssetBottomsheetState
                       borderRadius: BorderRadius.circular(500)
                   ),
                   child: MaterialButton(
-                    onPressed: (){
-                     if(selectedAsset!=null){
-                       Get.back(result: logic.videoContentModels.elementAt(selectedAsset!));
-                     }
+                    onPressed: () {
+                      if (selectedAsset != null) {
+                        Get.back(result: logic.videoContentModels.elementAt(
+                            selectedAsset!));
+                      }
                     },
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(500)),
-                    child: Center(child: Text("my_channel_17".tr,style: TextStyle(fontWeight: FontWeight.w500),)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(500)),
+                    child: Center(child: Text("my_channel_17".tr,
+                      style: TextStyle(fontWeight: FontWeight.w500),)),
                   ),
                 ),
               )

@@ -24,7 +24,6 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    print('_AppState.build = ${AppColor.primaryLightColor}');
     return GetMaterialApp(
       title:F.title,
       getPages: PageRoutes.routes,

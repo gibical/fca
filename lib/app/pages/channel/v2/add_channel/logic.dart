@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +55,15 @@ class AddChannelController extends GetxController {
     super.onReady();
     getAllCountries(); // Fetch all available countries
     getAllLanguages(); // Fetch all available languages
+
+    if(isEdit){
+      nameEditingController.text =model!.name??"";
+      desEditingController.text =model!.description??"";
+      isPriaveContant.value = model!.isPrivate??false;
+      isRecordable.value = model!.isRecordable??false;
+      languageModel = model!.language??"";
+      log('AddChannelController.onReady = ${model!.toJson()}');
+    }
   }
 
   /// Picks an image and uploads it
@@ -107,6 +118,14 @@ class AddChannelController extends GetxController {
         (countreisModel).forEach((element) {
           countreisString.add(element.title ?? "");
         });
+
+        if (isEdit) {
+          try {
+            selectedCountryModel = countreisModel.firstWhereOrNull((test)=>test.iso.toString().contains(model!.country.toString()));
+          }  catch (e) {
+            // TODO
+          }
+        }
         update();
       }
     } on DioError catch (e) {
@@ -178,7 +197,7 @@ class AddChannelController extends GetxController {
         "is_recordable": isRecordable.value ? 1 : 0,
       };
 
-      if (filePath != null) body['thumbnails'] = fileid;
+      if (filePath != null&&!isEdit) body['thumbnails'] = fileid;
 
       var url = "channels";
       if (isEdit) {
@@ -186,10 +205,11 @@ class AddChannelController extends GetxController {
       }
 
       try {
-        var response = await dio.post(
+        var response = await dio.request(
           '${Constant.HTTP_HOST}$url',
           data: body,
           options: Options(
+            method: isEdit?"patch":"post",
             headers: {
               'Content-Type': 'application/json',
               'X-App': '_Android',

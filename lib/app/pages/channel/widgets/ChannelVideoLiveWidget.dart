@@ -96,28 +96,13 @@ class _ChannelVideoLiveWidgetState extends State<ChannelVideoLiveWidget> {
         }
       },
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 16.0),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(widget.title),
-                TextButton(
-                  onPressed: () {
-                    widget.onSwitch(widget.liveID);
-                  },
-                  child: Text(
-                    "Switch",
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                ),
-              ],
-            ),
+
             AspectRatio(
               aspectRatio: _videoPlayerController.value.aspectRatio,
-              child: Chewie(
-                controller: _chewieController!,
+              child: VideoPlayer(
+                _videoPlayerController
               ),
             ),
           ],

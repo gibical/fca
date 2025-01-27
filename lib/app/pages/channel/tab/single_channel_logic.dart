@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/common/RequestInterface.dart';
@@ -169,7 +170,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
       );
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        print('Request succeeded: ${response.statusCode}');
+        if(kDebugMode)print('Request succeeded: ${response.statusCode}');
         return true;
       } else {
         print('Request failed: ${response.statusMessage}');
@@ -200,7 +201,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
       );
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        print('Request succeeded: ${response.statusCode}');
+        if(kDebugMode)print('Request succeeded: ${response.statusCode}');
         return true;
       } else {
         print('Request failed: ${response.statusMessage}');
@@ -301,7 +302,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
       );
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        print('Request succeeded: ${response.statusCode}');
+        if(kDebugMode)print('Request succeeded: ${response.statusCode}');
         return true;
       } else {
         print('Request failed: ${response.statusMessage}');
@@ -342,7 +343,7 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
       isloadingStartProgram(false);
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        print('Request succeeded: ${response.statusCode}');
+        if(kDebugMode)print('Request succeeded: ${response.statusCode}');
         Constant.showMessege("alert_18".tr);
         return DateTime.now();
       } else {
@@ -358,7 +359,6 @@ class SingleChannelLogic extends GetxController implements RequestInterface {
   void parseFromJsonGetlives(source) {
     livemodels =
         FromJsonGetChannelsLive.fromJson(jsonDecode(source)).data ?? [];
-    print('SingleChannelLogic.parseFromJsonGetlives = ${livemodels.length}');
     update();
   }
 

@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:get/get.dart';
@@ -34,10 +35,12 @@ class FirebaseController extends GetxController implements RequestInterface {
   init() async {
     onReady();
    if (true) {
-     var s =  await Firebase.initializeApp(
-      // name: F.title,
+     var s = F.appFlavor==Flavor.gibical? await Firebase.initializeApp(
+       name: F.title,
        options: DefaultFirebaseConfig.firebaseOptions
-      );
+      ):await Firebase.initializeApp(
+         options: DefaultFirebaseConfig.firebaseOptions
+     );
       if (Platform.isIOS) {
         FirebaseMessaging.instance.requestPermission();
       }
@@ -46,12 +49,10 @@ class FirebaseController extends GetxController implements RequestInterface {
       requestNotificationPermissions();
       initializeLocalNotifications();
       listenToFCMMessages();
-      print('FirebaseController.init 1 ${s.options.androidClientId}');
       if (box.read("islogin") ?? false) {
-        print('FirebaseController.init 2 ');
-     
+
         String? token = await FirebaseMessaging.instance.getToken();
-        log('FirebaseController.init token = ${token}');
+        if(kDebugMode)log('FirebaseController.init token = ${token}');
         box.write("firebaseToken", token);
         var body = {"token": token};
         apiRequster.request(
@@ -125,7 +126,6 @@ class FirebaseController extends GetxController implements RequestInterface {
   }
 
   void listenToFCMMessages() {
-    print('FirebaseController.listenToFCMMessages 1');
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       print("onMessageOpenedApp: $message");
 

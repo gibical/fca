@@ -62,12 +62,10 @@ class _ProgramsTabState extends State<ProgramsTab> {
         isBack = true; //
       }
     } catch (e) {
-      log('Error initializing channel list: $e');
     }
   }
 
   Widget _buildChannelList() {
-    print('_ProgramsTabState._buildChannelList = ${_logic.channelModels}');
     return GetBuilder<ShareAccountLogic>(
 
         init: _logic,
