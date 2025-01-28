@@ -715,7 +715,7 @@ class DetailMusicScreen extends StatelessWidget {
                               final comment =
                               logic.commentsData?['data'][index];
                               return CommentBoxWidget(
-                                data: comment,
+                                data: comment,logic:logic ,
                               );
                             });
                       }

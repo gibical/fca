@@ -415,27 +415,30 @@ class _ProgramShowPageState extends State<ProgramShowPage> {
               ),
 
               Spacer(),
-              Container(
-                width: 100.w,
-                height: 5.h,
-                margin: EdgeInsets.symmetric(vertical: 2.h),
-                decoration: BoxDecoration(
-                    color: AppColor.primaryLightColor,
-                    borderRadius: BorderRadius.circular(500)
-                ),
-                child: MaterialButton(
-                  onPressed: () {
-                    logic.startProgram(widget.programs);
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(500)),
-                  child: Obx(() {
-                    return Center(
-                        child: logic.isloadingStartProgram.value ? Lottie.asset(
-                            "assets/${F.assetTitle}/json/Y8IBRQ38bK.json",
-                            height: 5.h) : Text("my_channel_22".tr,
-                          style: TextStyle(fontWeight: FontWeight.w500),));
-                  }),
+              Visibility(
+                visible: !widget.programs.source.toString().contains("rtmp"),
+                child: Container(
+                  width: 100.w,
+                  height: 5.h,
+                  margin: EdgeInsets.symmetric(vertical: 2.h),
+                  decoration: BoxDecoration(
+                      color: AppColor.primaryLightColor,
+                      borderRadius: BorderRadius.circular(500)
+                  ),
+                  child: MaterialButton(
+                    onPressed: () {
+                      logic.startProgram(widget.programs);
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(500)),
+                    child: Obx(() {
+                      return Center(
+                          child: logic.isloadingStartProgram.value ? Lottie.asset(
+                              "assets/${F.assetTitle}/json/Y8IBRQ38bK.json",
+                              height: 5.h) : Text("my_channel_22".tr,
+                            style: TextStyle(fontWeight: FontWeight.w500),));
+                    }),
+                  ),
                 ),
               ),
 

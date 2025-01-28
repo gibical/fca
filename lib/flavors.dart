@@ -69,5 +69,29 @@ class F {
         return 'https://api.mediaverse.land/v2/';
     }
   }
+  static String get termsURL {
+    switch (appFlavor) {
+      case Flavor.mediaverse:
+        return 'https://mediaverse.land/en/terms';
+      case Flavor.gibical:
+        return "https://gibical.app/en/terms";
+      case Flavor.ravi:
+        return 'https://mediaverse.land/en/terms';
+      default:
+        return 'https://mediaverse.land/en/terms';
+    }
+  }
+  static String get policyURL {
+    switch (appFlavor) {
+      case Flavor.mediaverse:
+        return 'https://mediaverse.land/en/privacy';
+      case Flavor.gibical:
+        return "https://gibical.app/en/privacy";
+      case Flavor.ravi:
+        return "https://gibical.app/en/privacy";
+      default:
+        return "https://gibical.app/en/privacy";
+    }
+  }
 
 }

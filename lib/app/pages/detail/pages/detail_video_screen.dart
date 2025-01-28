@@ -672,7 +672,8 @@ class DetailVideoScreen extends StatelessWidget {
                               final comment =
                                   videoController.commentsData?['data'][index];
                               return CommentBoxWidget(
-                                data: comment,
+                                data: comment,logic: videoController,
+
                               );
                             });
                       }
@@ -735,12 +736,15 @@ class DetailVideoScreen extends StatelessWidget {
 }
 
 class CommentBoxWidget extends StatelessWidget {
-  const CommentBoxWidget({
+   CommentBoxWidget({
     super.key,
     required this.data,
+    required this.logic,
   });
 
   final data;
+  DetailController logic;
+  final GlobalKey _containerKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -817,11 +821,71 @@ class CommentBoxWidget extends StatelessWidget {
                   //   '1w',
                   //   style: TextStyle(color: '#9C9CB8'.toColor()),
                   // ),
-                  // Spacer(),
-                  // SvgPicture.asset(
-                  //   'assets/mediaverse/icons/menu.svg',
-                  //   height: 20,
-                  // ),
+                  Spacer(),
+                  Container(
+                    key: _containerKey,
+                    child: InkWell(
+                      onTap: (){
+                        final RenderBox renderBox =
+                        _containerKey.currentContext
+                            ?.findRenderObject()
+                        as RenderBox;
+                        final Offset offset = renderBox
+                            .localToGlobal(Offset.zero);
+                        showMenu(
+                          position: RelativeRect.fromLTRB(
+                            offset.dx,
+                            offset.dy,
+                            MediaQuery.of(context)
+                                .size
+                                .width -
+                                offset.dx -
+                                renderBox.size.width,
+                            MediaQuery.of(context)
+                                .size
+                                .height -
+                                offset.dy -
+                                renderBox.size.height,
+                          ),
+                          color: '#0F0F26'.toColor(),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.circular(
+                                  12.sp)),
+                          context: context,
+                          items: [
+                            PopupMenuItem(
+                              value: 1,
+                              onTap: () {
+
+                                logic.reportComment(data);
+                              },
+                              child: SizedBox(
+                                width: 130,
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/mediaverse/icons/report.svg',
+                                    ),
+                                    Text('details_6'.tr),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ).then((value) {
+                          if (value != null) {
+                            print('$value');
+                          }
+                        });
+                      },
+                      child: SvgPicture.asset(
+                        'assets/mediaverse/icons/menu.svg',
+                        height: 20,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -1790,7 +1854,7 @@ void runPublishXSheet(DetailController detailController) {
                       splashColor: Colors.white.withOpacity(0.03),
                       onTap: () {
 
-                        detailController.onSendShareRequest('x_tweet');
+                        detailController.onSendShareRequest('x-tweet');
                       },
                       child: Center(
                         child: Obx((){

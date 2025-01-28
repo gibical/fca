@@ -239,6 +239,10 @@ filename: 'uploadfile'),
   sendMainRequest() async{
     isloading(true);
 
+    if(assetsEditingController.text.trim().isEmpty){
+      Constant.showMessege("plus_12".tr);
+      return;
+    }
    // debugger();
     if(type ==PostType.text) await uploadFileWithDio();
     var box = GetStorage();
@@ -305,10 +309,9 @@ filename: 'uploadfile'),
 
     isloading(false);
     try {
-      Constant.showMessege("Request Denied : ${bodyError}");
-    }  catch (e) {
-      // TODO
-    }
+      var messege = jsonDecode(bodyError)['message'];
+      Constant.showMessege(messege);
+    } catch (e) {}
   }
 
   @override

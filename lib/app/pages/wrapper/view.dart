@@ -5,6 +5,7 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/channel/all_tools.dart';
+import 'package:mediaverse/app/pages/plus/view.dart';
 import 'package:mediaverse/app/pages/plus_section/view.dart';
 import 'package:mediaverse/app/pages/wallet/view.dart';
 
@@ -61,7 +62,7 @@ class _MainWrapperScreenState extends State<MainWrapperScreen> {
           splashColor: Colors.transparent,
           backgroundColor: AppColor.primaryLightColor,
           onPressed: () {
-            Get.to(PlusSectionPage());
+            Get.to(PlusPage());
           },
           child: Icon(
             Icons.add,

@@ -45,13 +45,13 @@ Widget AppbarBTNWidget({required String iconName ,required Function() onTap ,RxB
     ),
   );
 }
-Widget AppbarBTNWidgetAll({required String iconName ,required Function() onTap ,RxBool? isLoading }){
+Widget AppbarBTNWidgetAll({required String iconName ,required Function() onTap ,RxBool? isLoading ,Color? color}){
   return Container(
     height: 5.5.h,
     width: 5.5.h,
     decoration: BoxDecoration(
 
-      color: AppColor.secondaryDark,
+      color:color?? AppColor.secondaryDark,
       borderRadius: BorderRadius.circular(
           8.sp
       ),

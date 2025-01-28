@@ -739,7 +739,7 @@ class _DetailTextScreenState extends State<DetailTextScreen> {
                               final comment =
                                   logic.commentsData?['data'][index];
                               return CommentBoxWidget(
-                                data: comment,
+                                data: comment,logic: logic,
                               );
                             });
                       }

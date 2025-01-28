@@ -71,7 +71,6 @@ dependencies:
   firebase_analytics: ^10.8.0
   path: ^1.8.2
   video_editor: ^3.0.0
-  fraction: ^4.1.4
   chewie: any
   loadmore: ^2.1.0
   easy_refresh: ^3.3.4
@@ -105,6 +104,8 @@ dependencies:
   webview_flutter: ^4.8.0
   flutter_layout_grid: ^2.0.7
   shimmer: ^3.0.0
+  insta_assets_picker: ^3.1.0
+  fraction: ^5.0.4
 
 dev_dependencies:
   flutter_test:

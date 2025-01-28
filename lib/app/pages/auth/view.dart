@@ -6,6 +6,7 @@ import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/pages/auth/widgets/login_button_widget.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import 'logic.dart';
 import 'state.dart';
@@ -159,7 +160,13 @@ class AuthPage extends StatelessWidget {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
 
-                        print('Terms of Service clicked');
+                        try {
+                          launchUrlString(F.termsURL);
+                        }  catch (e) {
+                          // TODO
+                        }
+
+
                       },
                   ),
                    TextSpan(
@@ -173,7 +180,12 @@ class AuthPage extends StatelessWidget {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
 
-                        print('Privacy Policy clicked');
+                        try {
+                          launchUrlString(F.policyURL);
+                        }  catch (e) {
+                          // TODO
+                        }
+
                       },
                   ),
                 ],

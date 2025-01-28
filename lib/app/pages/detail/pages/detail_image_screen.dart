@@ -692,7 +692,7 @@ class DetailImageScreen extends StatelessWidget {
                               final comment =
                               imageController.commentsData?['data'][index];
                               return CommentBoxWidget(
-                                data: comment,
+                                data: comment,logic: imageController,
                               );
                             });
                       }

@@ -7,6 +7,7 @@ import 'package:chewie/chewie.dart';
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -368,7 +369,7 @@ class DetailController extends GetxController {
   void postComment() async {
     try {
       final token = GetStorage().read("token");
-      String apiUrl = '${Constant.HTTP_HOST}assets/comments';
+      String apiUrl = '${Constant.HTTP_HOST}assets/${detailss?['id']}/comments';
       var response = await Dio().post(
         apiUrl,
         data: {
@@ -390,10 +391,8 @@ class DetailController extends GetxController {
       } else {
 
       }
-    } catch (e) {
-
-      print("$e");
-
+    } on DioException catch (e) {
+      Constant.showMessege(e.response!.data['message']);
     }
   }
 
@@ -1223,14 +1222,13 @@ class DetailController extends GetxController {
       body['privacy'] = isPrivateContent.value?"private":"public";
 
     }
-    body['type'] =type;
 
     var url ="shares";
 
     try {
       final token = GetStorage().read("token");
       String apiUrl =
-          '${Constant.HTTP_HOST}$url';
+          '${Constant.HTTP_HOST}$url/${type}';
       var s = Dio();
      // s.interceptors.add(MediaVerseConvertInterceptor());
      s.interceptors.add(CurlLoggerDioInterceptor());
@@ -1250,6 +1248,7 @@ class DetailController extends GetxController {
             Constant.showMessege(" ${"alert_10".tr} = ${response.data['data']['details']['error']}");
 
           }
+
 
           Constant.showMessege('Success');
 
@@ -1274,7 +1273,7 @@ class DetailController extends GetxController {
       // Handle errors
       Get.back();
 
-      Constant.showMessege("alert_10".tr);
+      Constant.showMessege(e.response!.data['message']);
       loadingSendShareDataSate.value = DataState.error('error : ${e}');
       print('DetailController._fetchMediaData = $e');
     } finally {
@@ -1353,5 +1352,50 @@ class DetailController extends GetxController {
         videoPlayerController?.addListener(updatePlayPauseState);
       },
     );
+  }
+
+  void reportComment(data) async{
+    var dio = Dio();
+    dio.interceptors.add(MediaVerseConvertInterceptor());
+    try {
+      var response = await dio.post(
+        '${Constant.HTTP_HOST}'"assets/${detailss?['id']}/reports",
+        data: {
+
+        },
+        options: Options(
+
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${GetStorage().read("token")}',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        if(kDebugMode)print('Request succeeded: ${response.statusCode} - ${response.data}');
+
+
+        try{
+
+        }catch(e){
+
+        }
+
+        return response.data;
+
+
+
+      } else {
+        print('Request failed: ${response.statusMessage}');
+        return null;
+      }
+    } on DioError catch (e) {
+
+      print('DioError: ${e.requestOptions.uri} ${e.message}');
+      return null;
+    }
   }
 }

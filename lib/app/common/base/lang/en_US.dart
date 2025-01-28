@@ -536,4 +536,10 @@ const Map<String, String> enUS = {
   "my_channel_47":"Destionation Successfully Created",
   "my_channel_48":"Add Destionation Have Error: ",
 
+  "add_asset_1": "New Video",
+  "add_asset_2": "Allow Access to Continue",
+  "add_asset_3": "To use this feature, we need permission to access your camera and media. Tap below to enable access and proceed seamlessly.",
+  "add_asset_4": "Allow access",
+  "add_asset_5": "Camera",
+
 };
