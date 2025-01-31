@@ -29,7 +29,7 @@ class _StreamHomePageState extends State<StreamHomePage>     with SingleTickerPr
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 2, vsync: this, initialIndex: Get.arguments[1]);
     _tabController.addListener(() {
       setState(() {
         _selectedTabIndex = _tabController.index;
@@ -49,59 +49,14 @@ class _StreamHomePageState extends State<StreamHomePage>     with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black.withOpacity(0.4),
-        toolbarHeight: 70,
-        centerTitle: true,
-        title: Container(
-          margin: EdgeInsets.only(right: 1.w),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 22.0, bottom: 20),
-                child: Text(
-                  'Stream Management'.tr,
-                  style: FontStyleApp.titleMedium.copyWith(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+
+      backgroundColor: AppColor.backgroundColor,
       body: DefaultTabController(
         length: 2,
         child: Column(
           children: [
-            Container(
-              width: 100.w,
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.4),
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(60.sp),
-                  bottomLeft: Radius.circular(60.sp),
-                ),
-              ),
-              height: 60,
-              child: TabBar(
-                tabAlignment: TabAlignment.center,
-                physics: const BouncingScrollPhysics(),
-                isScrollable: true,
-                controller: _tabController,
-                labelPadding: const EdgeInsets.symmetric(horizontal: 20.0),
-                overlayColor: MaterialStateProperty.all(Colors.transparent),
-                enableFeedback: false,
-                indicatorWeight: 2,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorColor: AppColor.primaryLightColor,
-                unselectedLabelColor: Colors.grey,
-                labelColor: AppColor.primaryLightColor,
-                dividerColor: Colors.transparent,
-                tabs: [
-                  _buildTab(context, 0, 'Camera'.tr),
-                  _buildTab(context, 1, 'Screen'.tr),
-                ],
-              ),
-            ),
+
+            SizedBox(height: 10.h,),
             Expanded(
               child: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),

@@ -60,7 +60,7 @@ dependencies:
   camera: ^0.10.5+9
   audio_waveforms: ^1.0.4
   path_provider: any
-  file_picker: any
+  file_picker: ^8.0.7
   flutter_launcher_icons: ^0.13.1
   google_sign_in: any
   widget_zoom: ^0.0.3
@@ -80,7 +80,7 @@ dependencies:
   cached_network_image: ^3.3.1
   curl_logger_dio_interceptor: ^1.0.0
   sign_button: ^2.0.6
-  device_info_plus: ^9.1.2
+  device_info_plus: ^10.1.2
   firebase_auth: ^4.20.0
   country_picker: ^2.0.26
   rtmp_broadcaster: 2.2.6
@@ -104,9 +104,15 @@ dependencies:
   webview_flutter: ^4.8.0
   flutter_layout_grid: ^2.0.7
   shimmer: ^3.0.0
-  insta_assets_picker: ^3.1.0
-  fraction: ^5.0.4
+  insta_assets_picker:
+    git: https://github.com/abolfazlirani/insta_assets_picker.git
+  fraction: any
+  wechat_camera_picker: ^4.3.1
 
+  # for video examples
+  ffmpeg_kit_flutter_min: ^6.0.3
+  mime: ^1.0.5
+  toastification: ^2.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -10,7 +10,9 @@ import 'package:sizer/sizer.dart';
 import '../../../common/widgets/appbar_btn.dart';
 
 class PerimissonBottomSheet extends StatelessWidget {
-  PlusLogic logic= Get.find<PlusLogic>();
+  PlusLogic logic;
+
+  PerimissonBottomSheet(this.logic);
 
   @override
   Widget build(BuildContext context) {

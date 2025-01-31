@@ -18,6 +18,7 @@ import 'package:mediaverse/app/pages/massage/view.dart';
 import 'package:mediaverse/app/pages/media_suit/state.dart';
 import 'package:mediaverse/app/pages/media_suit/view.dart';
 import 'package:mediaverse/app/pages/otp/view.dart';
+import 'package:mediaverse/app/pages/plus/view.dart';
 import 'package:mediaverse/app/pages/plus_section/view.dart';
 import 'package:mediaverse/app/pages/profile/view.dart';
 import 'package:mediaverse/app/pages/search/state.dart';
@@ -203,7 +204,7 @@ class PageRoutes {
     GetPage(
       name: PageRoutes.PLUS,
       transition: Transition.downToUp,
-      page: () => PlusSectionPage(),
+      page: () => PlusPage(),
 
 
 

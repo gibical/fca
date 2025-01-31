@@ -381,7 +381,7 @@ class _ProgramShowPageState extends State<ProgramShowPage> {
                       ),
                       child: MaterialButton(
                         onPressed: () {
-                          Get.to(StreamHomePage(),arguments: [widget.programs]);
+                          Get.to(StreamHomePage(),arguments: [widget.programs,0]);
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(500)),
@@ -400,7 +400,7 @@ class _ProgramShowPageState extends State<ProgramShowPage> {
                       ),
                       child: MaterialButton(
                         onPressed: () {
-                          Get.to(StreamHomePage(),arguments: [widget.programs]);
+                          Get.to(StreamHomePage(),arguments: [widget.programs,1]);
 
                         },
                         shape: RoundedRectangleBorder(

@@ -7,6 +7,7 @@ import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/app/pages/plus/logic.dart';
 import 'package:mediaverse/app/pages/plus/widgets/perimisson_bottom_sheet.dart';
+import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:sizer/sizer.dart';
 
@@ -14,14 +15,17 @@ import '../../../common/widgets/appbar_btn.dart';
 
 
 class PlusCameraScreen extends StatefulWidget {
-  PlusCameraScreen({Key? key}) : super(key: key);
+  bool isImage;
+
+  PlusCameraScreen(this.isImage);
 
   @override
   State<PlusCameraScreen> createState() => _PlusPageState();
 }
 
 class _PlusPageState extends State<PlusCameraScreen> {
-  final PlusLogic logic = Get.find<PlusLogic>();
+
+
 
 
   @override
@@ -32,8 +36,13 @@ class _PlusPageState extends State<PlusCameraScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String tag =  "new-${widget.isImage?"image":"video"}-${DateTime.now()}";
+    final PlusLogic logic = Get.put(PlusLogic(widget.isImage?PostType.image:PostType.video,tag),tag: tag);
+    logic.initCamera();
+
     return GetBuilder<PlusLogic>(
         init: logic,
+        tag: tag,
         builder: (logic) {
           return Scaffold(
             backgroundColor: AppColor.backgroundColor,
@@ -65,7 +74,7 @@ class _PlusPageState extends State<PlusCameraScreen> {
 
                             children: [
                               Text(
-                                "add_asset_1".tr,
+                                "add_asset_1_${(!widget.isImage)?"0":"1"}".tr,
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w600),
                               ),
@@ -99,70 +108,84 @@ class _PlusPageState extends State<PlusCameraScreen> {
                         onFocusLost: () {
                           logic.controller == null;
                         },
-                        child: CameraPreview(logic.controller!)),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 30.h,
-                      decoration: BoxDecoration(
-                        color: "151311".toColor(),
+                        child:(logic.controller==null)?Container(): CameraPreview(logic.controller!,child: Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                height: 30.h,
+                                decoration: BoxDecoration(
+                                  color: "151311".toColor(),
 
-                      ),
-                      child: Stack(
-                        children: [
-                          Align(
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Align(
 
-                            child: Container(
+                                      child: Container(
 
-                              child: Row(
+                                        child: Row(
 
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceBetween,
-                                children: [
-                                  Container(
+                                          mainAxisAlignment: MainAxisAlignment
+                                              .spaceBetween,
+                                          children: [
+                                            Container(
 
-                                    child: GestureDetector(
-                                      onTap: (){
-                                        logic.selectFileFromGallery();
-                                      },
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(5),
-                                        child: Image.asset(
-                                            "assets/all/images/tumnial.png"),
+                                              child: GestureDetector(
+                                                onTap: (){
+                                                  logic.selectFileFromGallery(widget.isImage);
+                                                },
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(5),
+                                                  child: Image.asset(
+                                                      "assets/all/images/tumnial.png"),
+                                                ),
+                                              ),
+                                              height: 4.h,
+                                            ),
+                                            Container(
+                                              height: 10.h,
+                                              width: 10.h,
+                                              child: MaterialButton(
+                                                padding: EdgeInsets.all(2.w),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(500)
+                                                ),
+                                                onPressed: (){
+                                                  if (!widget.isImage) {
+                                                    logic.startOrStopMediaRecording();
+                                                  }else{
+                                                    logic.takePicture();
+                                                  }
+                                                },
+                                                child: SvgPicture.asset(
+                                                    "assets/all/icons/Shutter_${widget.isImage?"1":"0"}.svg",
+                                                height: 10.h,width: 10.h,),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 5.h,
+                                              child: Image.asset(
+                                                  "assets/all/images/camera_switch.png"),
+                                            ),
+
+                                          ],
+                                        ),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                            vertical: 6.h
+                                        ),
                                       ),
-                                    ),
-                                    height: 4.h,
-                                  ),
-                                  Container(
-                                    height: 10.h,
-                                    child: MaterialButton(
-                                      onPressed: (){
-                                        logic.startOrStopMediaRecording();
-                                      },
-                                      child: SvgPicture.asset(
-                                          "assets/all/icons/Shutter.svg"),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 5.h,
-                                    child: Image.asset(
-                                        "assets/all/images/camera_switch.png"),
-                                  ),
+                                      alignment: Alignment.bottomCenter,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
 
-                                ],
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 6.h
-                              ),
-                            ),
-                            alignment: Alignment.bottomCenter,
-                          )
-                        ],
-                      ),
-                    ),
-                  )
+                          ],
+                        ),)),
+                  ),
 
 
                 ],

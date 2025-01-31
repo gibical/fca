@@ -19,14 +19,12 @@ import '../plus_section/widget/custom_plan_text_filed.dart';
 import 'logic.dart';
 
 class EditProfilePage extends StatefulWidget {
-
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
   DetailController detailController = Get.arguments[0];
-
 
   @override
   void initState() {
@@ -36,54 +34,42 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final logic = Get.put(
-        EditProfileLogic(detailController, detailController.id));
+    final logic =
+        Get.put(EditProfileLogic(detailController, detailController.id));
     final state = logic.state;
     dynamic details;
     switch (Get.arguments[1] as PostType) {
       case PostType.image:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         details = detailController.imageDetails;
 
       case PostType.video:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         details = detailController.videoDetails;
 
       case PostType.audio:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         details = detailController.musicDetails;
 
       case PostType.text:
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         details = detailController.textDetails;
       case PostType.channel:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
     }
 
     logic.startPageFunction(details, PostType.text);
     return Scaffold(
-      backgroundColor: AppColor.secondaryDark,
-      body: SafeArea(
-        child:
-
-
-
-
-
-
-
-
-        Obx(() {
-
-          if(logic.isloading1.value ){
-            return   CustomScrollView(
+        backgroundColor: AppColor.secondaryDark,
+        body: SafeArea(child: Obx(() {
+          if (logic.isloading1.value) {
+            return CustomScrollView(
               slivers: [
                 SliverAppBar(
                   elevation: 0,
                   toolbarHeight: 10.h,
                   surfaceTintColor: Colors.transparent,
-                  pinned: true
-                  ,
+                  pinned: true,
                   automaticallyImplyLeading: false,
                   flexibleSpace: Center(
                     child: Padding(
@@ -91,22 +77,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                         children: [
-                          AppbarBTNWidget(iconName: 'back1', onTap: () {
-                            Get.back();
-                          }),
-
-                          Text('Edit' , style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600
-                          ),),
-                          AppbarBTNWidget(iconName: 'tick', onTap: () {
-
-
-
-                          }),
-
+                          AppbarBTNWidget(
+                              iconName: 'back1',
+                              onTap: () {
+                                Get.back();
+                              }),
+                          Text(
+                            'Edit',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w600),
+                          ),
+                          AppbarBTNWidget(iconName: 'tick', onTap: () {}),
                         ],
                       ),
                     ),
@@ -117,33 +99,28 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 //--
                 SliverToBoxAdapter(
                     child: Padding(
-                      padding:  EdgeInsets.only(top: Get.height / 2 - 100),
-                      child: Center(
-                        child: Transform.scale(
-                          scale: 0.5,
-                          child: CircularProgressIndicator(
-                            color: AppColor.primaryColor,
-                            backgroundColor: AppColor.primaryColor.withOpacity(0.2),
-                          ),
-                        ),
+                  padding: EdgeInsets.only(top: Get.height / 2 - 100),
+                  child: Center(
+                    child: Transform.scale(
+                      scale: 0.5,
+                      child: CircularProgressIndicator(
+                        color: AppColor.primaryColor,
+                        backgroundColor: AppColor.primaryColor.withOpacity(0.2),
                       ),
-                    )
-                ),
+                    ),
+                  ),
+                )),
                 //--
-
               ],
             );
-          }else{
-
-          }
+          } else {}
           return CustomScrollView(
             slivers: [
               SliverAppBar(
                 elevation: 0,
                 toolbarHeight: 10.h,
                 surfaceTintColor: Colors.transparent,
-                pinned: true
-                ,
+                pinned: true,
                 automaticallyImplyLeading: false,
                 flexibleSpace: Center(
                   child: Padding(
@@ -151,18 +128,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                       children: [
-                        AppbarBTNWidget(iconName: 'back1', onTap: () {
-                          Get.back();
-                        }),
-
-                        Text('Edit' , style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600
-                        ),),
-                        AppbarBTNWidget(iconName: 'tick', onTap: () { logic.sendMainRequest(); } , isLoading:logic.isloading  ),
-
+                        AppbarBTNWidget(
+                            iconName: 'back1',
+                            onTap: () {
+                              Get.back();
+                            }),
+                        Text(
+                          'Edit',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
+                        ),
+                        AppbarBTNWidget(
+                            iconName: 'tick',
+                            onTap: () {
+                              logic.sendMainRequest();
+                            },
+                            isLoading: logic.isloading),
                       ],
                     ),
                   ),
@@ -182,38 +164,33 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     width: 20.h,
                     decoration: BoxDecoration(
                         color: '0F0F26'.toColor(),
-                        borderRadius: BorderRadius.circular(8.82.sp)
-                    ),
+                        borderRadius: BorderRadius.circular(8.82.sp)),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.82.sp),
                       child: CachedNetworkImage(
-                        imageUrl: details?[
-                        'thumbnails'] !=
-                            null &&
-                            details!['thumbnails']
-                            is Map<String, dynamic>
-                            ? details!['thumbnails']
-                        ['525x525'] ??
-                            ''
+                        imageUrl: details?['thumbnails'] != null &&
+                                details!['thumbnails'] is Map<String, dynamic>
+                            ? details!['thumbnails']['525x525'] ?? ''
                             : '',
                         fit: BoxFit.cover,
                         errorWidget: (context, url, error) {
                           return Center(
                             child: SvgPicture.asset(
-                              'assets/mediaverse/icons/file-text.svg' ,),
+                              'assets/mediaverse/icons/file-text.svg',
+                            ),
                           );
                         },
                         placeholder: (context, url) {
-                          return  Transform.scale(
+                          return Transform.scale(
                             scale: 0.5,
                             child: CircularProgressIndicator(
                               color: AppColor.primaryColor,
-                              backgroundColor: AppColor.primaryColor.withOpacity(0.2),
+                              backgroundColor:
+                                  AppColor.primaryColor.withOpacity(0.2),
                             ),
                           );
                         },
                       ),
-
 
                       // CachedNetworkImage(imageUrl: '${details!['thumbnails']['525x525']}' ,fit: BoxFit.cover, errorWidget: (context, url, error) {
                       //   return Transform.scale(
@@ -248,101 +225,83 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 18.0),
                     child: TextField(
-
-
                       controller: logic.assetsEditingController,
                       decoration: InputDecoration(
-
                         filled: true,
-
-
                         fillColor: '#0F0F26'.toColor(),
-                        contentPadding: EdgeInsets.symmetric(vertical: 13 , horizontal: 10),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 13, horizontal: 10),
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
-
-                            borderRadius: BorderRadius.circular(8.sp)
-                        ),
+                            borderRadius: BorderRadius.circular(8.sp)),
                         disabledBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
-
-                            borderRadius: BorderRadius.circular(8.sp)
-                        ),
+                            borderRadius: BorderRadius.circular(8.sp)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
-
-                            borderRadius: BorderRadius.circular(8.sp)
-                        ),
-
+                            borderRadius: BorderRadius.circular(8.sp)),
                       ),
-                    )
-                ),
+                    )),
               ),
               //SizedBox
               SliverToBoxAdapter(
                 child: SizedBox(
                   height: 2.h,
                 ),
-
               ),
               SliverToBoxAdapter(
                 child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 18.0),
                     child: TextField(
-
-                      maxLines: Get.arguments[1] == PostType.text ? 8 :4,
+                      maxLines: Get.arguments[1] == PostType.text ? 8 : 4,
                       controller: logic.assetsDescreptionEditingController,
                       decoration: InputDecoration(
-
                         filled: true,
-
                         fillColor: '#0F0F26'.toColor(),
-                        contentPadding: EdgeInsets.symmetric(vertical: 13 , horizontal: 10),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 13, horizontal: 10),
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
-
-                            borderRadius: BorderRadius.circular(8.sp)
-                        ),
+                            borderRadius: BorderRadius.circular(8.sp)),
                         disabledBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
-
-                            borderRadius: BorderRadius.circular(8.sp)
-                        ),
+                            borderRadius: BorderRadius.circular(8.sp)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
-
-                            borderRadius: BorderRadius.circular(8.sp)
-                        ),
-
+                            borderRadius: BorderRadius.circular(8.sp)),
                       ),
-                    )
-                ),
+                    )),
               ),
               //SizedBox
               SliverToBoxAdapter(
                 child: SizedBox(
                   height: 2.h,
                 ),
-
               ),
 
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 18.0),
-                  child:  fieldEditAssetWidget(title: 'Category', onTap: () {
-
-                    _runCustomSelectBottomEditeAssetSheet( title:'Category' ,models: [
-                      "editprof_29".tr,
-                      "editprof_30".tr,
-                      "editprof_31".tr,
-                      "editprof_32".tr,
-                      "editprof_33".tr,
-                      "editprof_34".tr,
-                      "editprof_35".tr,
-                      "editprof_36".tr,
-                    ],value: logic.genreController, );
-
-                  }, value: logic.genreController,),
+                  child: fieldEditAssetWidget(
+                    title: 'Category',
+                    onTap: () {
+                      _runCustomSelectBottomEditeAssetSheet(
+                        title: 'Category',
+                        models: [
+                          "editprof_29".tr,
+                          "editprof_30".tr,
+                          "editprof_31".tr,
+                          "editprof_32".tr,
+                          "editprof_33".tr,
+                          "editprof_34".tr,
+                          "editprof_35".tr,
+                          "editprof_36".tr,
+                        ],
+                        value: logic.genreController,
+                      );
+                    },
+                    value: logic.genreController,
+                  ),
                 ),
               ),
               //SizedBox
@@ -350,22 +309,41 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: SizedBox(
                   height: 2.h,
                 ),
-
               ),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 18.0),
                   child: Row(
                     children: [
-                      Expanded(child:  fieldEditAssetWidget(title: 'Country', onTap: () {
-
-                        _runCustomSelectBottomEditeAssetSheet( title:'Country' ,  models: Constant.languages ,value: logic.languageController, );
-                      }, value: logic.languageController,),),
-                      SizedBox(width: 10,),
-                      Expanded(child:  fieldEditAssetWidget(title: 'Language', onTap: () {
-                        _runCustomSelectBottomEditeAssetSheet( title:'Select a language' ,     models: Constant.languages,value: logic.languageController, );
-
-                      }, value: logic.languageController,),),
+                      Expanded(
+                        child: fieldEditAssetWidget(
+                          title: 'Country',
+                          onTap: () {
+                            _runCustomSelectBottomEditeAssetSheet(
+                              title: 'Country',
+                              models: Constant.languages,
+                              value: logic.languageController,
+                            );
+                          },
+                          value: logic.languageController,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: fieldEditAssetWidget(
+                          title: 'Language',
+                          onTap: () {
+                            _runCustomSelectBottomEditeAssetSheet(
+                              title: 'Select a language',
+                              models: Constant.languages,
+                              value: logic.languageController,
+                            );
+                          },
+                          value: logic.languageController,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -375,7 +353,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: SizedBox(
                   height: 2.h,
                 ),
-
               ),
               SliverToBoxAdapter(
                 child: Padding(
@@ -383,23 +360,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Is this content public?' , style: TextStyle(
-                        color: '9C9CB8'.toColor()
-                      ),),
+                      Text(
+                        'Is this content public?',
+                        style: TextStyle(color: '9C9CB8'.toColor()),
+                      ),
+                      GetBuilder<EditProfileLogic>(
+                        builder: (controller) {
+                          return CustomSwitchWidget(
+                            value: logic.isEditEditingController.text == 'true',
+                            onChanged: (value) {
+                              logic.isEditEditingController.text =
+                                  value.toString();
 
-                     GetBuilder<EditProfileLogic>(builder: (controller) {
-                       return  CustomSwitchWidget(
-                         value: logic.isEditEditingController.text == 'true',
-                         onChanged: (value) {
-
-                           logic.isEditEditingController.text = value.toString();
-
-                           logic.update();
-
-                         },
-                       );
-                     },)
-
+                              logic.update();
+                            },
+                          );
+                        },
+                      )
                     ],
                   ),
                 ),
@@ -409,23 +386,28 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: SizedBox(
                   height: 2.h,
                 ),
-
               ),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 18.0),
-                  child: fieldEditAssetWidget(title: 'Full Ownership', onTap: () {
-                    _runCustomSelectBottomEditeAssetSheet(
-
-                      priceController: logic.priceController,
-                      isLicenceType: true,
-                      isSearchBox: false,
-                      title:'Licence type' ,models: [
-                      "editprof_13".tr,
-                      "editprof_14".tr,
-                      "editprof_15".tr
-                    ],value: logic.planController,);
-                  }, value: logic.planController,),
+                  child: fieldEditAssetWidget(
+                    title: 'Full Ownership',
+                    onTap: () {
+                      _runCustomSelectBottomEditeAssetSheet(
+                        priceController: logic.priceController,
+                        isLicenceType: true,
+                        isSearchBox: false,
+                        title: 'Licence type',
+                        models: [
+                          "editprof_13".tr,
+                          "editprof_14".tr,
+                          "editprof_15".tr
+                        ],
+                        value: logic.planController,
+                      );
+                    },
+                    value: logic.planController,
+                  ),
                 ),
               ),
 
@@ -434,23 +416,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: SizedBox(
                   height: 2.h,
                 ),
-
               ),
-
             ],
           );
-        })
-      )
-
-
-
-
-    );
+        })));
   }
 
-  Widget fieldEditAssetWidget({required String title , required Function() onTap ,required TextEditingController? value}) {
+  Widget fieldEditAssetWidget(
+      {required String title,
+      required Function() onTap,
+      required TextEditingController? value}) {
     return Material(
-
       color: '#0F0F26'.toColor(),
       borderRadius: BorderRadius.circular(8.sp),
       child: InkWell(
@@ -459,27 +435,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
         onTap: onTap,
         child: TextField(
           enabled: false,
-
           style: TextStyle(
             color: Colors.white,
             fontSize: 13.5,
           ),
           controller: value,
           decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(vertical: 13 , horizontal: 10),
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 13, horizontal: 10),
               hintText: title,
-              hintStyle: TextStyle(
-                  fontSize: 13.5,
-                color: '9C9CB8'.toColor()
-              ),
+              hintStyle: TextStyle(fontSize: 13.5, color: '9C9CB8'.toColor()),
               suffixIcon: Transform.scale(
                   scale: 0.5,
-
                   child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg')),
-              disabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide.none
-              )
-          ),
+              disabledBorder: OutlineInputBorder(borderSide: BorderSide.none)),
         ),
         // Row(
         //   crossAxisAlignment: CrossAxisAlignment.center,
@@ -492,17 +461,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
         //     SvgPicture.asset('assets/mediaverse/icons/arrow.svg')
         //   ],
         // ),
-
       ),
     );
   }
-
 
   void _runCustomSelectBottomEditeAssetSheet({
     required List<String> models,
     required String title,
     required TextEditingController? value,
-     TextEditingController? priceController,
+    TextEditingController? priceController,
     bool isSearchBox = true,
     bool isLicenceType = false,
   }) {
@@ -540,7 +507,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               onTap: () {
                                 Get.back();
                               },
-                              child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg'),
+                              child: SvgPicture.asset(
+                                  'assets/mediaverse/icons/arrow.svg'),
                             ),
                           ),
                           Spacer(),
@@ -557,15 +525,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ],
                       ),
                       SizedBox(height: 3.h),
-
                       if (isSearchBox)
                         TextField(
                           controller: searchController,
                           onChanged: (query) {
                             setState(() {
                               filteredModels = models
-                                  .where((item) =>
-                                  item.toLowerCase().contains(query.toLowerCase()))
+                                  .where((item) => item
+                                      .toLowerCase()
+                                      .contains(query.toLowerCase()))
                                   .toList();
                             });
                           },
@@ -578,7 +546,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             hintText: 'Search...',
                             hintStyle: TextStyle(color: '9C9CB8'.toColor()),
                             fillColor: '#17172E'.toColor(),
-                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 10),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(8.sp),
@@ -594,7 +563,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                         ),
                       SizedBox(height: isSearchBox ? 2.h : 0),
-
                       Expanded(
                         child: ListView.builder(
                           padding: EdgeInsets.only(bottom: 75),
@@ -639,7 +607,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                               activeColor: Colors.white,
                                               onChanged: (_) {},
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(6),
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
                                                 side: BorderSide(
                                                   color: '9C9CB8'.toColor(),
                                                   width: 1,
@@ -653,7 +622,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         Text(
                                           item,
                                           style: TextStyle(
-                                            color: isSelected ? Colors.white : '9C9CB8'.toColor(),
+                                            color: isSelected
+                                                ? Colors.white
+                                                : '9C9CB8'.toColor(),
                                             fontSize: 15,
                                           ),
                                         ),
@@ -662,23 +633,31 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   ),
                                   if (item == "editprof_14".tr && isSelected)
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8.0),
                                       child: TextField(
                                         textDirection: TextDirection.ltr,
-                                        controller:  priceController,
+                                        controller: priceController,
                                         decoration: InputDecoration(
                                           hintText: '00.00',
                                           hintTextDirection: TextDirection.ltr,
-                                          hintStyle: TextStyle(color: '9C9CB8'.toColor()),
+                                          hintStyle: TextStyle(
+                                              color: '9C9CB8'.toColor()),
                                           fillColor: '#17172E'.toColor(),
                                           filled: true,
-                                          suffixIcon: IconButton(onPressed: null, icon: Text('EUR' , style: TextStyle(
-
-                                            color: '9C9CB8'.toColor()
-                                          ),),),
-                                          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                          suffixIcon: IconButton(
+                                            onPressed: null,
+                                            icon: Text(
+                                              'EUR',
+                                              style: TextStyle(
+                                                  color: '9C9CB8'.toColor()),
+                                            ),
+                                          ),
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 10),
                                           border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(8.sp),
+                                            borderRadius:
+                                                BorderRadius.circular(8.sp),
                                             borderSide: BorderSide.none,
                                           ),
                                         ),
@@ -743,8 +722,4 @@ class _EditProfilePageState extends State<EditProfilePage> {
       ),
     );
   }
-
-
-
-
 }

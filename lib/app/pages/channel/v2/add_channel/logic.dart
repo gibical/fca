@@ -220,7 +220,11 @@ class AddChannelController extends GetxController {
         isLoading(false);
 
         if (response.statusCode! >= 200 || response.statusCode! < 300) {
-          Get.find<ShareAccountLogic>().getExternalAccount();
+          try {
+            Get.find<ShareAccountLogic>().getExternalAccount();
+          }  catch (e) {
+            // TODO
+          }
           Get.back();
         } else {
           try {

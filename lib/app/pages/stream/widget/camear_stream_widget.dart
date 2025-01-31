@@ -28,7 +28,7 @@ class _CameraStreamWidgetState extends State<CameraStreamWidget> {
         tag: "main",
         builder: (logic) {
       return Scaffold(
-        backgroundColor: AppColor.blueDarkColor,
+        backgroundColor: AppColor.backgroundColor,
 
         body: SingleChildScrollView(
           child: Column(

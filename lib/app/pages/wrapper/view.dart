@@ -8,6 +8,8 @@ import 'package:mediaverse/app/pages/channel/all_tools.dart';
 import 'package:mediaverse/app/pages/plus/view.dart';
 import 'package:mediaverse/app/pages/plus_section/view.dart';
 import 'package:mediaverse/app/pages/wallet/view.dart';
+import 'package:mediaverse/app/pages/wrapper/widgets/select_destination_bottom_sheet.dart';
+import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
 
 import '../../widgets/bottomnavwidget.dart';
 import '../channel/view.dart';
@@ -62,7 +64,7 @@ class _MainWrapperScreenState extends State<MainWrapperScreen> {
           splashColor: Colors.transparent,
           backgroundColor: AppColor.primaryLightColor,
           onPressed: () {
-            Get.to(PlusPage());
+           _goToRouteBottomSheet();
           },
           child: Icon(
             Icons.add,
@@ -81,5 +83,10 @@ class _MainWrapperScreenState extends State<MainWrapperScreen> {
         ],
       ),
     );
+  }
+
+  void _goToRouteBottomSheet() {
+
+    Get.bottomSheet(SelectDestinationBottomSheet());
   }
 }

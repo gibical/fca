@@ -77,7 +77,7 @@ class MainActivity : FlutterActivity() {
                 startService(serviceIntent)
             }
         } else {
-            Toast.makeText(this, "Screen Cast Permission Denied", Toast.LENGTH_SHORT).show()
+          //  Toast.makeText(this, "Screen Cast Permission Denied", Toast.LENGTH_SHORT).show()
         }
     }
 

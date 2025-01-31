@@ -30,7 +30,7 @@ class _ScreenStreamWidgetState extends State<ScreenStreamWidget> {
 
         builder: (logic) {
       return Scaffold(
-        backgroundColor: AppColor.blueDarkColor,
+        backgroundColor: AppColor.backgroundColor,
 
         body: SingleChildScrollView(
           child: Column(
