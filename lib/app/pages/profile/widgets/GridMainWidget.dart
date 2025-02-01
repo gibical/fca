@@ -37,7 +37,7 @@ class _GridPostViewState extends State<GridPostView> {
         .toDouble();
     print('=======================================================');
     print('=======================================================');
-    print('=======================================================');
+    print('==========================872328378=============================');
     print(videoLength);
     print(videoLength);
     print(videoLength);
@@ -105,10 +105,10 @@ class _GridPostViewState extends State<GridPostView> {
                       padding: EdgeInsets.all(5.w),
                       child: Column(
                         children: [
-                       if(widget. model['media_type'] == 1)   Align(
+                          if(widget. model['media_type'] == 1)   Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                             widget. model['name'],
+                              widget. model['name'],
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme
@@ -146,8 +146,8 @@ class _GridPostViewState extends State<GridPostView> {
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme
-                                    .of(context)
-                                    .textTheme.bodySmall?.copyWith(
+                                      .of(context)
+                                      .textTheme.bodySmall?.copyWith(
                                     color: Color(0xFF666680),
                                     fontSize: 8.sp,
                                     fontWeight: FontWeight.w400,
@@ -259,14 +259,14 @@ class _GridPostViewState extends State<GridPostView> {
       case 2:
         route = PageRoutes.DETAILIMAGE;
         break;
-        case 3:
-          route = PageRoutes.DETAILMUSIC;
-          break;
-          case 4:
-            route = PageRoutes.DETAILVIDEO;
-            break;
+      case 3:
+        route = PageRoutes.DETAILMUSIC;
+        break;
+      case 4:
+        route = PageRoutes.DETAILVIDEO;
+        break;
     }
-     Get.toNamed(route, arguments: {'id': model});
+    Get.toNamed(route, arguments: {'id': model});
 
   }
 }
@@ -294,8 +294,13 @@ class _GridPostView2State extends State<GridPostView2> {
       isSelected = !isSelected;
     });
     double videoLength =
-    double.tryParse(widget.model['file']['length'])??0;
+    ( widget.model[
+    'file']['info']['time'] ??
+        0)
+        .toDouble();
 
+
+    print('984383849'+':'+'${videoLength}');
     if (isSelected) {
 
       Get.find<MediaSuitController>().addItemToTempList(
@@ -331,10 +336,10 @@ class _GridPostView2State extends State<GridPostView2> {
 
         onTap:
 
-        (){
-      if(Get.arguments == 'edit_screen'){
-        toggleSelection();
-      }
+            (){
+          if(Get.arguments == 'edit_screen'){
+            toggleSelection();
+          }
 //       if(Get.arguments == 'edit_screen'){
 //         if (widget.model['media_type'].toString().contains("4")) {
 //
@@ -345,20 +350,20 @@ class _GridPostView2State extends State<GridPostView2> {
 // //
 //         Get.back();
 //       }
-      else if(Get.arguments == 'onTapNewProgram'){
-        if (widget.model['media_type'].toString().contains("4")) {
+          else if(Get.arguments == 'onTapNewProgram'){
+            if (widget.model['media_type'].toString().contains("4")) {
 
 //
-          Get.back(result: [jsonEncode(widget.model)]);
-        }else{
-          Constant.showMessege("alert_3".tr);
-        }
-      }else{
-        _getRouteAndPushIt(widget.model['id']);
-      }
+              Get.back(result: [jsonEncode(widget.model)]);
+            }else{
+              Constant.showMessege("alert_3".tr);
+            }
+          }else{
+            _getRouteAndPushIt(widget.model['id']);
+          }
 
-    }
-    ,
+        }
+        ,
         child: Container(
             width: 45.w,
             height: 45.w,
@@ -374,10 +379,10 @@ class _GridPostView2State extends State<GridPostView2> {
                       padding: EdgeInsets.all(5.w),
                       child: Column(
                         children: [
-                       if(widget. model['media_type'] == 1)   Align(
+                          if(widget. model['media_type'] == 1)   Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                             widget. model['name'],
+                              widget. model['name'],
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme
@@ -415,8 +420,8 @@ class _GridPostView2State extends State<GridPostView2> {
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme
-                                  .of(context)
-                                  .textTheme.bodySmall?.copyWith(
+                                    .of(context)
+                                    .textTheme.bodySmall?.copyWith(
                                   color: Color(0xFF666680),
                                   fontSize: 8.sp,
                                   fontWeight: FontWeight.w400,
@@ -445,7 +450,7 @@ class _GridPostView2State extends State<GridPostView2> {
                         Positioned(
                             bottom: 10,
                             left: 20,
-                            child: 
+                            child:
                             Text(processTitle(widget.model['name']))
                           //  Text(widget.model['media']['name'])
                         ),
@@ -527,14 +532,14 @@ class _GridPostView2State extends State<GridPostView2> {
       case 'image':
         route = PageRoutes.DETAILIMAGE;
         break;
-        case 'audio':
-          route = PageRoutes.DETAILMUSIC;
-          break;
-          case 'video':
-            route = PageRoutes.DETAILVIDEO;
-            break;
+      case 'audio':
+        route = PageRoutes.DETAILMUSIC;
+        break;
+      case 'video':
+        route = PageRoutes.DETAILVIDEO;
+        break;
     }
-     Get.toNamed(route, arguments: {'id': model});
+    Get.toNamed(route, arguments: {'id': model});
 
   }
 }

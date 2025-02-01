@@ -395,6 +395,8 @@ class DetailVideoScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
+
+
                             Spacer(),
                             Text(
                               '${videoController.formatDateString(videoController.videoDetails?['created_at'])}',
@@ -407,6 +409,9 @@ class DetailVideoScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+
+
+
                     //--
                     SliverToBoxAdapter(
                       child: SizedBox(

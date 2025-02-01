@@ -401,31 +401,31 @@ class LiveScreen extends StatelessWidget {
                             }),
                             SizedBox(
                               width: 5,
-                            ),
-              GestureDetector(
-              onTap: () {
-
-              },
-              child:    Container(
-                height: 45,
-
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(200),
-                  color: '#0F0F26'.toColor(),
-                ),
-                child: Row(
-                  children: [
-                    SvgPicture.asset('assets/mediaverse/icons/calendar01.svg'),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text('Conductor')
-                  ],
-                ),
-              ),
-              ),
-
+              //               ),
+              // GestureDetector(
+              // onTap: () {
+              //
+              // },
+              // child:    Container(
+              //   height: 45,
+              //
+              //   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(200),
+              //     color: '#0F0F26'.toColor(),
+              //   ),
+              //   child: Row(
+              //     children: [
+              //       SvgPicture.asset('assets/mediaverse/icons/calendar01.svg'),
+              //       SizedBox(
+              //         width: 5,
+              //       ),
+              //       Text('Conductor')
+              //     ],
+              //   ),
+              // ),
+              // ),
+)
                           ],
                         ),
                       ),

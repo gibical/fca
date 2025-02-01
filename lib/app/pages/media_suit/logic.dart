@@ -367,6 +367,7 @@ class MediaSuitController extends GetxController {
         Get.find<MediaSuitController>().setDataEditAudio(
             editAudioDataList[selectedAudioIndex.value!].name,
             editAudioDataList[selectedAudioIndex.value!].urlMedia!,
+            0,
             editAudioDataList[selectedAudioIndex.value!].assetId.toString(),
             isloading: true);
       } else {
@@ -452,6 +453,7 @@ class MediaSuitController extends GetxController {
         Get.find<MediaSuitController>().setDataEditAudio(
             editVideoDataList[selectedVideoIndex.value!].name,
             editVideoDataList[selectedVideoIndex.value!].urlMedia!,
+            0,
             editVideoDataList[selectedVideoIndex.value!].assetId.toString(),
             isloading: true);
         selectedVideoIndex.value = null;
@@ -494,43 +496,43 @@ class MediaSuitController extends GetxController {
           ),
           Expanded(
               child: ListView.builder(
-            itemBuilder: (s, p) {
-              return InkWell(
-                onTap: () {
-                  try {
-                    return Get.back(result: models.elementAt(p));
-                  } catch (e) {
-                    // TODO
-                  }
-                  Get.back();
+                itemBuilder: (s, p) {
+                  return InkWell(
+                    onTap: () {
+                      try {
+                        return Get.back(result: models.elementAt(p));
+                      } catch (e) {
+                        // TODO
+                      }
+                      Get.back();
+                    },
+                    child: Container(
+                      width: 100.w,
+                      height: 4.h,
+                      margin: EdgeInsets.symmetric(vertical: 6),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            models.elementAt(p),
+                            style: TextStyle(color: Colors.white.withOpacity(0.4)),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            width: 100.w,
+                            height: 1,
+                            color: Colors.white.withOpacity(0.15),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
                 },
-                child: Container(
-                  width: 100.w,
-                  height: 4.h,
-                  margin: EdgeInsets.symmetric(vertical: 6),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        models.elementAt(p),
-                        style: TextStyle(color: Colors.white.withOpacity(0.4)),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        width: 100.w,
-                        height: 1,
-                        color: Colors.white.withOpacity(0.15),
-                      )
-                    ],
-                  ),
-                ),
-              );
-            },
-            itemCount: models.length,
-          ))
+                itemCount: models.length,
+              ))
         ],
       ),
     ));
@@ -626,6 +628,7 @@ class MediaSuitController extends GetxController {
         Get.find<MediaSuitController>().setDataEditAudio(
             editTextDataList[selectedTextIndex.value!].name,
             editTextDataList[selectedTextIndex.value!].urlMedia!,
+            0,
             editTextDataList[selectedTextIndex.value!].assetId!,
             isloading: true);
       } else {
@@ -712,7 +715,7 @@ class MediaSuitController extends GetxController {
 
         maxValueRuler +=3;
       } else if (item.mediaClass == 3) {
-        setDataEditAudio(item.name, item.urlMedia!, item.assetId!,
+        setDataEditAudio(item.name, item.urlMedia!, item.defaultWidthVideo ?? 0,item.assetId!,
             isloading: item.isloading);
 
         maxValueRuler +=5;
@@ -744,7 +747,7 @@ class MediaSuitController extends GetxController {
           .add(EditDataModel(name, url, 0, assetId, 2, isloading: isloading));
     } else if (mediaClass == "audio") {
       tempSelectedItems
-          .add(EditDataModel(name, url, 0, assetId, 3, isloading: isloading));
+          .add(EditDataModel(name, url, widthVideoItem, assetId, 3, isloading: isloading));
     } else if (mediaClass == "video") {
       tempSelectedItems.add(EditDataModel(name, url, widthVideoItem, assetId, 4,
           isloading: isloading));
@@ -787,13 +790,14 @@ class MediaSuitController extends GetxController {
   }
 
   void setDataEditAudio(
-    String name,
-    String audioUrl,
-    String assetId, {
-    bool isloading = false,
-    double time = 0,
-  }) {
-    editAudioDataList.add(EditDataModel(name, audioUrl, 0, assetId, 3,
+      String name,
+      String audioUrl,
+      double time ,
+      String assetId, {
+        bool isloading = false,
+
+      }) {
+    editAudioDataList.add(EditDataModel(name, audioUrl, time, assetId, 3,
         isloading: isloading, second: time));
 
     selectedAudioIndex.value = editAudioDataList.length - 1;

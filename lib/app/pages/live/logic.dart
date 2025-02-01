@@ -78,9 +78,9 @@ class LiveController extends GetxController{
       if (response.statusCode == 200) {
         details?.value = RxMap<String, dynamic>.from(response.data['data']);
 
-        initPlayerVideo('https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/hls/de3f6ca7-2db3-4689-8160-0f574a5996ad/playlist.m3u8');
+        initPlayerVideo('${response.data['data']['current_url']}');
         print('82872738238273');
-        print(response.data);
+        print(response.data['data']['current_url']);
       } else {
         // Handle errors
       }
