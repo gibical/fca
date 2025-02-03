@@ -44,6 +44,7 @@ class _MyChannelManagementBottomSheetState
 
   @override
   Widget build(BuildContext context) {
+    print('_MyChannelManagementBottomSheetState.build open channel = ${logic.mainChannelModel.id}');
     return GetBuilder<MyChannelController>(
         init: logic,
         builder: (logic) {

@@ -584,7 +584,11 @@ class DetailController extends GetxController {
 
 
   void videoConvertToAudio() async{
-
+    bool checkVideoLengthes =  checkVideoLength();
+    if(!checkVideoLengthes){
+      Constant.showMessege("alert_21".tr);
+      Get.back();
+    }
     print(file_id);
     try {
       final token = GetStorage().read("token");
@@ -713,7 +717,11 @@ class DetailController extends GetxController {
     }
   }
   void videoDubbing() async{
-    await checkVideoLength();
+    bool checkVideoLengthes =  checkVideoLength();
+    if(!checkVideoLengthes){
+      Constant.showMessege("alert_21".tr);
+      Get.back();
+    }
     String? language = await runCustomSelectBottomLanguageSheet(models: Constant.languages,);
 
     Get.back();
@@ -917,6 +925,7 @@ class DetailController extends GetxController {
 
     String? language = await runCustomSelectBottomLanguageSheet(models: Constant.languages,);
 
+    Get.back();
     String loclae = Constant.languageMap[language]??"";
     try {
       final token = GetStorage().read("token");
@@ -1356,14 +1365,15 @@ class DetailController extends GetxController {
     );
   }
 
-  void reportComment(data) async{
+  void reportComment(data, RxInt? selectedReportOption, TextEditingController reportEditingController) async{
     var dio = Dio();
     dio.interceptors.add(MediaVerseConvertInterceptor());
     try {
       var response = await dio.post(
         '${Constant.HTTP_HOST}'"assets/${detailss?['id']}/reports",
         data: {
-
+          "type": selectedReportOption?.value,
+          "description": reportEditingController.text
         },
         options: Options(
 
@@ -1379,6 +1389,7 @@ class DetailController extends GetxController {
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         if(kDebugMode)print('Request succeeded: ${response.statusCode} - ${response.data}');
 
+        Constant.showMessege("alert_1".tr);
 
         try{
 
@@ -1448,10 +1459,21 @@ class DetailController extends GetxController {
     }
   }
 
-  checkVideoLength() {
-   if( (detailss?['length'] as num) <=0){
-     Constant.showMessege("alert_21".tr);
-     return;
+  bool checkVideoLength() {
+   try {
+     if( (detailss?['length'] as num) <=0){
+      // Constant.showMessege("alert_21".tr);
+       //Get.back();
+       return false;
+     }else{
+       return true;
+     }
+   }  catch (e) {
+    // Constant.showMessege("alert_21".tr);
+    // Get.back();
+
+     return false;
+     // TODO
    }
   }
 }

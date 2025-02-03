@@ -26,7 +26,6 @@ class _ChannelLiveTabState extends State<ChannelLiveTab> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       body: Container(
@@ -42,23 +41,31 @@ class _ChannelLiveTabState extends State<ChannelLiveTab> {
                 //  color: Colors.red,
                 child: GetBuilder<MyChannelController>(
                     init: logic,
-                    builder: (logic) {
+                    builder: (logics) {
                       return Stack(
                         children: [
                           Container(
                             child: GetBuilder<
                                 ChannelMainVideoLiveController>(
                               builder: (channelMainVideoLiveController) {
-
-                                      if (logic.isChannelLiveStarted.isFalse) {
+                                if (logic.isChannelLiveStarted.isFalse) {
                                   return Container(
                                     height: 20.h, child: Center(
                                     child: Text(
                                         "Live is Not Available Right Now"),
                                   ),);
                                 }
-                                return ChannelMainVideoLiveWidget(
-                                    logic.mainChannelModel.url ?? "");
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ChannelMainVideoLiveWidget(
+                                        logic.mainChannelModel.url ?? ""),
+                                Text(
+                                "${logics.mainChannelModel.program!.name}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13.sp),),
+
+                                  ],
+                                );
                               },
                               tag:
                               "live-${logic.mainChannelModel.id}",
@@ -216,26 +223,36 @@ class _ChannelLiveTabState extends State<ChannelLiveTab> {
                           crossAxisCount: 2,));
                   })),
 
-              Container(
-                width: 100.w,
-                height: 6.h,
-                margin: EdgeInsets.symmetric(vertical: 2.h),
-                decoration: BoxDecoration(
-                    color: "#b71d18".toColor(),
-                    borderRadius: BorderRadius.circular(500)
-                ),
-                child: MaterialButton(
-                  onPressed: () {},
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(500)),
-                  child: Center(
-                    child: Center(
-                      child: Text("my_channel_8".tr,
-                        style: TextStyle(fontWeight: FontWeight.w500),),
+               GetBuilder<
+                  MyChannelController>(
+                  init: logic,
+                  builder: (logic) {
+                return Visibility(
+                  visible: (logic.mainChannelModel.program != null),
+                  child: Container(
+                    width: 100.w,
+                    height: 6.h,
+                    margin: EdgeInsets.symmetric(vertical: 2.h),
+                    decoration: BoxDecoration(
+                        color: "#b71d18".toColor(),
+                        borderRadius: BorderRadius.circular(500)
+                    ),
+                    child: MaterialButton(
+                      onPressed: () {
+                        logic.onStopPressed();
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(500)),
+                      child: Center(
+                        child: Center(
+                          child: Text("my_channel_8".tr,
+                            style: TextStyle(fontWeight: FontWeight.w500),),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              )
+                );
+              })
 
             ],
           ),

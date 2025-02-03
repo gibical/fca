@@ -860,12 +860,16 @@ class CommentBoxWidget extends StatelessWidget {
                                   12.sp)),
                           context: context,
                           items: [
-                          
-                            PopupMenuItem(
+
+                            if(data['user']['id']!=GetStorage().read("userid"))
+                              PopupMenuItem(
                               value: 1,
                               onTap: () {
-
-                                logic.reportComment(data);
+                                Get.bottomSheet(
+                                    elevation: 0,
+                                    isScrollControlled: true,
+                                    CommentReportBottomSheet(logic,data['id']));
+                            //    logic.reportComment(data);
                               },
                               child: SizedBox(
                                 width: 130,

@@ -56,22 +56,22 @@ class _MainWrapperScreenState extends State<MainWrapperScreen> {
       bottomNavigationBar: BottomNavWidget(),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: 50.0),
-        child: FloatingActionButton(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-          splashColor: Colors.transparent,
-          backgroundColor: AppColor.primaryLightColor,
-          onPressed: () {
-           _goToRouteBottomSheet();
-          },
-          child: Icon(
-            Icons.add,
-            color: Theme.of(context).colorScheme.onBackground,
-          ),
-        ),
-      ),
+      // floatingActionButton: Padding(
+      //   padding: EdgeInsets.only(bottom: 50.0),
+      //   child: FloatingActionButton(
+      //     shape:
+      //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+      //     splashColor: Colors.transparent,
+      //     backgroundColor: AppColor.primaryLightColor,
+      //     onPressed: () {
+      //      _goToRouteBottomSheet();
+      //     },
+      //     child: Icon(
+      //       Icons.add,
+      //       color: Theme.of(context).colorScheme.onBackground,
+      //     ),
+      //   ),
+      // ),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: controller.pageController,

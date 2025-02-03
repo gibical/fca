@@ -20,6 +20,7 @@ import 'package:meta/meta.dart';
 import '../../../../../gen/model/json/FromJsonGetChannelsLive.dart';
 import '../../../../../gen/model/json/FromJsonGetChannelsShow.dart';
 import '../../../../../gen/model/json/FromJsonGetProgramSchedules.dart';
+import '../../../../../gen/model/json/FromJsonGetSchedules.dart';
 import '../../../../../gen/model/json/v2/FromJsonGetContentFromExplore.dart';
 import '../../../../common/app_config.dart';
 import '../../../share_account/logic.dart';
@@ -31,6 +32,7 @@ class MyChannelController extends GetxController {
  List<Destinations>  destinations = [];
   int selectedTabIndex = 0;
   List<LiveModel> livemodels = [];
+  List<SchedulesModel> schedulesList = [];
   ValueKey mainLiveKey = ValueKey("${DateTime.now().millisecondsSinceEpoch}");
 
   MyChannelController(this.mainChannelModel);
@@ -55,6 +57,7 @@ class MyChannelController extends GetxController {
 
     getAllDestionation();
     getChannel();
+    getAllSchedules();
     startPeriodicRefresh();
   }
   @override
@@ -109,7 +112,7 @@ class MyChannelController extends GetxController {
       bool isEdit,
       Programs? programModel) async {
     isLoadingCreateProgram.value = true;
-    // debugger();
+    //debugger();
     try {
       if (nameEditingController.text.isEmpty) {
         Constant.showMessege("alert_14".tr);
@@ -699,6 +702,58 @@ class MyChannelController extends GetxController {
     }
     update();
     addOrRemoveFromDestinationModelList(mainChannelModel.id.toString(),value.id.toString(),isEnable);
+  }
+
+  void getAllSchedules()async {
+    var dio = Dio();
+    dio.interceptors.add(MediaVerseConvertInterceptor());
+    var response = await Dio().get(
+      "${Constant.HTTP_HOST}channels/${mainChannelModel.id}/schedules",
+      options: Options(
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${GetStorage().read("token")}',
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
+    if (response.statusCode! >= 200) {
+      schedulesList = FromJsonGetSchedules.fromJson(response.data).data??[];
+      update();
+    }
+
+
+    update();
+    try {} catch (e) {
+      // TODO
+    }
+  }
+
+  void onStopPressed()async {
+    var dio = Dio();
+    dio.interceptors.add(MediaVerseConvertInterceptor());
+    var response = await Dio().patch(
+      "${Constant.HTTP_HOST}programs/${mainChannelModel.program!.id}/stop",
+      data: {
+
+      },
+      options: Options(
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${GetStorage().read("token")}',
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
+    if (response.statusCode! >= 200) {
+      Constant.showMessege("alert_1".tr);
+    }
+
+
+    update();
+    try {} catch (e) {
+      // TODO
+    }
   }
 
 }

@@ -118,8 +118,8 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
                                                 (!logic
                                                     .isRecordingTimeVisible
                                                     .value)
-                                                    ? "assets/${F.assetTitle}/icons/record-button.svg"
-                                                    : "assets/${F.assetTitle}/icons/record.svg",fit: BoxFit.fill,);
+                                                    ? "assets/mediaverse/icons/record-button.svg"
+                                                    : "assets/mediaverse/icons/record.svg",fit: BoxFit.fill,);
                                           })),
                                     ),
                                   ),

@@ -572,5 +572,9 @@ const Map<String, String> enUS = {
   "add_asset_30": "New Text",
   "add_asset_31": "Write your text here....",
 
+  "nav_1":"Explore" ,
+  "nav_2":"Studio" ,
+  "nav_3":"Wallet" ,
+  "nav_4":"Profile" ,
 
 };

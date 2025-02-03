@@ -162,7 +162,8 @@ class AllTabScreen extends StatelessWidget {
                         children:!logic.isloadingMini.value?logic.models.getRange(0, 3).toList().asMap().entries.map((toElement){
 
                           return MiniImageWidget( model: logic.models.elementAt(toElement.key)).inGridArea("image${toElement.key+1}");
-                        }).toList(): [
+                        }).
+                        toList(): [
                           ShimmirMiniImageWidget().inGridArea('image1'),
                           ShimmirMiniImageWidget().inGridArea('image2'),
                           ShimmirMiniImageWidget().inGridArea('image3'),

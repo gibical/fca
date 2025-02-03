@@ -49,9 +49,15 @@ class _AddProgramBottonsheetState extends State<AddProgramBottonsheet> {
         if(widget.programModel!.source.toString().contains("file")){
           _sourceEditingController.text =widget.programModel!.value??"";
           sourceType = SourceType.asset;
+          try {
+            model = widget.programModel!.asset!;
+          }  catch (e) {
+            // TODO
+          }
 
         }
 
+        print('_AddProgramBottonsheetState.initState = ${sourceType}');
 
         setState(() {
 
@@ -89,7 +95,7 @@ class _AddProgramBottonsheetState extends State<AddProgramBottonsheet> {
                           Get.back();
                         }),
                     Text(
-                      "my_channel_10".tr,
+                      widget.isEdit?"my_channel_20".tr:"my_channel_10".tr,
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                     Container(

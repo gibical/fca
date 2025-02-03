@@ -146,7 +146,7 @@ class _ChannelMainVideoLiveWidgetState extends State<ChannelMainVideoLiveWidget>
           _chewieController = ChewieController(
             videoPlayerController: _videoPlayerController,
             autoPlay: true,
-            looping: true,isLive: true,customControls: Container(),allowMuting: true
+            looping: true,isLive: true,customControls: Container(),
           );
 
           setState(() {});

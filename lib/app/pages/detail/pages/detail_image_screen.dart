@@ -440,13 +440,7 @@ class DetailImageScreen extends StatelessWidget {
                                       ),);
                                     },
                                     errorWidget: (context, url, error) {
-                                      return Center(child: Transform.scale(
-                                        scale: 0.5,
-                                        child: CircularProgressIndicator(
-                                          color: AppColor.primaryColor,
-                                          backgroundColor: AppColor.primaryColor.withOpacity(0.3),
-                                        ),
-                                      ),);
+                                      return Center(child: Image.asset("assets/all/images/tumnial.png",fit: BoxFit.cover,));
                                     },
                                   );
                                 }

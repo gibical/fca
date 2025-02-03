@@ -31,21 +31,21 @@ ChannelsModel dataFromJson(String str) => ChannelsModel.fromJson(json.decode(str
 String dataToJson(ChannelsModel data) => json.encode(data.toJson());
 class ChannelsModel {
   ChannelsModel({
-      String? id, 
-      String? name, 
-      String? description, 
-      String? url, 
-      String? language, 
-      bool? isPrivate, 
-      bool? isRecordable, 
-      bool? isAvailable, 
-      String? createdAt, 
-      String? updatedAt, 
-      String? lastEvent, 
-      String? thumbnails, 
-      String? country, 
-      List<String>? users, 
-      List<Events>? events, 
+      String? id,
+      String? name,
+      String? description,
+      String? url,
+      String? language,
+      bool? isPrivate,
+      bool? isRecordable,
+      bool? isAvailable,
+      String? createdAt,
+      String? updatedAt,
+      String? lastEvent,
+      String? thumbnails,
+      String? country,
+      List<String>? users,
+      List<Events>? events,
       List<Destinations>? destinations,
       List<Programs>? programs,}){
     _id = id;
@@ -81,6 +81,7 @@ class ChannelsModel {
     _updatedAt = json['updated_at'];
     _lastEvent = json['last_event'];
     _thumbnails = json['thumbnails'];
+    _program = json['program'] != null ? Programs.fromJson(json['program']): null;
     _country = json['country_iso'];
     _users = json['users'] != null ? json['users'].cast<String>() : [];
     if (json['events'] != null) {
@@ -120,6 +121,7 @@ class ChannelsModel {
   List<Events>? _events;
   List<Destinations> _destinations=[];
   List<Programs>? _programs;
+  Programs? _program;
 
   String? get id => _id;
   String? get name => _name;
@@ -132,6 +134,7 @@ class ChannelsModel {
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
   String? get lastEvent => _lastEvent;
+  Programs? get program => _program;
   dynamic? get thumbnails => _thumbnails;
   String? get country => _country;
   List<String>? get users => _users;
