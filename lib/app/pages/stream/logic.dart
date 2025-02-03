@@ -52,12 +52,17 @@ class StreamViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    const platform = MethodChannel('com.mediaverse.mediaverse/rtmp');
+    var platform = MethodChannel('${F.packageName}/rtmp');
 
     platform.setMethodCallHandler((call) async {
+      print('StreamViewController.onInit setMethodCallHandler = ${call}');
       if (call.method == "stopTheStream") {
 
         stopScreenStreaming();
+      }
+      if (call.method == "onStreamStarted") {
+
+       startScreenStreamingTimer();
       }
     });
     initMethod();
@@ -228,14 +233,6 @@ class StreamViewController extends GetxController {
           });
           print(result);
 
-          isScreenStreaming = true;
-          isScreenRecordingTimeVisible(true);
-          _screenRecordingDuration = Duration.zero;
-          _screenRecordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-            _screenRecordingDuration += Duration(seconds: 1);
-            screenRecordingTime.value = _formatDuration(_screenRecordingDuration);
-            update();
-          });
         } on PlatformException catch (e) {
           print("Failed to start screen streaming: '${e.message}'.");
         }
@@ -249,7 +246,7 @@ class StreamViewController extends GetxController {
 
   Future<void> stopScreenStreaming() async {
     try {
-      final String result = await MethodChannel('com.mediaverse.mediaverse/rtmp').invokeMethod('stopScreenShare');
+      final String result = await MethodChannel('${F.packageName}/rtmp').invokeMethod('stopScreenShare');
       print(result);
 
       isScreenStreaming = false;
@@ -331,6 +328,18 @@ class StreamViewController extends GetxController {
     _recordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       _recordingDuration += Duration(seconds: 1);
       recordingTime.value = _formatDuration(_recordingDuration);
+      update();
+    });
+  }
+
+  void startScreenStreamingTimer() {
+
+    isScreenStreaming = true;
+    isScreenRecordingTimeVisible(true);
+    _screenRecordingDuration = Duration.zero;
+    _screenRecordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      _screenRecordingDuration += Duration(seconds: 1);
+      screenRecordingTime.value = _formatDuration(_screenRecordingDuration);
       update();
     });
   }

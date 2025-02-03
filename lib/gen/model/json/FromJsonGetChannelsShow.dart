@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
+
+import 'package:mediaverse/gen/model/json/v2/FromJsonGetContentFromExplore.dart';
 FromJsonGetChannelsShow fromJsonGetChannelsShowFromJson(String str) => FromJsonGetChannelsShow.fromJson(json.decode(str));
 String fromJsonGetChannelsShowToJson(FromJsonGetChannelsShow data) => json.encode(data.toJson());
 class FromJsonGetChannelsShow {
@@ -207,6 +209,11 @@ class Programs {
     _id = json['id'];
     _channelId = json['channel_id'];
     _name = json['name'];
+    try {
+      _asset = ContentModel.fromJson(json['asset']);
+    }  catch (e) {
+      // TODO
+    }
     _source = json['source'];
     if (json['details'] != null) {
       _details = [];
@@ -244,6 +251,7 @@ class Programs {
   String? _value;
   String? _streamUrl;
   String? _streamKey;
+  ContentModel? _asset;
   String? _livesCount;
   List<Events>? _events;
   dynamic _channel;
@@ -252,6 +260,7 @@ class Programs {
   String? get id => _id;
   String? get channelId => _channelId;
   String? get name => _name;
+  ContentModel? get asset => _asset;
   String? get source => _source;
   List<dynamic>? get details => _details;
   String? get lastEvent => _lastEvent;

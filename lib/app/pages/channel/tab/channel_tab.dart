@@ -70,19 +70,21 @@ class _ProgramsTabState extends State<ProgramsTab> {
 
         init: _logic,
         builder: (logic) {
-      return Column(
-        children: [
-          Container(
-            child: AddChannelCardWidget(), //
-          ),
-          Column(
-            children: _logic.channelModels
-                .asMap()
-                .entries
-                .map((toElement) => _buildChannelCard(toElement.value))
-                .toList(),
-          )
-        ],
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              child: AddChannelCardWidget(), //
+            ),
+            Column(
+              children: _logic.channelModels
+                  .asMap()
+                  .entries
+                  .map((toElement) => _buildChannelCard(toElement.value))
+                  .toList(),
+            )
+          ],
+        ),
       );
     });
   }

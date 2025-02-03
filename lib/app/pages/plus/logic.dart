@@ -21,6 +21,7 @@ import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:toastification/toastification.dart';
+
 import '../../../gen/model/json/FromJsonGetNewCountries.dart';
 import '../../common/app_config.dart';
 import '../../common/app_route.dart';
@@ -29,52 +30,94 @@ import '../../common/utils/upload_file_controller.dart';
 import '../../widgets/country_picker.dart';
 import 'state.dart';
 
+/// Main controller for the 'Plus' page (creating various media posts).
 class PlusLogic extends GetxController {
   final PlusState state = PlusState();
+
+  /// A global key to reference a specific widget
   final GlobalKey containerKey = GlobalKey();
-  var isLoadingUploadFile = false.obs; // Loading state for file uploads
-  var isShowImageFromPath = false.obs; // Whether an image is shown
-  var isShowFileFromPath = false.obs; // Whether an image is shown
+
+  /// Loading state for file uploads
+  var isLoadingUploadFile = false.obs;
+
+  /// Whether to show an image selected from camera or gallery
+  var isShowImageFromPath = false.obs;
+
+  /// Whether to show a file (text, video, etc.) selected
+  var isShowFileFromPath = false.obs;
+
   late List<CameraDescription> _cameras;
-  CameraController? controller;
-  File? selectedFile;
+  CameraController? controller; // Camera controller
+  File? selectedFile; // The selected file
 
   // File upload data
   String? fileid;
   String? filePath;
-  PlusAspectRatio aspectRatio = PlusAspectRatio.post;
+  var aspectRatio = PlusAspectRatio.post.obs;
+
+  // File upload controller
   UploadFileController _uploadFileController = Get.put(UploadFileController());
+
+  // Text field controllers
   TextEditingController mainTextEditingController = TextEditingController();
   TextEditingController nameEditingController = TextEditingController();
   TextEditingController desEditingController = TextEditingController();
   TextEditingController priceEditingController = TextEditingController();
   TextEditingController durationEditingController =
       TextEditingController(text: "add_asset_14".tr);
+
+  /// List of subscription durations
   List<String> durationList = [
     "add_asset_15".tr,
     "add_asset_16".tr,
     "add_asset_17".tr,
   ];
+
+  /// Indicates if audio recording was successfully completed
   bool isRecordingCompleted = false;
 
+  /// Permissions needed for audio, photos, videos, storage, etc.
   var allPermission = [
     Permission.audio,
     Permission.photos,
     Permission.videos,
     Permission.manageExternalStorage,
   ];
+
+  /// List of all countries
   List<CountryModel> countreisModel = [];
+
+  /// List of countries as strings to display in the picker
   List<String> countreisString = [];
+
+  /// Selected country model
   CountryModel? selectedCountryModel;
-  String? languageModel; // Selected language
+
+  /// Selected language
+  String? languageModel;
+
   final ImagePicker _picker =
-      ImagePicker(); // Used to pick images from the gallery
-  var isPriaveContant = false.obs; // Private content toggle
+      ImagePicker(); // For picking an image from gallery
+
+  /// Whether content is private
+  var isPriaveContant = false.obs;
+
+  /// License type (free, ownership, subscription)
   PlusLicence licence = PlusLicence.free;
+
+  /// General loading state
   var isloading = false.obs;
+
+  /// Loading state for text-only actions
   var isloadingText = false.obs;
+
+  /// Whether to show the video recording time
   var isRecordingTimeVisible = false.obs;
+
+  /// Observable string for recording time
   var recordingTime = ''.obs;
+
+  /// Observable double for upload progress percentage
   var uploadFilePercent = 0.0.obs;
 
   Timer? _recordingTimer;
@@ -83,15 +126,21 @@ class PlusLogic extends GetxController {
 
   String uploadedFilePath = "";
   PostType postype;
+
+  /// Audio recorder controller
   late final RecorderController recorderController;
   bool isRecording = false;
 
+  /// A tag passed to this controller
   String tag;
 
-  PlusLogic(this.postype, this.tag);
-
+  /// This variable holds the final price after multiplied by 100
   String _resultPrice = '';
 
+  /// Constructor which receives a post type and a tag
+  PlusLogic(this.postype, this.tag);
+
+  /// Multiply the input price by 100
   void _multiplyBy100() {
     if (priceEditingController.text.isNotEmpty) {
       double? number = double.parse(priceEditingController.text);
@@ -101,24 +150,25 @@ class PlusLogic extends GetxController {
     }
   }
 
+  /// Called immediately after the controller is allocated in memory.
   @override
   void onInit() {
     super.onInit();
     _checkPermissionAndNavigate();
-
     getAllCountries();
     getAllLanguages();
   }
 
+  /// Start the audio recording timer
   void _startRecordingTimer() {
     recordingDuration = Duration.zero;
-
     _recordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       recordingDuration += Duration(seconds: 1);
       update();
     });
   }
 
+  /// Format the audio recording duration to HH:MM:SS
   String getFormattedRecordingDuration() {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     final hours = twoDigits(recordingDuration.inHours);
@@ -127,68 +177,66 @@ class PlusLogic extends GetxController {
     return "$hours:$minutes:$seconds";
   }
 
+  /// Stop the audio recording timer
   void _stopRecordingTimer() {
     _recordingTimer?.cancel();
-    recordingDuration = Duration.zero;
   }
 
+  /// Start or stop audio recording
   void startOrStopRecording() async {
     print('PlusLogic.startOrStopRecording 1 ');
     try {
       if (isRecording) {
+        // If currently recording, stop it
         _stopRecordingTimer();
-        print('PlusLogic.startOrStopRecording 2 ');
 
         recorderController.reset();
-        print('PlusLogic.startOrStopRecording 3 ');
 
         final path = await recorderController.stop(false);
-        print('PlusLogic.startOrStopRecording 4 ');
 
         if (path != null) {
           isRecordingCompleted = true;
           debugPrint(path);
-          uploadedFilePath = path ?? "";
-          print('PlusLogic.startOrStopRecording 5 ');
+          uploadedFilePath = path;
 
           debugPrint("Recorded file size: ${File(path).lengthSync()}");
         }
       } else {
-        print('PlusLogic.startOrStopRecording 6 ');
+        // If not recording, start it
+        recordingDuration = Duration.zero;
 
         await _getDir();
         _startRecordingTimer();
-        print('PlusLogic.startOrStopRecording 7 ${uploadedFilePath}');
-
-        await recorderController.record(path: uploadedFilePath!);
-        print('PlusLogic.startOrStopRecording 8 ');
+        await recorderController.record(path: uploadedFilePath);
       }
     } catch (e) {
-      print('PlusLogic.startOrStopRecording');
+      print('PlusLogic.startOrStopRecording $e');
       debugPrint(e.toString());
     } finally {
+      // Toggle the recording state
       isRecording = !isRecording;
       update();
     }
   }
 
+  /// Retrieve the directory path for saving audio files
   Future<String> _getDir() async {
     appDirectory = await getApplicationDocumentsDirectory();
     uploadedFilePath =
         "${appDirectory.path}/recording-${DateTime.now().millisecondsSinceEpoch}.m4a";
-
     return "";
   }
 
-  initAudio() {
+  /// Initialize the audio recorder
+  void initAudio() {
     try {
       recorderController = RecorderController()
         ..androidEncoder = AndroidEncoder.aac
         ..androidOutputFormat = AndroidOutputFormat.mpeg4
         ..iosEncoder = IosEncoder.kAudioFormatMPEG4AAC
         ..sampleRate = 44100;
-    }  catch (e) {
-      // TODO
+    } catch (e) {
+      // Error initializing recorder
     }
   }
 
@@ -197,6 +245,7 @@ class PlusLogic extends GetxController {
     super.onReady();
   }
 
+  /// Dispose the camera controller and recorder controller upon closing
   @override
   void onClose() {
     controller?.dispose();
@@ -204,23 +253,27 @@ class PlusLogic extends GetxController {
     super.onClose();
   }
 
+  /// Check if all required permissions are granted
   Future<bool> _checkAllPermissions() async {
     final statuses = await Future.wait(allPermission.map((p) => p.status));
     return statuses.every((s) => s.isGranted);
   }
 
+  /// Request permissions from the user
   Future<void> requestPermissions() async {
     bool result = false;
-
     final statuses = await allPermission.request();
+
     PermissionStatus? permissionGrantedAudio;
     PermissionStatus? permissionGrantedVideo;
     PermissionStatus? permissionGrantedPhoto;
+
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await DeviceInfoPlugin().androidInfo;
       int androidVersion = androidInfo.version.sdkInt;
+
+      // For devices running Android 12 or lower
       if (androidVersion <= 32) {
-        /// Android 12-
         if (!await Permission.storage.isGranted) {
           PermissionStatus status = await Permission.storage.request();
           if (status.isGranted) {
@@ -231,12 +284,14 @@ class PlusLogic extends GetxController {
           result = true;
         }
       } else {
-        /// Android 13+
+        // For Android 13 or higher
         Map<Permission, PermissionStatus> permissions =
             await allPermission.request();
+
         permissionGrantedAudio = permissions[Permission.audio]!;
         permissionGrantedVideo = permissions[Permission.videos]!;
         permissionGrantedPhoto = permissions[Permission.photos]!;
+
         if (permissionGrantedAudio == PermissionStatus.granted &&
             permissionGrantedVideo == PermissionStatus.granted &&
             permissionGrantedPhoto == PermissionStatus.granted) {
@@ -244,7 +299,7 @@ class PlusLogic extends GetxController {
         }
       }
     } else {
-      /// IOS - similar to Android 12-
+      // For iOS (similar to Android 12 and lower)
       if (!await Permission.storage.isGranted) {
         PermissionStatus status = await Permission.storage.request();
         if (status.isGranted) {
@@ -254,19 +309,25 @@ class PlusLogic extends GetxController {
         result = true;
       }
     }
+
     if (statuses.values.every((s) => s.isGranted)) {
       result = true;
     } else {
-      //Get.bottomSheet(PerimissonBottomSheet(this), isScrollControlled: true);
+      // Show bottom sheet if permissions are not granted
+      // Get.bottomSheet(PerimissonBottomSheet(this), isScrollControlled: true);
     }
+
+    // If permissions are now granted, close the bottom sheet
     if (result) {
       Get.back();
     }
   }
 
+  /// Initialize the camera
   void initCamera() async {
     _cameras = await availableCameras();
     controller = CameraController(_cameras[0], ResolutionPreset.max);
+
     controller!.initialize().then((_) {
       update();
     }).catchError((e) {
@@ -281,16 +342,21 @@ class PlusLogic extends GetxController {
     });
   }
 
+  /// Check permissions and navigate accordingly
   void _checkPermissionAndNavigate() async {
     if (await _checkAllPermissions()) {
+      // Permissions are already granted
     } else {
+      // Show bottom sheet to request permissions
       Get.bottomSheet(PerimissonBottomSheet(this), isScrollControlled: true);
     }
   }
 
+  /// Start recording video
   Future<void> startVideoRecording() async {
     if (controller == null || !controller!.value.isInitialized) return;
     if (controller!.value.isRecordingVideo) return;
+
     try {
       await controller!.startVideoRecording();
       isRecordingTimeVisible.value = true;
@@ -301,31 +367,42 @@ class PlusLogic extends GetxController {
     }
   }
 
+  /// Stop recording video
   Future<void> stopVideoRecording() async {
     if (controller == null) return;
     if (!controller!.value.isRecordingVideo) return;
+
     try {
       XFile video = await controller!.stopVideoRecording();
       uploadedFilePath = video.path;
+
       isRecordingTimeVisible.value = false;
       _stopVideoRecordingTimer();
 
-      Get.offNamed(PageRoutes.PLUS, arguments: [this]);      uploadFile();
+      // After stopping, go back to the main page and upload the file
+      Get.offNamed(PageRoutes.PLUS, arguments: [this]);
+      uploadFile();
+
       update();
     } catch (e) {
       print('Error stopping video recording: $e');
     }
   }
 
+  /// Capture a picture with the camera
   Future<XFile?> takePicture() async {
     if (controller == null || !controller!.value.isInitialized) return null;
     if (controller!.value.isTakingPicture) return null;
+
     try {
       final XFile file = await controller!.takePicture();
       uploadedFilePath = file.path;
       update();
+
+      // After capturing the picture, go back to the main page and upload the file
       Get.offNamed(PageRoutes.PLUS, arguments: [this]);
       uploadFile();
+
       return file;
     } on CameraException catch (e) {
       print('Error taking picture: ${e.description}');
@@ -333,6 +410,7 @@ class PlusLogic extends GetxController {
     }
   }
 
+  /// Start the video recording timer
   void _startVideoRecordingTimer() {
     recordingDuration = Duration.zero;
     _recordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -342,12 +420,14 @@ class PlusLogic extends GetxController {
     });
   }
 
+  /// Stop the video recording timer
   void _stopVideoRecordingTimer() {
     _recordingTimer?.cancel();
     recordingDuration = Duration.zero;
     recordingTime.value = '';
   }
 
+  /// Format the duration to 00:00:00
   String _formatDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     String hours = twoDigits(duration.inHours);
@@ -356,6 +436,7 @@ class PlusLogic extends GetxController {
     return "$hours:$minutes:$seconds";
   }
 
+  /// Start or stop media (video) recording
   void startOrStopMediaRecording() {
     if (isRecordingTimeVisible.value) {
       stopVideoRecording();
@@ -364,27 +445,29 @@ class PlusLogic extends GetxController {
     }
   }
 
+  /// Select file from the gallery (video or image) using InstaAssetPicker
   void selectFileFromGallery(bool isImage) {
     final theme = InstaAssetPicker.themeData(AppColor.primaryLightColor);
+
     InstaAssetPicker.pickAssets(
       maxAssets: 1,
       pickerConfig: InstaAssetPickerConfig(
-        themeColor: AppColor.primaryLightColor,skipCropOnComplete: true,closeOnComplete: true,
+        themeColor: AppColor.primaryLightColor,
+        skipCropOnComplete: true,
+        closeOnComplete: true,
       ),
       Get.context!,
       requestType: isImage ? RequestType.image : RequestType.video,
       onPermissionDenied: (s, p) {
         print('PlusLogic.selectFileFromGallery onPermissionDenied');
       },
-
       onCompleted: (s) {
-        print('PlusLogic.selectFileFromGallery ${s}');
         s.listen((onData) async {
-          //var file =await onData.data.first.selectedData.asset.file;
-
           if (onData.data.isNotEmpty) {
             var file = await onData.data.first.selectedData.asset.originFile;
             uploadedFilePath = file!.path;
+
+            // Return to the PLUS page and upload
             Get.offNamed(PageRoutes.PLUS, arguments: [this]);
             uploadFile();
             update();
@@ -394,19 +477,20 @@ class PlusLogic extends GetxController {
     );
   }
 
-  /// Picks an image and uploads it
+  /// Pick an image from the gallery using the ImagePicker and upload it
   Future<void> pickAndUploadFile() async {
     try {
       filePath = await pickImage();
     } catch (e) {
-      // TODO
-      print('PlusLogic.pickAndUploadFile = ${e}');
+      print('PlusLogic.pickAndUploadFile = $e');
     }
 
     if (uploadedFilePath.length > 2) {
       isLoadingUploadFile(true);
-      fileid =
-          await _uploadFileController.upload(uploadedFilePath ?? "", (s, i) {});
+      fileid = await _uploadFileController.upload(
+        uploadedFilePath ?? "",
+        (s, i) {},
+      );
       isLoadingUploadFile(false);
 
       if (fileid != null) {
@@ -419,7 +503,7 @@ class PlusLogic extends GetxController {
     update();
   }
 
-  /// Fetches the list of all countries
+  /// Fetch all countries from the server
   Future<void> getAllCountries() async {
     var dio = Dio();
     dio.interceptors.add(MediaVerseConvertInterceptor());
@@ -435,22 +519,22 @@ class PlusLogic extends GetxController {
         ),
       );
 
-      if (response.statusCode! >= 200 || response.statusCode! < 300) {
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
         (response.data['data'] as List<dynamic>).forEach((element) {
           countreisModel.add(CountryModel.fromJson(element));
         });
-        (countreisModel).forEach((element) {
-          countreisString.add(element.title ?? "");
-        });
 
+        for (var element in countreisModel) {
+          countreisString.add(element.title ?? "");
+        }
         update();
       }
     } on DioError catch (e) {
-      // Handle error (optional logging)
+      // Handle error
     }
   }
 
-  /// Opens a bottom sheet to pick a country
+  /// Show bottom sheet for country selection
   void pickCountry() async {
     CountryModel? model = await Get.bottomSheet(
       CountryPickerBottomSheet(countreisModel),
@@ -461,7 +545,7 @@ class PlusLogic extends GetxController {
     }
   }
 
-  /// Opens a bottom sheet to pick a language
+  /// Show bottom sheet for language selection
   void pickLanguage() async {
     String? model = await Get.bottomSheet(
       LangaugePickerBottomSheet(Constant.reversedLanguageMap),
@@ -472,7 +556,7 @@ class PlusLogic extends GetxController {
     }
   }
 
-  /// Fetches the list of all languages
+  /// Fetch all languages from the server
   Future<void> getAllLanguages() async {
     var dio = Dio();
     dio.interceptors.add(MediaVerseConvertInterceptor());
@@ -489,16 +573,17 @@ class PlusLogic extends GetxController {
         ),
       );
 
-      if (response.statusCode! >= 200 || response.statusCode! < 300) {
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
         Constant.reversedLanguageMap = response.data;
         update();
       }
     } on DioError catch (e) {
-      // Handle error (optional logging)
+      // Handle error
     }
   }
 
-  pickImage() async {
+  /// Pick an image from the gallery using ImagePicker
+  Future<String?> pickImage() async {
     try {
       final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
       return pickedFile?.path;
@@ -508,11 +593,15 @@ class PlusLogic extends GetxController {
     }
   }
 
+  /// Upload a file (audio, video, image, text) to the server
   Future<String?> uploadFile() async {
-    fileid == null;
-    fileid = await _uploadFileController.upload(uploadedFilePath, (s, p) {
-      uploadFilePercent.value = (s * 100) / p;
-    });
+    fileid = null;
+    fileid = await _uploadFileController.upload(
+      uploadedFilePath,
+      (s, p) {
+        uploadFilePercent.value = (s * 100) / p;
+      },
+    );
 
     if (fileid != null) {
       toastification.show(
@@ -522,9 +611,9 @@ class PlusLogic extends GetxController {
         description: Text("add_asset_7".tr),
         alignment: Alignment.topLeft,
         autoCloseDuration: const Duration(seconds: 4),
-        primaryColor: Color(0xff0f0f26),
-        backgroundColor: Color(0xffffffff),
-        foregroundColor: Color(0xffffffff),
+        primaryColor: const Color(0xff0f0f26),
+        backgroundColor: const Color(0xffffffff),
+        foregroundColor: const Color(0xffffffff),
         boxShadow: lowModeShadow,
         dragToClose: true,
       );
@@ -536,9 +625,9 @@ class PlusLogic extends GetxController {
         description: Text("add_asset_9".tr),
         alignment: Alignment.topLeft,
         autoCloseDuration: const Duration(seconds: 4),
-        primaryColor: Color(0xff0f0f26),
-        backgroundColor: Color(0xffffffff),
-        foregroundColor: Color(0xffffffff),
+        primaryColor: const Color(0xff0f0f26),
+        backgroundColor: const Color(0xffffffff),
+        foregroundColor: const Color(0xffffffff),
         boxShadow: lowModeShadow,
         dragToClose: true,
       );
@@ -546,11 +635,11 @@ class PlusLogic extends GetxController {
     return fileid;
   }
 
+  /// Return the corresponding license text for the provided enum
   String getLicenceText(PlusLicence li) {
     switch (li) {
       case PlusLicence.free:
         return "add_asset_10".tr;
-
       case PlusLicence.ownership:
         return "add_asset_11".tr;
       case PlusLicence.subscreibe:
@@ -560,12 +649,12 @@ class PlusLogic extends GetxController {
     }
   }
 
+  /// Send the main request to create a post on the server
   void sendMainRequest() async {
     isloading(true);
     _multiplyBy100();
     var box = GetStorage();
 
-    print('PlusLogic.sendMainRequest = ${countreisModel.length}');
     var body = {
       "file_id": fileid,
       "name": nameEditingController.text,
@@ -577,19 +666,27 @@ class PlusLogic extends GetxController {
       "lng": 0,
       "type": 1,
       "media_type": getMediaType(),
-      // "genre": genreController.text,
       "length": "10",
-      //"language": Constant.languageMap[languageController.text],
-      "country": countreisModel
-              .firstWhere((element) => element.iso
-                  .toString()
-                  .contains(selectedCountryModel!.iso ?? ""))
-              .iso ??
-          "",
       "forkability_status": isPriaveContant.value ? "1" : "2",
       "commenting_status": 1,
       "tags": []
     };
+    if (selectedCountryModel != null) {
+      body['country'] = countreisModel
+              .firstWhere(
+                (element) => element.iso
+                    .toString()
+                    .contains(selectedCountryModel?.iso ?? ""),
+              )
+              .iso ??
+          "";
+    }
+
+    if(languageModel!=null){
+      body['language'] = languageModel;
+    }
+
+    // If license type is not 1, it means it's not free and needs a price
     if (!_getPlanByDropDown().toString().contains("1")) {
       body['price'] = _resultPrice;
       print(_resultPrice);
@@ -614,76 +711,15 @@ class PlusLogic extends GetxController {
         ),
       );
 
-      if (response.statusCode! >= 200 || response.statusCode! < 300) {
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
         sendToAssetPage(response.data['data']['id']);
       }
     } on DioError catch (e) {
-      // Handle error (optional logging)
+      // Handle error
     }
   }
 
-  String getSubscrptioonPeriod() {
-    switch (durationEditingController.text) {
-      case "1 Month":
-        return "30";
-      case "1 Year":
-        return "365";
-      case "Unlimited":
-        return "100000000000";
-
-      default:
-        return "24";
-    }
-  }
-
-  void sendToAssetPage(id) {
-    try {
-      String route = PageRoutes.DETAILIMAGE;
-      switch (postype) {
-        case PostType.text:
-          route = PageRoutes.DETAILTEXT;
-        case PostType.image:
-          route = PageRoutes.DETAILIMAGE;
-        case PostType.audio:
-          route = PageRoutes.DETAILMUSIC;
-        case PostType.video:
-          route = PageRoutes.DETAILVIDEO;
-        case PostType.channel:
-        // TODO: Handle this case.
-      }
-
-      Get.toNamed(route,
-          arguments: {'id': id, 'idAssetMedia': 'idAssetMedia'},
-          preventDuplicates: false);
-    } catch (e) {
-      // TODO
-      print('FirebaseController.sendToAssetPage = ${e}');
-    }
-  }
-
-  getMediaType() {
-    switch (postype) {
-      case PostType.image:
-        // TODO: Handle this case.
-        return "image";
-      case PostType.video:
-        // TODO: Handle this case.
-        return "video";
-
-      case PostType.audio:
-        // TODO: Handle this case.
-        return "audio";
-
-      case PostType.text:
-        // TODO: Handle this case.
-        return "text";
-
-      case PostType.channel:
-        // TODO: Handle this case.
-        return "channel";
-    }
-  }
-
+  /// Convert the selected license option to the required string
   _getPlanByDropDown() {
     switch (licence) {
       case PlusLicence.free:
@@ -695,53 +731,114 @@ class PlusLogic extends GetxController {
     }
   }
 
-  Future<void> pickFileWithPermissionCheck() async {
-    _pickFile();
-  }
-
-  void _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: getallowedExtensionsByPostType(),
-    );
-    try {
-      isShowFileFromPath.value=true;
-      selectedFile = File(result!.files.first.path??"");
-      uploadedFilePath =selectedFile!.path;
-      update();
-    }  catch (e) {
-      // TODO
+  /// Get the subscription period in days based on user selection
+  String getSubscrptioonPeriod() {
+    switch (durationEditingController.text) {
+      case "1 Month":
+        return "30";
+      case "1 Year":
+        return "365";
+      case "Unlimited":
+        return "100000000000";
+      default:
+        return "24";
     }
   }
 
+  /// After successful creation of the post, navigate the user to the details page
+  void sendToAssetPage(id) {
+    try {
+      String route = PageRoutes.DETAILIMAGE;
+      switch (postype) {
+        case PostType.text:
+          route = PageRoutes.DETAILTEXT;
+          break;
+        case PostType.image:
+          route = PageRoutes.DETAILIMAGE;
+          break;
+        case PostType.audio:
+          route = PageRoutes.DETAILMUSIC;
+          break;
+        case PostType.video:
+          route = PageRoutes.DETAILVIDEO;
+          break;
+        case PostType.channel:
+          // Optional handling
+          break;
+      }
+      Get.toNamed(
+        route,
+        arguments: {'id': id, 'idAssetMedia': 'idAssetMedia'},
+        preventDuplicates: false,
+      );
+    } catch (e) {
+      print('FirebaseController.sendToAssetPage = $e');
+    }
+  }
+
+  /// Get the media type based on the post type
+  getMediaType() {
+    switch (postype) {
+      case PostType.image:
+        return "image";
+      case PostType.video:
+        return "video";
+      case PostType.audio:
+        return "audio";
+      case PostType.text:
+        return "text";
+      case PostType.channel:
+        return "channel";
+    }
+  }
+
+  /// Get allowed file extensions based on the post type
   getallowedExtensionsByPostType() {
     switch (postype) {
       case PostType.image:
         return ['png', 'jpg', 'jpeg'];
       case PostType.video:
-        return [
-          'mp4',
-        ];
+        return ['mp4'];
       case PostType.audio:
-        // TODO: Handle this case.
-        return ['mp3', "m4a"];
-
+        return ['mp3', 'm4a'];
       case PostType.text:
-        return [
-          'txt',
-        ];
-
+        return ['txt'];
       case PostType.channel:
-      // TODO: Handle this case.
+        return [];
     }
   }
 
+  /// Request permission and pick a file from the device using FilePicker
+  Future<void> pickFileWithPermissionCheck() async {
+    _pickFile();
+  }
+
+  /// Pick a file with FilePicker
+  void _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: getallowedExtensionsByPostType(),
+    );
+
+    try {
+      isShowFileFromPath.value = true;
+      selectedFile = File(result!.files.first.path ?? "");
+      uploadedFilePath = selectedFile!.path;
+      update();
+    } catch (e) {
+      // Error picking file
+    }
+  }
+
+  /// After picking a file, navigate back to the main form
   void goToMainForm() {
     uploadFile();
-    Get.offNamed(PageRoutes.PLUS, arguments: [this]);  }
+    Get.offNamed(PageRoutes.PLUS, arguments: [this]);
+  }
 
+  /// Save a string to a temporary .txt file and return the file path
   Future<String> saveStringToTxtFile(String stringData) async {
-    print('PlusSectionLogic.saveStringToTxtFile = ${stringData}');
+    print('PlusSectionLogic.saveStringToTxtFile = $stringData');
     final directory = await getTemporaryDirectory();
     final filePath = '${directory.path}/fileName.txt';
     final file = File(filePath);
@@ -749,8 +846,11 @@ class PlusLogic extends GetxController {
     return filePath;
   }
 
+  /// Create a text file from user input and upload it
   void createTextAndUploadFile() async {
     isloadingText(true);
+
+    // If user hasn't already chosen a text file, create one from the input
     if (isShowFileFromPath.isFalse) {
       uploadedFilePath =
           await saveStringToTxtFile(mainTextEditingController.text);
@@ -758,12 +858,16 @@ class PlusLogic extends GetxController {
 
     await uploadFile();
     isloadingText(false);
+
+    // Navigate back to the main form after upload
     Get.offNamed(PageRoutes.PLUS, arguments: [this]);
   }
 }
 
+/// Defines the aspect ratio for media: post or story
 enum PlusAspectRatio { post, story }
 
+/// Defines the license types: free, ownership or subscribe
 enum PlusLicence {
   free,
   ownership,

@@ -32,12 +32,12 @@ class AssetMiniTabWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Container(
+            if(model.postType!=PostType.text) Container(
               width: 8.h,
               height: 8.h,
               child: Stack(
                 children: [
-                  SizedBox.expand(
+                 SizedBox.expand(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: HomeImageWidget(model.thumbnails!.x226??""),
@@ -52,6 +52,17 @@ class AssetMiniTabWidget extends StatelessWidget {
                   )
         
                 ],
+              ),
+            ),
+            if(model.postType==PostType.text) Container(
+              width: 8.h,
+              height: 8.h,
+              decoration: BoxDecoration(
+                color: "0f0f26".toColor(),
+                borderRadius: BorderRadius.circular(10)
+              ),
+              child: Center(
+                child: SvgPicture.asset("assets/all/icons/mini_icon_text.svg"),
               ),
             ),
             SizedBox(width: 3.w,),

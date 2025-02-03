@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -23,6 +26,7 @@ class _ChannelLiveTabState extends State<ChannelLiveTab> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       body: Container(
@@ -45,7 +49,8 @@ class _ChannelLiveTabState extends State<ChannelLiveTab> {
                             child: GetBuilder<
                                 ChannelMainVideoLiveController>(
                               builder: (channelMainVideoLiveController) {
-                                if (logic.isChannelLiveStarted.isFalse) {
+
+                                      if (logic.isChannelLiveStarted.isFalse) {
                                   return Container(
                                     height: 20.h, child: Center(
                                     child: Text(
@@ -131,83 +136,85 @@ class _ChannelLiveTabState extends State<ChannelLiveTab> {
               Expanded(child: GetBuilder<MyChannelController>(
                   init: logic,
                   builder: (logic) {
-                return GridView.builder(
+                    return GridView.builder(
 
-                    itemBuilder: (s, i) {
-                      LiveModel model = logic.livemodels.elementAt(i);
-                      return (model
-                          .program != null) ? Container(
-                        margin: EdgeInsets.symmetric(horizontal: 1.w),
+                        itemBuilder: (s, i) {
+                          LiveModel model = logic.livemodels.elementAt(i);
+                          return (model
+                              .program != null) ? Container(
+                            margin: EdgeInsets.symmetric(horizontal: 1.w),
 
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              height: 14.h,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Stack(
-                                  children: [
-                                    SizedBox.expand(
-                                        child: Container(
-                                          key: ValueKey(
-                                              "live - ${model.id}"),
-                                          child:
-                                          ChannelVideoLiveWidget(
-                                            videoUrl:
-                                            model.url ??
-                                                "",
-                                            title: model
-                                                .program!.name ??
-                                                "",
-                                            liveID:
-                                            model.id ??
-                                                "", onSwitch: (String liveID) {
-                                            // logic.switchTo(liveID);
-                                          },
-                                          ),
-                                        )),
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        width: 7.w,
-                                        height: 7.w,
-                                        margin: EdgeInsets.all(3.w),
-                                        child: MaterialButton(
-                                            padding: EdgeInsets.zero,
-                                            onPressed: () {
-                                              logic.switchTo(
-                                                  model.id.toString());
-                                            },
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius
-                                                    .circular(5)
-                                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  height: 14.h,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Stack(
+                                      children: [
+                                        SizedBox.expand(
                                             child: Container(
-                                                width: 7.w,
-                                                height: 7.w,
-                                                child: SvgPicture.asset(
-                                                  "assets/all/icons/switch_channels.svg",))),
-                                      ),
-                                    )
-                                  ],
+                                              key: ValueKey(
+                                                  "live - ${model.id}"),
+                                              child:
+                                              ChannelVideoLiveWidget(
+                                                videoUrl:
+                                                model.url ??
+                                                    "",
+                                                title: model
+                                                    .program!.name ??
+                                                    "",
+                                                liveID:
+                                                model.id ??
+                                                    "",
+                                                onSwitch: (String liveID) {
+                                                  // logic.switchTo(liveID);
+                                                },
+                                              ),
+                                            )),
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Container(
+                                            width: 7.w,
+                                            height: 7.w,
+                                            margin: EdgeInsets.all(3.w),
+                                            child: MaterialButton(
+                                                padding: EdgeInsets.zero,
+                                                onPressed: () {
+                                                  logic.switchTo(
+                                                      model.id.toString());
+                                                },
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius
+                                                        .circular(5)
+                                                ),
+                                                child: Container(
+                                                    width: 7.w,
+                                                    height: 7.w,
+                                                    child: SvgPicture.asset(
+                                                      "assets/all/icons/switch_channels.svg",))),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            SizedBox(height: 1.h,),
-                            Text(model
-                                .program!.name ?? "", style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 10.sp),)
+                                SizedBox(height: 1.h,),
+                                Text(model
+                                    .program!.name ?? "", style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10.sp),)
 
-                          ],
-                        ),
-                      ) : Container();
-                    },
-                    itemCount: logic.livemodels.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,));
-              })),
+                              ],
+                            ),
+                          ) : Container();
+                        },
+                        itemCount: logic.livemodels.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,));
+                  })),
 
               Container(
                 width: 100.w,

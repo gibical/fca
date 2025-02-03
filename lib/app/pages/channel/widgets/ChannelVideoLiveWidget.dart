@@ -50,15 +50,15 @@ class _ChannelVideoLiveWidgetState extends State<ChannelVideoLiveWidget> {
 
   void _initializeVideoPlayer() {
     try {
-      _videoPlayerController = VideoPlayerController.network(widget.videoUrl)
+      _videoPlayerController = VideoPlayerController.network(widget.videoUrl,  videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),)
         ..initialize().then((_) {
           _chewieController = ChewieController(
             videoPlayerController: _videoPlayerController,
             autoPlay: false,
-            looping: true,
+            looping: true,isLive: true,customControls: Container(),allowMuting: true
           );
           setState(() {});
-        });
+        },);
 
       _videoPlayerController.addListener(() {
         if (_videoPlayerController.value.hasError) {
@@ -140,13 +140,15 @@ class _ChannelMainVideoLiveWidgetState extends State<ChannelMainVideoLiveWidget>
 
   void _initializeVideoPlayer() {
     try {
-      _videoPlayerController = VideoPlayerController.network(widget.url)
+      _videoPlayerController = VideoPlayerController.network(widget.url, videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true,allowBackgroundPlayback: true,),)
         ..initialize().then((_) {
+
           _chewieController = ChewieController(
             videoPlayerController: _videoPlayerController,
             autoPlay: true,
-            looping: true,
+            looping: true,isLive: true,customControls: Container(),allowMuting: true
           );
+
           setState(() {});
         });
 

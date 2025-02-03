@@ -416,35 +416,40 @@ class DetailImageScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(14.sp)),
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(14.sp),
-                              child: CachedNetworkImage(
-                                imageUrl: imageController.imageDetails?[
-                                'thumbnails'] !=
-                                    null &&
-                                    imageController.imageDetails!['thumbnails']
-                                    is Map<String, dynamic>
-                                    ? imageController.imageDetails!['thumbnails']
-                                ['525x525'] ??
-                                    ''
-                                    : '',
-                                fit: BoxFit.cover,
-                                placeholder: (context, url) {
-                                  return Center(child: Transform.scale(
-                                    scale: 0.5,
-                                    child: CircularProgressIndicator(
-                                      color: AppColor.primaryColor,
-                                      backgroundColor: AppColor.primaryColor.withOpacity(0.3),
-                                    ),
-                                  ),);
-                                },
-                                errorWidget: (context, url, error) {
-                                  return Center(child: Transform.scale(
-                                    scale: 0.5,
-                                    child: CircularProgressIndicator(
-                                      color: AppColor.primaryColor,
-                                      backgroundColor: AppColor.primaryColor.withOpacity(0.3),
-                                    ),
-                                  ),);
-                                },
+                              child: Builder(
+                                builder: (context) {
+
+                                  return CachedNetworkImage(
+                                    imageUrl: imageController.imageDetails?[
+                                    'thumbnails'] !=
+                                        null &&
+                                        imageController.imageDetails!['thumbnails']
+                                        is Map<String, dynamic>
+                                        ? imageController.imageDetails!['thumbnails']
+                                    ['525x525'] ??
+                                        ''
+                                        : '',
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) {
+                                      return Center(child: Transform.scale(
+                                        scale: 0.5,
+                                        child: CircularProgressIndicator(
+                                          color: AppColor.primaryColor,
+                                          backgroundColor: AppColor.primaryColor.withOpacity(0.3),
+                                        ),
+                                      ),);
+                                    },
+                                    errorWidget: (context, url, error) {
+                                      return Center(child: Transform.scale(
+                                        scale: 0.5,
+                                        child: CircularProgressIndicator(
+                                          color: AppColor.primaryColor,
+                                          backgroundColor: AppColor.primaryColor.withOpacity(0.3),
+                                        ),
+                                      ),);
+                                    },
+                                  );
+                                }
                               )),
                         ),
                       ),

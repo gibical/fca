@@ -69,105 +69,100 @@ class _AddProgramBottonsheetState extends State<AddProgramBottonsheet> {
         body: Container(
           height: 100.h,
           padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
-          child: Stack(
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    height: MediaQuery
-                        .of(context)
-                        .viewPadding
-                        .top + 4.h,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AppbarBTNWidgetAll(
-                          iconName: 'remove',
-                          onTap: () {
-                            Get.back();
-                          }),
-                      Text(
-                        "my_channel_10".tr,
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
-                      Container(
-                        width: 10.w,
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 1.h),
-                    width: 100.w,
-                    height: 6.h,
-                    decoration: BoxDecoration(
-                        color: "0f0f26".toColor(),
-                        borderRadius: BorderRadius.circular(10)),
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: TextField(
-                      controller: _nameEditingController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintStyle: TextStyle(color: "#9C9CB8".toColor()),
-                        hintText: "add_channel_3".tr,
-                      ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: MediaQuery
+                      .of(context)
+                      .viewPadding
+                      .top + 4.h,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppbarBTNWidgetAll(
+                        iconName: 'remove',
+                        onTap: () {
+                          Get.back();
+                        }),
+                    Text(
+                      "my_channel_10".tr,
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
+                    Container(
+                      width: 10.w,
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 1.h),
+                  width: 100.w,
+                  height: 6.h,
+                  decoration: BoxDecoration(
+                      color: "0f0f26".toColor(),
+                      borderRadius: BorderRadius.circular(10)),
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: TextField(
+                    controller: _nameEditingController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(color: "#9C9CB8".toColor()),
+                      hintText: "add_channel_3".tr,
                     ),
                   ),
-                  SizedBox(
-                    height: 1.h,
-                  ),
-                  MaterialButton(
-                    onPressed: () {
-              //
-                     if(!widget.isEdit) _selectAssetType();
-                    },
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Container(
-                        width: 100.w,
-                        height: 6.h,
-                        decoration: BoxDecoration(
-                            color:widget.isEdit?"9c9cb8".toColor(): "0f0f26".toColor(),
-                            borderRadius: BorderRadius.circular(10)),
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: _sourceEditingController.text.length > 4
-                            ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              _sourceEditingController.text,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: widget.isEdit?Colors.white:"#9C9CB8".toColor()),
-                            ),
-                            SvgPicture.asset(
-                                "assets/all/icons/add_channel_3.svg",
-                                color: widget.isEdit?Colors.white:"#9C9CB8".toColor())
-                          ],
-                        )
-                            : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "my_channel_11".tr,
-                              style: TextStyle(color: "#9C9CB8".toColor()),
-                            ),
-                            SvgPicture.asset(
-                                "assets/all/icons/add_channel_3.svg",
-                                color: "#9C9CB8".toColor())
-                          ],
-                        )),
-                  ),
-                ],
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child:                   Container(
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                MaterialButton(
+                  onPressed: () {
+            //
+                   if(!widget.isEdit) _selectAssetType();
+                  },
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Container(
+                      width: 100.w,
+                      height: 6.h,
+                      decoration: BoxDecoration(
+                          color:widget.isEdit?"9c9cb8".toColor(): "0f0f26".toColor(),
+                          borderRadius: BorderRadius.circular(10)),
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: _sourceEditingController.text.length > 4
+                          ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            _sourceEditingController.text,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: widget.isEdit?Colors.white:"#9C9CB8".toColor()),
+                          ),
+                          SvgPicture.asset(
+                              "assets/all/icons/add_channel_3.svg",
+                              color: widget.isEdit?Colors.white:"#9C9CB8".toColor())
+                        ],
+                      )
+                          : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "my_channel_11".tr,
+                            style: TextStyle(color: "#9C9CB8".toColor()),
+                          ),
+                          SvgPicture.asset(
+                              "assets/all/icons/add_channel_3.svg",
+                              color: "#9C9CB8".toColor())
+                        ],
+                      )),
+                ),
+                Container(
                   width: 100.w,
                   height: 5.h,
                   margin: EdgeInsets.symmetric(vertical: 2.h),
@@ -194,9 +189,8 @@ class _AddProgramBottonsheetState extends State<AddProgramBottonsheet> {
                     }),
                   ),
                 )
-                ,
-              )
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -20,6 +20,7 @@ class HomeTabController extends GetxController {
 
   List<ContentModel> models = [];
   List<ChannelsModel> channelsModel = [];
+  List<ChannelsModel> allChannelsModel = [];
   var isloadingMini =true.obs;
   var isloadingPage =true.obs;
 
@@ -35,6 +36,7 @@ class HomeTabController extends GetxController {
     
    if(!isChannel) getInitRequest(true);
    if(isChannel) getChnannelInitRequest(true);
+   if(isChannel) getChnannelAll(true);
   }
   
   void openSort()async {
@@ -127,7 +129,7 @@ class HomeTabController extends GetxController {
 
     try {
       var response = await dio.get(
-        '${Constant.HTTP_HOST}'"channels",
+        '${Constant.HTTP_HOST}'"channels?last_event_type=started",
 
         options: Options(
           headers: {
@@ -143,6 +145,45 @@ class HomeTabController extends GetxController {
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
 
         channelsModel = FromJsonGetAllChannels.fromJson(response.data).data??[];
+        if(kDebugMode)print('Request succeeded: ${response.statusCode} = ${models.length} = ${response.requestOptions.queryParameters}');
+        isloadingPage(false);
+        isloadingMini(false);
+        update();
+      } else {
+        print('Request failed: ${response.statusMessage}');
+        return null;
+      }
+    } on DioError catch (e) {
+      print('DioError: ${e.message}');
+      return null;
+    }
+  }
+  void getChnannelAll(bool bool) async{
+    var dio = Dio();
+
+    dio.interceptors.add(MediaVerseConvertInterceptor());
+
+    if(bool)isloadingMini(true);
+    isloadingPage(true);
+
+    try {
+      var response = await dio.get(
+        '${Constant.HTTP_HOST}'"channels",
+
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${GetStorage().read("token")}',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+
+
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+
+        allChannelsModel = FromJsonGetAllChannels.fromJson(response.data).data??[];
         if(kDebugMode)print('Request succeeded: ${response.statusCode} = ${models.length} = ${response.requestOptions.queryParameters}');
         isloadingPage(false);
         isloadingMini(false);

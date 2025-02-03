@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
@@ -21,7 +22,7 @@ class MiniVideoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool _isPermiuim = model.licenseType!=0 ;
+    bool _isPermiuim = model.licenseType!=1 ;
     return Container(
 
 
@@ -52,7 +53,7 @@ class MiniVideoWidget extends StatelessWidget {
                     children: [
                       SizedBox.expand(child:HomeImageWidget(model.thumbnails!.x226.toString())),
                      if(selectedAsset!=null&&selectedAsset==true) SizedBox.expand(child:Container(color: Colors.black.withOpacity(0.6),)),
-                     if(selectedAsset!=null&&selectedAsset==true) Align(child:SvgPicture.asset("assets/all/icons/check-circle.svg") ,),
+                     if(selectedAsset!=null&&selectedAsset==true) Align(child:SvgPicture.asset("assets/all/icons/check-circle.svg",color: AppColor.primaryLightColor,) ,),
                      if(_isPermiuim) Align(
                         alignment: Alignment.topLeft,
                         child: Container(

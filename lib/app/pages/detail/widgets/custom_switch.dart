@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mediaverse/app/common/app_extension.dart';
 
 
 class CustomSwitchWidget extends StatefulWidget {
@@ -15,36 +16,11 @@ class CustomSwitchWidget extends StatefulWidget {
 class _CustomSwitchWidgetState extends State<CustomSwitchWidget> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        widget.onChanged(!widget.value);
-      },
-      child: Container(
-        width: 48,
-        height: 24,
-        decoration: BoxDecoration(
-          color: widget.value ? const Color(0xFF2563EB) : Colors.grey[400],
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Stack(
-          children: [
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeInOut,
-              left: widget.value ? 24 : 2,
-              top: 2,
-              child: Container(
-                width: 20,
-                height: 20,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFF5F5F5),
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return Switch(
+        inactiveThumbColor: Colors.white,
+        inactiveTrackColor: "9c9cb8".toColor(),
+        value: widget.value,
+        onChanged: (s) {
+          widget.onChanged(!widget.value);          });
   }
 }

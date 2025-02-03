@@ -269,9 +269,8 @@ CountryModel countryModel = CountryModel();
   }
 
   void praseJsonFromGetProfile(source) {
-    print('ProfileControllers.praseJsonFromGetProfile  1 ${source}');
     model = ProfileModel.fromJson(jsonDecode(source));
-    print('ProfileControllers.praseJsonFromGetProfile  2 ');
+    GetStorage().write("userid", "${model.id}");
     onGetProfileAssets();
 
     onGetAssetsAll();

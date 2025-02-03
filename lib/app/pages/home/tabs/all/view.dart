@@ -99,6 +99,7 @@ class AllTabScreen extends StatelessWidget {
               TitleWidgetExplore("home_10".tr, () {
                 logic.pageController.animateToPage(2, duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
               }),
+              SizedBox(height: 1.h,),
               GetBuilder<HomeTabController>(
                   init: logic.videoController,
                   tag: "video",
@@ -134,6 +135,8 @@ class AllTabScreen extends StatelessWidget {
                 logic.pageController.animateToPage(3, duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
 
               }),
+              SizedBox(height: 1.h,),
+
               GetBuilder<HomeTabController>(
                   init: logic.imageController,
                   tag: "image",
@@ -174,6 +177,8 @@ class AllTabScreen extends StatelessWidget {
                 logic.pageController.animateToPage(4, duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
 
               }),
+              SizedBox(height: 1.h,),
+
               GetBuilder<HomeTabController>(
                   init: logic.audioController,
                   tag: "audio",
@@ -191,7 +196,7 @@ class AllTabScreen extends StatelessWidget {
                               .models.length,
                           itemBuilder: (s, i) {
                             return Container(
-                                width: 45.w,
+                                width: 47.w,
                                 child: logic.isloadingMini.value
                                     ? ShimmerMiniAudioWidget()
                                     :
@@ -207,6 +212,8 @@ class AllTabScreen extends StatelessWidget {
                 logic.pageController.animateToPage(5, duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
 
               }),
+              SizedBox(height: 1.h,),
+
               GetBuilder<HomeTabController>(
                   init: logic.textController,
                   tag: "text",

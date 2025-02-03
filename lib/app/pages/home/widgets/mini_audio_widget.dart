@@ -40,7 +40,7 @@ class MiniAudioWidget extends StatelessWidget {
             Container(
               height:height?? 45.w,
               margin: EdgeInsets.only(
-                  right: 5
+                  right: 10
               ),
               decoration: BoxDecoration(
 

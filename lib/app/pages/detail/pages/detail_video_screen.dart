@@ -855,6 +855,7 @@ class CommentBoxWidget extends StatelessWidget {
                                   12.sp)),
                           context: context,
                           items: [
+                          
                             PopupMenuItem(
                               value: 1,
                               onTap: () {
@@ -869,6 +870,23 @@ class CommentBoxWidget extends StatelessWidget {
                                       'assets/mediaverse/icons/report.svg',
                                     ),
                                     Text('details_6'.tr),
+                                  ],
+                                ),
+                              ),
+                            ),
+                         if(data['user']['id']==GetStorage().read("userid"))   PopupMenuItem(
+                              value: 1,
+                              onTap: () {
+
+                                logic.deleteComment(data['id']);
+                              },
+                              child: SizedBox(
+                                width: 130,
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/mediaverse/icons/delete.svg'),
+                                    Text('Delete'.tr),
                                   ],
                                 ),
                               ),

@@ -16,6 +16,7 @@ import '../../../../../gen/model/json/FromJsonGetNewCountries.dart';
 import '../../../../common/app_color.dart';
 import '../../../../common/utils/dio_inperactor.dart';
 import '../../../../widgets/country_picker.dart';
+import '../my_channel/view.dart';
 
 /// Controller for managing the addition of channels
 class AddChannelController extends GetxController {
@@ -225,7 +226,10 @@ class AddChannelController extends GetxController {
           }  catch (e) {
             // TODO
           }
+          
           Get.back();
+          Get.bottomSheet(MyChannelManagementBottomSheet(ChannelsModel.fromJson(response.data['data'])),isScrollControlled: true);
+
         } else {
           try {
             var message = response.data['message'];

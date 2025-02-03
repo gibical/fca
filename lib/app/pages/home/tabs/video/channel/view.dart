@@ -58,45 +58,17 @@ class _ChannelTabScreenState extends State<ChannelTabScreen> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 16
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 16),
                 height: 80.h,
                 child: LayoutGrid(
-                  areas: '''
-                      image1
-                      image2
-                      image3
-                      image4
-                      image5
-                      image6
-                      image7
-                      image8
-                      image9
-                     
-                               ''',
-                  columnSizes: [
-                    1.fr
-                  ],
-                  //
-                  rowSizes: [
-                    1.fr,
-                    1.fr,
-                    1.fr,
-                    1.fr,
-                    1.fr,
-                    1.fr,
-                    1.fr,
-                    1.fr,
-                    1.fr,
-
-                  ],
+                  areas: List.generate(logic.allChannelsModel.length, (index) => 'image${index + 1}').join('\n'),
+                  columnSizes: [1.fr],
+                  rowSizes: List.filled(logic.allChannelsModel.length, 1.fr),
                   columnGap: 6.w,
                   rowGap: 10,
-                  children: logic.channelsModel.getRange(0, 9).toList().asMap().entries.map((toElement){
-                    List<ChannelsModel> models=  logic.channelsModel.getRange(0, 9).toList();
-
-                    return MiniChannelWidget(model:  models.elementAt(toElement.key)).inGridArea("image${toElement.key+1}");
+                  children: logic.allChannelsModel.getRange(0, logic.allChannelsModel.length).toList().asMap().entries.map((toElement) {
+                    List<ChannelsModel> models = logic.allChannelsModel.getRange(0, logic.allChannelsModel.length).toList();
+                    return MiniChannelWidget(model: models.elementAt(toElement.key)).inGridArea("image${toElement.key + 1}");
                   }).toList(),
                 ),
               ),

@@ -22,7 +22,11 @@ class ScreenCaptureService : Service(), ConnectCheckerRtmp {
     private lateinit var rtmpDisplay: RtmpDisplay
     private var rtmpUrl: String? = null
 
-    private var isCapturing = false
+    // تغییر ۱: افزودن Companion object برای نگهداری وضعیت سرویس
+    companion object {
+        var isCapturing = false
+        var currentRtmpUrl: String? = null
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -68,7 +72,10 @@ class ScreenCaptureService : Service(), ConnectCheckerRtmp {
                         Log.d(TAG, "Video prepared successfully. Starting stream.")
                         rtmpDisplay.startStream(rtmpUrl)
                         Log.d(TAG, "Stream started to $rtmpUrl")
+
+                        // تغییر ۲: ست کردن وضعیت سرویس در Companion object
                         isCapturing = true
+                        currentRtmpUrl = rtmpUrl
                     } else {
                         Log.e(TAG, "prepareVideo failed.")
                         stopScreenCapture()
@@ -92,10 +99,13 @@ class ScreenCaptureService : Service(), ConnectCheckerRtmp {
         Log.d(TAG, "Stopping screen capture.")
         if (::rtmpDisplay.isInitialized && rtmpDisplay.isStreaming) {
             rtmpDisplay.stopStream()
-            sendBroadcastMessage("stopTheStream")
             Log.d(TAG, "Stream stopped.")
         }
+        // به فلاتر هم پیام ارسال می‌کنیم که استریم متوقف شده
+        sendBroadcastMessage("stopTheStream")
+
         isCapturing = false
+        currentRtmpUrl = null
         Log.d(TAG, "MediaProjection stopped.")
 
         stopForeground(true)
@@ -156,6 +166,7 @@ class ScreenCaptureService : Service(), ConnectCheckerRtmp {
         runOnUiThread {
             Toast.makeText(this, "Connection Failed: $reason", Toast.LENGTH_SHORT).show()
         }
+        // اگر اتصال قطع شود، سرویس را متوقف کرده و به فلاتر پیام می‌دهیم
         stopScreenCapture()
     }
 
@@ -168,6 +179,7 @@ class ScreenCaptureService : Service(), ConnectCheckerRtmp {
         runOnUiThread {
             Toast.makeText(this, "Disconnected", Toast.LENGTH_SHORT).show()
         }
+        // با قطع شدن اتصال، سرویس را متوقف کرده و پیام ارسال می‌کنیم
         stopScreenCapture()
     }
 

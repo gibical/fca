@@ -589,9 +589,11 @@ class DetailController extends GetxController {
     try {
       final token = GetStorage().read("token");
 
+      var dio =Dio();
       String apiUrl =
           '${Constant.HTTP_HOST}tasks/video-audio';
-      var response = await Dio().post(apiUrl, options: Options(headers: {
+      dio.interceptors.add(CurlLoggerDioInterceptor());
+      var response = await dio.post(apiUrl, options: Options(headers: {
         'accept': 'application/json',
         'X-App': '_Android',
         'Accept-Language': 'en-US',
@@ -611,11 +613,11 @@ class DetailController extends GetxController {
         Constant.showMessege("Request Denied : ${response.data['status']}");
 
       }
-    } catch (e) {
+    } on DioException catch (e) {
       // Handle errors
       Constant.showMessege("Request Denied : ${e.toString()}");
 
-      print('DetailController._fetchMediaData = $e');
+      print('DetailController._fetchMediaData = ${e.response}');
     } finally {
 
     }
@@ -672,9 +674,7 @@ class DetailController extends GetxController {
 
   void textToAudio() async{
 
-    String? language = await runCustomSelectBottomLanguageSheet(models: Constant.languages,);
 
-    String loclae = Constant.languageMap[language]??"";
     try {
       final token = GetStorage().read("token");
 
@@ -689,7 +689,6 @@ class DetailController extends GetxController {
         'Authorization': 'Bearer $token',
       },),data: {
         "file": file_id,
-        "language": loclae
 
       },);
 
@@ -714,8 +713,10 @@ class DetailController extends GetxController {
     }
   }
   void videoDubbing() async{
+    await checkVideoLength();
     String? language = await runCustomSelectBottomLanguageSheet(models: Constant.languages,);
 
+    Get.back();
     String loclae = Constant.languageMap[language]??"";
     try {
       final token = GetStorage().read("token");
@@ -861,6 +862,7 @@ class DetailController extends GetxController {
                             return InkWell(
                               onTap: () {
                                 Get.back(result: item);
+
                               },
                               child: Column(
                                 children: [
@@ -1397,5 +1399,59 @@ class DetailController extends GetxController {
       print('DioError: ${e.requestOptions.uri} ${e.message}');
       return null;
     }
+  }
+
+  void deleteComment(data)async {
+    var dio = Dio();
+    dio.interceptors.add(MediaVerseConvertInterceptor());
+    try {
+      var response = await dio.delete(
+        '${Constant.HTTP_HOST}'"comments/${data}",
+        data: {
+
+        },
+        options: Options(
+
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${GetStorage().read("token")}',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        if(kDebugMode)print('Request succeeded: ${response.statusCode} - ${response.data}');
+
+
+        try{
+
+          await fetchMediaComments();
+
+        }catch(e){
+
+        }
+
+        return response.data;
+
+
+
+      } else {
+        print('Request failed: ${response.statusMessage}');
+        return null;
+      }
+    } on DioError catch (e) {
+
+      print('DioError: ${e.requestOptions.uri} ${e.message}');
+      return null;
+    }
+  }
+
+  checkVideoLength() {
+   if( (detailss?['length'] as num) <=0){
+     Constant.showMessege("alert_21".tr);
+     return;
+   }
   }
 }

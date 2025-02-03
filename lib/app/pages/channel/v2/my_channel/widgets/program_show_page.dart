@@ -12,7 +12,9 @@ import 'package:mediaverse/app/pages/home/widgets/home_image_widget.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetChannelsShow.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../../gen/model/enums/post_type_enum.dart';
 import '../../../../../common/app_color.dart';
+import '../../../../../common/app_route.dart';
 import '../../../../../common/widgets/appbar_btn.dart';
 import '../../../../stream/view.dart';
 import '../logic.dart';
@@ -177,7 +179,7 @@ class _ProgramShowPageState extends State<ProgramShowPage> {
               SizedBox(
                 height: 4.h,
               ),
-              Visibility(
+              if(widget.programs.asset!=null) Visibility(
                 visible: widget.programs.source.toString().contains("file"),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -187,7 +189,7 @@ class _ProgramShowPageState extends State<ProgramShowPage> {
                       height: 60.w,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
-                        child: Image.asset("assets/all/images/tumnial.png"),
+                        child: HomeImageWidget(widget.programs.asset!.thumbnails!.x366??""),
                       ),
                     
                     ),
@@ -195,10 +197,12 @@ class _ProgramShowPageState extends State<ProgramShowPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("A Journey Through the Wild",
+                        Text(widget.programs.asset!.name??"",
                           style: TextStyle(fontWeight: FontWeight.bold),),
                         MaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            sendToAssetPage(widget.programs.asset!.postType, widget.programs.asset!.id??"");
+                          },
                           child: Row(
                             children: [
                               Text(
@@ -448,5 +452,28 @@ class _ProgramShowPageState extends State<ProgramShowPage> {
         ),
       ),
     );
+  }
+  void  sendToAssetPage(PostType postType,id) {
+
+    try {
+
+      String route = PageRoutes.DETAILIMAGE;
+      switch (postType) {
+        case PostType.text:
+          route = PageRoutes.DETAILTEXT;
+        case PostType.image:
+          route = PageRoutes.DETAILIMAGE;
+        case PostType.audio:
+          route = PageRoutes.DETAILMUSIC;
+        case PostType.video:
+          route = PageRoutes.DETAILVIDEO;
+        case PostType.channel:
+        // TODO: Handle this case.
+      }
+      Get.toNamed(route, arguments: {'id': id}, preventDuplicates: false);
+    } catch (e) {
+      // TODO
+      print('FirebaseController.sendToAssetPage = ${e}');
+    }
   }
 }

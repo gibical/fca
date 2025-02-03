@@ -78,53 +78,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
           ),
         ),
       ),
-      body: DefaultTabController(
-        length: 2,
-        child: Column(
-          children: [
-            Container(
-              width: 100.w,
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.4),
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(60.sp),
-                  bottomLeft: Radius.circular(60.sp),
-                ),
-              ),
-              height: 60,
-              child: TabBar(
-                tabAlignment: TabAlignment.center,
-                physics: const BouncingScrollPhysics(),
-                isScrollable: true,
-                controller: _tabController,
-                labelPadding: const EdgeInsets.symmetric(horizontal: 20.0),
-                overlayColor: MaterialStateProperty.all(Colors.transparent),
-                enableFeedback: false,
-                indicatorWeight: 2,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorColor: AppColor.primaryLightColor,
-                unselectedLabelColor: Colors.grey,
-                labelColor: AppColor.primaryLightColor,
-                dividerColor: Colors.transparent,
-                tabs: [
-                  _buildTab(context, 0, 'Stream'.tr),
-                  _buildTab(context, 1, 'Share'.tr),
-                ],
-              ),
-            ),
-            Expanded(
-              child: TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _tabController,
-                children: [
-                  getAcoountStream(),
-                  getAcoountShare(),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      body: getAcoountShare(),
     );
   }
 
@@ -423,85 +377,29 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
                       ),
                       if(!isSendedByCondactor)Align(
                         alignment: Alignment.bottomCenter,
-                        child: Container(
-                            width: 100.w,
-                            height: 9.h,
-                            decoration: BoxDecoration(
-                                color: AppColor.primaryLightColor,
-                                border: Border(
-                                  left: BorderSide(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      width: 1),
-                                  bottom: BorderSide(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      width: 0.4),
-                                ),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15),
-                                )),
-                            child: Stack(
-                              children: [
-                                Align(
-                                  child: Container(
-                                    width: 80.w,
-                                    height: 5.h,
-                                    child: DottedBorder(
-                                      borderType: BorderType.RRect,
-                                      color: "6f6e8e".toColor(),
-                                      radius: Radius.circular(12),
-                                      strokeWidth: 2,
-                                      child: ClipRRect(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12)),
-                                          child: MaterialButton(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    12)),
-                                            onPressed: () {
-                                              logic.showAccountType();
-                                            },
-                                            padding: EdgeInsets.zero,
-                                            child: Center(
-                                              child: Row(
-                                                mainAxisSize:
-                                                MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .center,
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment
-                                                    .center,
-                                                children: [
-                                                  Text(
-                                                    "share_28".tr,
-                                                    style: TextStyle(
-                                                        color: "6f6e8e"
-                                                            .toColor(),
-                                                        fontWeight:
-                                                        FontWeight
-                                                            .bold),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 3.w,
-                                                  ),
-                                                  Icon(
-                                                    Icons
-                                                        .add_circle_outline,
-                                                    color:
-                                                    "6f6e8e".toColor(),
-                                                    size: 11.sp,
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          )),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
+                        child:   Container(
+                          width: 100.w,
+                          height: 6.h,
+                          margin: EdgeInsets.symmetric(vertical: 3.5.h,horizontal: 16),
+                          decoration: BoxDecoration(
+                              color: AppColor.primaryLightColor,
+                              borderRadius: BorderRadius.circular(500)
+                          ),
+                          child: MaterialButton(
+                            onPressed: () {
+                              logic.showAccountType();
+
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(500)),
+                            child: Center(
+                              child: Center(
+                                child: Text("share_28".tr,
+                                  style: TextStyle(fontWeight: FontWeight.w500),),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
 
 
