@@ -34,15 +34,31 @@ import '../home/logic.dart';
 import 'logic.dart';
 import 'old.dart';
 
-class LiveScreen extends StatelessWidget {
+class LiveScreen extends StatefulWidget {
   LiveScreen({super.key});
 
+  @override
+  State<LiveScreen> createState() => _LiveScreenState();
+}
+
+class _LiveScreenState extends State<LiveScreen> {
   HomeLogic logic = Get.find<HomeLogic>();
 
   LiveController liveController = Get.put(
       LiveController(), tag: "time_${DateTime
       .now()
       .millisecond}");
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+   try {
+     Get.find<LiveController>().chewieController!.dispose();
+   }  catch (e) {
+     // TODO
+   }
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

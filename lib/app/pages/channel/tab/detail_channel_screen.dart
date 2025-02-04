@@ -63,29 +63,7 @@ class _DetailChannelScreenState extends State<DetailChannelScreen> {
                                   builder: (logic) {
                                     return Stack(
                                       children: [
-                                        Container(
-                                          child: GetBuilder<
-                                              ChannelMainVideoLiveController>(
-                                            builder: (channelMainVideoLiveController) {
 
-
-                                              if(logic.isChannelLiveStarted.isFalse){
-                                                return Container(height: 20.h,child: Center(
-                                                  child: Text("Live is Not Available Right Now"),
-                                                ),);
-                                              }
-                                              return  ChannelMainVideoLiveWidget(
-                                                 logic.channelsModel.url??"");
-                                            },
-                                            tag:
-                                                "live-${logic.channelsModel.id}",
-                                            init:
-                                                ChannelMainVideoLiveController(
-                                                    logic.channelsModel.url ??
-                                                        ""),
-                                          ),
-                                          key: logic.mainLiveKey,
-                                        )
                                       ],
                                     );
                                   }),

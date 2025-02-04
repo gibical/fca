@@ -49,14 +49,16 @@ class DetailController extends GetxController {
   ScreenshotController screenshotController = ScreenshotController();
   List<ExternalAccountModel> externalAccountlist = [];
   String selectedAccountTitle = '';
-  void selectAccountPublish(int index) {
-    enableChannel = index;
-    selectedAccountTitle = externalAccountlist[index].title ?? '';
+  void selectAccountPublish(ExternalAccountModel model) {
+    enableChannel = model;
+    selectedAccountTitle = model.title ?? '';
+    enableChanneCditingController.text = model.title ?? '';
     update();
   }
   bool isExpandedViewBodyText = false;
   int index ;
-  int enableChannel = 0 ;
+  ExternalAccountModel? enableChannel  ;
+  TextEditingController enableChanneCditingController = TextEditingController();
 
   DetailController(this.index);
 
@@ -1188,7 +1190,7 @@ class DetailController extends GetxController {
       if (response.statusCode! >= 200&&response.statusCode! <300) {
         isLoadingChannel(false);
         externalAccountlist = FromJsonGetExternalAccount.fromJson(response.data??[]).data??[];
-         selectAccountPublish(0);
+        // selectAccountPublish(0);
         update();
       } else {
         // Handle errors
@@ -1217,7 +1219,7 @@ class DetailController extends GetxController {
     loadingSendShareDataSate.value = DataState.loading();
     Map<String,dynamic> body = {
       "file_id": file_id,
-      "external_account_id": externalAccountlist.elementAt(enableChannel).id.toString(),
+      "external_account_id": enableChannel!.id.toString(),
 
     };
     print('DetailController.onSendYouTubeRequest = ${formatDateTime(selectedDate.value)}');
@@ -1475,5 +1477,11 @@ class DetailController extends GetxController {
      return false;
      // TODO
    }
+  }
+
+  void clearSelectedChannel() {
+    enableChanneCditingController.clear();
+    selectedAccountTitle = "";
+    enableChannel =null;
   }
 }

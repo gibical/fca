@@ -33,10 +33,8 @@ class HomeTabController extends GetxController {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    
-   if(!isChannel) getInitRequest(true);
-   if(isChannel) getChnannelInitRequest(true);
-   if(isChannel) getChnannelAll(true);
+
+    onReadyRequest();
   }
   
   void openSort()async {
@@ -196,6 +194,13 @@ class HomeTabController extends GetxController {
       print('DioError: ${e.message}');
       return null;
     }
+  }
+
+  void onReadyRequest() {
+
+    if(!isChannel) getInitRequest(true);
+    if(isChannel) getChnannelInitRequest(true);
+    if(isChannel) getChnannelAll(true);
   }
 
 }

@@ -19,8 +19,8 @@ class MiniTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool _isPermiuim = model.licenseType!=0 ;
-
+    bool _isPermiuim = model.licenseType==2 ;
+    bool _isSilver = model.licenseType==3 ;
     return Container(
 
 
@@ -52,6 +52,10 @@ class MiniTextWidget extends StatelessWidget {
                     Row(
                       children: [
                         if(_isPermiuim) Container(
+                          margin: EdgeInsets.all(2.w),
+                          child: SvgPicture.asset("assets/all/icons/mini_icon_permiuim.svg",),
+                        ),
+                        if(_isSilver) Container(
                           margin: EdgeInsets.all(2.w),
                           child: SvgPicture.asset("assets/all/icons/mini_icon_permiuim.svg",color: "#C0C0C0".toColor(),),
                         ),

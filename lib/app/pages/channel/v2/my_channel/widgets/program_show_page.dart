@@ -189,7 +189,7 @@ class _ProgramShowPageState extends State<ProgramShowPage> {
                       height: 60.w,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
-                        child: HomeImageWidget(widget.programs.asset!.thumbnails!.x366??""),
+                        child: HomeImageWidget(widget.programs.asset!.thumbnails!.x525??""),
                       ),
                     
                     ),

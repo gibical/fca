@@ -44,7 +44,7 @@ class _TextTabScreenState extends State<TextTabScreen> {
 
     return GetBuilder<HomeTabController>(
         init: logic,
-        tag: "audio",
+        tag: "text",
         builder: (logic) {
           return Scaffold(
             backgroundColor: AppColor.backgroundColor,
@@ -145,7 +145,7 @@ class _TextTabScreenState extends State<TextTabScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("home_15_1".tr, style: TextStyle(
+                        Text("home_15_3".tr, style: TextStyle(
                             fontWeight: FontWeight.bold),),
                         InkWell(
                             borderRadius: BorderRadius.circular(500),

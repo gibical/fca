@@ -19,7 +19,8 @@ class MiniImageWidget extends StatelessWidget {
   MiniImageWidget({this.height,required this.model});
   @override
   Widget build(BuildContext context) {
-    bool _isPermiuim = model.licenseType!=0 ;
+    bool _isPermiuim = model.licenseType==2 ;
+    bool _isSilver = model.licenseType==3 ;
 
     return           Container(
       margin: EdgeInsets.only(
@@ -47,6 +48,13 @@ class MiniImageWidget extends StatelessWidget {
                   child: Container(
                     margin: EdgeInsets.all(2.w),
                     child: SvgPicture.asset("assets/all/icons/mini_icon_permiuim.svg"),
+                  ),
+                ),
+                if(_isSilver) Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    margin: EdgeInsets.all(2.w),
+                    child: SvgPicture.asset("assets/all/icons/mini_icon_permiuim.svg",color: "c0c0c0".toColor(),),
                   ),
                 ),
                 Align(

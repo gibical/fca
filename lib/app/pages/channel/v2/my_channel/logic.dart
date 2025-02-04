@@ -455,7 +455,8 @@ class MyChannelController extends GetxController {
     } on DioError catch (e) {
       isloadingAddDestionation(false);
 
-      Constant.showMessege("${"my_channel_48".tr} ${e.message}");
+      Get.back();
+      Constant.showMessege(e.response!.data['message']);
 
     }
 

@@ -26,6 +26,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../gen/model/enums/post_type_enum.dart';
+import '../../../../gen/model/json/FromJsonGetExternalAccount.dart';
 import '../../../common/app_config.dart';
 import '../../channel/widgets/card_channel_widget.dart';
 import '../../login/widgets/custom_register_button_widget.dart';
@@ -37,14 +38,30 @@ import '../widgets/custom_switch.dart';
 import '../widgets/report_botton_sheet.dart';
 import '../widgets/youtube_bottomsheet.dart';
 
-class DetailVideoScreen extends StatelessWidget {
+class DetailVideoScreen extends StatefulWidget {
   DetailVideoScreen({super.key});
 
+  @override
+  State<DetailVideoScreen> createState() => _DetailVideoScreenState();
+}
+
+class _DetailVideoScreenState extends State<DetailVideoScreen> {
   final videoController = Get.put(DetailController(4),
       tag: "${DateTime.now().microsecondsSinceEpoch}");
 
   var idAssetMediaValte = Get.arguments['idAssetMedia'];
 
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    try {
+      videoController.dispose();
+    }  catch (e) {
+      // TODO
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -1145,6 +1162,7 @@ void runCustomSelectBottomToolsAsset(DetailController controller) {
 }
 
 void runCustomPublishSheet(DetailController detailController) {
+  detailController.clearSelectedChannel();
   detailController.fetchChannels();
 
   Get.bottomSheet(
@@ -1407,9 +1425,10 @@ void runPublishYoutubeSheet(DetailController detailController) {
               Obx(() {
                 return GestureDetector(
                   onTap: () {
-                    runSelectAccountSheet(detailController);
+                    runSelectAccountSheet(detailController,"google");
                   },
                   child: TextField(
+                    controller: detailController.enableChanneCditingController,
                     style: TextStyle(
                       decorationColor: Colors.transparent,
                       decoration: TextDecoration.none,
@@ -1729,9 +1748,10 @@ void runPublishXSheet(DetailController detailController) {
                 Obx(() {
                   return GestureDetector(
                     onTap: () {
-                      runSelectAccountSheet(detailController);
+                      runSelectAccountSheet(detailController,"x");
                     },
                     child: TextField(
+                      controller: detailController.enableChanneCditingController,
                       style: TextStyle(
                         decorationColor: Colors.transparent,
                         decoration: TextDecoration.none,
@@ -1964,9 +1984,10 @@ void runPublishGoogleDriveSheet(DetailController detailController) {
                 Obx(() {
                   return GestureDetector(
                     onTap: () {
-                      runSelectAccountSheet(detailController);
+                      runSelectAccountSheet(detailController,"google");
                     },
                     child: TextField(
+                      controller: detailController.enableChanneCditingController,
                       style: TextStyle(
                         decorationColor: Colors.transparent,
                         decoration: TextDecoration.none,
@@ -2255,7 +2276,7 @@ void runSelectTimeSheet(DetailController controller) {
                     fontSize: 25
                   ),
                   is24HourMode: false,
-                  time: DateTime(selectedTime.hour, selectedTime.minute),
+                  time: DateTime.now(),
                   onTimeChange: (time) {
                     setState(() {
                       selectedTime = TimeOfDay(hour: time.hour, minute: time.minute);
@@ -2427,7 +2448,7 @@ void runSelectTimeSheet(DetailController controller) {
 // }
 
 
-void runSelectAccountSheet(DetailController detailController) {
+void runSelectAccountSheet(DetailController detailController,String type) {
   detailController.fetchChannels();
 
   Get.bottomSheet(
@@ -2525,25 +2546,32 @@ void runSelectAccountSheet(DetailController detailController) {
                         height: 1.h,
                       ),
                     ],
-                  ):Column(
-                    children: detailController.externalAccountlist
-                        //  .where((element) => element.type.toString().contains("1"))
-                        .toList()
-                        .asMap()
-                        .entries
-                        .map((e) {
-                      var model =
-                          detailController.externalAccountlist.elementAt(e.key);
+                  ):Builder(
+                    builder: (context) {
+                          List<ExternalAccountModel> filtredList = detailController.externalAccountlist
+                          .where((element) {
+                            return element.type.toString().contains(type);
+                          })
+                          .toList();
+                      return Column(
+                        children: filtredList
+                            .asMap()
+                            .entries
+                            .map((e) {
+                          var model =
+                          filtredList.elementAt(e.key);
 
-                      return accountWidget(
-                          //
-                          title: (model.title ?? "").toString(),
-                          date: (model.createdAt ?? ""),
-                          isEnable: detailController.enableChannel == e.key,
-                          onTap: () {
-                            detailController.selectAccountPublish(e.key);
-                          });
-                    }).toList(),
+                          return accountWidget(
+                              //
+                              title: (model.title ?? "").toString(),
+                              date: (model.createdAt ?? ""),
+                              isEnable: detailController.enableChannel!=null&&detailController.enableChannel!.id == model.id,
+                              onTap: () {
+                                detailController.selectAccountPublish(model);
+                              });
+                        }).toList(),
+                      );
+                    }
                   );
                 }
               }),

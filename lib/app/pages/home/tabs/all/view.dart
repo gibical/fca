@@ -50,6 +50,9 @@ class AllTabScreen extends StatelessWidget {
         onRefresh: () async {
 
 
+          logic.channelController.onReadyRequest();
+
+
         },
         child: SingleChildScrollView(
           child: Column(
@@ -57,8 +60,7 @@ class AllTabScreen extends StatelessWidget {
             children: [
 
 
-              TitleWidgetExplore("home_8".tr, () {}),
-              SizedBox(height: 1.h,),
+
 
               GetBuilder<HomeTabController>(
                   init: logic.channelController,
@@ -68,30 +70,41 @@ class AllTabScreen extends StatelessWidget {
                     print(
                         'AllTabScreen.build GetBuilder HomeTabController = ${logic
                             .isloadingMini}');
-                    return Container(
-                      width: 100.w,
-                      height: 13.h,
-                      decoration: BoxDecoration(
+                    return Visibility(
+                      visible: logic
+                          .channelsModel.isNotEmpty,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TitleWidgetExplore("home_8".tr, () {}),
+                          SizedBox(height: 1.h,),
+                          Container(
+                            width: 100.w,
+                            height: 13.h,
+                            decoration: BoxDecoration(
 
+                            ),
+                            child: ListView.builder(
+                                padding: EdgeInsets.only(left: 16),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: logic.isloadingMini.value ? 6 : logic
+                                    .channelsModel.length,
+                                itemBuilder: (s, i) {
+                                  return Container(
+                                      width: 26.w,//
+                                      child: logic.isloadingMini.value
+                                          ? ShimmerMiniLiveWidget()//
+                                          :
+
+                                      Container(
+
+                                        child: MiniLiveWidget(
+                                           logic.channelsModel.elementAt(i),),
+                                      ));
+                                }), //
+                          ),
+                        ],
                       ),
-                      child: ListView.builder(
-                          padding: EdgeInsets.only(left: 16),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: logic.isloadingMini.value ? 6 : logic
-                              .channelsModel.length,
-                          itemBuilder: (s, i) {
-                            return Container(
-                                width: 26.w,//
-                                child: logic.isloadingMini.value
-                                    ? ShimmerMiniLiveWidget()//
-                                    :
-
-                                Container(
-
-                                  child: MiniLiveWidget(
-                                     logic.channelsModel.elementAt(i),),
-                                ));
-                          }), //
                     );
                   }),
 

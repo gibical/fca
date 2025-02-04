@@ -403,9 +403,9 @@ class _YoutubeShareBottomSheetState extends State<YoutubeShareBottomSheet> {
                     return CardChannelWidget2(//
                         title: (model.title ?? "").toString(),
                         date: (model.createdAt ?? ""),
-                        isEnable: logic.enableChannel == e.key,
+                        isEnable: logic.enableChannel!=null&&logic.enableChannel!.id == model.id,
                         onTap: () {
-                          logic.enableChannel = e.key;
+                          logic.enableChannel = model;
                           logic.update();
                         });
                   }).toList(),

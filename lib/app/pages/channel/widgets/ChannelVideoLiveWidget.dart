@@ -5,7 +5,6 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/pages/channel/tab/ChannalLiveController.dart';
@@ -57,6 +56,7 @@ class _ChannelVideoLiveWidgetState extends State<ChannelVideoLiveWidget> {
             autoPlay: false,
             looping: true,isLive: true,customControls: Container(),allowMuting: true
           );
+          _chewieController?.setVolume(0);
           setState(() {});
         },);
 

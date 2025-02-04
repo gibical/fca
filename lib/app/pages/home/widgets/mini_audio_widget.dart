@@ -20,7 +20,8 @@ class MiniAudioWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool _isPermiuim = model.licenseType!=0 ;
+    bool _isPermiuim = model.licenseType==2 ;
+    bool _isSilver = model.licenseType==3 ;
     return Container(
 
 
@@ -55,6 +56,13 @@ class MiniAudioWidget extends StatelessWidget {
                         child: Container(
                           margin: EdgeInsets.all(2.w),
                           child: SvgPicture.asset("assets/all/icons/mini_icon_permiuim.svg"),
+                        ),
+                      ),
+                      if(_isSilver) Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          margin: EdgeInsets.all(2.w),
+                          child: SvgPicture.asset("assets/all/icons/mini_icon_permiuim.svg",color: "c0c0c0".toColor(),),
                         ),
                       ),
                       Align(
