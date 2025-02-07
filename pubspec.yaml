@@ -49,7 +49,7 @@ dependencies:
   visibility_detector: any
   focus_detector: any
   dotted_border: ^2.1.0
-  pointycastle: 3.7.3
+  pointycastle: 3.9.1
   image_picker: ^1.0.7
   just_audio: ^0.9.36
   video_player: ^2.8.2
