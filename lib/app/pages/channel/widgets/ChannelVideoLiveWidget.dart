@@ -140,7 +140,7 @@ class _ChannelMainVideoLiveWidgetState extends State<ChannelMainVideoLiveWidget>
 
   void _initializeVideoPlayer() {
     try {
-      _videoPlayerController = VideoPlayerController.network(widget.url, videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true,allowBackgroundPlayback: true,),)
+      _videoPlayerController = VideoPlayerController.network(widget.url, videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true,),)
         ..initialize().then((_) {
 
           _chewieController = ChewieController(
@@ -189,16 +189,11 @@ class _ChannelMainVideoLiveWidgetState extends State<ChannelMainVideoLiveWidget>
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 16.0),
-        child: Column(
-          children: [
-
-            AspectRatio(
-              aspectRatio: _videoPlayerController.value.aspectRatio,
-              child: Chewie(
-                controller: _chewieController!,
-              ),
-            ),
-          ],
+        child: AspectRatio(
+          aspectRatio: _videoPlayerController.value.aspectRatio,
+          child: Chewie(
+            controller: _chewieController!,
+          ),
         ),
       ),
     )

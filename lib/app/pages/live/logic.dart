@@ -79,8 +79,6 @@ class LiveController extends GetxController{
         details?.value = RxMap<String, dynamic>.from(response.data['data']);
 
         initPlayerVideo('${response.data['data']['current_url']}');
-        print('82872738238273');
-        print(response.data['data']['current_url']);
       } else {
         // Handle errors
       }

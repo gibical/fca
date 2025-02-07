@@ -42,6 +42,7 @@ class PlusLogic extends GetxController {
 
   /// Whether to show an image selected from camera or gallery
   var isShowImageFromPath = false.obs;
+  var isFileUploaded = false.obs;
 
   /// Whether to show a file (text, video, etc.) selected
   var isShowFileFromPath = false.obs;
@@ -604,6 +605,7 @@ class PlusLogic extends GetxController {
     );
 
     if (fileid != null) {
+      isFileUploaded(true);
       toastification.show(
         type: ToastificationType.success,
         style: ToastificationStyle.fillColored,

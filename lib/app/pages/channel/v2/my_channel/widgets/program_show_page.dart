@@ -189,7 +189,7 @@ class _ProgramShowPageState extends State<ProgramShowPage> {
                       height: 60.w,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
-                        child: HomeImageWidget(widget.programs.asset!.thumbnails!.x525??""),
+                        child: HomeImageWidget(widget.programs.asset!.thumbnails!.md??""),
                       ),
                     
                     ),
@@ -197,8 +197,10 @@ class _ProgramShowPageState extends State<ProgramShowPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(widget.programs.asset!.name??"",
-                          style: TextStyle(fontWeight: FontWeight.bold),),
+                        Expanded(
+                          child: Text(widget.programs.asset!.name??"",
+                            style: TextStyle(fontWeight: FontWeight.bold),maxLines: 1,overflow: TextOverflow.ellipsis,),
+                        ),
                         MaterialButton(
                           onPressed: () {
                             sendToAssetPage(widget.programs.asset!.postType, widget.programs.asset!.id??"");

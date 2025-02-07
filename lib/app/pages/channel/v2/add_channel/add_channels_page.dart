@@ -14,13 +14,17 @@ import 'package:mediaverse/app/pages/channel/v2/add_channel/logic.dart';
 import 'package:mediaverse/app/pages/channel/v2/widgets/channels_title_widget.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../detail/widgets/custom_switch.dart';
+
 class AddChannelsPage extends StatelessWidget {
 
+  bool  isEdit =Get.arguments[0];
 
-  AddChannelController logic = Get.put(AddChannelController(Get.arguments[0],model: Get.arguments[1]));
 
   @override
   Widget build(BuildContext context) {
+    AddChannelController logic = Get.put(AddChannelController(isEdit,model: Get.arguments[1]));
+
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       body: SafeArea(
@@ -29,7 +33,7 @@ class AddChannelsPage extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  ChannelsTitleWidget("add_channel_1".tr),
+                  ChannelsTitleWidget(isEdit?"add_channel_1_1".tr:"add_channel_1".tr),
                   Container(
                     width: 50.w,
                     height: 50.w,
@@ -155,116 +159,35 @@ class AddChannelsPage extends StatelessWidget {
                     child: Row(
                       children: [
                         Expanded(
-                          child: GetBuilder<AddChannelController>(
-                              init: logic,
-                              builder: (logic) {
-                                return Container(
-                                    width: 100.w,
-                                    height: 6.h,
-                                    decoration: BoxDecoration(
-                                        color: "0f0f26".toColor(),
-                                        borderRadius: BorderRadius.circular(10)),
-                                    child: MaterialButton(
-                                      onPressed: () {
-                                        logic.pickCountry();
-                                      },
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 16),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              10)),
-                                      child: Row(
-                                        children: [
-                                          if (logic.selectedCountryModel == null)
-                                            SvgPicture.asset(
-                                                "assets/all/icons/add_channel_2.svg"),
-                                          if (logic.selectedCountryModel != null)
-                                            Container(
-                                              child: CountryFlag.fromCountryCode(
-                                                logic.selectedCountryModel!.iso
-                                                    .toString(),
-                                                width: 30,
-                                                height: 15,
-                                              ),
-                                            ),
-                                          SizedBox(
-                                            width: 2.w,
-                                          ),
-                                          if (logic.selectedCountryModel == null)
-                                            Text(
-                                              "add_channel_5".tr,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 10.sp,
-                                                  color: "9c9cb8".toColor()),
-                                            ),
-                                          if (logic.selectedCountryModel != null)
-                                            Expanded(
-                                              child: Text(
-                                                logic.selectedCountryModel!.name
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 9.sp,
-                                                    color: "9c9cb8".toColor()),
-                                                maxLines: 2,
-                                              ),
-                                            ),
-                                          Spacer(),
-                                          SvgPicture.asset(
-                                              "assets/all/icons/add_channel_3.svg"),
-                                        ],
-                                      ),
-                                    ));
-                              }),
+                          child: fieldEditAssetWidget(
+                            title: 'Country',
+                            onTap: () {
+                              _runCustomSelectBottomEditeAssetSheet(
+                                title: 'Country',
+                                models: logic.countreisString,
+                                value: logic.countryEditingController,
+                              );
+                            },
+                            value: logic.countryEditingController,
+                          ),
                         ),
                         SizedBox(
-                          width: 3.w,
+                          width: 10,
                         ),
                         Expanded(
-                          child: GetBuilder<AddChannelController>(
-                              init: logic,
-                              builder: (logic) {
-                                return Container(
-                                    width: 100.w,
-                                    height: 6.h,
-                                    decoration: BoxDecoration(
-                                        color: "0f0f26".toColor(),
-                                        borderRadius: BorderRadius.circular(10)),
-                                    child: MaterialButton(
-                                      onPressed: () {
-                                        logic.pickLanguage();
-                                      },
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 16),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              10)),
-                                      child: Row(
-                                        children: [
-                                          if (logic.languageModel == null) Text(
-                                            "add_channel_6".tr,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 10.sp,
-                                                color: "9c9cb8".toColor()),
-                                          ),
-                                          if (logic.languageModel != null) Text(
-                                            Constant.reversedLanguageMap[logic
-                                                .languageModel],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 10.sp,
-                                                color: "9c9cb8".toColor()),
-                                          ),
-                                          Spacer(),
-                                          SvgPicture.asset(
-                                              "assets/all/icons/add_channel_3.svg"),
-                                        ],
-                                      ),
-                                    ));
-                              }),
+                          child: fieldEditAssetWidget(
+                            title: 'Language',
+                            onTap: () {
+                              _runCustomSelectBottomEditeAssetSheet(
+                                title: 'Select a language',
+                                models: Constant.reversedLanguageMap.values.toList(),
+                                value: logic.languageEditingController,
+                              );
+                            },
+                            value: logic.languageEditingController,
+                          ),
                         ),
+
                       ],
                     ),
                   ),
@@ -286,17 +209,15 @@ class AddChannelsPage extends StatelessWidget {
                             ),
                             Spacer(),
                             Transform.scale(
-                              scale: 0.7,
-                              child: Obx(() {
-                                return Switch(
-                                    inactiveThumbColor: Colors.white,
-                                    inactiveTrackColor: "9c9cb8".toColor(),
-                                    value: logic.isPriaveContant.value,
-                                    onChanged: (s) {
-                                      logic.isPriaveContant.value = s;
-                                    });
-                              }),
-                            )
+                              scale: 1,
+                              child: Obx(() => CustomSwitchWidget(
+                                value:  logic.isPriaveContant.value,
+                                onChanged: (value) {
+                                  logic.isPriaveContant.value = value;
+                                },
+                              )),
+                            ),
+
                           ],
                         )),
                   ),
@@ -318,17 +239,16 @@ class AddChannelsPage extends StatelessWidget {
                             ),
                             Spacer(),
                             Transform.scale(
-                              scale: 0.7,
-                              child: Obx(() {
-                                return Switch(
-                                    inactiveThumbColor: Colors.white,
-                                    inactiveTrackColor: "9c9cb8".toColor(),
-                                    value: logic.isRecordable.value,
-                                    onChanged: (s) {
-                                      logic.isRecordable.value = s;
-                                    });
-                              }),
-                            )
+                              scale: 1,
+                              child: Obx(() => CustomSwitchWidget(
+                                value:  logic.isRecordable.value,
+                                onChanged: (value) {
+                                  logic.isRecordable.value = value;
+                                },
+                              )),
+                            ),
+
+
                           ],
                         )),
                   ),
@@ -361,6 +281,305 @@ class AddChannelsPage extends StatelessWidget {
               ),
             ),
           )),
+    );
+  }
+  Widget fieldEditAssetWidget(
+      {required String title,
+        required Function() onTap,
+        required TextEditingController? value}) {
+    return Material(
+      color: '#0F0F26'.toColor(),
+      borderRadius: BorderRadius.circular(8.sp),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8.sp),
+        splashColor: Colors.white.withOpacity(0.02),
+        onTap: onTap,
+        child: TextField(
+          enabled: false,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 13.5,
+          ),
+          controller: value,
+          decoration: InputDecoration(
+              contentPadding:
+              EdgeInsets.symmetric(vertical: 13, horizontal: 10),
+              hintText: title,
+              hintStyle: TextStyle(fontSize: 13.5, color: '9C9CB8'.toColor()),
+              suffixIcon: Transform.scale(
+                  scale: 0.5,
+                  child: SvgPicture.asset('assets/mediaverse/icons/arrow.svg')),
+              disabledBorder: OutlineInputBorder(borderSide: BorderSide.none)),
+        ),
+        // Row(
+        //   crossAxisAlignment: CrossAxisAlignment.center,
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     Text(title , style: TextStyle(
+        //         color: '#9C9CB8'.toColor()
+        //     ),),
+        //
+        //     SvgPicture.asset('assets/mediaverse/icons/arrow.svg')
+        //   ],
+        // ),
+      ),
+    );
+  }
+  void _runCustomSelectBottomEditeAssetSheet({
+    required List<dynamic> models,
+    required String title,
+    required TextEditingController? value,
+    TextEditingController? priceController,
+    bool isSearchBox = true,
+    bool isLicenceType = false,
+  }) {
+    List<dynamic> filteredModels = List.from(models);
+    final TextEditingController searchController = TextEditingController();
+
+    Get.bottomSheet(
+      elevation: 0,
+      StatefulBuilder(
+        builder: (context, setState) {
+          return Container(
+            width: 100.w,
+            height: 50.h,
+            decoration: BoxDecoration(
+              color: "#0F0F26".toColor(),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+            ),
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 3.h),
+                      Row(
+                        children: [
+                          RotatedBox(
+                            quarterTurns: 2,
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: SvgPicture.asset(
+                                  'assets/mediaverse/icons/arrow.svg'),
+                            ),
+                          ),
+                          Spacer(),
+                          Text(
+                            title,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(width: 24),
+                          Spacer(),
+                        ],
+                      ),
+                      SizedBox(height: 3.h),
+                      if (isSearchBox)
+                        TextField(
+                          controller: searchController,
+                          onChanged: (query) {
+                            setState(() {
+                              filteredModels = models
+                                  .where((item) => item.toString()
+                                  .toLowerCase()
+                                  .contains(query.toLowerCase()))
+                                  .toList();
+                            });
+                          },
+                          style: TextStyle(
+                            decorationColor: Colors.transparent,
+                            decoration: TextDecoration.none,
+                          ),
+                          decoration: InputDecoration(
+                            filled: true,
+                            hintText: 'Search...',
+                            hintStyle: TextStyle(color: '9C9CB8'.toColor()),
+                            fillColor: '#17172E'.toColor(),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 10),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8.sp),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8.sp),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8.sp),
+                            ),
+                          ),
+                        ),
+                      SizedBox(height: isSearchBox ? 2.h : 0),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: EdgeInsets.only(bottom: 75),
+                          itemCount: filteredModels.length,
+                          itemBuilder: (context, index) {
+                            final item = filteredModels[index];
+                            final isSelected = value?.text == item;
+
+                            return InkWell(
+                              onTap: () {
+                                setState(() {
+                                  value?.text = item;
+                                });
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 3.h,
+                                    margin: EdgeInsets.symmetric(vertical: 6),
+                                    child: Row(
+                                      children: [
+                                        if (isLicenceType)
+                                          Container(
+                                            width: 20,
+                                            height: 20,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color: isSelected
+                                                    ? '2563EB'.toColor()
+                                                    : '9C9CB8'.toColor(),
+                                                width: isSelected ? 5.5 : 1,
+                                              ),
+                                            ),
+                                          )
+                                        else
+                                          SizedBox(
+                                            width: 24,
+                                            height: 24,
+                                            child: Checkbox(
+                                              value: isSelected,
+                                              activeColor: Colors.white,
+                                              onChanged: (_) {},
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(6),
+                                                side: BorderSide(
+                                                  color: '9C9CB8'.toColor(),
+                                                  width: 1,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(
+                                          item,
+                                          style: TextStyle(
+                                            color: isSelected
+                                                ? Colors.white
+                                                : '9C9CB8'.toColor(),
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (item == "editprof_14".tr && isSelected)
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8.0),
+                                      child: TextField(
+                                        textDirection: TextDirection.ltr,
+                                        controller: priceController,
+                                        decoration: InputDecoration(
+                                          hintText: '00.00',
+                                          hintTextDirection: TextDirection.ltr,
+                                          hintStyle: TextStyle(
+                                              color: '9C9CB8'.toColor()),
+                                          fillColor: '#17172E'.toColor(),
+                                          filled: true,
+                                          suffixIcon: IconButton(
+                                            onPressed: null,
+                                            icon: Text(
+                                              'EUR',
+                                              style: TextStyle(
+                                                  color: '9C9CB8'.toColor()),
+                                            ),
+                                          ),
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 10),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                            BorderRadius.circular(8.sp),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        '0F0F26'.toColor(),
+                        Colors.transparent,
+                      ],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: '0F0F26'.toColor(),
+                        blurRadius: 50,
+                        spreadRadius: 30,
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 45,
+                        child: Material(
+                          color: '2563EB'.toColor(),
+                          borderRadius: BorderRadius.circular(100),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(100),
+                            splashColor: Colors.white.withOpacity(0.03),
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Center(
+                              child: Text('Confirm'),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -24,6 +24,7 @@ import '../../../../../gen/model/json/FromJsonGetSchedules.dart';
 import '../../../../../gen/model/json/v2/FromJsonGetContentFromExplore.dart';
 import '../../../../common/app_config.dart';
 import '../../../share_account/logic.dart';
+import '../../tab/ChannalLiveController.dart';
 import 'models/channel_tab_model.dart';
 
 class MyChannelController extends GetxController {
@@ -79,7 +80,7 @@ class MyChannelController extends GetxController {
     var dio = Dio();
     dio.interceptors.add(MediaVerseConvertInterceptor());
     var response = await Dio().get(
-      "${Constant.HTTP_HOST}assets",
+      "${Constant.HTTP_HOST}profile/assets",
       queryParameters: {"media_type": "video"},
       options: Options(
         headers: {
@@ -188,13 +189,20 @@ class MyChannelController extends GetxController {
       ),
     );
     if (response.statusCode! >= 200) {
+     bool _lastChannelLiveStarted = isChannelLiveStarted.value;
+
       mainChannelModel = ChannelsModel.fromJson(response.data['data']);
       if((response.data['data']['last_event_type']).toString().contains("started")){
         isChannelLiveStarted(true);
       }else{
         isChannelLiveStarted(false);
       }
+      if(_lastChannelLiveStarted !=isChannelLiveStarted.value){
+
+        Get.find<ChannelMainVideoLiveController>( tag: "live-${mainChannelModel.id}").update();
+      }
     }
+
 
     getChannelLives();
     update();
@@ -216,8 +224,13 @@ class MyChannelController extends GetxController {
       ),
     );
     if (response.statusCode! >= 200) {
+      int lashLiveCount = livemodels.length;
       livemodels =
           FromJsonGetChannelsLive.fromJson(response.data).data ?? [];
+      if(lashLiveCount != livemodels.length){
+        Get.find<ChannelMainVideoLiveController>( tag: "live-${mainChannelModel.id}").update();
+
+      }
     }
 
     update();
@@ -305,12 +318,14 @@ class MyChannelController extends GetxController {
     var dio = Dio();
 
     dio.interceptors.add(MediaVerseConvertInterceptor());
+    dio.interceptors.add(CurlLoggerDioInterceptor());
 
     isloadingAddSchedule(true);
 
+    print('MyChannelController.addProgramSchedule = ${dateTime.toUtc()}');
     var body =  {
       "times": [
-        DateFormat('y-MM-dd hh:mm:ss').format(dateTime)
+        DateFormat('y-MM-dd HH:mm:ss').format(dateTime.toUtc())
       ]
     };
 

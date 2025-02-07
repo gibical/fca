@@ -1223,7 +1223,7 @@ class DetailController extends GetxController {
 
     };
     print('DetailController.onSendYouTubeRequest = ${formatDateTime(selectedDate.value)}');
-    if (!ifNowSend) {
+    if (isSeletedDate.value) {
       body["times"]= [
         formatDateTime( selectedDate.value)
       ];
@@ -1238,6 +1238,7 @@ class DetailController extends GetxController {
 
     var url ="shares";
 
+    print('DetailController.onSendShareRequest = ${body}');
     try {
       final token = GetStorage().read("token");
       String apiUrl =

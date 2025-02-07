@@ -40,7 +40,7 @@ class AssetMiniTabWidget extends StatelessWidget {
                  SizedBox.expand(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: HomeImageWidget(model.thumbnails!.x226??""),
+                      child: HomeImageWidget(model.thumbnails!.md??""),
                     ),
                   ),
                   Align(

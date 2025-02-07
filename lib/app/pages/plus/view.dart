@@ -80,14 +80,14 @@ class _PlusPageState extends State<PlusPage> {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                Visibility(
-                  visible: _isShowTum,
-                  child: SizedBox.expand(
-                    child:
-                    Image.asset(
-                        "assets/all/images/tumnial.png"),
-                    //
-                  ),),
+                                Visibility(
+                                  visible: _isShowTum,
+                                  child: SizedBox.expand(
+                                    child:
+                                    Image.asset(
+                                        "assets/all/images/tumnial.png"),
+                                    //
+                                  ),),
                                 if (logic.postype == PostType.audio &&
                                     !_isShowTum &&
                                     !logic.isShowImageFromPath.value)SizedBox
@@ -426,31 +426,34 @@ class _PlusPageState extends State<PlusPage> {
                             ),
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.all(16),
-                          height: 6.h,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(1000),
-                              color: AppColor.primaryLightColor),
-                          child: MaterialButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(500),
+                        Obx(() {
+                          return Container(
+                            margin: EdgeInsets.all(16),
+                            height: 6.h,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(1000),
+                                color: logic.isFileUploaded.value ? AppColor
+                                    .primaryLightColor : "9c9cb8".toColor()),
+                            child: MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(500),
+                              ),
+                              onPressed: () {
+                                logic.sendMainRequest();
+                              },
+                              child: Obx(() {
+                                return Center(
+                                  child: logic.isloading.value
+                                      ? Lottie.asset(
+                                      "assets/${F
+                                          .assetTitle}/json/Y8IBRQ38bK.json",
+                                      height: 5.h)
+                                      : Text("add_channel_9".tr),
+                                );
+                              }),
                             ),
-                            onPressed: () {
-                              logic.sendMainRequest();
-                            },
-                            child: Obx(() {
-                              return Center(
-                                child: logic.isloading.value
-                                    ? Lottie.asset(
-                                    "assets/${F
-                                        .assetTitle}/json/Y8IBRQ38bK.json",
-                                    height: 5.h)
-                                    : Text("add_channel_9".tr),
-                              );
-                            }),
-                          ),
-                        )
+                          );
+                        })
                       ],
                     ),
                   ),

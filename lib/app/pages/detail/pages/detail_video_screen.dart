@@ -1219,9 +1219,9 @@ void runCustomPublishSheet(DetailController detailController) {
             height: 0.5,
             width: Get.width,
           ),
-          SizedBox(height: 2.h),
+          if(detailController.detailss?['media_type']=="video")SizedBox(height: 2.h),
           //BTN Tools 1
-          GestureDetector(
+        if(detailController.detailss?['media_type']=="video")  GestureDetector(
             onTap: () {
               Get.back();
               runPublishYoutubeSheet(detailController);

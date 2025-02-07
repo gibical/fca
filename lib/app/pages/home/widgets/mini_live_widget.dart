@@ -53,7 +53,7 @@ class MiniLiveWidget extends StatelessWidget {
                     ),
                   ),
                   Visibility(
-                    visible: model.lastEvent.toString().contains("STARTED"),
+                    visible:true,
                     child: Align(
                       alignment: Alignment.topCenter,
                       child: Container(

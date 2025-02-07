@@ -199,6 +199,7 @@ class ContentModel {
 }
 
   ContentModel.fromJson(dynamic json) {
+    
     _id = json['id'];
     _name = json['name'];
     _slug = json['slug'];
@@ -206,6 +207,9 @@ class ContentModel {
     _language = json['language'];
     _countryIso = json['country_iso'];
     _mediaType = json['media_type'];
+    if (_mediaType=="video") {
+      log('ContentModel.fromJson  = ${jsonEncode(json)}');
+    }
     postType = _getPostTypeByMediaType(_mediaType);
     _licenseType = json['license_type'];
     _status = json['status'];
@@ -467,71 +471,34 @@ Thumbnails thumbnailsFromJson(String str) => Thumbnails.fromJson(json.decode(str
 String thumbnailsToJson(Thumbnails data) => json.encode(data.toJson());
 class Thumbnails {
   Thumbnails({
-      String? x226, 
-      String? x366, 
-      String? x220, 
-      String? x218, 
-      String? x304, 
-      String? x525, 
-      String? x1080, 
-      String? x1396,}){
-    _x226 = x226;
-    _x366 = x366;
-    _x220 = x220;
-    _x218 = x218;
-    _x304 = x304;
-    _x525 = x525;
-    _x1080 = x1080;
-    _x1396 = x1396;
-}
+    String? md,
+    String? sm,}){
+    _md = md;
+    _sm = sm;
+  }
 
   Thumbnails.fromJson(dynamic json) {
     try {
-      _x226 = json['226x226'];
-      _x366 = json['336x366'];
-      _x220 = json['340x220'];
-      _x218 = json['390x218'];
-      _x304 = json['523x304'];
-      _x525 = json['525x525'];
-      _x1080 = json['1920x1080'];
-      _x1396 = json['3090x1396'];
+      _md = json['md'];
+      _sm = json['sm'];
     }  catch (e) {
       // TODO
     }
   }
-  String? _x226;
-  String? _x366;
-  String? _x220;
-  String? _x218;
-  String? _x304;
-  String? _x525;
-  String? _x1080;
-  String? _x1396;
+  String? _md;
+  String? _sm;
 
-  String? get x226 => _x226;
-  String? get x366 => _x366;
-  String? get x220 => _x220;
-  String? get x218 => _x218;
-  String? get x304 => _x304;
-  String? get x525 => _x525;
-  String? get x1080 => _x1080;
-  String? get x1396 => _x1396;
+  String? get md => _md;
+  String? get sm => _sm;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['226x226'] = _x226;
-    map['336x366'] = _x366;
-    map['340x220'] = _x220;
-    map['390x218'] = _x218;
-    map['523x304'] = _x304;
-    map['525x525'] = _x525;
-    map['1920x1080'] = _x1080;
-    map['3090x1396'] = _x1396;
+    map['md'] = _md;
+    map['sm'] = _sm;
     return map;
   }
 
 }
-
 Info infoFromJson(String str) => Info.fromJson(json.decode(str));
 String infoToJson(Info data) => json.encode(data.toJson());
 class Info {

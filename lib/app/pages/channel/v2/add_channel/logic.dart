@@ -28,6 +28,8 @@ class AddChannelController extends GetxController {
   // Text controllers for user input
   TextEditingController nameEditingController = TextEditingController();
   TextEditingController desEditingController = TextEditingController();
+  TextEditingController languageEditingController = TextEditingController();
+  TextEditingController countryEditingController = TextEditingController();
 
   // Observables for UI state management
   var isPriaveContant = false.obs; // Private content toggle
@@ -122,7 +124,7 @@ class AddChannelController extends GetxController {
 
         if (isEdit) {
           try {
-            selectedCountryModel = countreisModel.firstWhereOrNull((test)=>test.iso.toString().contains(model!.country.toString()));
+            countryEditingController.text = countreisModel.firstWhereOrNull((test)=>test.iso.toString().contains(model!.country.toString()))?.name??"";
           }  catch (e) {
             // TODO
           }
@@ -172,10 +174,14 @@ class AddChannelController extends GetxController {
           },
         ),
       );
-
       if (response.statusCode! >= 200 || response.statusCode! < 300) {
         Constant.reversedLanguageMap = response.data;
         update();
+        if(isEdit){
+
+          languageEditingController.text = Constant.reversedLanguageMap[model!.language??""];
+
+        }
       }
     } on DioError catch (e) {
       // Handle error (optional logging)
@@ -187,13 +193,18 @@ class AddChannelController extends GetxController {
     var dio = Dio();
     dio.interceptors.add(MediaVerseConvertInterceptor());
 
-    if (selectedCountryModel != null && languageModel != null) {
+    if (countryEditingController.text .isNotEmpty && languageEditingController.text .isNotEmpty) {
       isLoading(true);
+      final Map<String, String> reverseLanguageMap =
+      Constant.reversedLanguageMap.map((key, value) => MapEntry(value, key));
+
+
+      String? key = reverseLanguageMap[languageEditingController.text];
       Map<String, dynamic> body = {
         "name": nameEditingController.text,
         "description": desEditingController.text,
-        "country_iso": selectedCountryModel!.iso,
-        "language": languageModel!,
+        "country_iso": countreisModel.firstWhere((test)=>test.name.toString().contains(countryEditingController.text)).iso??"",
+        "language": key,
         "is_private": isPriaveContant.value ? 1 : 0,
         "is_recordable": isRecordable.value ? 1 : 0,
       };
@@ -205,6 +216,7 @@ class AddChannelController extends GetxController {
         url += "/${model!.id}";
       }
 
+      print('AddChannelController.saveChannels = ${body}');
       try {
         var response = await dio.request(
           '${Constant.HTTP_HOST}$url',

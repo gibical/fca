@@ -145,10 +145,12 @@ class _AddProgramBottonsheetState extends State<AddProgramBottonsheet> {
                           ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            _sourceEditingController.text,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: widget.isEdit?Colors.white:"#9C9CB8".toColor()),
+                          Expanded(
+                            child: Text(
+                              _sourceEditingController.text,
+                              textAlign: TextAlign.center,maxLines: 1,overflow: TextOverflow.ellipsis,
+                              style: TextStyle(color: widget.isEdit?Colors.white:"#9C9CB8".toColor()),
+                            ),
                           ),
                           SvgPicture.asset(
                               "assets/all/icons/add_channel_3.svg",

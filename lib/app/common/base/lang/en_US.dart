@@ -474,6 +474,7 @@ const Map<String, String> enUS = {
 
 
   "add_channel_1": "Create Channel",
+  "add_channel_1_1": "Edit Channel",
   "add_channel_2": "Edit thumbnail",
   "add_channel_3": "Name ",
   "add_channel_4": "Description",

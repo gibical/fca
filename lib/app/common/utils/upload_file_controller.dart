@@ -35,7 +35,7 @@ class UploadFileController extends GetxController {
             'Authorization': 'Bearer ${GetStorage().read("token")}',
             'Content-Type': 'multipart/form-data',
             'X-App': '_Android',
-          },
+          },sendTimeout: const Duration(minutes: 500)
         ),
         onSendProgress: _onSendProgress,
       );

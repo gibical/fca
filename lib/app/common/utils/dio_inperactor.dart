@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/common/RequestInterface.dart';
 import 'package:mediaverse/app/common/app_config.dart';
 import 'package:mediaverse/app/common/app_route.dart';
@@ -44,8 +45,14 @@ class MediaVerseConvertInterceptor extends Interceptor{
     }  catch (e) {
       // TODO
     }
-    if(err.response!.statusCode==406){
-      Get.toNamed(PageRoutes.SIGNUP);
+    if(err.response!.statusCode==401){
+      _logOut();
     }
+  }
+  void _logOut() async{
+
+    var box  = GetStorage();
+    box.write("islogin", false);
+    Get.offAllNamed(PageRoutes.SPLASH,);
   }
 }

@@ -530,11 +530,11 @@ class _LiveScreenState extends State<LiveScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 18.0),
                         child: Row(
                           children: [
-                            liveController.liveDetails!["country"] !=null ?    Column(
+                            liveController.liveDetails!["country_iso"] !=null ?    Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('Country'),
-                                Text('${liveController.liveDetails!["country"] !=null? liveController.liveDetails!["country"]["name"] :''}' ,style: TextStyle(
+                                Text('${liveController.liveDetails!["country_iso"] !=null? liveController.liveDetails!["country_iso"] :''}' ,style: TextStyle(
                                   color: '#9C9CB8'.toColor(),
                                   fontSize: 16
                                 ),)

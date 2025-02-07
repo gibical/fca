@@ -52,7 +52,7 @@ class MiniVideoWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                   child: Stack(
                     children: [
-                      SizedBox.expand(child:HomeImageWidget(model.thumbnails!.x226.toString())),
+                      SizedBox.expand(child:HomeImageWidget(model.thumbnails!.md.toString())),
                      if(selectedAsset!=null&&selectedAsset==true) SizedBox.expand(child:Container(color: Colors.black.withOpacity(0.6),)),
                      if(selectedAsset!=null&&selectedAsset==true) Align(child:SvgPicture.asset("assets/all/icons/check-circle.svg",color: AppColor.primaryLightColor,) ,),
                       if(_isPermiuim) Align(

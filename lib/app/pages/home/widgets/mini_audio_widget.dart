@@ -50,7 +50,7 @@ class MiniAudioWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                   child: Stack(
                     children: [
-                      SizedBox.expand(child:HomeImageWidget(model.thumbnails!.x226.toString())),
+                      SizedBox.expand(child:HomeImageWidget(model.thumbnails!.md.toString())),
                       if(_isPermiuim) Align(
                         alignment: Alignment.topLeft,
                         child: Container(
