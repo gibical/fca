@@ -40,7 +40,7 @@ class _AddChannelCardWidgetState extends State<AddChannelCardWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Add Porgram'.tr,
+              'Add Channel'.tr,
               style: FontStyleApp.bodyMedium.copyWith(
                 color: AppColor.grayLightColor.withOpacity(0.5),
               ),

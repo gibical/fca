@@ -12,11 +12,11 @@ class F {
   static String get title {
     switch (appFlavor) {
       case Flavor.mediaverse:
-        return 'MediaVerse App';
+        return 'MediaVerse';
       case Flavor.gibical:
-        return 'Gibical App';
+        return 'Gibical';
       case Flavor.ravi:
-        return 'Ravi App';
+        return 'Ravi';
       default:
         return 'title';
     }
@@ -26,7 +26,7 @@ class F {
       case Flavor.mediaverse:
         return 'land.mediaverse.app';
       case Flavor.gibical:
-        return 'com.app.gibicalapp';
+        return 'app.gibical.app';
       case Flavor.ravi:
         return 'ir.app.ravi';
       default:
@@ -45,6 +45,18 @@ class F {
         return 'mediaverse';
     }
   }
+  static String get oAuthCliendID {
+    switch (appFlavor) {
+      case Flavor.mediaverse:
+        return '9ddd87cf-12ac-464b-8fbb-874e88a10b98';
+      case Flavor.gibical:
+        return '9de0316b-55ad-45a4-85f0-781e05712ff2';
+      case Flavor.ravi:
+        return '9ddd87cf-12ac-464b-8fbb-874e88a10b98';
+      default:
+        return 'mediaverse';
+    }
+  }
   static String get apiurl {
     switch (appFlavor) {
       case Flavor.mediaverse:
@@ -55,6 +67,30 @@ class F {
         return 'https://api.mediaverse.land/v2/';
       default:
         return 'https://api.mediaverse.land/v2/';
+    }
+  }
+  static String get termsURL {
+    switch (appFlavor) {
+      case Flavor.mediaverse:
+        return 'https://mediaverse.land/en/terms';
+      case Flavor.gibical:
+        return "https://gibical.app/en/terms";
+      case Flavor.ravi:
+        return 'https://mediaverse.land/en/terms';
+      default:
+        return 'https://mediaverse.land/en/terms';
+    }
+  }
+  static String get policyURL {
+    switch (appFlavor) {
+      case Flavor.mediaverse:
+        return 'https://mediaverse.land/en/privacy';
+      case Flavor.gibical:
+        return "https://gibical.app/en/privacy";
+      case Flavor.ravi:
+        return "https://gibical.app/en/privacy";
+      default:
+        return "https://gibical.app/en/privacy";
     }
   }
 

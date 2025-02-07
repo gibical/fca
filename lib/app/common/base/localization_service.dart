@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mediaverse/app/common/base/lang/de_DE.dart';
 
 import 'lang/en_US.dart';
 import 'lang/fa_IR.dart';
@@ -15,11 +16,11 @@ class LocalizationService extends Translations {
   static const fallBackLocale2 = Locale('fa', 'IR');
   // static final fallBackLocale = Locale('fa', 'IR');
 
-  static final langs = ['English', 'Farsi'];
-  static final locales = [const Locale('en', 'US'), const Locale('fa', 'IR')];
+  static final langs = ['English', 'Farsi',"Germany"];
+  static final locales = [const Locale('en', 'US'), const Locale('fa', 'IR'),const Locale('de', 'DE'),];
 
   @override
-  Map<String, Map<String, String>> get keys => {'en_US': enUS, 'fa_IR': faIR};
+  Map<String, Map<String, String>> get keys => {'en_US': enUS, 'fa_IR': faIR, 'de_DE': deDE};
 
   void changeLocale(String lang) {
     final locale = getLocaleFromLanguage(lang);

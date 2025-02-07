@@ -6,20 +6,56 @@ import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mediaverse/app/common/RequestInterface.dart';
 import 'package:mediaverse/app/common/app_api.dart';
 import 'package:mediaverse/app/common/utils/firebase_controller.dart';
+import 'package:mediaverse/app/pages/home/home_tab_logic.dart';
+import 'package:mediaverse/app/pages/home/tabs/all/view.dart';
+import 'package:mediaverse/app/pages/home/tabs/image/view.dart';
+import 'package:mediaverse/app/pages/home/tabs/sound/view.dart';
+import 'package:mediaverse/app/pages/home/tabs/text/view.dart';
+import 'package:mediaverse/app/pages/home/tabs/video/channel/view.dart';
+import 'package:mediaverse/app/pages/home/tabs/video/view.dart';
 import 'package:mediaverse/app/pages/profile/logic.dart';
+import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetAllChannels.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetBestVideos.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetChannels.dart';
 
 import '../../../gen/model/json/FromJsonGetBestModelVideows.dart';
+import '../../../gen/model/json/FromJsonGetChannelsShow.dart';
+import 'models/tab_model.dart';
 
 class HomeLogic extends GetxController implements  RequestInterface{
 
-  List<ChannelModel> channels = [];
-  List<dynamic> bestVideos = [];
+
+  HomeTabController imageController = Get.put(HomeTabController(PostType.image),tag: "image");
+  HomeTabController textController = Get.put(HomeTabController(PostType.text),tag: "text");
+  HomeTabController audioController = Get.put(HomeTabController(PostType.audio),tag: "audio");
+  HomeTabController videoController = Get.put(HomeTabController(PostType.video),tag: "video");
+  HomeTabController channelController = Get.put(HomeTabController(PostType.channel,isChannel: true),tag: "channel");
+
+  var selectedTab = 0.obs;
+
+  List<HomeTabModel>   homeTabsModel=[];
+
+
+  PageController pageController = PageController();
+
+
+  List<ChannelsModel> channels = [
+    ChannelsModel(),
+    ChannelsModel(),
+  ];
+  List<dynamic> bestVideos = [
+    "m","asdasd",
+    "m","asdasd",
+    "m","asdasd",
+    "m","asdasd",
+    "m","asdasd",
+  ];
   List<dynamic> mostImages = [];
   List<dynamic> mostText = [];
   List<dynamic> mostSongs = [];
@@ -44,7 +80,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    apiRequster  = ApiRequster(this,develperModel: true);
+    apiRequster  = ApiRequster(this,develperModel: false);
 
     try {
       print('HomeLogic.onReady 1');
@@ -63,6 +99,9 @@ class HomeLogic extends GetxController implements  RequestInterface{
       print('HomeLogic.onReady finally');
 
     }
+
+    update();
+
 
     getMainReueqst();
   }
@@ -106,12 +145,12 @@ class HomeLogic extends GetxController implements  RequestInterface{
 
   void praseJsonFromChannels(source) {
     try {
-      if (Platform.isIOS) {
-        channels = (FromJsonGetChannels.fromJson(jsonDecode(source)).data ?? []).where((te)=>te.link.toString().contains("https://s1.mediaverse.app")).toList();
-      }else{
-        channels = FromJsonGetChannels.fromJson(jsonDecode(source)).data ?? [];
-
-      }
+        channels = FromJsonGetAllChannels.fromJson(jsonDecode(source)).data ?? [];
+      // if (Platform.isIOS) {
+      //   channels = (FromJsonGetAllChannels.fromJson(jsonDecode(source)).data ?? []).where((te)=>te.link.toString().contains("https://s1.mediaverse.app")).toList();
+      // }else{
+      //
+      // }
       print('HomeLogic.praseJsonFromChannels 1 =${channels}');
     }  catch (e) {
       // TODO
@@ -123,12 +162,11 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
 
   void _getBestVideos() {
-    apiRequster.request("videos/newest", ApiRequster.MHETOD_GET, 2);
+    apiRequster.request("assets/newest"+'?media_type=video', ApiRequster.MHETOD_GET, 2);
 
   }
 
   void praseJsonFromBestVideos(source) {
-    log('HomeLogic.praseJsonFromBestVideos = ${source}');
     bestVideos = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
 
 
@@ -137,15 +175,15 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
 
   void _getMostVideos() {
-    apiRequster.request("images/most-viewed", ApiRequster.MHETOD_GET, 3);
+    apiRequster.request("assets/most-viewed"+'?media_type=image', ApiRequster.MHETOD_GET, 3);
 
   }
   void _getMostText() {
-    apiRequster.request("texts/most-viewed", ApiRequster.MHETOD_GET, 4);
+    apiRequster.request("assets/most-viewed"+'?media_type=text', ApiRequster.MHETOD_GET, 4);
 
   }
   void _getMostSongs() {
-    apiRequster.request("audios/newest", ApiRequster.MHETOD_GET, 5);
+    apiRequster.request("assets/newest"+'?media_type=audio', ApiRequster.MHETOD_GET, 5);
 
   }
 
@@ -168,7 +206,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
 
   void sendImageRecentlyReuqest() {
-    apiRequster.request("images/daily-recommended", ApiRequster.MHETOD_GET, 6);
+    apiRequster.request("assets/daily-recommended"+'?media_type=image', ApiRequster.MHETOD_GET, 6);
 
   }
 
@@ -179,7 +217,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
 
   void sendSoundRecentlyReuqest() {
 
-    apiRequster.request("audios/daily-recommended", ApiRequster.MHETOD_GET, 7);
+    apiRequster.request("assets/daily-recommended" +'?media_type=audio', ApiRequster.MHETOD_GET, 7);
 
   }
 
@@ -189,7 +227,7 @@ class HomeLogic extends GetxController implements  RequestInterface{
   }
   void sendTextRecentlyReuqest() {
 
-    apiRequster.request("texts/daily-recommended", ApiRequster.MHETOD_GET, 8);
+    apiRequster.request("assets/daily-recommended"+'?media_type=text', ApiRequster.MHETOD_GET, 8);
 
   }
 
@@ -197,6 +235,11 @@ class HomeLogic extends GetxController implements  RequestInterface{
     textRecently.value = FromJsonGetBestVideos.fromJson(jsonDecode(source)).data??[];
 
     print('HomeLogic.parseJsonFromNewsText = ${textRecently.length}');
+    update();
+  }
+
+  void onpageChanged(int value) {
+    selectedTab.value=value;
     update();
   }
 }

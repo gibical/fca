@@ -12,7 +12,13 @@ import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/setting/view.dart';
 import 'package:mediaverse/app/pages/stream/logic.dart';
 
+import '../home/logic.dart';
+
 class WrapperController extends GetxController {
+  HomeLogic homeLogic = Get.put(HomeLogic());
+
+
+
   final PageController pageController = PageController(initialPage: 0);
   Rx<int> selectedIndex = Rx<int>(0);
 

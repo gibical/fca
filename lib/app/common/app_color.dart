@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mediaverse/app/common/app_extension.dart';
 export 'package:mediaverse/flavors.dart';
 
@@ -8,8 +9,7 @@ double withSize = 0;
 double hightSize = 0;
 
 TextStyle fontStyle(double fontSize, fontWeight) {
-  return TextStyle(
-    fontFamily: 'Ravi',
+  return GoogleFonts.inter(
     fontSize: fontSize,
     fontWeight: fontWeight,
   );
@@ -18,33 +18,6 @@ TextStyle fontStyle(double fontSize, fontWeight) {
 class AppTheme {
   var box = GetStorage();
 
-  // static var lightTheme = ThemeData.light().copyWith(
-  //   primaryColor: Colors.white,
-  //     primaryColorLight: AppColor.primaryLightColor,
-  //     primaryColorDark: AppColor.primaryDarkColor,
-  //   brightness: Brightness.light,
-  //     hintColor: "#758299".toColor(),
-  //     cardColor: "#E2E7F2".toColor(),disabledColor: "E2E7F2".toColor(),
-  //     textTheme: const TextTheme(
-  //         displayMedium: TextStyle(color:Colors.white ),
-  //         displaySmall: TextStyle(color: Colors.white )
-  //     )
-  //
-  // );
-  // static var darkTheme =  ThemeData.dark().copyWith(
-  //   primaryColor:Colors.black,
-  //   primaryColorLight: AppColor.primaryLightColor,
-  //   primaryColorDark: AppColor.primaryDarkColor,
-  //
-  //   brightness: Brightness.dark,
-  //   cardColor: "#111920".toColor(),
-  //   hintColor: "#162532".toColor(),disabledColor: "#111920".toColor(),
-  //   textTheme: const TextTheme(
-  //     displayMedium: TextStyle(color:Colors.white),
-  //     displaySmall: TextStyle(color:Colors.white )
-  //   )
-  //
-  // );
 
   static ThemeData get lightMode => ThemeData(
         useMaterial3: true,
@@ -121,24 +94,33 @@ class AppTheme {
 
 class AppColor {
   static late Color grayLightColor;
+  static late Color backgroundColor;
   static late Color blueDarkColor;
   static late Color whiteColor;
   static late Color primaryLightColor;
+  static  Color primaryColor = '#2563EB'.toColor();
   static late Color primaryDarkColor;
   static late Color errorColor;
+  static  Color secondaryDark = '#000018'.toColor();
+
 
   static void init() {
     switch (F.appFlavor) {
       case Flavor.gibical:
+        backgroundColor = const Color(0xff000018);
+
         grayLightColor = const Color(0xffF5F7F9);
         blueDarkColor = const Color(0xff010224);
         whiteColor = const Color(0xffffffff);
-        primaryLightColor = const Color(0xff5A7AFA);
+        primaryLightColor = const Color(0xff2563EB);
+        primaryColor = const Color(0xff2563EB);
         primaryDarkColor = const Color(0xff000033);
         errorColor = const Color(0xffE01818);
         break;
 
       case Flavor.ravi:
+        backgroundColor = const Color(0xff000018);
+
         grayLightColor = const Color(0xffF5F7F9);
         blueDarkColor = const Color(0xff00332f);
         whiteColor = const Color(0xffffffff);
@@ -149,15 +131,18 @@ class AppColor {
 
       case Flavor.mediaverse:
       default:
-        grayLightColor = const Color(0xffF5F7F9);
+      backgroundColor = const Color(0xff000018);
+
+      grayLightColor = const Color(0xffF5F7F9);
         blueDarkColor = const Color(0xff010224);
         whiteColor = const Color(0xffffffff);
-        primaryLightColor = const Color(0xff5A7AFA);
+      primaryLightColor = const Color(0xff2563EB);
+        primaryColor = const Color(0xff2563EB);
         primaryDarkColor = const Color(0xff000033);
         errorColor = const Color(0xffE01818);
         break;
     }
 
-    whiteColor = const Color(0xffffffff); // ثابت برای همه طعم‌ها
+    whiteColor = const Color(0xffffffff);
   }
 }

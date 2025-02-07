@@ -95,7 +95,7 @@ class ChangePasswordLogic extends GetxController implements  RequestInterface{
   }
 
   void parseJsonFromOTPcode(source) {
-    Constant.showMessege("Request Succesfuly");
+    Constant.showMessege("alert_1".tr);
     isloading(false);
 
     Get.back();

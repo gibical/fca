@@ -79,7 +79,7 @@ class _DetailsBottomWidgetState extends State<DetailsBottomWidget> {
               padding: EdgeInsets.symmetric(horizontal: 3.w),
               onPressed: (){
 
-                Get.bottomSheet(YoutubeShareBottomSheet(widget.detailController,false),backgroundColor: AppColor.primaryDarkColor);
+              Get.bottomSheet(YoutubeShareBottomSheet(widget.detailController,false),backgroundColor: AppColor.primaryDarkColor);
 
               },
 

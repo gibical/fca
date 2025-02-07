@@ -18,14 +18,16 @@ import '../../../common/app_color.dart';
 import '../../../common/app_icon.dart';
 import '../logic.dart';
 
+import 'package:http/http.dart' as http;
 
 
 
 class VideoLiveWidget extends StatefulWidget {
   final String videoUrl;
-  LiveController liveController;
+  dynamic liveController;
+  bool  isShowLoading ;
 
-   VideoLiveWidget({Key? key, required this.videoUrl, required this.liveController}) : super(key: key);
+   VideoLiveWidget({Key? key, required this.videoUrl, required this.liveController,this.isShowLoading=false}) : super(key: key);
 
   @override
   _VideoLiveWidgetState createState() => _VideoLiveWidgetState();
@@ -73,7 +75,7 @@ class _VideoLiveWidgetState extends State<VideoLiveWidget> {
 
   @override
   void dispose() {
-    widget. liveController.controllerVideoPlay.dispose();
+    widget. liveController.controllerVideoPlay.dispose();//
     super.dispose();
   }
 
@@ -114,10 +116,10 @@ class _VideoLiveWidgetState extends State<VideoLiveWidget> {
       ),
     ): Padding(
       padding:  EdgeInsets.symmetric(vertical: 5.h),
-      child: Center(child: Container(
+      child: Center(child:(widget.isShowLoading)?Text("No Live Active Right Now"):  Container(
           width: 10.w,
           height: 10.w,
-          child: CircularProgressIndicator())),
+          child:CircularProgressIndicator())),
     );
   }
 }

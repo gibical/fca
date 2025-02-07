@@ -9,6 +9,7 @@ import 'package:mediaverse/app/pages/signup/widgets/custom_text_field_form_regis
 import 'package:mediaverse/app/widgets/logo_app_widget.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../gen/model/enums/login_enum.dart';
 import '../../common/app_config.dart';
 import '../plus_section/widget/custom_plan_text_filed.dart';
 
@@ -95,7 +96,7 @@ class SignupScreen extends StatelessWidget {
                           SizedBox(width: 1.w,),
                           InkWell(
                             onTap: () {
-                              Get.toNamed(PageRoutes.LOGIN);
+                              Get.offNamed(PageRoutes.LOGIN,arguments:LoginEnum.username );
                             },
                             child: Text(
                               'signup_11'.tr, style: textTheme.bodySmall!.copyWith(

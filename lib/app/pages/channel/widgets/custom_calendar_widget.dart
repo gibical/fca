@@ -5,8 +5,10 @@ import 'package:mediaverse/app/pages/channel/widgets/addChanelCardCalanderWidget
 import 'package:mediaverse/app/pages/channel/widgets/add_channel_card_widget.dart';
 import 'package:mediaverse/app/pages/channel/widgets/card_channel_widget.dart';
 import 'package:mediaverse/app/pages/share_account/logic.dart';
+import 'package:mediaverse/gen/model/json/FromJsonGetChannels.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../gen/model/json/FromJsonGetChannelsShow.dart';
 import '../../../common/app_color.dart';
 import '../../../common/app_icon.dart';
 import '../../../common/font_style.dart';
@@ -299,7 +301,7 @@ class _CustomCalendarWidgetState extends State<CustomCalendarWidget> {
                           ),
 
                           ...logic.todayModels.asMap().entries.map((e) =>    CardChannelWidget(title: e.value.type.toString(),
-                              date: DateTime.parse(e.value.time??"").toString()),).toList()
+                              date: DateTime.parse(e.value.time??"").toString(), model: ChannelsModel()),).toList()
                         ],
                       ),
                     ),

@@ -12,6 +12,7 @@ import 'package:mediaverse/app/common/app_extension.dart';
 import 'package:mediaverse/gen/model/json/FromJsonGetExternalAccount.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../gen/model/json/FromJsonGetChannelsShow.dart';
 import '../../common/app_color.dart';
 import '../../common/app_icon.dart';
 import '../../common/font_style.dart';
@@ -34,6 +35,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
   (Get.arguments != null && Get.arguments[0] == "onTapChannelManagement");
 
   bool upcomingWidget = Get.arguments != null;//
+  List<Destinations> destionationList =[];
 
   @override
   void initState() {
@@ -44,6 +46,14 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
         _selectedTabIndex = _tabController.index;
       });
     });
+   try {
+     destionationList =Get.arguments[2];
+     if(destionationList.isNotEmpty){
+       logic.destintionList.addAll(destionationList);
+     }
+   }  catch (e) {
+     // TODO
+   }
   }
 
   @override
@@ -68,53 +78,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
           ),
         ),
       ),
-      body: DefaultTabController(
-        length: 2,
-        child: Column(
-          children: [
-            Container(
-              width: 100.w,
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.4),
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(60.sp),
-                  bottomLeft: Radius.circular(60.sp),
-                ),
-              ),
-              height: 60,
-              child: TabBar(
-                tabAlignment: TabAlignment.center,
-                physics: const BouncingScrollPhysics(),
-                isScrollable: true,
-                controller: _tabController,
-                labelPadding: const EdgeInsets.symmetric(horizontal: 20.0),
-                overlayColor: MaterialStateProperty.all(Colors.transparent),
-                enableFeedback: false,
-                indicatorWeight: 2,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorColor: AppColor.primaryLightColor,
-                unselectedLabelColor: Colors.grey,
-                labelColor: AppColor.primaryLightColor,
-                dividerColor: Colors.transparent,
-                tabs: [
-                  _buildTab(context, 0, 'Stream'.tr),
-                  _buildTab(context, 1, 'Share'.tr),
-                ],
-              ),
-            ),
-            Expanded(
-              child: TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _tabController,
-                children: [
-                  getAcoountStream(),
-                  getAcoountShare(),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      body: getAcoountShare(),
     );
   }
 
@@ -144,9 +108,9 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
             builder: (logics) {
 
               var list = logics.destinationModelList;
-              print('ShareAccountPage.build 1 = ${isSendedByCondactor} - ${ list.length}');
+              //print('ShareAccountPage.build 1 = ${isSendedByCondactor} - ${ list.length}');
               try {
-                print('ShareAccountPage.build = ${upcomingWidget}');
+                //print('ShareAccountPage.build = ${upcomingWidget}');
                 // if (upcomingWidget) {
                 //   String filter = Get.arguments[1];
                 //
@@ -176,7 +140,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
 
                                 itemCount: list.length,
                                 itemBuilder: (context, index) {
-                                  print('ShareAccountPage.build 2 = ${isSendedByCondactor} - ${ list.length}');
+                                  //print('ShareAccountPage.build 2 = ${isSendedByCondactor} - ${ list.length}');
 
                                   return MassageItemWidgetDestination(
                                       list.elementAt(index));
@@ -357,7 +321,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
     });
   }
   Widget getAcoountShare(){
-    print('ShareAccountPage.build = ${isSendedByCondactor}');
+    //print('ShareAccountPage.build = ${isSendedByCondactor}');
     return Obx(() {
       if (logic.isloading.value) {
         return Scaffold(
@@ -374,9 +338,9 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
             builder: (logics) {
 
               var list = logics.externalList;
-              print('ShareAccountPage.build list.length = ${list.length}');
+              //print('ShareAccountPage.build list.length = ${list.length}');
               try {
-                print('ShareAccountPage.build = ${upcomingWidget}');
+                //print('ShareAccountPage.build = ${upcomingWidget}');
                 // if (upcomingWidget) {
                 //   String filter = Get.arguments[1];
                 //
@@ -413,85 +377,29 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
                       ),
                       if(!isSendedByCondactor)Align(
                         alignment: Alignment.bottomCenter,
-                        child: Container(
-                            width: 100.w,
-                            height: 9.h,
-                            decoration: BoxDecoration(
-                                color: AppColor.primaryLightColor,
-                                border: Border(
-                                  left: BorderSide(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      width: 1),
-                                  bottom: BorderSide(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      width: 0.4),
-                                ),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15),
-                                )),
-                            child: Stack(
-                              children: [
-                                Align(
-                                  child: Container(
-                                    width: 80.w,
-                                    height: 5.h,
-                                    child: DottedBorder(
-                                      borderType: BorderType.RRect,
-                                      color: "6f6e8e".toColor(),
-                                      radius: Radius.circular(12),
-                                      strokeWidth: 2,
-                                      child: ClipRRect(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12)),
-                                          child: MaterialButton(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    12)),
-                                            onPressed: () {
-                                              logic.showAccountType();
-                                            },
-                                            padding: EdgeInsets.zero,
-                                            child: Center(
-                                              child: Row(
-                                                mainAxisSize:
-                                                MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .center,
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment
-                                                    .center,
-                                                children: [
-                                                  Text(
-                                                    "share_28".tr,
-                                                    style: TextStyle(
-                                                        color: "6f6e8e"
-                                                            .toColor(),
-                                                        fontWeight:
-                                                        FontWeight
-                                                            .bold),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 3.w,
-                                                  ),
-                                                  Icon(
-                                                    Icons
-                                                        .add_circle_outline,
-                                                    color:
-                                                    "6f6e8e".toColor(),
-                                                    size: 11.sp,
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          )),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
+                        child:   Container(
+                          width: 100.w,
+                          height: 6.h,
+                          margin: EdgeInsets.symmetric(vertical: 3.5.h,horizontal: 16),
+                          decoration: BoxDecoration(
+                              color: AppColor.primaryLightColor,
+                              borderRadius: BorderRadius.circular(500)
+                          ),
+                          child: MaterialButton(
+                            onPressed: () {
+                              logic.showAccountType();
+
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(500)),
+                            child: Center(
+                              child: Center(
+                                child: Text("share_28".tr,
+                                  style: TextStyle(fontWeight: FontWeight.w500),),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
 
 
@@ -504,14 +412,14 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
     });
   }
 
-  Padding MassageItemWidget(ProgramModel elementAt) {
+  Padding MassageItemWidget(Programs elementAt) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0.6.h),
       child: MaterialButton(
         padding: EdgeInsets.zero,
         onPressed: isSendedByCondactor
             ? () {
-          print('_ShareAccountPageState.MassageItemWidget = 1');
+          //print('_ShareAccountPageState.MassageItemWidget = 1');
 
           Get.find<ShareAccountLogic>().setSelectedChannel(elementAt);
                 Get.find<ShareAccountLogic>().selectShareMode = SelectShareMode.stream;
@@ -662,7 +570,7 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Type: Youtube",
+                            "Type: ${elementAt.type.toString().toUpperCase()}",
                             style: FontStyleApp.bodyMedium.copyWith(
                               color: Colors.grey.withOpacity(0.7),
                             ),
@@ -693,8 +601,9 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
       ),
     );
   }
-  Padding MassageItemWidgetDestination(DestinationModel elementAt) {
+  Padding MassageItemWidgetDestination(Destinations elementAt) {
     bool _isSelected = logic.getactiveDestinationModel(elementAt);
+    bool _isSelectedFromModel = logic.getactiveDestinationModelFromList(destionationList,elementAt);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 0.6.h),
       child: MaterialButton(
@@ -704,101 +613,106 @@ class _ShareAccountPageState extends State<ShareAccountPage>      with SingleTic
 
 
 
-          Get.find<ShareAccountLogic>().setSelectedDestiniation(elementAt);
-          Get.find<ShareAccountLogic>().selectShareMode = SelectShareMode.stream;
-          Get.find<ShareAccountLogic>().selectShareModelName = elementAt.name??"";
-          Get.find<ShareAccountLogic>().selectShareModeid = elementAt.id??"";
+          if (!_isSelectedFromModel) {
+            Get.find<ShareAccountLogic>().setSelectedDestiniation(elementAt);
+            Get.find<ShareAccountLogic>().selectShareMode = SelectShareMode.stream;
+            Get.find<ShareAccountLogic>().selectShareModelName = elementAt.name??"";
+            Get.find<ShareAccountLogic>().selectShareModeid = elementAt.id??"";
+          }
                //  Get.back();
               }
             : null,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.sp),
         ),
-        child: Container(
-          height: 8.5.h,
-          width: double.infinity,
-          decoration: BoxDecoration(
-              color: Color(0xff4E4E61).withOpacity(0.3),
-              borderRadius: BorderRadius.circular(16.sp),
-              border:_isSelected?Border.all(color: Colors.white): Border(
-                left: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1),
-                bottom:
-                    BorderSide(color: Colors.grey.withOpacity(0.3), width: 0.4),
-              )),
-          child: Row(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 1.5.h,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 6.w,
+        child: Opacity(
+          opacity: _isSelectedFromModel?0.3:1,
+          child: Container(
+            height: 8.5.h,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                color: Color(0xff4E4E61).withOpacity(0.3),
+                borderRadius: BorderRadius.circular(16.sp),
+                border:_isSelected?Border.all(color: Colors.white): Border(
+                  left: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1),
+                  bottom:
+                      BorderSide(color: Colors.grey.withOpacity(0.3), width: 0.4),
+                )),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 1.5.h,
                             ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  '${elementAt.name}',
-                                  style: FontStyleApp.bodyMedium
-                                      .copyWith(color: Colors.white),
-                                ),
-                                Spacer(),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 0.8.h,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 6.w),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Type: Youtube",
-                                  style: FontStyleApp.bodyMedium.copyWith(
-                                    color: Colors.grey.withOpacity(0.7),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 6.w,
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    '${elementAt.name}',
+                                    style: FontStyleApp.bodyMedium
+                                        .copyWith(color: Colors.white),
                                   ),
-                                ),
-                               
-                              ],
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 0.8.h,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 6.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Type: Youtube",
+                                    style: FontStyleApp.bodyMedium.copyWith(
+                                      color: Colors.grey.withOpacity(0.7),
+                                    ),
+                                  ),
+          
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ( _isSelected||_isSelectedFromModel)?Checkbox(value: true, onChanged: (s){}):Container(),
+                          Text(
+                            "Connected: on",//
+                            style: FontStyleApp.bodyMedium.copyWith(
+                              color: Colors.grey.withOpacity(0.7),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ( _isSelected)?Checkbox(value: true, onChanged: (s){}):Container(),
-                        Text(
-                          "Connected: on",//
-                          style: FontStyleApp.bodyMedium.copyWith(
-                            color: Colors.grey.withOpacity(0.7),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 4.w,)
-                  ],
+                      SizedBox(width: 4.w,)
+                    ],
+                  ),
                 ),
-              ),
-              if (!isSendedByCondactor)
-                IconButton(
-                    onPressed: () {
-                      logic.list.remove(elementAt);
-                      logic.update();
-                      logic.deleteDestinationModel(elementAt);
-                    },
-                    icon: Icon(Icons.delete))
-            ],
+                if (!isSendedByCondactor)
+                  IconButton(
+                      onPressed: () {
+                        logic.channelModels.remove(elementAt);
+                        logic.update();
+                        logic.deleteDestinationModel(elementAt);
+                      },
+                      icon: Icon(Icons.delete))
+              ],
+            ),
           ),
         ),
       ),

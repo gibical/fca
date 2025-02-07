@@ -4,14 +4,17 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mediaverse/app/common/app_route.dart';
+import 'package:mediaverse/app/common/utils/firebase_options.dart';
 import 'package:meta/meta.dart';
 
+import '../../../flavors.dart';
 import '../../pages/media_suit/logic.dart';
 import '../RequestInterface.dart';
 import '../app_api.dart';
@@ -22,7 +25,6 @@ class FirebaseController extends GetxController implements RequestInterface {
     print('FirebaseController.initializeLocalNotifications 1 ');
     // Handle your notification response logic here
   }
-
   late FirebaseMessaging _firebaseMessaging;
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -32,27 +34,34 @@ class FirebaseController extends GetxController implements RequestInterface {
 
   init() async {
     onReady();
-    await Firebase.initializeApp(
-    );
-    if (Platform.isIOS) {
-      FirebaseMessaging.instance.requestPermission();
-    }
+   if (true) {
+     var s = F.appFlavor==Flavor.gibical? await Firebase.initializeApp(
+       name: F.title,
+       options: DefaultFirebaseConfig.firebaseOptions
+      ):await Firebase.initializeApp(
+         options: DefaultFirebaseConfig.firebaseOptions
+     );
+      if (Platform.isIOS) {
+        FirebaseMessaging.instance.requestPermission();
+      }
+     
+      _firebaseMessaging = FirebaseMessaging.instance;
+      requestNotificationPermissions();
+      initializeLocalNotifications();
+      listenToFCMMessages();
+      if (box.read("islogin") ?? false) {
 
-    _firebaseMessaging = FirebaseMessaging.instance;
-    requestNotificationPermissions();
-    initializeLocalNotifications();
-    listenToFCMMessages();
-    if (box.read("islogin") ?? false) {
-      String? token = await FirebaseMessaging.instance.getToken();
-      print('FirebaseController.init = ${token}');
-      box.write("firebaseToken", token);
-      var body = {"token": token};
-      apiRequster.request(
-          "push-notifications/firebase-tokens", ApiRequster.MHETOD_POST, 1,
-          useToken: true, body: body);
-      apiRequster.request("firebase?user_id=2", ApiRequster.MHETOD_GET, 500,
-          useToken: true);
-    }
+        String? token = await FirebaseMessaging.instance.getToken();
+        if(kDebugMode)log('FirebaseController.init token = ${token}');
+        box.write("firebaseToken", token);
+        var body = {"token": token};
+        apiRequster.request(
+            "push-notifications/firebase-tokens", ApiRequster.MHETOD_POST, 1,
+            useToken: true, body: body);
+        apiRequster.request("firebase?user_id=2", ApiRequster.MHETOD_GET, 500,
+            useToken: true);
+      }
+   }
   }
 
   @override
@@ -70,11 +79,13 @@ class FirebaseController extends GetxController implements RequestInterface {
   @override
   void onStartReuqest(int reqCode) {
     // TODO: implement onStartReuqest
+
   }
 
   @override
   void onSucces(source, int reqCdoe) {
     // TODO: implement onSucces
+    print('FirebaseController.onSucces Update Token ');
   }
 
   void logOut() {
@@ -92,7 +103,15 @@ class FirebaseController extends GetxController implements RequestInterface {
   void initializeLocalNotifications() {
     var initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettingsIOS = DarwinInitializationSettings();
+    var initializationSettingsIOS = DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+      onDidReceiveLocalNotification: (id, title, body, payload) async {
+        // handle if needed
+        print('FirebaseController.initializeLocalNotifications onDidReceiveLocalNotification ');
+      },
+    );
     var initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
@@ -107,7 +126,6 @@ class FirebaseController extends GetxController implements RequestInterface {
   }
 
   void listenToFCMMessages() {
-    print('FirebaseController.listenToFCMMessages 1');
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       print("onMessageOpenedApp: $message");
 
@@ -132,7 +150,8 @@ class FirebaseController extends GetxController implements RequestInterface {
   }
 
   void showNotification(RemoteMessage message) {
-     //debugger();
+    print('FirebaseController.showNotification 1 ');
+    //debugger();
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'MediaVerse_0',
       'MediaVerse',
@@ -140,11 +159,18 @@ class FirebaseController extends GetxController implements RequestInterface {
       importance: Importance.max,
       priority: Priority.high,
     );
-    var iOSPlatformChannelSpecifics = DarwinNotificationDetails();
+    print('FirebaseController.showNotification 2 ');
+    var iOSPlatformChannelSpecifics = const DarwinNotificationDetails(
+      presentAlert: true,
+      presentSound: true,
+      presentBadge: true,
+    );
     var platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
       iOS: iOSPlatformChannelSpecifics,
     );
+ ;
+
     try {
       _flutterLocalNotificationsPlugin.show(
           0, // Notification ID
@@ -153,7 +179,10 @@ class FirebaseController extends GetxController implements RequestInterface {
           platformChannelSpecifics,
           //   payload: message.data
           payload: jsonEncode(message.data));
+      print('FirebaseController.showNotification 4 ');
+
     } catch (e) {
+      print('FirebaseController.showNotification = ${e}');
       _flutterLocalNotificationsPlugin.show(
         0, // Notification ID
         message.notification?.title, // Notification Title
@@ -167,20 +196,21 @@ class FirebaseController extends GetxController implements RequestInterface {
     print('FirebaseController.sendToAssetPage = ${s}');
     // debugger();
     try {
-      var json = jsonDecode(s);
+      var json = jsonDecode(jsonDecode(s)['result']);
+      var id = json['id'];
+
       print('FirebaseController.sendToAssetPage 2  = ${json}');
       String route = PageRoutes.DETAILIMAGE;
-      switch (json['class'].toString()) {
-        case "1":
+      switch ((json['media_type']).toString()) {
+        case "text":
           route = PageRoutes.DETAILTEXT;
-        case "2":
+        case "image":
           route = PageRoutes.DETAILIMAGE;
-        case "3":
+        case "audio":
           route = PageRoutes.DETAILMUSIC;
-        case "4":
+        case "video":
           route = PageRoutes.DETAILVIDEO;
       }
-      var id = json['id'];
       Get.toNamed(route, arguments: {'id': id}, preventDuplicates: false);
     } catch (e) {
       // TODO

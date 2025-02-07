@@ -45,14 +45,20 @@ class ProfileModel {
 }
 
   ProfileModel.fromJson(dynamic jsons) {
-    log('ProfileModel.fromJson = ${jsons}');
+   // debugger();
     var json = jsons['data'];
     _id = json['id'];
     _firstName = json['first_name'];
     _lastName = json['last_name'];
     _username = json['username'];
     _cellphone = json['cellphone'];
-    _iso = json['address']['country_iso'];
+    try {
+      if (json['address']!=null) {
+        _iso = json['address']['country_iso'];
+      }
+    }  catch (e) {
+      // TODO
+    }
     _cellphoneVerifiedAt = json['cellphone_verified_at'];
     _email = json['email'];
     _emailVerifiedAt = json['email_verified_at'];

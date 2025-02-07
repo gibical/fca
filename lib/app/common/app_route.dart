@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+import 'package:mediaverse/app/pages/auth/view.dart';
 import 'package:mediaverse/app/pages/change_password/view.dart';
 import 'package:mediaverse/app/pages/channel/all_tools.dart';
+import 'package:mediaverse/app/pages/channel/v2/add_channel/add_channels_page.dart';
 import 'package:mediaverse/app/pages/detail/logic.dart';
 import 'package:mediaverse/app/pages/detail/pages/detail_text_screen.dart';
 import 'package:mediaverse/app/pages/detail/state.dart';
@@ -16,6 +18,7 @@ import 'package:mediaverse/app/pages/massage/view.dart';
 import 'package:mediaverse/app/pages/media_suit/state.dart';
 import 'package:mediaverse/app/pages/media_suit/view.dart';
 import 'package:mediaverse/app/pages/otp/view.dart';
+import 'package:mediaverse/app/pages/plus/view.dart';
 import 'package:mediaverse/app/pages/plus_section/view.dart';
 import 'package:mediaverse/app/pages/profile/view.dart';
 import 'package:mediaverse/app/pages/search/state.dart';
@@ -29,6 +32,7 @@ import 'package:mediaverse/app/pages/upload/view.dart';
 import 'package:mediaverse/app/pages/wrapper/state.dart';
 import 'package:mediaverse/app/pages/wrapper/view.dart';
 
+import '../pages/channel/tab/detail_channel_screen.dart';
 import '../pages/detail/pages/comment_screen.dart';
 import '../pages/detail/pages/detail_image_screen.dart';
 import '../pages/detail/pages/detail_music_screen.dart';
@@ -65,9 +69,28 @@ class PageRoutes {
   static const CHANGEPASSWORD = '/ChangePassword';
   static const MEDIASUIT = '/MediaSuite';
   static const SHAREACCOUNT = '/ShareAccount';
+  static const SINGLECHANNEL = '/ChannelScreen';
+  static const AUTH = '/AuthScreen';
+  static const ADDCHANNEL = '/AddChannelScreen';
 
 
   static List<GetPage> routes = [
+    GetPage(
+      name: PageRoutes.ADDCHANNEL,
+      page: () =>   AddChannelsPage(),
+
+    ),
+    GetPage(
+      name: PageRoutes.AUTH,
+      page: () =>  AuthPage(),
+
+    ),
+    GetPage(
+      name: PageRoutes.SINGLECHANNEL,
+      page: () =>  DetailChannelScreen(),
+      transition: Transition.upToDown,
+
+    ),
     GetPage(
       name: PageRoutes.SPLASH,
       page: () => const SplashScreen(),
@@ -181,7 +204,7 @@ class PageRoutes {
     GetPage(
       name: PageRoutes.PLUS,
       transition: Transition.downToUp,
-      page: () => PlusSectionPage(),
+      page: () => PlusPage(),
 
 
 

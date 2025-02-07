@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -15,6 +16,7 @@ import 'package:mediaverse/gen/model/json/FromJsonGetmostText.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../gen/model/json/FromJsonGetBestModelVideows.dart';
+import '../../../../gen/model/json/FromJsonGetChannelsShow.dart';
 import '../../../common/app_route.dart';
 
 class BestItemExploreWidget extends GetView<HomeLogic> {
@@ -96,7 +98,7 @@ class BestItemExploreWidget extends GetView<HomeLogic> {
                   Container(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: Text(
-                        elementAt['media']['name'],
+                        elementAt['name'],
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: Color(0xFF666680),
@@ -223,7 +225,7 @@ class BestItemSongsWidget extends GetView<HomeLogic> {
                   Container(
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: Text(
-                        elementAt['media']['name'],
+                        elementAt['name'],
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: Color(0xFF666680),
@@ -274,12 +276,13 @@ class BestItemSongsWidget extends GetView<HomeLogic> {
 class BestChannelsWidget extends GetView<HomeLogic> {
   BestChannelsWidget({required this.model});
 
-  ChannelModel model;
+  ChannelsModel model;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -287,11 +290,7 @@ class BestChannelsWidget extends GetView<HomeLogic> {
           height: 20.w,
           decoration: BoxDecoration(
               color: theme.onBackground.withOpacity(0.1),
-              image: DecorationImage(
-                  image: NetworkImage(
-                    model.thumbnail ?? "",
-                  ),
-                  fit: BoxFit.cover),
+           
               border: Border.symmetric(
                   horizontal: BorderSide(
                 width: 0.9,
@@ -308,22 +307,42 @@ class BestChannelsWidget extends GetView<HomeLogic> {
                 height: 190,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20.sp)),
-                  // gradient: LinearGradient(
-                  //     begin: Alignment.bottomCenter,
-                  //     end: Alignment.topCenter,
-                  //     colors: [
-                  //       Colors.black.withOpacity(0.6),
-                  //       Colors.black.withOpacity(0.4),
-                  //      Colors.transparent,
-                  //
-                  // ])
+
                 ),
+              ),
+              if((model.thumbnails??"").toString().length>4)ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: CachedNetworkImage(imageUrl:model.thumbnails['226x226'],
+                errorWidget: (s,q,a){
+                  return Container(
+                    child: Image.asset("assets/mediaverse/images/mainLogo.png"),
+                  );
+                },),
+              ),
+              if((model.thumbnails??"").toString().length<4)Container(
+                child: Image.asset("assets/mediaverse/images/mainLogo.png"),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 15, bottom: 10),
-                child: SvgPicture.asset(AppIcon.videoIcon,
-                    color: AppColor.grayLightColor.withOpacity(0.5),
-                    height: 1.8.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Container(
+
+                        child: Text(
+                          model.name??'',
+                          style: TextStyle(
+                          fontSize: 7.sp
+                        ),),
+                        margin: EdgeInsets.symmetric(horizontal: 3),
+                      ),
+                    ),
+                    SvgPicture.asset(AppIcon.videoIcon,
+                        color: AppColor.grayLightColor.withOpacity(0.5),
+                        height: 1.8.h),
+                  ],
+                ),
               )
             ],
           )),
@@ -340,7 +359,6 @@ class BestTextWidget extends GetView<HomeLogic> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    print('BestTextWidget.build = ${model['user']}');
     return GestureDetector(
       onTap: () {
         String itemId = model['id'];
@@ -378,7 +396,7 @@ class BestTextWidget extends GetView<HomeLogic> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              model['media']['name'],
+                              model['name'],
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme
@@ -393,7 +411,7 @@ class BestTextWidget extends GetView<HomeLogic> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              model['media']['description'] ?? " ",
+                              model['description'] ?? " ",
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: Theme

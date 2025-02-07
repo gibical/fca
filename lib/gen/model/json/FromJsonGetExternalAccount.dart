@@ -197,7 +197,7 @@ class ExternalAccountModel {
   ExternalAccountModel.fromJson(dynamic json) {
     _id = json['id'];
     _userId = json['user_id'];
-    _type = json['media_type'];
+    _type = json['type'];
     _title = json['title'].toString();
     _information = json['information'] != null ? Information.fromJson(json['information']) : null;
     _createdAt = json['created_at'];

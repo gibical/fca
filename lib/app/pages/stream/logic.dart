@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
 import '../../../flavors.dart';
+import '../../../gen/model/json/FromJsonGetChannelsShow.dart';
 import '../../../gen/model/json/walletV2/FromJsonGetPrograms.dart';
 import '../channel/view.dart';
 import '../share_account/logic.dart';
@@ -25,7 +26,7 @@ class StreamViewController extends GetxController {
   var isLoading = true.obs;
    AnimationController? animationController;
 
-  ProgramModel? programModel;
+  Programs? programModel;
   ShareAccountLogic shareAccountLogic = Get.put(ShareAccountLogic(), tag: "stream");
   int selectedCamera;
 
@@ -51,12 +52,17 @@ class StreamViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    const platform = MethodChannel('com.mediaverse.mediaverse/rtmp');
+    var platform = MethodChannel('${F.packageName}/rtmp');
 
     platform.setMethodCallHandler((call) async {
+      print('StreamViewController.onInit setMethodCallHandler = ${call}');
       if (call.method == "stopTheStream") {
 
         stopScreenStreaming();
+      }
+      if (call.method == "onStreamStarted") {
+
+       startScreenStreamingTimer();
       }
     });
     initMethod();
@@ -223,18 +229,10 @@ class StreamViewController extends GetxController {
         try {
           print('StreamViewController.startScreenStreaming = ${'${F.packageName}/rtmp'}');
           final String result = await MethodChannel('${F.packageName}/rtmp').invokeMethod('startScreenShare', {
-            'rtmpUrl': programModel!.streamURL,
+            'rtmpUrl': programModel!.streamUrl,
           });
           print(result);
 
-          isScreenStreaming = true;
-          isScreenRecordingTimeVisible(true);
-          _screenRecordingDuration = Duration.zero;
-          _screenRecordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-            _screenRecordingDuration += Duration(seconds: 1);
-            screenRecordingTime.value = _formatDuration(_screenRecordingDuration);
-            update();
-          });
         } on PlatformException catch (e) {
           print("Failed to start screen streaming: '${e.message}'.");
         }
@@ -242,13 +240,13 @@ class StreamViewController extends GetxController {
         print('Microphone permission denied');
       }
     }else{
-      Constant.showMessege("You must Select Program First");
+      Constant.showMessege("alert_12".tr);
     }
   }
 
   Future<void> stopScreenStreaming() async {
     try {
-      final String result = await MethodChannel('com.mediaverse.mediaverse/rtmp').invokeMethod('stopScreenShare');
+      final String result = await MethodChannel('${F.packageName}/rtmp').invokeMethod('stopScreenShare');
       print(result);
 
       isScreenStreaming = false;
@@ -311,9 +309,9 @@ class StreamViewController extends GetxController {
   }
 
   void goToChannelScreen() async {
-    ProgramModel programModel = await Get.to(ChannelScreen(), arguments: [true]);
+    Programs programModel = await Get.to(ChannelScreen(), arguments: [true]);
     this.programModel = programModel;
-    url = programModel.streamURL;
+    url = programModel.streamUrl;
     update();
   }
 
@@ -330,6 +328,18 @@ class StreamViewController extends GetxController {
     _recordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       _recordingDuration += Duration(seconds: 1);
       recordingTime.value = _formatDuration(_recordingDuration);
+      update();
+    });
+  }
+
+  void startScreenStreamingTimer() {
+
+    isScreenStreaming = true;
+    isScreenRecordingTimeVisible(true);
+    _screenRecordingDuration = Duration.zero;
+    _screenRecordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      _screenRecordingDuration += Duration(seconds: 1);
+      screenRecordingTime.value = _formatDuration(_screenRecordingDuration);
       update();
     });
   }

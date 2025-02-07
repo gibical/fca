@@ -39,7 +39,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
   double value = 0;
   double actualValue = 0;
   double minValue = 0; // Start from 1
-  double maxValue = 200;
+
   double itemWidth = 100;
 
   late ScrollSynchronizer scrollSynchronizer;
@@ -77,7 +77,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int totalItemCount = ((maxValue - minValue) / (itemWidth / 10)).round();
+    int totalItemCount = ((editorController.maxValueRuler - minValue) / (itemWidth / 10)).round();
 
     final h = MediaQuery.of(context).size.height;
 
@@ -208,7 +208,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                   ? SizedBox()
                                   : CustomRulerTimelineOtherAssetsWidget1(
                                       minValue: minValue,
-                                      maxValue: maxValue,
+                                      maxValue: editorController.maxValueRuler,
                                       value: value,
                                       majorTick: 10,
                                       // Adjust as per your preference
@@ -228,7 +228,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                           .withOpacity(0.2),
                                       linearStep: true,
                                       totalSeconds:
-                                          ((maxValue - minValue) / 1).toInt() +
+                                          ((editorController.maxValueRuler - minValue) / 1).toInt() +
                                               1,
                                       // Adjust to cover the entire range
                                       scrollController: _rulerScrollController,
@@ -279,17 +279,17 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                     editorController.selectedAudioIndex,
                               ),
                               CustomDividerTilmelineWidget(),
-                              TimelineItemList(
-                                controller: _listScrollControllerText,
-                                itemCount:
-                                    editorController.editTextDataList.length,
-                                totalItemCount: totalItemCount,
-                                color: Colors.green,
-                                dataList: editorController.editTextDataList,
-                                selectedIndex:
-                                    editorController.selectedTextIndex,
-                              ),
-                              CustomDividerTilmelineWidget(),
+                              // TimelineItemList(
+                              //   controller: _listScrollControllerText,
+                              //   itemCount:
+                              //       editorController.editTextDataList.length,
+                              //   totalItemCount: totalItemCount,
+                              //   color: Colors.green,
+                              //   dataList: editorController.editTextDataList,
+                              //   selectedIndex:
+                              //       editorController.selectedTextIndex,
+                              // ),
+                              // CustomDividerTilmelineWidget(),
                               SizedBox(
                                 height: 1.h,
                               ),
@@ -353,7 +353,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                  Get.to(ProfileScreen(),
+                                  Get.to(()=>ProfileScreen(),
                                       arguments: 'edit_screen');
                                 },
                                 icon: Icon(
@@ -440,6 +440,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                                       )),
                                   IconButton(
                                       onPressed: () {
+
                                         editorController.exportOnline();
                                       },
                                       icon: Icon(Icons.done, size: 27)),
@@ -590,9 +591,10 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
     );
   }
 
-  Widget _buildInfiniteScrollContainer() {
+
+  Widget _buildInfiniteScrollContainer(String key) {
     return Container(
-      key: const ValueKey('orange'),
+      key:  ValueKey(key),
       width: 100000.0,
       color: Colors.transparent,
     );
@@ -643,7 +645,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
               if (index < dataList.length) {
                 var model = dataList[index];
                 return GestureDetector(
-                  key: ValueKey('item_$index'),
+                  key: ValueKey('${model.assetId }${index}'),
                   onTap: () {
                     setState(() {
                       selectedIndex.value = index;
@@ -661,7 +663,7 @@ class _MediaSuitScreenState extends State<MediaSuitScreen> {
                   ),
                 );
               } else {
-                return _buildInfiniteScrollContainer();
+                return _buildInfiniteScrollContainer(index.toString()  );
               }
             },
             proxyDecorator: (child, index, animation) => _proxyDecorator(

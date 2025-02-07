@@ -14,7 +14,7 @@ class SplashLogic extends GetxController {
 
       Get.offAndToNamed(PageRoutes.WRAPPER);
     }else{
-      Get.offAndToNamed(PageRoutes.INTRO);
+      Get.offAndToNamed(PageRoutes.AUTH);
 
     }
   }

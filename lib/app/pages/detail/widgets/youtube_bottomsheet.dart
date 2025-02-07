@@ -315,7 +315,7 @@ class _YoutubeShareBottomSheetState extends State<YoutubeShareBottomSheet> {
                             ),
                             child: Center(
                               child: Text(
-                                logic.isSeletedDate ? "${logic.dateTime
+                                logic.isSeletedDate.value ? "${logic.dateTime
                                     .year}-${logic.dateTime.month}-${logic
                                     .dateTime.day}" : "details_32".tr,
                                 style: TextStyle(
@@ -349,7 +349,7 @@ class _YoutubeShareBottomSheetState extends State<YoutubeShareBottomSheet> {
                                 borderRadius: BorderRadius.circular(10)
                             ),
                             child: Center(
-                              child: Text(logic.isSeletedDate
+                              child: Text(logic.isSeletedDate.value
                                   ? "${logic.dateTime.hour}-${logic.dateTime
                                   .minute}"
                                   : "details_33".tr, style: TextStyle(
@@ -403,9 +403,9 @@ class _YoutubeShareBottomSheetState extends State<YoutubeShareBottomSheet> {
                     return CardChannelWidget2(//
                         title: (model.title ?? "").toString(),
                         date: (model.createdAt ?? ""),
-                        isEnable: logic.enableChannel == e.key,
+                        isEnable: logic.enableChannel!=null&&logic.enableChannel!.id == model.id,
                         onTap: () {
-                          logic.enableChannel = e.key;
+                          logic.enableChannel = model;
                           logic.update();
                         });
                   }).toList(),
@@ -427,8 +427,8 @@ class _YoutubeShareBottomSheetState extends State<YoutubeShareBottomSheet> {
                             .circular(
                             100)),
                     onPressed: () async {
-                      widget.detailController.onSendYouTubeRequest(
-                          widget.youtubeMode);
+                      widget.detailController.onSendShareRequest(
+                          widget.youtubeMode? "youtube":"google_drive",ifNowSend: logic.isSeletedNow);
                     },
                     color: Colors.black54,
                     child:  Text("details_38".tr),
@@ -440,45 +440,6 @@ class _YoutubeShareBottomSheetState extends State<YoutubeShareBottomSheet> {
         });
   }
 
-  void showDialogPicker(BuildContext context, DetailController controller) {
-    var selectedDate = showDatePicker(
-      context: context,
-      helpText: 'details_37'.tr,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2050),
-      builder: (BuildContext context, Widget? child) {
-        return Container(
-          padding: EdgeInsets.all(16),
-          child: Theme(
-            data: ThemeData.dark().copyWith(
-              colorScheme: ColorScheme.light(
-                // primary: MyColors.primary,
-                primary: Theme
-                    .of(context)
-                    .colorScheme
-                    .primary,
-                onPrimary: AppColor.primaryDarkColor,
-                surface: "02063d".toColor(),
-                onSurface: Colors.white,
-              ),
-              //.dialogBackgroundColor:Colors.blue[900],
-            ),
-            child: child!,
-          ),
-        );
-      },
-    );
-    selectedDate.then((value) {
-      controller.dateTime = value!;
-      controller.isSeletedDate = true;
-      controller.update();
-    }, onError: (error) {
-      if (kDebugMode) {
-        print(error);
-      }
-    });
-  }
 
   void showDialogTimePicker(BuildContext context, DetailController controller) {
     var selectedTime = showTimePicker(
@@ -511,7 +472,7 @@ class _YoutubeShareBottomSheetState extends State<YoutubeShareBottomSheet> {
         hour: value?.hour,
         minute: value?.minute,
       );
-      controller.isSeletedDate = true;
+      controller.isSeletedDate.value = true;
       controller.update();
     }, onError: (error) {
       if (kDebugMode) {
@@ -519,4 +480,44 @@ class _YoutubeShareBottomSheetState extends State<YoutubeShareBottomSheet> {
       }
     });
   }
+}
+
+void showDialogPicker(BuildContext context, DetailController controller) {
+  var selectedDate = showDatePicker(
+    context: context,
+    helpText: 'details_37'.tr,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2050),
+    builder: (BuildContext context, Widget? child) {
+      return Container(
+        padding: EdgeInsets.all(16),
+        child: Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.light(
+              // primary: MyColors.primary,
+              primary: Theme
+                  .of(context)
+                  .colorScheme
+                  .primary,
+              onPrimary: AppColor.primaryDarkColor,
+              surface: "02063d".toColor(),
+              onSurface: Colors.white,
+            ),
+            //.dialogBackgroundColor:Colors.blue[900],
+          ),
+          child: child!,
+        ),
+      );
+    },
+  );
+  selectedDate.then((value) {
+    controller.dateTime = value!;
+    controller.isSeletedDate.value = true;
+    controller.update();
+  }, onError: (error) {
+    if (kDebugMode) {
+      print(error);
+    }
+  });
 }

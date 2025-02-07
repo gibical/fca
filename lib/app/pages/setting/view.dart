@@ -6,12 +6,14 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mediaverse/app/common/app_icon.dart';
 import 'package:mediaverse/app/common/app_route.dart';
+import 'package:mediaverse/app/common/base/localization_service.dart';
 import 'package:mediaverse/app/pages/profile/logic.dart';
 import 'package:mediaverse/app/pages/wrapper/logic.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
 import '../../common/font_style.dart';
+import '../../widgets/country_picker.dart';
 import '../home/logic.dart';
 import 'account_page.dart';
 
@@ -186,6 +188,48 @@ class SettingScreen extends StatelessWidget {
 
             ),
             SizedBox(height: 4.h),
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 7.5.w),
+              child: Opacity(
+                opacity: 0.99,
+                child: Container(
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      // ItemSettingScreenWidget(
+                      //   onTap: (){
+                      //     print('Analytics');
+                      //   },
+                      //   icon: AppIcon.AnalyticsIcon, title: 'Analytics', subTitle: '' , iconSize: 19,
+                      // enable: false,),
+                      ItemSettingScreenWidget(
+                        onTap: (){
+
+
+                          changeLanguage();
+
+                        },
+                        icon: "assets/${F.assetTitle}/icons/language.svg",
+                        title: 'setting_18'.tr,
+                        subTitle: '',
+                        iconSize: 19,
+                      ),
+
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color(0xff4E4E61).withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(16.sp),
+                    border: Border(
+                      top: BorderSide(color: Colors.grey.withOpacity(0.4) , width: 0.9),
+                      left: BorderSide(color: Colors.grey.withOpacity(0.4) , width: 0.5),
+                    )
+                  ),
+                ),
+              ),
+
+            ),
+            SizedBox(height: 4.h),
 
             Padding(
               padding:  EdgeInsets.symmetric(horizontal: 7.5.w),
@@ -220,6 +264,33 @@ class SettingScreen extends StatelessWidget {
     var box  = GetStorage();
     box.write("islogin", false);
     Get.offAllNamed(PageRoutes.SPLASH,);
+  }
+
+  void changeLanguage() async{
+    var res = await Get.bottomSheet(
+        ChangeLangaugePickerBottomSheet());
+
+    String? model = res[0];
+    if (model != null) {
+      Locale locale  = Locale("fa","IR");
+      switch(model){
+        case "fa":
+          locale = Locale("fa","IR");
+          break;
+          case "en":
+          locale = Locale("en","EN");
+          break;
+          case "de":
+          locale = Locale("de","DE");
+          break;
+      }
+
+      Get.updateLocale(locale);
+
+      print('SettingScreen.changeLanguage = ${res}');
+      LocalizationService().changeLocale(res[1]);
+      logic.update();
+    }
   }
 }
 

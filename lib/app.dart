@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toastification/toastification.dart';
 
 import 'app/common/app_color.dart';
 import 'app/common/app_route.dart';
@@ -22,24 +25,29 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    print('_AppState.build = ${AppColor.primaryLightColor}');
-    return GetMaterialApp(
-      title:F.title,
-      getPages: PageRoutes.routes,
-
-      initialRoute: PageRoutes.SPLASH,
-      translations: LocalizationService(),
-      debugShowCheckedModeBanner: false,
-
-      locale:F.appFlavor==Flavor.ravi?LocalizationService.fallBackLocale2: LocalizationService.fallBackLocale,
-      fallbackLocale:LocalizationService.fallBackLocale,
-      themeMode: AppTheme().getCurrentTheme(),
-      theme: AppTheme.darkMode,
-      darkTheme:  AppTheme.darkMode,
-
-
-       navigatorObservers: <NavigatorObserver>[App.observer],
-
+    return ToastificationWrapper(
+      child: GetMaterialApp(
+        title:F.title,
+        getPages: PageRoutes.routes,
+      
+        initialRoute: PageRoutes.SPLASH,
+        translations: LocalizationService(),
+        debugShowCheckedModeBanner: false,
+      
+        locale:F.appFlavor==Flavor.ravi?LocalizationService.fallBackLocale2: LocalizationService().getCurrentLocale(),
+        fallbackLocale:LocalizationService.fallBackLocale,
+        themeMode: AppTheme().getCurrentTheme(),
+        theme: AppTheme.darkMode,
+        darkTheme:  AppTheme.darkMode,
+      
+      
+         navigatorObservers: <NavigatorObserver>[
+      
+          if(Platform.isAndroid) App.observer
+      
+         ],
+      
+      ),
     );
 
   }

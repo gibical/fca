@@ -169,7 +169,7 @@ class MediaSuitController extends GetxController {
       ActionEditorModel(nameItem: 'Change Speech Audio', onTap: () {}),
     ];
   }
-
+  double maxValueRuler = 200;
   var editTextDataList = <EditDataModel>[].obs;
   var editImageDataList = <EditDataModel>[].obs;
   var editVideoDataList = <EditDataModel>[].obs;
@@ -367,6 +367,7 @@ class MediaSuitController extends GetxController {
         Get.find<MediaSuitController>().setDataEditAudio(
             editAudioDataList[selectedAudioIndex.value!].name,
             editAudioDataList[selectedAudioIndex.value!].urlMedia!,
+            0,
             editAudioDataList[selectedAudioIndex.value!].assetId.toString(),
             isloading: true);
       } else {
@@ -452,6 +453,7 @@ class MediaSuitController extends GetxController {
         Get.find<MediaSuitController>().setDataEditAudio(
             editVideoDataList[selectedVideoIndex.value!].name,
             editVideoDataList[selectedVideoIndex.value!].urlMedia!,
+            0,
             editVideoDataList[selectedVideoIndex.value!].assetId.toString(),
             isloading: true);
         selectedVideoIndex.value = null;
@@ -494,43 +496,43 @@ class MediaSuitController extends GetxController {
           ),
           Expanded(
               child: ListView.builder(
-            itemBuilder: (s, p) {
-              return InkWell(
-                onTap: () {
-                  try {
-                    return Get.back(result: models.elementAt(p));
-                  } catch (e) {
-                    // TODO
-                  }
-                  Get.back();
+                itemBuilder: (s, p) {
+                  return InkWell(
+                    onTap: () {
+                      try {
+                        return Get.back(result: models.elementAt(p));
+                      } catch (e) {
+                        // TODO
+                      }
+                      Get.back();
+                    },
+                    child: Container(
+                      width: 100.w,
+                      height: 4.h,
+                      margin: EdgeInsets.symmetric(vertical: 6),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            models.elementAt(p),
+                            style: TextStyle(color: Colors.white.withOpacity(0.4)),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            width: 100.w,
+                            height: 1,
+                            color: Colors.white.withOpacity(0.15),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
                 },
-                child: Container(
-                  width: 100.w,
-                  height: 4.h,
-                  margin: EdgeInsets.symmetric(vertical: 6),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        models.elementAt(p),
-                        style: TextStyle(color: Colors.white.withOpacity(0.4)),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        width: 100.w,
-                        height: 1,
-                        color: Colors.white.withOpacity(0.15),
-                      )
-                    ],
-                  ),
-                ),
-              );
-            },
-            itemCount: models.length,
-          ))
+                itemCount: models.length,
+              ))
         ],
       ),
     ));
@@ -626,6 +628,7 @@ class MediaSuitController extends GetxController {
         Get.find<MediaSuitController>().setDataEditAudio(
             editTextDataList[selectedTextIndex.value!].name,
             editTextDataList[selectedTextIndex.value!].urlMedia!,
+            0,
             editTextDataList[selectedTextIndex.value!].assetId!,
             isloading: true);
       } else {
@@ -704,35 +707,52 @@ class MediaSuitController extends GetxController {
       if (item.mediaClass == 1) {
         setDataEditText(item.name, item.urlMedia!, item.assetId!,
             isloading: item.isloading);
+
+        maxValueRuler +=3;
       } else if (item.mediaClass == 2) {
         setDataEditImage(item.name, item.urlMedia!, item.assetId!,
             isloading: item.isloading);
+
+        maxValueRuler +=3;
       } else if (item.mediaClass == 3) {
-        setDataEditAudio(item.name, item.urlMedia!, item.assetId!,
+        setDataEditAudio(item.name, item.urlMedia!, item.defaultWidthVideo ?? 0,item.assetId!,
             isloading: item.isloading);
+
+        maxValueRuler +=5;
       } else if (item.mediaClass == 4) {
         setDataEditVideo(item.name, item.urlMedia!, item.defaultWidthVideo ?? 3.0, item.assetId!,
             isloading: item.isloading);
+
+        print('----33----');
+        print(item.defaultWidthVideo);
+        print('----33----');
+        maxValueRuler +=item.defaultWidthVideo?.round() ?? 0 ;
+
+        print('----44----');
+        print(maxValueRuler);
+        print('----44----');
       }
     }
     tempSelectedItems.clear();
   }
 
   void addItemToTempList(
-      String name, String url, widthVideoItem, String assetId, int mediaClass,
+      String name, String url, widthVideoItem, String assetId, String mediaClass,
       {bool isloading = false}) {
-    if (mediaClass == 1) {
+    if (mediaClass == "text") {
       tempSelectedItems
           .add(EditDataModel(name, url, 0, assetId, 1, isloading: isloading));
-    } else if (mediaClass == 2) {
+    } else if (mediaClass == "image") {
       tempSelectedItems
           .add(EditDataModel(name, url, 0, assetId, 2, isloading: isloading));
-    } else if (mediaClass == 3) {
+    } else if (mediaClass == "audio") {
       tempSelectedItems
-          .add(EditDataModel(name, url, 0, assetId, 3, isloading: isloading));
-    } else if (mediaClass == 4) {
+          .add(EditDataModel(name, url, widthVideoItem, assetId, 3, isloading: isloading));
+    } else if (mediaClass == "video") {
       tempSelectedItems.add(EditDataModel(name, url, widthVideoItem, assetId, 4,
           isloading: isloading));
+      print('wwww=wwww');
+
     } else {}
   }
 
@@ -753,6 +773,7 @@ class MediaSuitController extends GetxController {
     editImageDataList.add(
         EditDataModel(name, imageUrl, 0, assetId, 2, isloading: isloading));
     selectedImageIndex.value = editImageDataList.length - 1;
+    print('MediaSuitController.setDataEditImage = ${editImageDataList}');
   }
 
   void setDataEditVideo(
@@ -762,19 +783,21 @@ class MediaSuitController extends GetxController {
 
     editVideoDataList.add(EditDataModel(
         name, videoUrl, widthVideoItem, assetId, 4,
-        isloading: isloading, second: videoTime));
+        isloading: isloading, second: videoTime)
+    );
 
     selectedVideoIndex.value = editVideoDataList.length - 1;
   }
 
   void setDataEditAudio(
-    String name,
-    String audioUrl,
-    String assetId, {
-    bool isloading = false,
-    double time = 5,
-  }) {
-    editAudioDataList.add(EditDataModel(name, audioUrl, 0, assetId, 3,
+      String name,
+      String audioUrl,
+      double time ,
+      String assetId, {
+        bool isloading = false,
+
+      }) {
+    editAudioDataList.add(EditDataModel(name, audioUrl, time, assetId, 3,
         isloading: isloading, second: time));
 
     selectedAudioIndex.value = editAudioDataList.length - 1;
@@ -795,29 +818,35 @@ class MediaSuitController extends GetxController {
       selectedAudioIndex(0);
     }
   }
-
   String videoConfig() {
     if (editVideoDataList.isNotEmpty) {
       List<Map<String, dynamic>> jsonList = [];
       int previousItemEnd = 0;
       for (int i = 0; i < editVideoDataList.length; i++) {
         var currentItem = editVideoDataList[i];
+
         var currentItemEnd =
             previousItemEnd + currentItem.defaultWidthVideo!.round();
 
         var resultEnd = currentItemEnd / 16;
 
-        currentItem.start = previousItemEnd + 1;
-        // var endTime = currentItem.second.toInt();
+        if (i == 0) {
+          currentItem.start = 0;
+        } else {
+          currentItem.start = previousItemEnd + 1;
+        }
+
         currentItem.end = resultEnd.toInt();
 
-        if (i > 0) {
-          currentItem.end = resultEnd.toInt() * 2;
-        }
         currentItem.length = currentItem.end - currentItem.start;
+        if (currentItem.length <= 0) {
+          currentItem.length = 1;
+          currentItem.end = currentItem.start + 1;
+        }
+
         jsonList.add(currentItem.toJson());
 
-        previousItemEnd = resultEnd.toInt();
+        previousItemEnd = currentItem.end;
       }
 
       String jsonData = jsonEncode(jsonList);
@@ -829,6 +858,8 @@ class MediaSuitController extends GetxController {
     }
   }
 
+
+
   String textConfig() {
     if (editTextDataList.isNotEmpty) {
       List<Map<String, dynamic>> jsonList = [];
@@ -836,12 +867,14 @@ class MediaSuitController extends GetxController {
 
       for (int i = 0; i < editTextDataList.length; i++) {
         var currentItem = editTextDataList[i];
-        currentItem.start =
-            previousEnd + 1; // Ensure the start is properly updated
-        currentItem.end = currentItem.start +
-            currentItem.second
-                .toInt(); // Calculate the end time based on the item's length
 
+        if (i == 0) {
+          currentItem.start = 0;
+        } else {
+          currentItem.start = previousEnd + 1;
+        }
+
+        currentItem.end = currentItem.start + currentItem.second.toInt();
         jsonList.add({
           'start': currentItem.start,
           'end': currentItem.end,
@@ -849,7 +882,7 @@ class MediaSuitController extends GetxController {
           'id': currentItem.assetId,
         });
 
-        previousEnd = currentItem.end; // Update previousEnd for the next item
+        previousEnd = currentItem.end;
       }
 
       String jsonData = jsonEncode(jsonList);
@@ -868,9 +901,14 @@ class MediaSuitController extends GetxController {
 
       for (int i = 0; i < editImageDataList.length; i++) {
         var currentItem = editImageDataList[i];
-        currentItem.start = previousEnd + 1;
-        currentItem.end = currentItem.start + currentItem.second.toInt();
 
+        if (i == 0) {
+          currentItem.start = 0;
+        } else {
+          currentItem.start = previousEnd + 1;
+        }
+
+        currentItem.end = currentItem.start + currentItem.second.toInt();
         jsonList.add({
           'start': currentItem.start,
           'end': currentItem.end,
@@ -897,9 +935,14 @@ class MediaSuitController extends GetxController {
 
       for (int i = 0; i < editAudioDataList.length; i++) {
         var currentItem = editAudioDataList[i];
-        currentItem.start = previousEnd + 1;
-        currentItem.end = currentItem.start + currentItem.second.toInt();
 
+        if (i == 0) {
+          currentItem.start = 0;
+        } else {
+          currentItem.start = previousEnd + 1;
+        }
+
+        currentItem.end = currentItem.start + currentItem.second.toInt();
         jsonList.add({
           'start': currentItem.start,
           'end': currentItem.end,
@@ -919,6 +962,7 @@ class MediaSuitController extends GetxController {
     }
   }
 
+
   void exportOnline() async {
     selectedTextIndex.value = null;
     selectedVideoIndex.value = null;
@@ -934,6 +978,7 @@ class MediaSuitController extends GetxController {
     print('====================Audio==============================');
     var audi = audioConfig();
 
+    print('MediaSuitController.exportOnline = ${image}');
     isloadingSubmit(true);
 
     var dio = Dio();

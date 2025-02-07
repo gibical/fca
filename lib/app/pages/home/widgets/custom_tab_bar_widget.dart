@@ -72,34 +72,9 @@ class _CustomTabBarWidgetState extends State<CustomTabBarWidget>
                 controller: _tabController,
                 children: [
                   AllTabScreen(),
-                  ImageTabScreen(
-                    onClick: (){},onSendRequest: (){
-                      logic.sendImageRecentlyReuqest();
-                  },list: logic.imagesRecently,
-                  ),
-                  VideoTabScreen(
-                    onSendRequest: (){
 
-                    },onClick: (){
 
-                  },list:convertToRxList(logic.bestVideos) ,
-                  ),
-                  SoundTabScreen(
-                    onSendRequest: (){
-                      logic.sendSoundRecentlyReuqest();
 
-                    },onClick: (){
-
-                  },list:convertToRxList(logic.mostSongs) ,
-                    ),
-                  TextTabScreen(
-          onSendRequest: (){
-            logic.sendTextRecentlyReuqest();
-
-          },onClick: (){
-
-          },list:convertToRxList(logic.textRecently) ,
-                  ),
                 ],
               ),
               Padding(

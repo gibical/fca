@@ -30,6 +30,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../common/app_color.dart';
+import '../../common/utils/upload_file_controller.dart';
 import 'state.dart';
 
 class PlusSectionLogic extends GetxController implements RequestInterface {
@@ -45,6 +46,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   TextEditingController genreController = TextEditingController();
   TextEditingController subscrptionController = TextEditingController(text: "1 day");
 
+  UploadFileController _uploadFileController = Get.put(UploadFileController());
 
   String assetid = "";
   String postUploadedId = "";
@@ -175,7 +177,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   Future<XFile?> takePicture() async {
     final CameraController? cameraController = controller;
     if (cameraController == null || !cameraController.value.isInitialized) {
-      Constant.showMessege('Error: select a camera first.');
+      Constant.showMessege('alert_20'.tr);
       return null;
     }
 
@@ -328,6 +330,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
 
   void _startRecordingTimer() {
     _recordingDuration = Duration.zero;
+
     _recordingTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       _recordingDuration += Duration(seconds: 1);
       update(); // به‌روزرسانی ویو برای نمایش زمان جدید
@@ -361,6 +364,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
           debugPrint(path);
           soundOutPut = path ?? "";
           debugPrint("Recorded file size: ${File(path).lengthSync()}");
+
           Get.to(FirstForm(this), arguments: [this]);
         }
       } else {
@@ -505,19 +509,15 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       case MediaMode.image:
         // TODO: Handle this case.
 
-        print('PlusSectionLogic.getMainWidget 1 ${controller} ');
         if (controller == null || !controller!.value.isInitialized) {
-          print('PlusSectionLogic.getMainWidget 1 - 1 ');
 
           return FocusDetector(onFocusGained: () {
-            print('PlusSectionLogic.getMainWidget 2 ');
                 initCamera();
           }, child: Container(
             width: 100.w,
             height: 100.h,
           ));
         }
-        print('PlusSectionLogic.getMainWidget 3 ');
 
         return Stack(
           children: [
@@ -572,17 +572,18 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
     if (priceController.text.isNotEmpty) {
       double? number = double.parse(priceController.text);
       if (number != null) {
-
           _resultPrice = ((number.toInt()) * 100).toString();
-
       }}
 
   }
-  sendMainRequest() {
+  sendMainRequest() async{
     isloading(true);
     _multiplyBy100();
     var box = GetStorage();
+    String fileID =await uploadFileWithDio()??"";
+    print('PlusSectionLogic.sendMainRequest fileID = ${fileID} -${mediaMode}');
     var body = {
+      "file_id":fileID,
       "name": titleController.text,
       "user": box.read("userid"),
       "license_type": _getPlanByDropDown(),
@@ -591,6 +592,7 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       "lat": 0,
       "lng": 0,
       "type": 1,
+      "media_type":getMediaType(),
       "genre": genreController.text,
       "length": "10",
       //"language": Constant.languageMap[languageController.text],
@@ -605,12 +607,13 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       print(_resultPrice);
     }
 
-    print('PlusSectionLogic.sendMainRequest = ${body}');
+    print('PlusSectionLogic.sendMainRequest = ${jsonEncode(body)}');
 
     apiRequster.request(_getUrlByMediaEnum(), ApiRequster.MHETOD_POST, 1,
         body: body, useToken: true);
   }
   Future<String> saveStringToTxtFile(String stringData) async {
+    print('PlusSectionLogic.saveStringToTxtFile = ${stringData}');
     final directory = await getTemporaryDirectory();
     final filePath = '${directory.path}/fileName.txt';
     final file = File(filePath);
@@ -648,23 +651,8 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   }
 
   String _getUrlByMediaEnum() {
-    switch (mediaMode) {
-      case MediaMode.audio:
-        // TODO: Handle this case.
-        return "audios";
-      case MediaMode.image:
-        // TODO: Handle this case.
-        if(videoOutPut.isNotEmpty&&videoOutPut.contains("mp4")) return "videos";
-        return "images";
+    return "assets";
 
-      case MediaMode.text:
-        // TODO: Handle this case.
-        return "texts";
-
-      case MediaMode.video:
-        // TODO: Handle this case.
-        return "videos";
-    }
   }
 
   _getPlanByDropDown() {
@@ -681,60 +669,23 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
   void peaseJsonFromAddAssets(source) {
     print(
         'PlusSectionLogic.peaseJsonFromAddAssets = ${jsonEncode(source)} - ${imageOutPut}');
-    assetid = jsonDecode(source)['data']['asset_id'].toString();
+    assetid = jsonDecode(source)['data']['id'].toString();
     postUploadedId = jsonDecode(source)['data']['id'].toString();
 
     isloading(false);
 
-    Get.to(UploadAssetPage(), arguments: [this]);
+    Get.toNamed(_getRouteByMedia(), arguments: {'id': postUploadedId , 'idAssetMedia':'idAssetMedia'});
   }
 
-  Future<void> uploadFileWithDio() async {
+  Future<String?> uploadFileWithDio() async {
    textOutPut = await saveStringToTxtFile(captionController.text);
-    var dio = Dio();
-    var formData = d.FormData.fromMap({
-      'file': await d.MultipartFile.fromFile(_getFilePathFromMediaEnum(),
-          filename: 'uploadfile'),
-      'asset': assetid.toString(),
-    });
-   print('PlusSectionLogic.uploadFileWithDio = ${imageOutPut} - ${formData.fields}');
 
-   dio.interceptors.add(MediaVerseConvertInterceptor());
+   return await _uploadFileController.upload(_getFilePathFromMediaEnum(), (s, p) {
+     uploadedCount = (s * 100) / p;
+     print('PlusSectionLogic.uploadFileWithDio = ${s} - ${p}');
+     update();
+   });
 
-    try {
-      var response = await dio.post(
-        '${Constant.HTTP_HOST}files',
-        data: formData,
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer ${GetStorage().read("token")}',
-            'Content-Type': 'multipart/form-data',
-            'X-App': '_Android',
-          },
-        ),
-        onSendProgress: (s, p) {
-          uploadedCount = (s * 100) / p;
-          print('PlusSectionLogic.uploadFileWithDio = ${s} - ${p}');
-          update();
-        },
-      );
-
-      if (response.statusCode! >= 200||response.statusCode! < 300) {
-        print('==================================================================================================');
-        print('File uploaded successfully = ${response.data}');
-        print('==================================================================================================');
-
-
-
-        Get.toNamed(_getRouteByMedia(), arguments: {'id': postUploadedId , 'idAssetMedia':'idAssetMedia'});
-
-
-      } else {
-        print('Failed to upload file: ${response.statusMessage}');
-      }
-    } on DioError catch (e) {
-      print('DioError: ${e.message}');
-    }
   }
   Future<void> getAllCountries() async {
     var dio = Dio();
@@ -857,6 +808,28 @@ class PlusSectionLogic extends GetxController implements RequestInterface {
       return false;
     }else{
       return true;
+    }
+  }
+
+  getMediaType() {
+    switch(mediaMode){
+
+      case MediaMode.audio:
+      // TODO: Handle this case.
+        return "audio";
+      case MediaMode.image:
+      // TODO: Handle this case.
+        if(imageOutPut.length>5)return "image";
+        if(videoOutPut.length>5)return "video";
+
+      case MediaMode.text:
+      // TODO: Handle this case.
+        return "text";
+
+      case MediaMode.video:
+      // TODO: Handle this case.
+        return "video";
+
     }
   }
 }

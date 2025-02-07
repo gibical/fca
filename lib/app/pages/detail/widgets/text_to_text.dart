@@ -167,8 +167,8 @@ class TextToTextWidget extends StatelessWidget {
       },
     );
     selectedDate.then((value) {
-      controller.dateTime =value!;
-      controller.isSeletedDate=true;
+      controller.selectedDate.value =value!;
+      controller.isSeletedDate.value=true;
       controller.update();
     }, onError: (error) {
       if (kDebugMode) {
@@ -203,11 +203,11 @@ class TextToTextWidget extends StatelessWidget {
     selectedTime.then((value) {
 
 
-      controller.dateTime = controller.dateTime.copyWith(
+      controller.selectedDate.value = controller.selectedDate.value.copyWith(
         hour: value?.hour,
         minute: value?.minute,
       );
-      controller.isSeletedDate=true;
+      controller.isSeletedDate.value=true;
       controller.update();
     }, onError: (error) {
       if (kDebugMode) {

@@ -5,8 +5,11 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:mediaverse/app/common/app_color.dart';
 import 'package:mediaverse/app/common/app_route.dart';
 import 'package:mediaverse/app/pages/channel/all_tools.dart';
+import 'package:mediaverse/app/pages/plus/view.dart';
 import 'package:mediaverse/app/pages/plus_section/view.dart';
 import 'package:mediaverse/app/pages/wallet/view.dart';
+import 'package:mediaverse/app/pages/wrapper/widgets/select_destination_bottom_sheet.dart';
+import 'package:mediaverse/gen/model/enums/post_type_enum.dart';
 
 import '../../widgets/bottomnavwidget.dart';
 import '../channel/view.dart';
@@ -53,22 +56,22 @@ class _MainWrapperScreenState extends State<MainWrapperScreen> {
       bottomNavigationBar: BottomNavWidget(),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: 50.0),
-        child: FloatingActionButton(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-          splashColor: Colors.transparent,
-          backgroundColor: AppColor.primaryLightColor,
-          onPressed: () {
-            Get.to(PlusSectionPage());
-          },
-          child: Icon(
-            Icons.add,
-            color: Theme.of(context).colorScheme.onBackground,
-          ),
-        ),
-      ),
+      // floatingActionButton: Padding(
+      //   padding: EdgeInsets.only(bottom: 50.0),
+      //   child: FloatingActionButton(
+      //     shape:
+      //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+      //     splashColor: Colors.transparent,
+      //     backgroundColor: AppColor.primaryLightColor,
+      //     onPressed: () {
+      //      _goToRouteBottomSheet();
+      //     },
+      //     child: Icon(
+      //       Icons.add,
+      //       color: Theme.of(context).colorScheme.onBackground,
+      //     ),
+      //   ),
+      // ),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: controller.pageController,
@@ -80,5 +83,10 @@ class _MainWrapperScreenState extends State<MainWrapperScreen> {
         ],
       ),
     );
+  }
+
+  void _goToRouteBottomSheet() {
+
+    Get.bottomSheet(SelectDestinationBottomSheet());
   }
 }

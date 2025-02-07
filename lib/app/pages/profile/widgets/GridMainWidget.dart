@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class _GridPostViewState extends State<GridPostView> {
         .toDouble();
     print('=======================================================');
     print('=======================================================');
-    print('=======================================================');
+    print('==========================872328378=============================');
     print(videoLength);
     print(videoLength);
     print(videoLength);
@@ -50,7 +51,7 @@ class _GridPostViewState extends State<GridPostView> {
     if (isSelected) {
 
       Get.find<MediaSuitController>().addItemToTempList(
-        widget.model['media']['name'].toString(),
+        widget.model['name'].toString(),
         widget.model['file']['url'],
         videoLength,
         widget.model['file_id'].toString(),
@@ -75,7 +76,7 @@ class _GridPostViewState extends State<GridPostView> {
         onTap:Get.arguments == 'edit_screen'  ? toggleSelection
             :Get.arguments == 'onTapChannelManagement' ? (){
 
-          Get.find<ShareAccountLogic>().setModelShareData(widget.model['media']['name'].toString() ,widget.model['file_id']);
+          Get.find<ShareAccountLogic>().setModelShareData(widget.model['name'].toString() ,widget.model['file_id']);
 
           Get.back();
 
@@ -104,10 +105,10 @@ class _GridPostViewState extends State<GridPostView> {
                       padding: EdgeInsets.all(5.w),
                       child: Column(
                         children: [
-                       if(widget. model['media_type'] == 1)   Align(
+                          if(widget. model['media_type'] == 1)   Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                             widget. model['media']['name'],
+                              widget. model['name'],
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme
@@ -145,8 +146,8 @@ class _GridPostViewState extends State<GridPostView> {
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme
-                                    .of(context)
-                                    .textTheme.bodySmall?.copyWith(
+                                      .of(context)
+                                      .textTheme.bodySmall?.copyWith(
                                     color: Color(0xFF666680),
                                     fontSize: 8.sp,
                                     fontWeight: FontWeight.w400,
@@ -176,7 +177,7 @@ class _GridPostViewState extends State<GridPostView> {
                         Positioned(
                             bottom: 10,
                             left: 20,
-                            child: Text(widget.model['media']['name'])),
+                            child: Text(widget.model['name'])),
                       ],
                     ),
                     decoration:
@@ -233,6 +234,7 @@ class _GridPostViewState extends State<GridPostView> {
   }
 
   _getBackground() {
+
     //tum_video
     switch(widget.model['media_type']){
       case 1:
@@ -257,23 +259,24 @@ class _GridPostViewState extends State<GridPostView> {
       case 2:
         route = PageRoutes.DETAILIMAGE;
         break;
-        case 3:
-          route = PageRoutes.DETAILMUSIC;
-          break;
-          case 4:
-            route = PageRoutes.DETAILVIDEO;
-            break;
+      case 3:
+        route = PageRoutes.DETAILMUSIC;
+        break;
+      case 4:
+        route = PageRoutes.DETAILVIDEO;
+        break;
     }
-     Get.toNamed(route, arguments: {'id': model});
+    Get.toNamed(route, arguments: {'id': model});
 
   }
 }
 class GridPostView2 extends StatefulWidget {
 
   dynamic model;
+  bool isSubscribation;
 
 
-  GridPostView2(this.model);
+  GridPostView2(this.model,this.isSubscribation);
 
   @override
   State<GridPostView2> createState() => _GridPostView2State();
@@ -283,6 +286,10 @@ class GridPostView2 extends StatefulWidget {
 class _GridPostView2State extends State<GridPostView2> {
   bool isSelected = false;
   void toggleSelection() {
+    if ( widget.isSubscribation&&!(widget.model['forkability_status'].toString().contains("2"))) {
+      Constant.showMessege("alert_2".tr);
+      return;
+    }
     setState(() {
       isSelected = !isSelected;
     });
@@ -291,23 +298,17 @@ class _GridPostView2State extends State<GridPostView2> {
     'file']['info']['time'] ??
         0)
         .toDouble();
-    print('=======================================================');
-    print('=======================================================');
-    print('=======================================================');
-    print(videoLength);
-    print(videoLength);
-    print(videoLength);
-    print('=======================================================');
-    print('=======================================================');
-    print('=======================================================');
+
+
+    print('984383849'+':'+'${videoLength}');
     if (isSelected) {
 
       Get.find<MediaSuitController>().addItemToTempList(
-        widget.model['media']['name'].toString(),
+        widget.model['name'].toString(),
         widget.model['file']['url'],
         videoLength,
         widget.model['file_id'].toString(),
-        widget.model['media_type'],
+        widget.model['media_type'].toString(),
       );
     } else {
       Get.find<MediaSuitController>().removeItemFromTempList(
@@ -332,20 +333,37 @@ class _GridPostView2State extends State<GridPostView2> {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
 
-        onTap:Get.arguments == 'edit_screen' ? toggleSelection:Get.arguments == 'onTapChannelManagement' ? (){
-          if (widget.model['media_type'].toString().contains("4")) {
-            Get.find<ShareAccountLogic>().setModelShareData(widget.model['media']['name'].toString() ,widget.model['file_id']);
+
+        onTap:
+
+            (){
+          if(Get.arguments == 'edit_screen'){
+            toggleSelection();
+          }
+//       if(Get.arguments == 'edit_screen'){
+//         if (widget.model['media_type'].toString().contains("4")) {
 //
-            Get.back();
+//         Get.find<ShareAccountLogic>().setModelShareData(widget.model['media']['name'].toString() ,widget.model['file_id']);
+//         }else{
+//           Constant.showMessege("Please Select Video ");
+//         }
+// //
+//         Get.back();
+//       }
+          else if(Get.arguments == 'onTapNewProgram'){
+            if (widget.model['media_type'].toString().contains("4")) {
+
+//
+              Get.back(result: [jsonEncode(widget.model)]);
+            }else{
+              Constant.showMessege("alert_3".tr);
+            }
           }else{
-            Constant.showMessege("Please Select Video ");
+            _getRouteAndPushIt(widget.model['id']);
           }
 
-        }:(){
-          _getRouteAndPushIt(widget.model['id']);
-
-
-        },
+        }
+        ,
         child: Container(
             width: 45.w,
             height: 45.w,
@@ -361,10 +379,10 @@ class _GridPostView2State extends State<GridPostView2> {
                       padding: EdgeInsets.all(5.w),
                       child: Column(
                         children: [
-                       if(widget. model['media_type'] == 1)   Align(
+                          if(widget. model['media_type'] == 1)   Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                             widget. model['media']['name'],
+                              widget. model['name'],
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme
@@ -402,8 +420,8 @@ class _GridPostView2State extends State<GridPostView2> {
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme
-                                  .of(context)
-                                  .textTheme.bodySmall?.copyWith(
+                                    .of(context)
+                                    .textTheme.bodySmall?.copyWith(
                                   color: Color(0xFF666680),
                                   fontSize: 8.sp,
                                   fontWeight: FontWeight.w400,
@@ -432,8 +450,8 @@ class _GridPostView2State extends State<GridPostView2> {
                         Positioned(
                             bottom: 10,
                             left: 20,
-                            child: 
-                            Text(processTitle(widget.model['media']['name']))
+                            child:
+                            Text(processTitle(widget.model['name']))
                           //  Text(widget.model['media']['name'])
                         ),
                       ],
@@ -477,13 +495,13 @@ class _GridPostView2State extends State<GridPostView2> {
 
   String _getIcon() {
     switch(widget.model['media_type']){
-      case 1:
+      case "text":
         return AppIcon.textIcon;
-      case 2:
+      case "image":
         return AppIcon.imageIcon;
-      case 3:
+      case "audio":
         return AppIcon.soundIcon;
-      case 4:
+      case "video":
         return AppIcon.videoIcon;
     }
     return AppIcon.videoIcon;
@@ -508,20 +526,20 @@ class _GridPostView2State extends State<GridPostView2> {
     String route = "";
     print('_GridPostViewState._getRouteAndPushIt 2  = ${widget.model} -  ${widget.model['media_type']} - ${model}');
     switch(widget.model['media_type']){
-      case 1:
+      case 'text':
         route = PageRoutes.DETAILTEXT;
         break;
-      case 2:
+      case 'image':
         route = PageRoutes.DETAILIMAGE;
         break;
-        case 3:
-          route = PageRoutes.DETAILMUSIC;
-          break;
-          case 4:
-            route = PageRoutes.DETAILVIDEO;
-            break;
+      case 'audio':
+        route = PageRoutes.DETAILMUSIC;
+        break;
+      case 'video':
+        route = PageRoutes.DETAILVIDEO;
+        break;
     }
-     Get.toNamed(route, arguments: {'id': model});
+    Get.toNamed(route, arguments: {'id': model});
 
   }
 }

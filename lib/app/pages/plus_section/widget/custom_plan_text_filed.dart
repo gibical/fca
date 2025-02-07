@@ -123,6 +123,7 @@ Widget CustomShowAndPickCountry(
     required context,
     required List<String> models,
     TextEditingController? textEditingController}) {
+
   try {
     print('CustomShowAndPickCountry = ${countryModel!.iso}');
   }  catch (e) {
@@ -144,60 +145,166 @@ Widget CustomShowAndPickCountry(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(9.sp),
+            borderRadius: BorderRadius.circular(9.sp),color: Color(0xff0E0E12).withOpacity(0.5),
             border: Border.all(color: "353542".toColor())),
         height: isLarge ? 130 : 53,
-        child: TextFormField(
-          enabled: false,
-          minLines: isLarge ? 5 : 1,
-          maxLines: isLarge ? 6 : 1,
-          controller: textEditingController ?? TextEditingController(),
-          showCursor: true,
-          style: textTheme.bodyMedium?.copyWith(color: AppColor.whiteColor),
-          decoration: InputDecoration(
+        child: Row(
+          children: [
+            SizedBox(width: 3.w,),
+            if(countryModel!=null) Container(
 
+                child: CountryFlag.fromCountryCode(countryModel.iso.toString(),
+                  width: 30,
+                  height: 15,)),
+            if(countryModel!=null) Container(
 
-              suffix: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child:Row(
-                  children: [
-                   if(countryModel!=null) Container(
+                margin: EdgeInsets.only(left: 3.w),
+                child: Text(countryModel.name.toString(),style: TextStyle(
+                    color: Colors.white
+                ),)),
+            if(countryModel==null) Container(
 
-                       child: CountryFlag.fromCountryCode(countryModel.iso.toString(),
-                       width: 30,
-                           height: 15,)),
-                   if(countryModel!=null) Container(
+                margin: EdgeInsets.only(left: 3.w),
+                child: Text("signup_10_1".tr,style: TextStyle(
+                    color: Colors.white
+                ),)),
 
-                     margin: EdgeInsets.only(left: 3.w),
-                       child: Text(countryModel.name.toString(),style: TextStyle(
-                         color: Colors.white
-                       ),)),
-                   if(countryModel==null) Container(
-
-                     margin: EdgeInsets.only(left: 3.w),
-                       child: Text("signup_10_1".tr,style: TextStyle(
-                         color: Colors.white
-                       ),)),
-
-                  ],
-                ) ,
+            Expanded(
+              child: TextFormField(
+                enabled: false,
+                minLines: isLarge ? 5 : 1,
+                maxLines: isLarge ? 6 : 1,
+                controller: textEditingController ?? TextEditingController(),
+                showCursor: true,
+                style: textTheme.bodyMedium?.copyWith(color: AppColor.whiteColor),
+                decoration: InputDecoration(
+              
+              
+                    suffix: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      child:Row(
+                        children: [
+               
+                         
+                        ],
+                      ) ,
+                    ),
+                    hintStyle: textTheme.bodyMedium?.copyWith(
+                      color: AppColor.whiteColor.withOpacity(0.2),
+                    ),
+                    // contentPadding: EdgeInsets.only( left: 8 , right: 8  ),
+                    fillColor: Color(0xff0E0E12).withOpacity(0.5),
+                    filled: true,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(9.sp),
+                        borderSide: BorderSide.none),
+                    suffixIcon: RotatedBox(
+                        quarterTurns: 1,
+                        child: Icon(
+                          Icons.arrow_forward_ios_sharp,
+                          color: "666680".toColor(),
+                          size: 10.sp,
+                        ))),
               ),
-              hintStyle: textTheme.bodyMedium?.copyWith(
-                color: AppColor.whiteColor.withOpacity(0.2),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget CustomShowAndPickLanguage(
+    {required String hintText,
+    required String titleText,
+    required String? languageModel,
+    required Map<String, dynamic> countries,
+    required bool needful,
+    required dynamic signlogic,
+    bool isLarge = false,
+    required context,
+    required List<String> models,
+    TextEditingController? textEditingController}) {
+
+  try {
+  }  catch (e) {
+    // TODO
+  }
+  final textTheme = Theme.of(context).textTheme;
+  return GestureDetector(
+    onTap: () async{
+      String? model = await Get.bottomSheet(
+          LangaugePickerBottomSheet(countries));
+      if (model != null) {
+      textEditingController!.text = countries[languageModel].toString();
+      signlogic.languageModel =model;
+
+      signlogic.update();
+      }
+    },
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(9.sp),color: Color(0xff0E0E12).withOpacity(0.5),
+            border: Border.all(color: "353542".toColor())),
+        height: isLarge ? 130 : 53,
+        child: Row(
+          children: [
+            SizedBox(width: 3.w,),
+
+            if(languageModel!=null) Container(
+
+                margin: EdgeInsets.only(left: 3.w),
+                child: Text(countries[languageModel],style: TextStyle(
+                    color: Colors.white
+                ),)),
+            if(languageModel==null) Container(
+
+                margin: EdgeInsets.only(left: 3.w),
+                child: Text("viewall_1".tr,style: TextStyle(
+                    color: Colors.white
+                ),)),
+
+            Expanded(
+              child: TextFormField(
+                enabled: false,
+                minLines: isLarge ? 5 : 1,
+                maxLines: isLarge ? 6 : 1,
+                controller: textEditingController ?? TextEditingController(),
+                showCursor: true,
+                style: textTheme.bodyMedium?.copyWith(color: AppColor.whiteColor),
+                decoration: InputDecoration(
+
+
+                    suffix: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      child:Row(
+                        children: [
+
+
+                        ],
+                      ) ,
+                    ),
+                    hintStyle: textTheme.bodyMedium?.copyWith(
+                      color: AppColor.whiteColor.withOpacity(0.2),
+                    ),
+                    // contentPadding: EdgeInsets.only( left: 8 , right: 8  ),
+                    fillColor: Color(0xff0E0E12).withOpacity(0.5),
+                    filled: true,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(9.sp),
+                        borderSide: BorderSide.none),
+                    suffixIcon: RotatedBox(
+                        quarterTurns: 1,
+                        child: Icon(
+                          Icons.arrow_forward_ios_sharp,
+                          color: "666680".toColor(),
+                          size: 10.sp,
+                        ))),
               ),
-              // contentPadding: EdgeInsets.only( left: 8 , right: 8  ),
-              fillColor: Color(0xff0E0E12).withOpacity(0.5),
-              filled: true,
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(9.sp),
-                  borderSide: BorderSide.none),
-              suffixIcon: RotatedBox(
-                  quarterTurns: 1,
-                  child: Icon(
-                    Icons.arrow_forward_ios_sharp,
-                    color: "666680".toColor(),
-                    size: 10.sp,
-                  ))),
+            ),
+          ],
         ),
       ),
     ),

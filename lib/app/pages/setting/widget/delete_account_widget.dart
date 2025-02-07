@@ -134,7 +134,7 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> implements Re
   void onSucces(source, int reqCdoe) {
     // TODO: implement onSucces
     isloading(false);
-    Constant.showMessege("Account Deleted");
+    Constant.showMessege("alert_4".tr);
     _logOut();
 
   }
