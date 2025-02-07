@@ -45,7 +45,7 @@ dependencies:
   country_code_picker: ^3.0.0
   lottie: any
   http: any
-  google_fonts: ^5.1.0
+  google_fonts: ^6.2.1
   visibility_detector: any
   focus_detector: any
   dotted_border: ^2.1.0
